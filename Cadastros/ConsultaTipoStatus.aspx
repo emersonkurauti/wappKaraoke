@@ -6,7 +6,7 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Consulta de Tipos de Status</h3>
+                    <span class="panel-title">Consulta de Tipos de Status</span>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <br/>
-                            <asp:GridView ID="gvTpStatus" runat="server" CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
+                            <asp:GridView ID="gvDados" runat="server" CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
                                 <Columns>
                                     <asp:BoundField HeaderText="Cód." DataField="cdTpStatus">
                                         <ItemStyle Width="5%" />
@@ -64,13 +64,6 @@
                                     </asp:CommandField>
                                 </Columns>
                             </asp:GridView>
-
-                            <script type="text/javascript">
-                                $(function () {
-                                    $('[id*=gvTpStatus]').footable();
-                                });
-                            </script>
-
                         </div>
                     </div>
                     <div class="row">

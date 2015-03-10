@@ -65,8 +65,6 @@
     <Content Include="Cadastros\ConsultaGrupos.aspx" />
     <Content Include="Cadastros\ConsultaMusicas.aspx" />
     <Content Include="Cadastros\ConsultaTipoStatus.aspx" />
-    <Content Include="Cadastros\CS.aspx" />
-    <Content Include="Cadastros\CS1.aspx" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.css" />
@@ -198,20 +196,6 @@
     </Compile>
     <Compile Include="Cadastros\ConsultaTipoStatus.aspx.designer.cs">
       <DependentUpon>ConsultaTipoStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Cadastros\CS.aspx.cs">
-      <DependentUpon>CS.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Cadastros\CS.aspx.designer.cs">
-      <DependentUpon>CS.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Cadastros\CS1.aspx.cs">
-      <DependentUpon>CS1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Cadastros\CS1.aspx.designer.cs">
-      <DependentUpon>CS1.aspx</DependentUpon>
     </Compile>
     <Content Include="css\footable.min.css" />
     <Content Include="js\jquery.min.js" />

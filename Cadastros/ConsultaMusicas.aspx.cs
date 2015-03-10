@@ -27,25 +27,25 @@ namespace wappKaraoke.Cadastros
                 dr["nmMusica"] = "Nome Música de teste - " + i;
                 dr["nmCantor"] = "Nome Cantor de teste - " + i;
                 dr["nuAnoLanc"] = 2000 + i;
-                dr["nmCantor"] = "KANJI - " + i;
+                dr["nmMusicaKanji"] = "KANJI - " + i;
 
                 dt.Rows.Add(dr);
             }
 
-            gvMusicas.DataSource = dt;
-            gvMusicas.DataBind();
+            gvDados.DataSource = dt;
+            gvDados.DataBind();
 
             //Attribute to show the Plus Minus Button.
-            gvMusicas.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+            gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
 
             //Attribute to hide column in Phone.
-            gvMusicas.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            gvMusicas.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-            gvMusicas.HeaderRow.Cells[3].Attributes["data-hide"] = "phone"; 
-            gvMusicas.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+            gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+            gvDados.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+            gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
 
             //Adds THEAD and TBODY to GridView.
-            gvMusicas.HeaderRow.TableSection = TableRowSection.TableHeader;
+            gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
     }
 }

@@ -6,7 +6,7 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Cadastro de Grupos</h3>
+                    <span class="panel-title">Cadastro de Grupos</span>
                 </div>
                 <div class="panel-body">
                     <div class="row">

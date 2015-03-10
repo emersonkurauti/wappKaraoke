@@ -34,18 +34,18 @@ namespace wappKaraoke.Cadastros
                     dt.Rows.Add(dr);
                 }
 
-                gvTpStatus.DataSource = dt;
-                gvTpStatus.DataBind();
+                gvDados.DataSource = dt;
+                gvDados.DataBind();
 
                 //Attribute to show the Plus Minus Button.
-                gvTpStatus.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+                gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
 
                 //Attribute to hide column in Phone.
-                gvTpStatus.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-                gvTpStatus.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
                 
                 //Adds THEAD and TBODY to GridView.
-                gvTpStatus.HeaderRow.TableSection = TableRowSection.TableHeader;
+                gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
             }
         }
     }
