@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{29767489-78E8-4836-A11C-D2E5111C1A47}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>wappKaraoke</RootNamespace>
+    <AssemblyName>wappKaraoke</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Cadastros\CadastroAssociacoes.aspx" />
+    <Content Include="Cadastros\CadastroCategorias.aspx" />
+    <Content Include="Cadastros\CadastroCidades.aspx" />
+    <Content Include="Cadastros\CadastroConcursos.aspx" />
+    <Content Include="Cadastros\CadastroFases.aspx" />
+    <Content Include="Cadastros\CadastroGrupos.aspx" />
+    <Content Include="Cadastros\CadastroMusicas.aspx" />
+    <Content Include="Cadastros\CadastroTipoStatus.aspx" />
+    <Content Include="Cadastros\ConsultaAssociacoes.aspx" />
+    <Content Include="Cadastros\ConsultaCategorias.aspx" />
+    <Content Include="Cadastros\ConsultaCidades.aspx" />
+    <Content Include="Cadastros\ConsultaFases.aspx" />
+    <Content Include="Cadastros\ConsultaGrupos.aspx" />
+    <Content Include="Cadastros\ConsultaTipoStatus.aspx" />
+    <Content Include="Cadastros\CS.aspx" />
+    <Content Include="Cadastros\CS1.aspx" />
+    <Content Include="css\bootstrap-theme.css" />
+    <Content Include="css\bootstrap-theme.min.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\carousel.css" />
+    <Content Include="css\img\minus.png" />
+    <Content Include="css\img\plus.png" />
+    <Content Include="css\print.css" />
+    <Content Include="css\pygment_trac.css" />
+    <Content Include="css\stylesheet.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="js\bootstrap.js" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\demo.js" />
+    <Content Include="js\1.8.2\jquery.min.js" />
+    <Content Include="js\jquery.js" />
+    <Content Include="js\main.js" />
+    <Content Include="Login.aspx" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cadastros\CadastroAssociacoes.aspx.cs">
+      <DependentUpon>CadastroAssociacoes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\CadastroAssociacoes.aspx.designer.cs">
+      <DependentUpon>CadastroAssociacoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\CadastroCategorias.aspx.cs">
+      <DependentUpon>CadastroCategorias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\CadastroCategorias.aspx.designer.cs">
+      <DependentUpon>CadastroCategorias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\CadastroCidades.aspx.cs">
+      <DependentUpon>CadastroCidades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\CadastroCidades.aspx.designer.cs">
+      <DependentUpon>CadastroCidades.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\CadastroConcursos.aspx.cs">
+      <DependentUpon>CadastroConcursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\CadastroConcursos.aspx.designer.cs">
+      <DependentUpon>CadastroConcursos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\CadastroFases.aspx.cs">
+      <DependentUpon>CadastroFases.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\CadastroFases.aspx.designer.cs">
+      <DependentUpon>CadastroFases.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\CadastroGrupos.aspx.cs">
+      <DependentUpon>CadastroGrupos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\CadastroGrupos.aspx.designer.cs">
+      <DependentUpon>CadastroGrupos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\CadastroMusicas.aspx.cs">
+      <DependentUpon>CadastroMusicas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\CadastroMusicas.aspx.designer.cs">
+      <DependentUpon>CadastroMusicas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\CadastroTipoStatus.aspx.cs">
+      <DependentUpon>CadastroTipoStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\CadastroTipoStatus.aspx.designer.cs">
+      <DependentUpon>CadastroTipoStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaAssociacoes.aspx.cs">
+      <DependentUpon>ConsultaAssociacoes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaAssociacoes.aspx.designer.cs">
+      <DependentUpon>ConsultaAssociacoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaCategorias.aspx.cs">
+      <DependentUpon>ConsultaCategorias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaCategorias.aspx.designer.cs">
+      <DependentUpon>ConsultaCategorias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaCidades.aspx.cs">
+      <DependentUpon>ConsultaCidades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaCidades.aspx.designer.cs">
+      <DependentUpon>ConsultaCidades.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaFases.aspx.cs">
+      <DependentUpon>ConsultaFases.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaFases.aspx.designer.cs">
+      <DependentUpon>ConsultaFases.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaGrupos.aspx.cs">
+      <DependentUpon>ConsultaGrupos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaGrupos.aspx.designer.cs">
+      <DependentUpon>ConsultaGrupos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaTipoStatus.aspx.cs">
+      <DependentUpon>ConsultaTipoStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaTipoStatus.aspx.designer.cs">
+      <DependentUpon>ConsultaTipoStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\CS.aspx.cs">
+      <DependentUpon>CS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\CS.aspx.designer.cs">
+      <DependentUpon>CS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\CS1.aspx.cs">
+      <DependentUpon>CS1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\CS1.aspx.designer.cs">
+      <DependentUpon>CS1.aspx</DependentUpon>
+    </Compile>
+    <Content Include="css\footable.min.css" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="js\footable.min.js" />
+    <Compile Include="Classes\csCorStatus.cs" />
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Master Page\mpKaraoke.Master.cs">
+      <DependentUpon>mpKaraoke.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master Page\mpKaraoke.Master.designer.cs">
+      <DependentUpon>mpKaraoke.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="css\footable-0.1.css" />
+    <Content Include="js\footable-0.1.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Master Page\mpKaraoke.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="css\bootstrap-theme.css.map" />
+    <None Include="css\bootstrap.css.map" />
+    <None Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>1152</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
