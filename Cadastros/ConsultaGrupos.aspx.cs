@@ -28,6 +28,9 @@ namespace wappKaraoke.Cadastros
 
             gvGrupos.DataSource = dt;
             gvGrupos.DataBind();
+
+            //Adds THEAD and TBODY to GridView.
+            gvGrupos.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
     }
 }

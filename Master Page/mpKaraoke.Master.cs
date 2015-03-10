@@ -11,7 +11,8 @@ namespace wappKaraoke
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //if (Session["cdUsuario"] == null && Session["Senha"] == null && Session["TpUsuario"] == null)
+                //Response.Redirect("Login.aspx");
         }
     }
 }

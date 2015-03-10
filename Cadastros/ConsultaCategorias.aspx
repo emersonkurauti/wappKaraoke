@@ -39,7 +39,7 @@
                         <div class="col-sm-12">
                             <br/>
                             <asp:GridView ID="gvCategorias" runat="server"
-                                CssClass="table table-bordered table-hover" AutoGenerateColumns="False">
+                                CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
                                 <Columns>
                                     <asp:BoundField HeaderText="Cód." DataField="cdCategoria">
                                         <ItemStyle Width="5%" />

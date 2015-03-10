@@ -28,6 +28,9 @@ namespace wappKaraoke.Cadastros
 
             gvAssociacao.DataSource = dt;
             gvAssociacao.DataBind();
+
+            //Adds THEAD and TBODY to GridView.
+            gvAssociacao.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
     }
 }

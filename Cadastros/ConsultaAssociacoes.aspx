@@ -39,7 +39,7 @@
                         <div class="col-sm-12">
                             <br/>
                             <asp:GridView ID="gvAssociacao" runat="server"
-                                CssClass="table table-bordered table-hover" AutoGenerateColumns="False">
+                                CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
                                 <Columns>
                                     <asp:BoundField HeaderText="Cód." DataField="cdAssociacao">
                                         <ItemStyle Width="5%" />
@@ -59,6 +59,13 @@
                                 </Columns>
                                 <HeaderStyle CssClass="info" />
                             </asp:GridView>
+
+                            <script type="text/javascript">
+                                $(function () {
+                                    $('[id*=gvCidade]').footable();
+                                });
+                            </script>
+
                         </div>
                     </div>
                     <div class="row">

@@ -39,7 +39,7 @@
                         <div class="col-sm-12">
                             <br/>
                             <asp:GridView ID="gvFases" runat="server"
-                                CssClass="table table-bordered table-hover" AutoGenerateColumns="False">
+                                CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
                                 <Columns>
                                     <asp:BoundField HeaderText="Cód." DataField="cdFase">
                                         <ItemStyle Width="5%" />
