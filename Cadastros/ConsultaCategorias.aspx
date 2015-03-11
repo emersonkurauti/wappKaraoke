@@ -15,10 +15,15 @@
                                 placeholder="Cód. Categoria..." Visible="True">
                             </asp:TextBox>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-10">
                             <asp:TextBox ID="deCategoria" class="form-control" runat="server" 
                                 placeholder="Descrição da Categoria..." Visible="True">
                             </asp:TextBox>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">                    
+                        <div class="col-md-8">
                         </div>
                         <div class="col-md-2">
                             <asp:LinkButton ID="btnBuscar" 
@@ -35,9 +40,9 @@
                             </asp:LinkButton>
                         </div>
                     </div>
+                    <br/>
                     <div class="row">
                         <div class="col-sm-12">
-                            <br/>
                             <asp:GridView ID="gvDados" runat="server"
                                 CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
                                 <Columns>

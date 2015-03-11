@@ -12,10 +12,10 @@ namespace wappKaraoke.Cadastros
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!this.IsPostBack)
             {
                 csCorStatus vcsCorStatus = new csCorStatus();
-                deCor = vcsCorStatus.CarregaDDLCor(deCor);
+                deCor = vcsCorStatus.CarregaDDL(deCor);
             }
         }
     }

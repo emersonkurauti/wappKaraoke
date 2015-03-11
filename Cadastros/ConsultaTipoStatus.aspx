@@ -15,15 +15,20 @@
                                 placeholder="Cód. Status..." Visible="True">
                             </asp:TextBox>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <asp:TextBox ID="deTpStatus" class="form-control" runat="server" 
                                 placeholder="Descrição do Status..." Visible="True">
                             </asp:TextBox>
                         </div>
                         <div class="col-md-2">
                             <asp:DropDownList ID="deCor" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True">
+                                runat="server" Width="100%" AutoPostBack="False">
                             </asp:DropDownList>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-8">
                         </div>
                         <div class="col-md-2">
                             <asp:LinkButton ID="btnBuscar" 

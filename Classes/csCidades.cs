@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace wappKaraoke.Classes
 {
-    public class csCorStatus
+    public class csCidades
     {
         private DataTable _dtDados = new DataTable();
         public DataTable dtDados
@@ -18,13 +18,12 @@ namespace wappKaraoke.Classes
 
         private DataTable getDtDados()
         {
-            _dtDados.Columns.Add("deCor", typeof(string));
-            _dtDados.Rows.Add("Amarelo");
-            _dtDados.Rows.Add("Azul");
-            _dtDados.Rows.Add("Laranja");
-            _dtDados.Rows.Add("Magenta");
-            _dtDados.Rows.Add("Verde");
-            _dtDados.Rows.Add("Vermelho");
+            _dtDados.Columns.Add("cdCidade", typeof(int));
+            _dtDados.Columns.Add("nmCidade", typeof(string));
+
+            _dtDados.Rows.Add(1, "Presidente Prudente");
+            _dtDados.Rows.Add(2, "Presidente Venceslau");
+            _dtDados.Rows.Add(3, "Presidente Bernardes");
 
             return _dtDados;
         }
@@ -32,8 +31,8 @@ namespace wappKaraoke.Classes
         public DropDownList CarregaDDL(DropDownList pDDL)
         {
             pDDL.DataSource = getDtDados();
-            pDDL.DataValueField = "deCor";
-            pDDL.DataTextField = "deCor";
+            pDDL.DataValueField = "cdCidade";
+            pDDL.DataTextField = "nmCidade";
             pDDL.DataBind();
             pDDL.SelectedIndex = 0;
 

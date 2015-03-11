@@ -50,6 +50,7 @@
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         Cadastros <span class="caret"></span></a>
                       <ul class="dropdown-menu" role="menu">
+                        <li><a href="../Cadastros/ConsultaConcursos.aspx">Concursos</a></li>
                         <li><a href="../Cadastros/ConsultaMusicas.aspx">Músicas</a></li>
                         <li><a href="../Cadastros/ConsultaCategorias.aspx">Categorias</a></li>
                         <li><a href="../Cadastros/ConsultaAssociacoes.aspx">Associações</a></li>

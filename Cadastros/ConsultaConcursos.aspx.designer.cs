@@ -10,7 +10,16 @@
 namespace wappKaraoke.Cadastros {
     
     
-    public partial class CadastroConcursos {
+    public partial class ConsultaConcursos {
+        
+        /// <summary>
+        /// cdConcurso control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox cdConcurso;
         
         /// <summary>
         /// nmConcurso control.
@@ -31,13 +40,13 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox nmConcursoKanji;
         
         /// <summary>
-        /// dtConcurso control.
+        /// dtConsurso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dtConcurso;
+        protected global::System.Web.UI.WebControls.TextBox dtConsurso;
         
         /// <summary>
         /// cdCidade control.
@@ -49,21 +58,39 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.DropDownList cdCidade;
         
         /// <summary>
-        /// btnSalvar control.
+        /// btnBuscar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSalvar;
+        protected global::System.Web.UI.WebControls.LinkButton btnBuscar;
         
         /// <summary>
-        /// btnCancelar control.
+        /// btnNovo1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnCancelar;
+        protected global::System.Web.UI.WebControls.LinkButton btnNovo1;
+        
+        /// <summary>
+        /// gvDados control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvDados;
+        
+        /// <summary>
+        /// btnNovo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnNovo;
     }
 }

@@ -9,27 +9,31 @@ using wappKaraoke.Classes;
 
 namespace wappKaraoke.Cadastros
 {
-    public partial class ConsultaTipoStatus : System.Web.UI.Page
+    public partial class ConsultaConcursos : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!this.IsPostBack)
             {
-                csCorStatus vcsCorStatus = new csCorStatus();
-                deCor = vcsCorStatus.CarregaDDL(deCor);
+                csCidades vcsCidades = new csCidades();
+                cdCidade = vcsCidades.CarregaDDL(cdCidade);
 
                 DataTable dt = new DataTable();
-                dt.Columns.Add("cdTpStatus", typeof(int));
-                dt.Columns.Add("deTpStatus", typeof(string));
-                dt.Columns.Add("deCor", typeof(string));
+                dt.Columns.Add("cdConcurso", typeof(int));
+                dt.Columns.Add("nmConcurso", typeof(string));
+                dt.Columns.Add("nmConcursoKanji", typeof(string));
+                dt.Columns.Add("dtConcurso", typeof(string));
+                dt.Columns.Add("cdCidade", typeof(string));
 
                 for (int i = 1; i < 15; i++)
                 {
                     DataRow dr = dt.NewRow();
 
-                    dr["cdTpStatus"] = i;
-                    dr["deTpStatus"] = "Tipo Status de teste - " + i;
-                    dr["deCor"] = "Azul";
+                    dr["cdConcurso"] = i;
+                    dr["nmConcurso"] = "Nome Concurso de teste - " + i;
+                    dr["nmConcursoKanji"] = "Nome Kanji de teste - " + i;
+                    dr["dtConcurso"] = "01/10/2014";
+                    dr["cdCidade"] = "Cidade teste - " + i;
 
                     dt.Rows.Add(dr);
                 }
@@ -43,7 +47,9 @@ namespace wappKaraoke.Cadastros
                 //Attribute to hide column in Phone.
                 gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
                 gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-                
+                gvDados.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+
                 //Adds THEAD and TBODY to GridView.
                 gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
             }

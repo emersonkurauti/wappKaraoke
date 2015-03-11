@@ -15,7 +15,7 @@
                                 placeholder="Cód. Cidade..." Visible="True">
                             </asp:TextBox>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-9">
                             <asp:TextBox ID="nmCidade" class="form-control" runat="server" 
                                 placeholder="Nome da Cidade..." Visible="True">
                             </asp:TextBox>
@@ -24,6 +24,11 @@
                             <asp:TextBox ID="deUF" class="form-control" runat="server" 
                                 placeholder="UF..." Visible="True">
                             </asp:TextBox>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-8">
                         </div>
                         <div class="col-md-2">
                             <asp:LinkButton ID="btnBuscar" 

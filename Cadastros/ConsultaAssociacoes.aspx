@@ -15,10 +15,15 @@
                                 placeholder="Cód. Associação..." Visible="True">
                             </asp:TextBox>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-10">
                             <asp:TextBox ID="nmAssociacao" class="form-control" runat="server" 
                                 placeholder="Nome da Associação..." Visible="True">
                             </asp:TextBox>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-8">
                         </div>
                         <div class="col-md-2">
                             <asp:LinkButton ID="btnBuscar" 

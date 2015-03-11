@@ -61,6 +61,7 @@
     <Content Include="Cadastros\ConsultaAssociacoes.aspx" />
     <Content Include="Cadastros\ConsultaCategorias.aspx" />
     <Content Include="Cadastros\ConsultaCidades.aspx" />
+    <Content Include="Cadastros\ConsultaConcursos.aspx" />
     <Content Include="Cadastros\ConsultaFases.aspx" />
     <Content Include="Cadastros\ConsultaGrupos.aspx" />
     <Content Include="Cadastros\ConsultaMusicas.aspx" />
@@ -169,6 +170,13 @@
     <Compile Include="Cadastros\ConsultaCidades.aspx.designer.cs">
       <DependentUpon>ConsultaCidades.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\ConsultaConcursos.aspx.cs">
+      <DependentUpon>ConsultaConcursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaConcursos.aspx.designer.cs">
+      <DependentUpon>ConsultaConcursos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\ConsultaFases.aspx.cs">
       <DependentUpon>ConsultaFases.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -200,6 +208,7 @@
     <Content Include="css\footable.min.css" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\footable.min.js" />
+    <Compile Include="Classes\csCidades.cs" />
     <Compile Include="Classes\csCorStatus.cs" />
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
