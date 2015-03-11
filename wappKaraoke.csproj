@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Cadastros\CadastroAssociacoes.aspx" />
+    <Content Include="Cadastros\CadastroCantores.aspx" />
     <Content Include="Cadastros\CadastroCategorias.aspx" />
     <Content Include="Cadastros\CadastroCidades.aspx" />
     <Content Include="Cadastros\CadastroConcursos.aspx" />
@@ -60,6 +61,7 @@
     <Content Include="Cadastros\CadastroMusicas.aspx" />
     <Content Include="Cadastros\CadastroTipoStatus.aspx" />
     <Content Include="Cadastros\ConsultaAssociacoes.aspx" />
+    <Content Include="Cadastros\ConsultaCantores.aspx" />
     <Content Include="Cadastros\ConsultaCategorias.aspx" />
     <Content Include="Cadastros\ConsultaCidades.aspx" />
     <Content Include="Cadastros\ConsultaConcursos.aspx" />
@@ -101,6 +103,13 @@
     </Compile>
     <Compile Include="Cadastros\CadastroAssociacoes.aspx.designer.cs">
       <DependentUpon>CadastroAssociacoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\CadastroCantores.aspx.cs">
+      <DependentUpon>CadastroCantores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\CadastroCantores.aspx.designer.cs">
+      <DependentUpon>CadastroCantores.aspx</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\CadastroCategorias.aspx.cs">
       <DependentUpon>CadastroCategorias.aspx</DependentUpon>
@@ -164,6 +173,13 @@
     </Compile>
     <Compile Include="Cadastros\ConsultaAssociacoes.aspx.designer.cs">
       <DependentUpon>ConsultaAssociacoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaCantores.aspx.cs">
+      <DependentUpon>ConsultaCantores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaCantores.aspx.designer.cs">
+      <DependentUpon>ConsultaCantores.aspx</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\ConsultaCategorias.aspx.cs">
       <DependentUpon>ConsultaCategorias.aspx</DependentUpon>
