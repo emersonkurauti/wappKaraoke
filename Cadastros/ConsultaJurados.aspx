@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master Page/mpKaraoke.Master" AutoEventWireup="true" CodeBehind="ConsultaConcursos.aspx.cs" Inherits="wappKaraoke.Cadastros.ConsultaConcursos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master Page/mpKaraoke.Master" AutoEventWireup="true" CodeBehind="ConsultaJurados.aspx.cs" Inherits="wappKaraoke.Cadastros.ConsultaJurados" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -6,25 +6,20 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span class="panel-title">Consulta de Concurso</span>
+                    <span class="panel-title">Consulta de Jurados</span>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-2">
-                                    <asp:TextBox ID="cdConcurso" class="form-control" runat="server" 
-                                        placeholder="Cód. Concurso..." Visible="True">
+                                    <asp:TextBox ID="cdJurado" class="form-control" runat="server" 
+                                        placeholder="Cód. Jurado..." Visible="True">
                                     </asp:TextBox>
                                 </div>
-                                <div class="col-md-5">
-                                    <asp:TextBox ID="nmConcurso" class="form-control" runat="server" 
-                                        placeholder="Nome do Concurso..." Visible="True">
-                                    </asp:TextBox>
-                                </div>
-                                <div class="col-md-5">
-                                    <asp:TextBox ID="nmConcursoKanji" class="form-control" runat="server" 
-                                        placeholder="Nome do Concurso Kanji..." Visible="True">
+                                <div class="col-md-10">
+                                    <asp:TextBox ID="nmJurado" class="form-control" runat="server" 
+                                        placeholder="Nome do Jurado..." Visible="True">
                                     </asp:TextBox>
                                 </div>
                             </div>
@@ -32,16 +27,12 @@
                         <br />
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-2">
-                                    <div class='input-group date' id='datetimepicker1'>
-                                        <asp:TextBox ID="dtConsurso" runat="server" class="form-control"
-                                            placeholder="Ex. 13/01/2015" Visible="True">
-                                        </asp:TextBox>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
+                                <div class="col-md-7">
+                                    <asp:TextBox ID="nmJuradoKanji" class="form-control" runat="server" 
+                                        placeholder="Nome do Jurado Kanji..." Visible="True">
+                                    </asp:TextBox>
                                 </div>
-                                <div class="col-md-10">
+                                <div class="col-md-5">
                                     <asp:DropDownList ID="cdCidade" class="form-control selectpicker" style="text-align:left" 
                                         runat="server" Width="100%" AutoPostBack="False">
                                     </asp:DropDownList>
@@ -64,7 +55,7 @@
                                     <asp:LinkButton ID="btnNovo1" 
                                                 runat="server" 
                                                 CssClass="btn btn-primary btn-block btn-success">
-                                        <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Novo Concurso
+                                        <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Novo Jurado
                                     </asp:LinkButton>
                                 </div>
                             </div>
@@ -76,14 +67,12 @@
                             <asp:GridView ID="gvDados" runat="server"
                                 CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
                                 <Columns>
-                                    <asp:BoundField HeaderText="Cód." DataField="cdConcurso">
+                                    <asp:BoundField HeaderText="Cód." DataField="cdJurado">
                                         <ItemStyle Width="5%" />
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Nome" DataField="nmConcurso">
+                                    <asp:BoundField HeaderText="Nome" DataField="nmJurado">
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Kanji" DataField="nmConcursoKanji">
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="Dt. Concurso" DataField="dtConcurso">
+                                    <asp:BoundField HeaderText="Kanji" DataField="nmJuradoKanji">
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Cidade" DataField="cdCidade">
                                     </asp:BoundField>
@@ -111,7 +100,7 @@
                             <asp:LinkButton ID="btnNovo" 
                                     runat="server" 
                                     CssClass="btn btn-primary btn-block btn-success">
-                            <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Novo Concurso
+                            <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Novo Jurado
                             </asp:LinkButton>
                         </div>
                     </div>

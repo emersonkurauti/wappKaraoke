@@ -56,6 +56,7 @@
     <Content Include="Cadastros\CadastroConcursos.aspx" />
     <Content Include="Cadastros\CadastroFases.aspx" />
     <Content Include="Cadastros\CadastroGrupos.aspx" />
+    <Content Include="Cadastros\CadastroJurados.aspx" />
     <Content Include="Cadastros\CadastroMusicas.aspx" />
     <Content Include="Cadastros\CadastroTipoStatus.aspx" />
     <Content Include="Cadastros\ConsultaAssociacoes.aspx" />
@@ -64,6 +65,7 @@
     <Content Include="Cadastros\ConsultaConcursos.aspx" />
     <Content Include="Cadastros\ConsultaFases.aspx" />
     <Content Include="Cadastros\ConsultaGrupos.aspx" />
+    <Content Include="Cadastros\ConsultaJurados.aspx" />
     <Content Include="Cadastros\ConsultaMusicas.aspx" />
     <Content Include="Cadastros\ConsultaTipoStatus.aspx" />
     <Content Include="css\bootstrap-theme.css" />
@@ -135,6 +137,13 @@
     <Compile Include="Cadastros\CadastroGrupos.aspx.designer.cs">
       <DependentUpon>CadastroGrupos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\CadastroJurados.aspx.cs">
+      <DependentUpon>CadastroJurados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\CadastroJurados.aspx.designer.cs">
+      <DependentUpon>CadastroJurados.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Cadastros\CadastroMusicas.aspx.cs">
       <DependentUpon>CadastroMusicas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -190,6 +199,13 @@
     </Compile>
     <Compile Include="Cadastros\ConsultaGrupos.aspx.designer.cs">
       <DependentUpon>ConsultaGrupos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaJurados.aspx.cs">
+      <DependentUpon>ConsultaJurados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaJurados.aspx.designer.cs">
+      <DependentUpon>ConsultaJurados.aspx</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\ConsultaMusicas.aspx.cs">
       <DependentUpon>ConsultaMusicas.aspx</DependentUpon>

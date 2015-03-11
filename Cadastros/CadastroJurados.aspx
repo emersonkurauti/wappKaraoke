@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master Page/mpKaraoke.Master" AutoEventWireup="true" CodeBehind="CadastroConcursos.aspx.cs" Inherits="wappKaraoke.Cadastros.CadastroConcursos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master Page/mpKaraoke.Master" AutoEventWireup="true" CodeBehind="CadastroJurados.aspx.cs" Inherits="wappKaraoke.Cadastros.CadastroJurados" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -6,36 +6,24 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span class="panel-title">Cadastro de Concursos</span>
+                    <span class="panel-title">Cadastro de Jurados</span>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <asp:TextBox ID="nmConcurso" class="form-control" runat="server" 
-                                placeholder="Nome do Concurso..." Visible="True">
+                            <asp:TextBox ID="nmJurado" class="form-control" runat="server" 
+                                placeholder="Nome do Jurado..." Visible="True">
                             </asp:TextBox>
                         </div>
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-sm-12">
-                           <asp:TextBox ID="nmConcursoKanji" class="form-control" runat="server" 
-                                placeholder="Nome do Concurso Kanji..." Visible="True">
+                        <div class="col-sm-7">
+                           <asp:TextBox ID="nmJuradoKanji" class="form-control" runat="server" 
+                                placeholder="Nome do Jurado Kanji..." Visible="True">
                            </asp:TextBox> 
                         </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <div class='input-group date' id='datetimepicker1'>
-                                <asp:TextBox ID="dtConsurso" runat="server" class="form-control"
-                                    placeholder="Ex. 13/01/2015" Visible="True">
-                                </asp:TextBox>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-sm-10">
+                        <div class="col-sm-5">
                            <asp:DropDownList ID="cdCidade" class="form-control selectpicker" style="text-align:left" 
                                 runat="server" Width="100%" AutoPostBack="True">
                             </asp:DropDownList>

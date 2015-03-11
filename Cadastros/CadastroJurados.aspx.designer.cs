@@ -10,34 +10,25 @@
 namespace wappKaraoke.Cadastros {
     
     
-    public partial class CadastroConcursos {
+    public partial class CadastroJurados {
         
         /// <summary>
-        /// nmConcurso control.
+        /// nmJurado control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox nmConcurso;
+        protected global::System.Web.UI.WebControls.TextBox nmJurado;
         
         /// <summary>
-        /// nmConcursoKanji control.
+        /// nmJuradoKanji control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox nmConcursoKanji;
-        
-        /// <summary>
-        /// dtConsurso control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dtConsurso;
+        protected global::System.Web.UI.WebControls.TextBox nmJuradoKanji;
         
         /// <summary>
         /// cdCidade control.
