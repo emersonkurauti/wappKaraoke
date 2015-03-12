@@ -65,31 +65,36 @@
                                     <asp:BoundField HeaderText="Cód." DataField="cdMusica">
                                         <ItemStyle Width="5%" />
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Nome" DataField="nmMusica">
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="Cantor" DataField="nmCantor">
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="Ano" DataField="nuAnoLanc">
-                                        <ItemStyle Width="5%" />
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="Kanji" DataField="nmMusicaKanji">
-                                    </asp:BoundField>
-                                    <asp:CommandField ButtonType="Button" SelectText="Editar" 
-                                        ShowSelectButton="True">
-                                        <ControlStyle CssClass="btn btn-primary btn-block" />
-                                        <ItemStyle Width="15%" />
-                                    </asp:CommandField>
-                                    <asp:CommandField ButtonType="Button" SelectText="Excluir" 
-                                        ShowSelectButton="True">
-                                        <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
-                                        <ItemStyle Width="15%" />
-                                    </asp:CommandField>
                                     <asp:TemplateField HeaderText="Nome - Kanji">
                                         <ItemTemplate>
                                             <asp:Literal ID="ltNomeKanji" runat="server">
                                             </asp:Literal>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <asp:BoundField HeaderText="Nome" DataField="nmMusica" Visible="False">
+                                    </asp:BoundField>
+                                    <asp:BoundField HeaderText="Cantor" DataField="nmCantor">
+                                    </asp:BoundField>
+                                    <asp:BoundField HeaderText="Ano" DataField="nuAnoLanc">
+                                        <ItemStyle Width="5%" />
+                                    </asp:BoundField>
+                                    <asp:BoundField HeaderText="Kanji" DataField="nmMusicaKanji" Visible="False">
+                                    </asp:BoundField>
+                                    <asp:CommandField ButtonType="Button" SelectText="Editar" 
+                                        ShowSelectButton="True">
+                                        <ControlStyle CssClass="btn btn-primary btn-block" />
+                                        <ItemStyle Width="10%" />
+                                    </asp:CommandField>
+                                    <asp:CommandField ButtonType="Button" SelectText="Excluir" 
+                                        ShowSelectButton="True">
+                                        <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
+                                        <ItemStyle Width="10%" />
+                                    </asp:CommandField>
+                                    <asp:CommandField ButtonType="Button" SelectText="Arquivos" 
+                                        ShowSelectButton="True">
+                                        <ControlStyle CssClass="btn btn-primary btn-block btn-warning" />
+                                        <ItemStyle Width="10%" />
+                                    </asp:CommandField>
                                 </Columns>
                                 <HeaderStyle CssClass="info" />
                             </asp:GridView>
