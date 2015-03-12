@@ -29,7 +29,7 @@ namespace wappKaraoke.Cadastros
                 dt.Columns.Add("dtNascimento", typeof(string));
                 dt.Columns.Add("cdCidade", typeof(string));
 
-                for (int i = 1; i < 15; i++)
+                for (int i = 0; i < 15; i++)
                 {
                     DataRow dr = dt.NewRow();
 
@@ -49,18 +49,24 @@ namespace wappKaraoke.Cadastros
                 gvDados.DataSource = dt;
                 gvDados.DataBind();
 
+                for (int i = 0; i < 15; i++)
+                {
+                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmCantor"].ToString() +
+                        " <br/> " + dt.Rows[i]["nmNomeKanji"].ToString();
+                }
+
                 //Attribute to show the Plus Minus Button.
                 gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
 
                 //Attribute to hide column in Phone.
                 gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-                gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-                gvDados.HeaderRow.Cells[3].Attributes["data-hide"] = "all";
-                gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "all";
-                gvDados.HeaderRow.Cells[5].Attributes["data-hide"] = "phone";
-                gvDados.HeaderRow.Cells[6].Attributes["data-hide"] = "all";
-                gvDados.HeaderRow.Cells[7].Attributes["data-hide"] = "phone";
-                gvDados.HeaderRow.Cells[8].Attributes["data-hide"] = "all";
+
+                gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[5].Attributes["data-hide"] = "all";
+                gvDados.HeaderRow.Cells[6].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[7].Attributes["data-hide"] = "all";
+                gvDados.HeaderRow.Cells[8].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[9].Attributes["data-hide"] = "all";
 
                 //Adds THEAD and TBODY to GridView.
                 gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;

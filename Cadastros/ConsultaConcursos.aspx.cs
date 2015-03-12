@@ -25,7 +25,7 @@ namespace wappKaraoke.Cadastros
                 dt.Columns.Add("dtConcurso", typeof(string));
                 dt.Columns.Add("cdCidade", typeof(string));
 
-                for (int i = 1; i < 15; i++)
+                for (int i = 0; i < 15; i++)
                 {
                     DataRow dr = dt.NewRow();
 
@@ -41,6 +41,12 @@ namespace wappKaraoke.Cadastros
                 gvDados.DataSource = dt;
                 gvDados.DataBind();
 
+                for (int i = 0; i < 15; i++)
+                {
+                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmConcurso"].ToString() +
+                        " <br/> " + dt.Rows[i]["nmConcursoKanji"].ToString();
+                }
+
                 //Attribute to show the Plus Minus Button.
                 gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
 
@@ -49,6 +55,7 @@ namespace wappKaraoke.Cadastros
                 gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
                 gvDados.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
                 gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[5].Attributes["data-hide"] = "phone";
 
                 //Adds THEAD and TBODY to GridView.
                 gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;

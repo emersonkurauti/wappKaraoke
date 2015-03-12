@@ -70,9 +70,15 @@
                                     <asp:BoundField HeaderText="Cód." DataField="cdJurado">
                                         <ItemStyle Width="5%" />
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Nome" DataField="nmJurado">
+                                    <asp:TemplateField HeaderText="Nome - Kanji">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltNomeKanji" runat="server">
+                                            </asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField HeaderText="Nome" DataField="nmJurado" Visible="False">
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Kanji" DataField="nmJuradoKanji">
+                                    <asp:BoundField HeaderText="Kanji" DataField="nmJuradoKanji" Visible="False">
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Cidade" DataField="cdCidade">
                                     </asp:BoundField>

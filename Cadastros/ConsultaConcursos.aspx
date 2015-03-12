@@ -79,9 +79,15 @@
                                     <asp:BoundField HeaderText="Cód." DataField="cdConcurso">
                                         <ItemStyle Width="5%" />
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Nome" DataField="nmConcurso">
+                                    <asp:TemplateField HeaderText="Nome - Kanji">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltNomeKanji" runat="server">
+                                            </asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField HeaderText="Nome" DataField="nmConcurso" Visible="false">
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Kanji" DataField="nmConcursoKanji">
+                                    <asp:BoundField HeaderText="Kanji" DataField="nmConcursoKanji" Visible="false">
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Dt. Concurso" DataField="dtConcurso">
                                     </asp:BoundField>
