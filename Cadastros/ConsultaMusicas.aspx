@@ -84,6 +84,12 @@
                                         <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
                                         <ItemStyle Width="15%" />
                                     </asp:CommandField>
+                                    <asp:TemplateField HeaderText="Nome - Kanji">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltNomeKanji" runat="server">
+                                            </asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                 </Columns>
                                 <HeaderStyle CssClass="info" />
                             </asp:GridView>

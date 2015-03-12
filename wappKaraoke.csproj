@@ -61,6 +61,7 @@
     <Content Include="Cadastros\CadastroMusicas.aspx" />
     <Content Include="Cadastros\CadastroTipoStatus.aspx" />
     <Content Include="Cadastros\ConsultaAssociacoes.aspx" />
+    <Content Include="Cadastros\ConsultaAssociacoesConcursos.aspx" />
     <Content Include="Cadastros\ConsultaCantores.aspx" />
     <Content Include="Cadastros\ConsultaCategorias.aspx" />
     <Content Include="Cadastros\ConsultaCidades.aspx" />
@@ -173,6 +174,13 @@
     </Compile>
     <Compile Include="Cadastros\ConsultaAssociacoes.aspx.designer.cs">
       <DependentUpon>ConsultaAssociacoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaAssociacoesConcursos.aspx.cs">
+      <DependentUpon>ConsultaAssociacoesConcursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\ConsultaAssociacoesConcursos.aspx.designer.cs">
+      <DependentUpon>ConsultaAssociacoesConcursos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Cadastros\ConsultaCantores.aspx.cs">
       <DependentUpon>ConsultaCantores.aspx</DependentUpon>
