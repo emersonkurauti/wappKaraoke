@@ -9,9 +9,9 @@ using System.Data;
 
 namespace wappKaraoke.Cadastros
 {
-    public partial class ConsultaJurados : System.Web.UI.Page
+    public partial class ConsultaJurados : csPageDefault
     {
-        protected void Page_Load(object sender, EventArgs e)
+        public override void Page_Load(object sender, EventArgs e)
         {
             if (!this.IsPostBack)
             {
@@ -44,19 +44,25 @@ namespace wappKaraoke.Cadastros
                     ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmJurado"].ToString() +
                         " <br/> " + dt.Rows[i]["nmJuradoKanji"].ToString();
                 }
-
-                //Attribute to show the Plus Minus Button.
-                gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
-
-                //Attribute to hide column in Phone.
-                gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-                gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-                gvDados.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-                gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
-                
-                //Adds THEAD and TBODY to GridView.
-                gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
             }
+
+            base.Page_Load(sender, e);
+        }
+
+        public override void ConfirarGridView()
+        {
+            base.ConfirarGridView();
+            //Attribute to show the Plus Minus Button.
+            gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+
+            //Attribute to hide column in Phone.
+            gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+            gvDados.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+            gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+
+            //Adds THEAD and TBODY to GridView.
+            gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
     }
 }

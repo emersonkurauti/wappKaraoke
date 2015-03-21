@@ -5,31 +5,42 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using wappKaraoke.Classes;
 
 namespace wappKaraoke.Cadastros
 {
-    public partial class ConsultaCidades : System.Web.UI.Page
+    public partial class ConsultaCidades : csPageDefault
     {
-        protected void Page_Load(object sender, EventArgs e)
+        public override void Page_Load(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("cdCidade", typeof(int));
-            dt.Columns.Add("nmCidade", typeof(string));
-            dt.Columns.Add("deUF", typeof(string));
-
-            for (int i = 1; i < 15; i++)
+            if (!this.IsPostBack)
             {
-                DataRow dr = dt.NewRow();
+                DataTable dt = new DataTable();
+                dt.Columns.Add("cdCidade", typeof(int));
+                dt.Columns.Add("nmCidade", typeof(string));
+                dt.Columns.Add("deUF", typeof(string));
 
-                dr["cdCidade"] = i;
-                dr["nmCidade"] = "Cidade de teste - " + i;
-                dr["deUF"] = "SP";
+                for (int i = 1; i < 15; i++)
+                {
+                    DataRow dr = dt.NewRow();
 
-                dt.Rows.Add(dr);
+                    dr["cdCidade"] = i;
+                    dr["nmCidade"] = "Cidade de teste - " + i;
+                    dr["deUF"] = "SP";
+
+                    dt.Rows.Add(dr);
+                }
+
+                gvDados.DataSource = dt;
+                gvDados.DataBind();
             }
 
-            gvDados.DataSource = dt;
-            gvDados.DataBind();
+            base.Page_Load(sender, e);
+        }
+
+        public override void ConfirarGridView()
+        {
+            base.ConfirarGridView();
 
             //Attribute to show the Plus Minus Button.
             gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";

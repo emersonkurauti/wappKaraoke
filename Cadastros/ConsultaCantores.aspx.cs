@@ -9,9 +9,9 @@ using System.Data;
 
 namespace wappKaraoke.Cadastros
 {
-    public partial class ConsultaCantores : System.Web.UI.Page
+    public partial class ConsultaCantores : csPageDefault
     {
-        protected void Page_Load(object sender, EventArgs e)
+        public override void Page_Load(object sender, EventArgs e)
         {
             if (!this.IsPostBack)
             {
@@ -54,23 +54,30 @@ namespace wappKaraoke.Cadastros
                     ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmCantor"].ToString() +
                         " <br/> " + dt.Rows[i]["nmNomeKanji"].ToString();
                 }
-
-                //Attribute to show the Plus Minus Button.
-                gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
-
-                //Attribute to hide column in Phone.
-                gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-
-                gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
-                gvDados.HeaderRow.Cells[5].Attributes["data-hide"] = "all";
-                gvDados.HeaderRow.Cells[6].Attributes["data-hide"] = "phone";
-                gvDados.HeaderRow.Cells[7].Attributes["data-hide"] = "all";
-                gvDados.HeaderRow.Cells[8].Attributes["data-hide"] = "phone";
-                gvDados.HeaderRow.Cells[9].Attributes["data-hide"] = "all";
-
-                //Adds THEAD and TBODY to GridView.
-                gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
             }
+
+            base.Page_Load(sender, e);
+        }
+
+        public override void ConfirarGridView()
+        {
+            base.ConfirarGridView();
+
+            //Attribute to show the Plus Minus Button.
+            gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+
+            //Attribute to hide column in Phone.
+            gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+
+            gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+            gvDados.HeaderRow.Cells[5].Attributes["data-hide"] = "all";
+            gvDados.HeaderRow.Cells[6].Attributes["data-hide"] = "phone";
+            gvDados.HeaderRow.Cells[7].Attributes["data-hide"] = "all";
+            gvDados.HeaderRow.Cells[8].Attributes["data-hide"] = "phone";
+            gvDados.HeaderRow.Cells[9].Attributes["data-hide"] = "all";
+
+            //Adds THEAD and TBODY to GridView.
+            gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
     }
 }

@@ -5,29 +5,40 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using wappKaraoke.Classes;
 
 namespace wappKaraoke.Cadastros
 {
-    public partial class ConsultaAssociacoes : System.Web.UI.Page
+    public partial class ConsultaAssociacoes : csPageDefault
     {
-        protected void Page_Load(object sender, EventArgs e)
+        public override void Page_Load(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("cdAssociacao", typeof(int));
-            dt.Columns.Add("nmAssociacao", typeof(string));
-
-            for (int i = 1; i < 15; i++)
+            if (!this.IsPostBack)
             {
-                DataRow dr = dt.NewRow();
+                DataTable dt = new DataTable();
+                dt.Columns.Add("cdAssociacao", typeof(int));
+                dt.Columns.Add("nmAssociacao", typeof(string));
 
-                dr["cdAssociacao"] = i;
-                dr["nmAssociacao"] = "Associação de teste - " + i;
+                for (int i = 1; i < 15; i++)
+                {
+                    DataRow dr = dt.NewRow();
 
-                dt.Rows.Add(dr);
+                    dr["cdAssociacao"] = i;
+                    dr["nmAssociacao"] = "Associação de teste - " + i;
+
+                    dt.Rows.Add(dr);
+                }
+
+                gvDados.DataSource = dt;
+                gvDados.DataBind();
             }
+            
+            base.Page_Load(sender, e);
+        }
 
-            gvDados.DataSource = dt;
-            gvDados.DataBind();
+        public override void ConfirarGridView()
+        {
+            base.ConfirarGridView();
 
             //Adds THEAD and TBODY to GridView.
             gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;

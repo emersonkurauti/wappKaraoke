@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <link href="../css/footable-0.1.css" rel="stylesheet" type="text/css" />
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default">
@@ -17,12 +18,12 @@
                                         placeholder="Cód. Concurso..." Visible="True">
                                     </asp:TextBox>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <asp:TextBox ID="nmConcurso" class="form-control" runat="server" 
                                         placeholder="Nome do Concurso..." Visible="True">
                                     </asp:TextBox>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <asp:TextBox ID="nmConcursoKanji" class="form-control" runat="server" 
                                         placeholder="Nome do Concurso Kanji..." Visible="True">
                                     </asp:TextBox>
@@ -32,19 +33,40 @@
                         <br />
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-2">
-                                    <div class='input-group date' id='datetimepicker1'>
-                                        <asp:TextBox ID="dtConsurso" runat="server" class="form-control"
-                                            placeholder="Ex. 13/01/2015" Visible="True">
+                                <div class="col-md-3">
+                                    <div class="input-group date">
+                                        <asp:TextBox ID="dtIniConsurso" runat="server" class="form-control"
+                                            placeholder="Ex. 01/01/2015" Visible="True">
                                         </asp:TextBox>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            Dt. Início
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-md-10">
+                                <div class="col-md-3">
+                                    <div class="input-group date">
+                                        <asp:TextBox ID="dtFimConcurso" runat="server" class="form-control"
+                                            placeholder="Ex. 01/01/2015" Visible="True">
+                                        </asp:TextBox>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                            Dt. Fim&nbsp;&nbsp;&nbsp;
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <asp:DropDownList ID="cdCidade" class="form-control selectpicker" style="text-align:left" 
                                         runat="server" Width="100%" AutoPostBack="False">
                                     </asp:DropDownList>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <asp:CheckBox ID="flFinalizado" runat="server"/>
+                                        </span>
+                                        <asp:label class="form-control">
+                                            Finalizado?
+                                        </asp:label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -89,9 +111,13 @@
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Kanji" DataField="nmConcursoKanji" Visible="false">
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Dt. Concurso" DataField="dtConcurso">
+                                    <asp:BoundField HeaderText="Dt. Ini. Concurso" DataField="dtIniConcurso">
+                                    </asp:BoundField>
+                                    <asp:BoundField HeaderText="Dt. Fim Concurso" DataField="dtFimConcurso">
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Cidade" DataField="cdCidade">
+                                    </asp:BoundField>
+                                    <asp:BoundField HeaderText="Finalizado?" DataField="flFinalizado">
                                     </asp:BoundField>
                                     <asp:CommandField ButtonType="Button" SelectText="Editar" 
                                         ShowSelectButton="True">

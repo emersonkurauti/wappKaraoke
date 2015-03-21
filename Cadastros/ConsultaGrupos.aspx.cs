@@ -5,30 +5,40 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using wappKaraoke.Classes;
 
 namespace wappKaraoke.Cadastros
 {
-    public partial class ConsultaGrupos : System.Web.UI.Page
+    public partial class ConsultaGrupos : csPageDefault
     {
-        protected void Page_Load(object sender, EventArgs e)
+        public override void Page_Load(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("cdGrupo", typeof(int));
-            dt.Columns.Add("deGrupo", typeof(string));
-
-            for (int i = 1; i < 15; i++)
+            if (!this.IsPostBack)
             {
-                DataRow dr = dt.NewRow();
+                DataTable dt = new DataTable();
+                dt.Columns.Add("cdGrupo", typeof(int));
+                dt.Columns.Add("deGrupo", typeof(string));
 
-                dr["cdGrupo"] = i;
-                dr["deGrupo"] = "Grupo de teste - " + i;
+                for (int i = 1; i < 15; i++)
+                {
+                    DataRow dr = dt.NewRow();
 
-                dt.Rows.Add(dr);
+                    dr["cdGrupo"] = i;
+                    dr["deGrupo"] = "Grupo de teste - " + i;
+
+                    dt.Rows.Add(dr);
+                }
+
+                gvDados.DataSource = dt;
+                gvDados.DataBind();
             }
 
-            gvDados.DataSource = dt;
-            gvDados.DataBind();
+            base.Page_Load(sender, e);
+        }
 
+        public override void ConfirarGridView()
+        {
+            base.ConfirarGridView();
             //Adds THEAD and TBODY to GridView.
             gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
         }

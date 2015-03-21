@@ -9,9 +9,9 @@ using wappKaraoke.Classes;
 
 namespace wappKaraoke.Cadastros
 {
-    public partial class ConsultaTipoStatus : System.Web.UI.Page
+    public partial class ConsultaTipoStatus : csPageDefault
     {
-        protected void Page_Load(object sender, EventArgs e)
+        public override void Page_Load(object sender, EventArgs e)
         {
             if (!this.IsPostBack)
             {
@@ -36,17 +36,23 @@ namespace wappKaraoke.Cadastros
 
                 gvDados.DataSource = dt;
                 gvDados.DataBind();
-
-                //Attribute to show the Plus Minus Button.
-                gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
-
-                //Attribute to hide column in Phone.
-                gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-                gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-                
-                //Adds THEAD and TBODY to GridView.
-                gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
             }
+
+            base.Page_Load(sender, e);
+        }
+
+        public override void ConfirarGridView()
+        {
+            base.ConfirarGridView();
+            //Attribute to show the Plus Minus Button.
+            gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+
+            //Attribute to hide column in Phone.
+            gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+
+            //Adds THEAD and TBODY to GridView.
+            gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
     }
 }

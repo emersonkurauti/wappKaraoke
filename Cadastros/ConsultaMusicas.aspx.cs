@@ -5,40 +5,51 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using wappKaraoke.Classes;
 
 namespace wappKaraoke.Cadastros
 {
-    public partial class ConsultaMusicas : System.Web.UI.Page
+    public partial class ConsultaMusicas : csPageDefault
     {
-        protected void Page_Load(object sender, EventArgs e)
+        public override void Page_Load(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("cdMusica", typeof(int));
-            dt.Columns.Add("nmMusica", typeof(string));
-            dt.Columns.Add("nmCantor", typeof(string));
-            dt.Columns.Add("nuAnoLanc", typeof(int));
-            dt.Columns.Add("nmMusicaKanji", typeof(string));
-
-            for (int i = 0; i < 15; i++)
+            if (!this.IsPostBack)
             {
-                DataRow dr = dt.NewRow();
+                DataTable dt = new DataTable();
+                dt.Columns.Add("cdMusica", typeof(int));
+                dt.Columns.Add("nmMusica", typeof(string));
+                dt.Columns.Add("nmCantor", typeof(string));
+                dt.Columns.Add("nuAnoLanc", typeof(int));
+                dt.Columns.Add("nmMusicaKanji", typeof(string));
 
-                dr["cdMusica"] = i;
-                dr["nmMusica"] = "Nome Música de teste - " + i ;
-                dr["nmCantor"] = "Nome Cantor de teste - " + i;
-                dr["nuAnoLanc"] = 2000 + i;
-                dr["nmMusicaKanji"] = "KANJI - " + i;
+                for (int i = 0; i < 15; i++)
+                {
+                    DataRow dr = dt.NewRow();
 
-                dt.Rows.Add(dr);
+                    dr["cdMusica"] = i;
+                    dr["nmMusica"] = "Nome Música de teste - " + i;
+                    dr["nmCantor"] = "Nome Cantor de teste - " + i;
+                    dr["nuAnoLanc"] = 2000 + i;
+                    dr["nmMusicaKanji"] = "KANJI - " + i;
+
+                    dt.Rows.Add(dr);
+                }
+
+                gvDados.DataSource = dt;
+                gvDados.DataBind();
+
+                for (int i = 0; i < 15; i++)
+                {
+                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmMusica"].ToString() + " <br/> " + dt.Rows[i]["nmMusicaKanji"].ToString();
+                }
             }
 
-            gvDados.DataSource = dt;
-            gvDados.DataBind();
+            base.Page_Load(sender, e);
+        }
 
-            for (int i = 0; i < 15; i++)
-            {
-                ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmMusica"].ToString() + " <br/> " + dt.Rows[i]["nmMusicaKanji"].ToString();
-            }
+        public override void ConfirarGridView()
+        {
+            base.ConfirarGridView();
 
             //Attribute to show the Plus Minus Button.
             gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";

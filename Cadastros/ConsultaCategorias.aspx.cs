@@ -5,32 +5,43 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using wappKaraoke.Classes;
 
 namespace wappKaraoke.Cadastros
 {
-    public partial class ConsultaCategorias : System.Web.UI.Page
+    public partial class ConsultaCategorias : csPageDefault
     {
-        protected void Page_Load(object sender, EventArgs e)
+        public override void Page_Load(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("cdCategoria", typeof(int));
-            dt.Columns.Add("deCategoria", typeof(string));
-
-            for (int i = 1; i < 15; i++)
+            if (!this.IsPostBack)
             {
-                DataRow dr = dt.NewRow();
+                DataTable dt = new DataTable();
+                dt.Columns.Add("cdCategoria", typeof(int));
+                dt.Columns.Add("deCategoria", typeof(string));
 
-                dr["cdCategoria"] = i;
-                dr["deCategoria"] = "Categoria de teste - " + i;
+                for (int i = 1; i < 15; i++)
+                {
+                    DataRow dr = dt.NewRow();
 
-                dt.Rows.Add(dr);
+                    dr["cdCategoria"] = i;
+                    dr["deCategoria"] = "Categoria de teste - " + i;
+
+                    dt.Rows.Add(dr);
+                }
+
+                gvDados.DataSource = dt;
+                gvDados.DataBind();
             }
 
-            gvDados.DataSource = dt;
-            gvDados.DataBind();
+            base.Page_Load(sender, e);
+        }
+
+        public override void ConfirarGridView()
+        {
+            base.ConfirarGridView();
 
             //Adds THEAD and TBODY to GridView.
-            gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
+            gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;            
         }
     }
 }
