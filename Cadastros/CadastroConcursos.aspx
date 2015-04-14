@@ -21,7 +21,8 @@
                     <ul class="nav nav-tabs">
                         <li role="presentation" class="active"><a href="#Concurso" data-toggle="tab">Concurso</a></li>
                         <li role="presentation"><a href="#Associações" data-toggle="tab">Associações</a></li>
-                        <li role="presentation"><a href="#Jurados" data-toggle="tab">Grupos/Jurados</a></li>
+                        <li role="presentation"><a href="#Jurados" data-toggle="tab">Jurados</a></li>
+                        <li role="presentation"><a href="#Cantores" data-toggle="tab">Cantores</a></li>
                     </ul>
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="Concurso">
@@ -204,6 +205,16 @@
                                 </div>
                             </div>
                         </div> <!--<div class="tab-pane" id="Jurados">-->
+                        <div class="tab-pane" id="Cantores">
+                            <div class="panel panel-default" style="border-top: 0px">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!--<div class="tab-pane" id="Cantores">-->
                     </div> <!--<div id="my-tab-content" class="tab-content">-->
                     <div class="row">
                         <div class="col-sm-2" align="left" style="float: left">

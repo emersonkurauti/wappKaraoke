@@ -30,7 +30,7 @@ namespace wappKaraoke.Cadastros
                     dr["nmMusica"] = "Nome Música de teste - " + i;
                     dr["nmCantor"] = "Nome Cantor de teste - " + i;
                     dr["nuAnoLanc"] = 2000 + i;
-                    dr["nmMusicaKanji"] = "KANJI - " + i;
+                    dr["nmMusicaKanji"] = "日本語を - " + i;
 
                     dt.Rows.Add(dr);
                 }
