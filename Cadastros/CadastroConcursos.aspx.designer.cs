@@ -121,6 +121,42 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.GridView gvAssociacoes;
         
         /// <summary>
+        /// cdJurado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cdJurado;
+        
+        /// <summary>
+        /// deGrupo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox deGrupo;
+        
+        /// <summary>
+        /// btnAdicionarGrupoJurado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnAdicionarGrupoJurado;
+        
+        /// <summary>
+        /// gvGrupoJuradoConcurso control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvGrupoJuradoConcurso;
+        
+        /// <summary>
         /// btnSalvar control.
         /// </summary>
         /// <remarks>

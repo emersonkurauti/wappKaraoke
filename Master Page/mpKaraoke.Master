@@ -10,15 +10,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Karaokê</title>
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <meta name="viewport" content = "width = device-width, initial-scale = 1.0, minimum-scale = 1.0, maximum-scale = 1.0, user-scalable = no" />
     <link href="../css/footable-0.1.css" rel="stylesheet" type="text/css" />
+    <link href="../css/footable.min.css" rel="stylesheet" type="text/css" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
     <script src="../js/1.8.2/jquery.min.js" type="text/javascript"></script>
     <script src="../js/footable-0.1.js" type="text/javascript"></script>
-    <link href="../css/footable.min.css" rel="stylesheet" type="text/css" />
     <script src="../js/jquery.min.js" type="text/javascript"></script>    
     <script src="../js/footable.min.js" type="text/javascript"></script>
+    <script src="../js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
         $(function () {
@@ -70,7 +72,6 @@
         
         </asp:ContentPlaceHolder>
     </div>
-    <script src="../js/bootstrap.min.js"></script>
     </form>
 </body>
 </html>

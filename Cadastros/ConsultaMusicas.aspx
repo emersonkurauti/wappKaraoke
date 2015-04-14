@@ -78,8 +78,6 @@
                                     <asp:BoundField HeaderText="Ano" DataField="nuAnoLanc">
                                         <ItemStyle Width="5%" />
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Kanji" DataField="nmMusicaKanji" Visible="False">
-                                    </asp:BoundField>
                                     <asp:CommandField ButtonType="Button" SelectText="Editar" 
                                         ShowSelectButton="True">
                                         <ControlStyle CssClass="btn btn-primary btn-block" />

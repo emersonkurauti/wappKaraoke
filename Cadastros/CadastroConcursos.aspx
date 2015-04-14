@@ -1,5 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master Page/mpKaraoke.Master" AutoEventWireup="true" CodeBehind="CadastroConcursos.aspx.cs" Inherits="wappKaraoke.Cadastros.CadastroConcursos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+        $(function () {
+            $('[id*=gvAssociacoes]').footable();
+        });
+
+        $(function () {
+            $('[id*=gvGrupoJuradoConcurso]').footable();
+        });
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
@@ -12,7 +21,7 @@
                     <ul class="nav nav-tabs">
                         <li role="presentation" class="active"><a href="#Concurso" data-toggle="tab">Concurso</a></li>
                         <li role="presentation"><a href="#Associações" data-toggle="tab">Associações</a></li>
-                        <li role="presentation"><a href="#Jurados" data-toggle="tab">Jurados</a></li>
+                        <li role="presentation"><a href="#Jurados" data-toggle="tab">Grupos/Jurados</a></li>
                     </ul>
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="Concurso">
@@ -85,7 +94,7 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <asp:DropDownList ID="cdAssociacao" class="form-control selectpicker" style="text-align:left" 
-                                                runat="server" Width="100%" AutoPostBack="True">
+                                                runat="server" Width="100%" AutoPostBack="False">
                                             </asp:DropDownList>
                                         </div>
                                         <div class="col-sm-6">
@@ -104,7 +113,7 @@
                                         <div class="col-sm-2">
                                             <asp:LinkButton ID="btnAdidiconarAssociacao" 
                                                     runat="server" 
-                                                    CssClass="btn btn-primary btn-block">
+                                                    CssClass="btn btn-success btn-block">
                                                 <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
                                             </asp:LinkButton>
                                         </div>
@@ -115,7 +124,9 @@
                                             <asp:GridView ID="gvAssociacoes" runat="server"
                                                 CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
                                                 <Columns>
-                                                    <asp:BoundField DataField="cdAssociacao" HeaderText="Cód. Associação" Visible="False" />
+                                                    <asp:BoundField HeaderText="Cód." DataField="cdAssociacao">
+                                                        <ItemStyle Width="5%" />
+                                                    </asp:BoundField>
                                                     <asp:BoundField DataField="nmAssociacao" HeaderText="Associação" />
                                                     <asp:BoundField DataField="nmRepresentante" HeaderText="Representante" />
                                                     <asp:BoundField DataField="deEmail" HeaderText="E-mail" />
@@ -130,6 +141,7 @@
                                                         <ItemStyle Width="15%" />
                                                     </asp:CommandField>
                                                 </Columns>
+                                                <HeaderStyle CssClass="info" />
                                             </asp:GridView>
                                         </div>
                                     </div> <!--<div class="row">-->
@@ -139,6 +151,56 @@
                         <div class="tab-pane" id="Jurados">
                             <div class="panel panel-default" style="border-top: 0px">
                                 <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <asp:DropDownList ID="cdJurado" class="form-control selectpicker" style="text-align:left" 
+                                                runat="server" Width="100%" AutoPostBack="False">
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <asp:TextBox ID="deGrupo" class="form-control" runat="server" 
+                                                placeholder="Grupo do Jurado..." Visible="True">
+                                            </asp:TextBox>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <asp:LinkButton ID="btnAdicionarGrupoJurado" 
+                                                    runat="server" 
+                                                    CssClass="btn btn-success btn-block">
+                                                <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
+                                            </asp:LinkButton>
+                                        </div>
+                                    </div> <!--<div class="row">-->
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <asp:GridView ID="gvGrupoJuradoConcurso" runat="server"
+                                                CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
+                                                <Columns>
+                                                    <asp:BoundField HeaderText="Cód." DataField="cdJurado">
+                                                        <ItemStyle Width="5%" />
+                                                    </asp:BoundField>
+                                                    <asp:BoundField DataField="deGrupo" HeaderText="Grupo" />
+                                                    <asp:TemplateField HeaderText="Nome - Kanji">
+                                                        <ItemTemplate>
+                                                            <asp:Literal ID="ltNomeKanji" runat="server">
+                                                            </asp:Literal>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:CommandField ButtonType="Button" SelectText="Editar" 
+                                                        ShowSelectButton="True">
+                                                        <ControlStyle CssClass="btn btn-primary btn-block" />
+                                                        <ItemStyle Width="15%" />
+                                                    </asp:CommandField>
+                                                    <asp:CommandField ButtonType="Button" SelectText="Excluir" 
+                                                        ShowSelectButton="True">
+                                                        <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
+                                                        <ItemStyle Width="15%" />
+                                                    </asp:CommandField>
+                                                </Columns>
+                                                <HeaderStyle CssClass="info" />
+                                            </asp:GridView>
+                                        </div>
+                                    </div> <!--<div class="row">-->
                                 </div>
                             </div>
                         </div> <!--<div class="tab-pane" id="Jurados">-->
