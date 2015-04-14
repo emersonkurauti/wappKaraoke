@@ -170,6 +170,7 @@
     </Compile>
     <Compile Include="Cadastros\ConsultaAssociacoes.aspx.cs">
       <DependentUpon>ConsultaAssociacoes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Cadastros\ConsultaAssociacoes.aspx.designer.cs">
       <DependentUpon>ConsultaAssociacoes.aspx</DependentUpon>
@@ -247,6 +248,7 @@
     <Content Include="css\footable.min.css" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\footable.min.js" />
+    <Compile Include="Classes\csAssociacoes.cs" />
     <Compile Include="Classes\csCidades.cs" />
     <Compile Include="Classes\csCorStatus.cs" />
     <Compile Include="Classes\csPageDefault.cs">

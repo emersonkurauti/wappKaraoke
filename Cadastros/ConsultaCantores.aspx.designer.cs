@@ -31,13 +31,13 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox nmCantor;
         
         /// <summary>
-        /// nmNomeArtistico control.
+        /// nmNomeKanji control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox nmNomeArtistico;
+        protected global::System.Web.UI.WebControls.TextBox nmNomeKanji;
         
         /// <summary>
         /// dtNascimento control.
@@ -49,13 +49,13 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox dtNascimento;
         
         /// <summary>
-        /// nmNomeKanji control.
+        /// nmNomeArtistico control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox nmNomeKanji;
+        protected global::System.Web.UI.WebControls.TextBox nmNomeArtistico;
         
         /// <summary>
         /// nuRG control.

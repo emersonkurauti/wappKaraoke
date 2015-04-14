@@ -19,8 +19,8 @@
                     <br />
                     <div class="row">
                         <div class="col-sm-12">
-                           <asp:TextBox ID="nmNomeArtistico" class="form-control" runat="server" 
-                                placeholder="Nome Artísitico..." Visible="True">
+                           <asp:TextBox ID="nmNomeKanji" class="form-control" runat="server" 
+                                placeholder="Nome do Cantor Kanji..." Visible="True">
                            </asp:TextBox> 
                         </div>
                     </div>
@@ -36,8 +36,8 @@
                             </div>
                         </div>
                         <div class="col-sm-10">
-                           <asp:TextBox ID="nmNomeKanji" class="form-control" runat="server" 
-                                placeholder="Nome do Cantor Kanji..." Visible="True">
+                           <asp:TextBox ID="nmNomeArtistico" class="form-control" runat="server" 
+                                placeholder="Nome Artísitico..." Visible="True">
                            </asp:TextBox> 
                         </div>
                     </div>

@@ -76,6 +76,51 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.LinkButton btnReabrir;
         
         /// <summary>
+        /// cdAssociacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cdAssociacao;
+        
+        /// <summary>
+        /// nmRepresentante control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox nmRepresentante;
+        
+        /// <summary>
+        /// deEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox deEmail;
+        
+        /// <summary>
+        /// btnAdidiconarAssociacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnAdidiconarAssociacao;
+        
+        /// <summary>
+        /// gvAssociacoes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvAssociacoes;
+        
+        /// <summary>
         /// btnSalvar control.
         /// </summary>
         /// <remarks>

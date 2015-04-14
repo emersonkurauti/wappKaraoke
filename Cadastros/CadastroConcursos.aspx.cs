@@ -16,6 +16,9 @@ namespace wappKaraoke.Cadastros
             {
                 csCidades vcsCidades = new csCidades();
                 cdCidade = vcsCidades.CarregaDDL(cdCidade);
+
+                csAssociacoes vcsAssociacoes = new csAssociacoes();
+                cdAssociacao = vcsAssociacoes.CarregaDDL(cdAssociacao);
             }
         }
     }
