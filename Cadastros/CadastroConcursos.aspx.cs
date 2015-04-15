@@ -24,6 +24,16 @@ namespace wappKaraoke.Cadastros
                 csJurados vcsJurados = new csJurados();
                 cdJurado = vcsJurados.CarregaDDL(cdJurado);
 
+                csFases vcsFases = new csFases();
+                cdFase = vcsFases.CarregaDDL(cdFase);
+
+                //Filtrar somente as associações adicionadas no concurso
+                csAssociacoes vcsAssociacoesCantor = new csAssociacoes();
+                cdAssociacaoCantor = vcsAssociacoesCantor.CarregaDDL(cdAssociacaoCantor);
+
+                csCantores vcsCantores = new csCantores();
+                cdCantor = vcsCantores.CarregaDDL(cdCantor);
+
                 //Associações
                 DataTable dt = new DataTable();
                 dt.Columns.Add("cdAssociacao", typeof(int));
@@ -72,6 +82,44 @@ namespace wappKaraoke.Cadastros
                 {
                     ((Literal)gvGrupoJuradoConcurso.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmJurado"].ToString() + " <br/> " + dt.Rows[i]["nmNomeKanji"].ToString();
                 }
+
+                //Fases
+                dt = new DataTable();
+                dt.Columns.Add("cdFase", typeof(int));
+                dt.Columns.Add("deFase", typeof(string));
+
+                for (int i = 0; i < 4; i++)
+                {
+                    DataRow dr = dt.NewRow();
+
+                    dr["cdFase"] = i;
+                    dr["deFase"] = "Fase Teste - " + i;
+
+                    dt.Rows.Add(dr);
+                }
+
+                gvFasesConcurso.DataSource = dt;
+                gvFasesConcurso.DataBind();
+
+                //Cantores
+                dt = new DataTable();
+                dt.Columns.Add("cdCantor", typeof(int));
+                dt.Columns.Add("nmCantor", typeof(string));
+                dt.Columns.Add("nmAssociacao", typeof(string));
+
+                for (int i = 0; i < 4; i++)
+                {
+                    DataRow dr = dt.NewRow();
+
+                    dr["cdCantor"] = i;
+                    dr["nmCantor"] = "Cantor de Teste - " + i;
+                    dr["nmAssociacao"] = "Associacao de Teste - " + i;
+
+                    dt.Rows.Add(dr);
+                }
+
+                gvCantoresConcurso.DataSource = dt;
+                gvCantoresConcurso.DataBind();
             }
 
             base.Page_Load(sender, e);
@@ -107,6 +155,31 @@ namespace wappKaraoke.Cadastros
 
             //Adds THEAD and TBODY to GridView.
             gvGrupoJuradoConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+            //Fases
+            //Attribute to show the Plus Minus Button.
+            gvFasesConcurso.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+
+            //Attribute to hide column in Phone.
+            gvFasesConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            gvFasesConcurso.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+            gvFasesConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+
+            //Adds THEAD and TBODY to GridView.
+            gvFasesConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+            //Cantores
+            //Attribute to show the Plus Minus Button.
+            gvCantoresConcurso.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+
+            //Attribute to hide column in Phone.
+            gvCantoresConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            gvCantoresConcurso.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+            gvCantoresConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+            gvCantoresConcurso.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+
+            //Adds THEAD and TBODY to GridView.
+            gvCantoresConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
     }
 }

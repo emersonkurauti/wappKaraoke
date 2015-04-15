@@ -8,6 +8,15 @@
         $(function () {
             $('[id*=gvGrupoJuradoConcurso]').footable();
         });
+
+        $(function () {
+            $('[id*=gvFasesConcurso]').footable();
+        });
+
+        $(function () {
+            $('[id*=gvCantoresConcurso]').footable();
+        })
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -20,8 +29,9 @@
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
                         <li role="presentation" class="active"><a href="#Concurso" data-toggle="tab">Concurso</a></li>
-                        <li role="presentation"><a href="#Associações" data-toggle="tab">Associações</a></li>
+                        <li role="presentation"><a href="#Associacoes" data-toggle="tab">Associações</a></li>
                         <li role="presentation"><a href="#Jurados" data-toggle="tab">Jurados</a></li>
+                        <li role="presentation"><a href="#Fases" data-toggle="tab">Fases</a></li>
                         <li role="presentation"><a href="#Cantores" data-toggle="tab">Cantores</a></li>
                     </ul>
                     <div id="my-tab-content" class="tab-content">
@@ -71,10 +81,10 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
-                                            <asp:LinkButton ID="btnFinalizar" 
+                                            <asp:LinkButton ID="btnFechar" 
                                                     runat="server" 
                                                     CssClass="btn btn-primary btn-block">
-                                                <i aria-hidden="true" class="glyphicon glyphicon-saved"></i>&nbsp;&nbsp;Finalizar
+                                                <i aria-hidden="true" class="glyphicon glyphicon-saved"></i>&nbsp;&nbsp;Fechar
                                             </asp:LinkButton>
                                         </div>
                                         <div class="col-sm-2">
@@ -89,7 +99,7 @@
                                 </div><!--<div class="panel-body">-->
                             </div> <!--<div class="panel panel-default" style="border-top: 0px">-->                            
                         </div> <!--<div class="tab-pane active" id="Concurso">-->
-                        <div class="tab-pane" id="Associações">
+                        <div class="tab-pane" id="Associacoes">
                             <div class="panel panel-default" style="border-top: 0px">
                                 <div class="panel-body">
                                     <div class="row">
@@ -205,13 +215,99 @@
                                 </div>
                             </div>
                         </div> <!--<div class="tab-pane" id="Jurados">-->
+                        <div class="tab-pane" id="Fases">
+                            <div class="panel panel-default" style="border-top: 0px">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <asp:DropDownList ID="cdFase" class="form-control selectpicker" style="text-align:left" 
+                                                runat="server" Width="100%" AutoPostBack="False">
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <asp:LinkButton ID="btnAdicionarFase" 
+                                                    runat="server" 
+                                                    CssClass="btn btn-success btn-block">
+                                                <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
+                                            </asp:LinkButton>
+                                        </div>
+                                    </div><!--<div class="row">-->
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <asp:GridView ID="gvFasesConcurso" runat="server"
+                                                CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
+                                                <Columns>
+                                                    <asp:BoundField HeaderText="Cód." DataField="cdFase">
+                                                        <ItemStyle Width="5%" />
+                                                    </asp:BoundField>
+                                                    <asp:BoundField DataField="deFase" HeaderText="Fase" />
+                                                    <asp:CommandField ButtonType="Button" SelectText="Editar" 
+                                                        ShowSelectButton="True">
+                                                        <ControlStyle CssClass="btn btn-primary btn-block" />
+                                                        <ItemStyle Width="15%" />
+                                                    </asp:CommandField>
+                                                    <asp:CommandField ButtonType="Button" SelectText="Excluir" 
+                                                        ShowSelectButton="True">
+                                                        <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
+                                                        <ItemStyle Width="15%" />
+                                                    </asp:CommandField>
+                                                </Columns>
+                                                <HeaderStyle CssClass="info" />
+                                            </asp:GridView>
+                                        </div>
+                                    </div> <!--<div class="row">-->
+                                </div>
+                            </div>
+                        </div> <!--<div class="tab-pane" id="Fases">-->
                         <div class="tab-pane" id="Cantores">
                             <div class="panel panel-default" style="border-top: 0px">
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-sm-5">
+                                            <asp:DropDownList ID="cdCantor" class="form-control selectpicker" style="text-align:left" 
+                                                runat="server" Width="100%" AutoPostBack="False">
+                                            </asp:DropDownList>
                                         </div>
-                                    </div>
+                                        <div class="col-sm-5">
+                                            <asp:DropDownList ID="cdAssociacaoCantor" class="form-control selectpicker" style="text-align:left" 
+                                                runat="server" Width="100%" AutoPostBack="False">
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <asp:LinkButton ID="btnAdicionarCantor" 
+                                                    runat="server" 
+                                                    CssClass="btn btn-success btn-block">
+                                                <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
+                                            </asp:LinkButton>
+                                        </div>
+                                    </div><!--<div class="row">-->
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <asp:GridView ID="gvCantoresConcurso" runat="server"
+                                                CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
+                                                <Columns>
+                                                    <asp:BoundField HeaderText="Cód." DataField="cdCantor">
+                                                        <ItemStyle Width="5%" />
+                                                    </asp:BoundField>
+                                                    <asp:BoundField DataField="nmCantor" HeaderText="Cantor" />
+                                                    <asp:BoundField DataField="nmAssociacao" HeaderText="Associação" />
+                                                    <asp:CommandField ButtonType="Button" SelectText="Editar" 
+                                                        ShowSelectButton="True">
+                                                        <ControlStyle CssClass="btn btn-primary btn-block" />
+                                                        <ItemStyle Width="15%" />
+                                                    </asp:CommandField>
+                                                    <asp:CommandField ButtonType="Button" SelectText="Excluir" 
+                                                        ShowSelectButton="True">
+                                                        <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
+                                                        <ItemStyle Width="15%" />
+                                                    </asp:CommandField>
+                                                </Columns>
+                                                <HeaderStyle CssClass="info" />
+                                            </asp:GridView>
+                                        </div>
+                                    </div> <!--<div class="row">-->
                                 </div>
                             </div>
                         </div> <!--<div class="tab-pane" id="Cantores">-->
