@@ -29,6 +29,7 @@
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
                         <li role="presentation" class="active"><a href="#Concurso" data-toggle="tab">Concurso</a></li>
+                        <li role="presentation"><a href="#Arquivos" data-toggle="tab">Arquivos</a></li>
                         <li role="presentation"><a href="#Associacoes" data-toggle="tab">Associações</a></li>
                         <li role="presentation"><a href="#Jurados" data-toggle="tab">Jurados</a></li>
                         <li role="presentation"><a href="#Fases" data-toggle="tab">Fases</a></li>
@@ -61,7 +62,7 @@
                                     <br />
                                     <div class="row">                        
                                         <div class="col-sm-4">
-                                            <div class='input-group date' id='datetimepicker1'>
+                                            <div class='input-group date'>
                                                 <asp:TextBox ID="dtIniConsurso" runat="server" class="form-control"
                                                     placeholder="Ex. 13/01/2015" Visible="True">
                                                 </asp:TextBox>
@@ -71,7 +72,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
-                                            <div class='input-group date' id='Div1'>
+                                            <div class='input-group date'>
                                                 <asp:TextBox ID="dtFimConsurso" runat="server" class="form-control"
                                                     placeholder="Ex. 13/01/2015" Visible="True">
                                                 </asp:TextBox>
@@ -99,6 +100,202 @@
                                 </div><!--<div class="panel-body">-->
                             </div> <!--<div class="panel panel-default" style="border-top: 0px">-->                            
                         </div> <!--<div class="tab-pane active" id="Concurso">-->
+                        <div class="tab-pane" id="Arquivos">
+                            <div class="panel panel-default" style="border-top: 0px">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <ul class="nav nav-tabs">
+                                                <li role="presentation" class="active"><a href="#Imagens" data-toggle="tab">Imagens</a></li>
+                                                <li role="presentation"><a href="#Documentos" data-toggle="tab">Documentos</a></li>
+                                            </ul>
+                                            <div id="my-tab-content-2" class="tab-content">
+                                                <div class="tab-pane active" id="Imagens">
+                                                    <div class="panel panel-default" style="border-top: 0px">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="row-fluid">
+                                                                        <ul class="thumbnails">
+                                                                            <li class="span4">
+                                                                                <div class="thumbnail">
+                                                                                    <img src="../assets/img/bootstrap-mdo-sfmoma-02.jpg" />
+                                                                                    <div class="caption">
+                                                                                        <h4>Título IMG 1</h4>
+                                                                                        <p>descrição da imagem</p>
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-6">
+                                                                                                <asp:LinkButton ID="btnAmplia1" 
+                                                                                                        runat="server" 
+                                                                                                        CssClass="btn btn-primary btn-block">
+                                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
+                                                                                                </asp:LinkButton>
+                                                                                            </div>
+                                                                                            <div class="col-sm-6">
+                                                                                                <asp:LinkButton ID="btnRemove1" 
+                                                                                                        runat="server" 
+                                                                                                        CssClass="btn btn-primary btn-block btn-danger">
+                                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
+                                                                                                </asp:LinkButton>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="span4">
+                                                                                <div class="thumbnail">
+                                                                                    <img src="../assets/img/bootstrap-mdo-sfmoma-01.jpg" />
+                                                                                    <div class="caption">
+                                                                                        <h4>Título IMG 2</h4>
+                                                                                        <p>descrição da imagem</p>
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-6">
+                                                                                                <asp:LinkButton ID="btnAmplia2" 
+                                                                                                        runat="server" 
+                                                                                                        CssClass="btn btn-primary btn-block">
+                                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
+                                                                                                </asp:LinkButton>
+                                                                                            </div>
+                                                                                            <div class="col-sm-6">
+                                                                                                <asp:LinkButton ID="btnRemove2" 
+                                                                                                        runat="server" 
+                                                                                                        CssClass="btn btn-primary btn-block btn-danger">
+                                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
+                                                                                                </asp:LinkButton>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="span4">
+                                                                                <div class="thumbnail">
+                                                                                    <img src="../assets/img/bootstrap-mdo-sfmoma-03.jpg" />
+                                                                                    <div class="caption">
+                                                                                        <h4>Título IMG 3</h4>
+                                                                                        <p>descrição da imagem</p>
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-6">
+                                                                                                <asp:LinkButton ID="btnAmplia3" 
+                                                                                                        runat="server" 
+                                                                                                        CssClass="btn btn-primary btn-block">
+                                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
+                                                                                                </asp:LinkButton>
+                                                                                            </div>
+                                                                                            <div class="col-sm-6">
+                                                                                                <asp:LinkButton ID="btnRemove3" 
+                                                                                                        runat="server" 
+                                                                                                        CssClass="btn btn-primary btn-block btn-danger">
+                                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
+                                                                                                </asp:LinkButton>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row-fluid">
+                                                                        <ul class="thumbnails">
+                                                                            <li class="span4">
+                                                                                <div class="thumbnail">
+                                                                                    <img src="../assets/img/bootstrap-mdo-sfmoma-03.jpg" />
+                                                                                    <div class="caption">
+                                                                                        <h4>Título IMG 4</h4>
+                                                                                        <p>descrição da imagem</p>
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-6">
+                                                                                                <asp:LinkButton ID="LinkButton1" 
+                                                                                                        runat="server" 
+                                                                                                        CssClass="btn btn-primary btn-block">
+                                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
+                                                                                                </asp:LinkButton>
+                                                                                            </div>
+                                                                                            <div class="col-sm-6">
+                                                                                                <asp:LinkButton ID="LinkButton2" 
+                                                                                                        runat="server" 
+                                                                                                        CssClass="btn btn-primary btn-block btn-danger">
+                                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
+                                                                                                </asp:LinkButton>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="span4">
+                                                                                <div class="thumbnail">
+                                                                                    <img src="../assets/img/bootstrap-mdo-sfmoma-03.jpg" />
+                                                                                    <div class="caption">
+                                                                                        <h4>Título IMG 4</h4>
+                                                                                        <p>descrição da imagem</p>
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-6">
+                                                                                                <asp:LinkButton ID="LinkButton3" 
+                                                                                                        runat="server" 
+                                                                                                        CssClass="btn btn-primary btn-block">
+                                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
+                                                                                                </asp:LinkButton>
+                                                                                            </div>
+                                                                                            <div class="col-sm-6">
+                                                                                                <asp:LinkButton ID="LinkButton4" 
+                                                                                                        runat="server" 
+                                                                                                        CssClass="btn btn-primary btn-block btn-danger">
+                                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
+                                                                                                </asp:LinkButton>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="span4">
+                                                                                <div class="thumbnail">
+                                                                                    <img src="../assets/img/bootstrap-mdo-sfmoma-03.jpg" />
+                                                                                    <div class="caption">
+                                                                                        <h4>Título IMG 4</h4>
+                                                                                        <p>descrição da imagem</p>
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-6">
+                                                                                                <asp:LinkButton ID="LinkButton5" 
+                                                                                                        runat="server" 
+                                                                                                        CssClass="btn btn-primary btn-block">
+                                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
+                                                                                                </asp:LinkButton>
+                                                                                            </div>
+                                                                                            <div class="col-sm-6">
+                                                                                                <asp:LinkButton ID="LinkButton6" 
+                                                                                                        runat="server" 
+                                                                                                        CssClass="btn btn-primary btn-block btn-danger">
+                                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
+                                                                                                </asp:LinkButton>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> <!--<div class="tab-pane active" id="Imagens">-->
+                                                <div class="tab-pane" id="Documentos">
+                                                    <div class="panel panel-default" style="border-top: 0px">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> <!--<div class="tab-pane active" id="Documentos">-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!--<div class="tab-pane active" id="Arquivos">-->
                         <div class="tab-pane" id="Associacoes">
                             <div class="panel panel-default" style="border-top: 0px">
                                 <div class="panel-body">
