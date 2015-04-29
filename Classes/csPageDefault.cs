@@ -9,10 +9,18 @@ namespace wappKaraoke.Classes
     {
         public virtual void Page_Load(object sender, EventArgs e)
         {
+            if (!this.IsPostBack)
+            {
+                InicializaSessions();
+            }
             ConfirarGridView();
         }
 
         public virtual void ConfirarGridView()
+        { 
+        }
+
+        public virtual void InicializaSessions()
         { 
         }
     }

@@ -14,6 +14,11 @@ namespace wappKaraoke.Cadastros
         private string strInicio = "<div class=\"tabbable tabs-left\"> \n <ul class=\"nav nav-tabs\">\n";
         private string strMeio = "</ul> \n <div class=\"tab-content\">\n";
         private string strFim = "</div> \n </div>\n";
+        private string strInicioPanelDiv = "<div class=\"panel panel-default\" style=\"border-left: 0px\">\n" +
+                                     "<div class=\"panel-body\">\n" +
+                                     "<div class=\"row\"\n>\n" +
+                                     "<div class=\"col-sm-12\"\n>";
+        private string strFimPanelDiv = "</div>\n</div>\n</div>\n</div>";
         private string strLista;
         private string strDivs;
 
@@ -191,18 +196,28 @@ namespace wappKaraoke.Cadastros
             //gvCantoresConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
 
+        public override void InicializaSessions()
+        {
+            base.InicializaSessions();
+
+            Session["strLista"] = null;
+            Session["strDivs"] = null;
+        }
+
         public void btnAdicionarCantor_OnClick(Object sender, EventArgs e)
         {
             if (Session["strLista"] != null)
-                strLista = Session["strLista"].ToString();
+                strLista = Session["strLista"].ToString().Replace("<li class=\"active\">", "<li>");
 
             if (Session["strDivs"] != null)
-                strDivs = Session["strDivs"].ToString();
+                strDivs = Session["strDivs"].ToString().Replace("class=\"tab-pane active\"", "class=\"tab-pane\"");
 
-            strLista += "<li><a href=\"#"
+            strLista += "<li class=\"active\"><a href=\"#"
                 + cdCategoria.SelectedItem.Text + "\" data-toggle=\"tab\">" + cdCategoria.SelectedItem.Text + "</a></li>";
 
-            strDivs += "<div class=\"tab-pane\" id=\"" + cdCategoria.SelectedItem.Text + ">";
+            strDivs += "<div class=\"tab-pane active\" id=\"" + cdCategoria.SelectedItem.Text + "\">";
+            //strDivs += strInicioPanelDiv;
+            //strDivs += strFimPanelDiv;
             strDivs += "</div>";
 
             Session["strLista"] = strLista;

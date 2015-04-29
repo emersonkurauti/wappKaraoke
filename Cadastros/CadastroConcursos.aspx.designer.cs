@@ -13,6 +13,24 @@ namespace wappKaraoke.Cadastros {
     public partial class CadastroConcursos {
         
         /// <summary>
+        /// ltJavaScript control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltJavaScript;
+        
+        /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        
+        /// <summary>
         /// nmConcurso control.
         /// </summary>
         /// <remarks>
@@ -184,6 +202,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.LinkButton LinkButton6;
         
         /// <summary>
+        /// upConcursoAssociacoes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upConcursoAssociacoes;
+        
+        /// <summary>
         /// cdAssociacao control.
         /// </summary>
         /// <remarks>
@@ -229,6 +256,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.GridView gvAssociacoes;
         
         /// <summary>
+        /// upConcursoJurados control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upConcursoJurados;
+        
+        /// <summary>
         /// cdJurado control.
         /// </summary>
         /// <remarks>
@@ -265,6 +301,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.GridView gvGrupoJuradoConcurso;
         
         /// <summary>
+        /// upConcursoFases control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upConcursoFases;
+        
+        /// <summary>
         /// cdFase control.
         /// </summary>
         /// <remarks>
@@ -290,6 +335,15 @@ namespace wappKaraoke.Cadastros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvFasesConcurso;
+        
+        /// <summary>
+        /// upCantoresCategorias control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upCantoresCategorias;
         
         /// <summary>
         /// cdCategoria control.
