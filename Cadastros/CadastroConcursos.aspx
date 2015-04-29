@@ -12,11 +12,6 @@
         $(function () {
             $('[id*=gvFasesConcurso]').footable();
         });
-
-        $(function () {
-            $('[id*=gvCantoresConcurso]').footable();
-        })
-
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -33,7 +28,7 @@
                         <li role="presentation"><a href="#Associacoes" data-toggle="tab">Associações</a></li>
                         <li role="presentation"><a href="#Jurados" data-toggle="tab">Jurados</a></li>
                         <li role="presentation"><a href="#Fases" data-toggle="tab">Fases</a></li>
-                        <li role="presentation"><a href="#Cantores" data-toggle="tab">Cantores</a></li>
+                        <li role="presentation"><a href="#Categorias" data-toggle="tab">Categorias</a></li>
                     </ul>
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="Concurso">
@@ -457,53 +452,27 @@
                                 </div>
                             </div>
                         </div> <!--<div class="tab-pane" id="Fases">-->
-                        <div class="tab-pane" id="Cantores">
+                        <div class="tab-pane" id="Categorias">
                             <div class="panel panel-default" style="border-top: 0px">
                                 <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-sm-5">
-                                            <asp:DropDownList ID="cdCantor" class="form-control selectpicker" style="text-align:left" 
-                                                runat="server" Width="100%" AutoPostBack="False">
-                                            </asp:DropDownList>
-                                        </div>
-                                        <div class="col-sm-5">
-                                            <asp:DropDownList ID="cdAssociacaoCantor" class="form-control selectpicker" style="text-align:left" 
+                                        <div class="col-sm-10">
+                                            <asp:DropDownList ID="cdCategoria" class="form-control selectpicker" style="text-align:left" 
                                                 runat="server" Width="100%" AutoPostBack="False">
                                             </asp:DropDownList>
                                         </div>
                                         <div class="col-sm-2">
                                             <asp:LinkButton ID="btnAdicionarCantor" 
                                                     runat="server" 
-                                                    CssClass="btn btn-success btn-block">
+                                                    CssClass="btn btn-success btn-block"
+                                                    OnClick="btnAdicionarCantor_OnClick">
                                                 <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
                                             </asp:LinkButton>
                                         </div>
                                     </div><!--<div class="row">-->
                                     <br/>
                                     <div class="row">
-                                        <div class="col-sm-12">
-                                            <asp:GridView ID="gvCantoresConcurso" runat="server"
-                                                CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
-                                                <Columns>
-                                                    <asp:BoundField HeaderText="Cód." DataField="cdCantor">
-                                                        <ItemStyle Width="5%" />
-                                                    </asp:BoundField>
-                                                    <asp:BoundField DataField="nmCantor" HeaderText="Cantor" />
-                                                    <asp:BoundField DataField="nmAssociacao" HeaderText="Associação" />
-                                                    <asp:CommandField ButtonType="Button" SelectText="Editar" 
-                                                        ShowSelectButton="True">
-                                                        <ControlStyle CssClass="btn btn-primary btn-block" />
-                                                        <ItemStyle Width="15%" />
-                                                    </asp:CommandField>
-                                                    <asp:CommandField ButtonType="Button" SelectText="Excluir" 
-                                                        ShowSelectButton="True">
-                                                        <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
-                                                        <ItemStyle Width="15%" />
-                                                    </asp:CommandField>
-                                                </Columns>
-                                                <HeaderStyle CssClass="info" />
-                                            </asp:GridView>
-                                        </div>
+                                        <asp:Literal ID="ltCategorias" runat="server"></asp:Literal>
                                     </div> <!--<div class="row">-->
                                 </div>
                             </div>

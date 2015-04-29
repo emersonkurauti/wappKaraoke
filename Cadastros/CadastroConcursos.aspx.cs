@@ -11,6 +11,12 @@ namespace wappKaraoke.Cadastros
 {
     public partial class CadastroConcursos : csPageDefault
     {
+        private string strInicio = "<div class=\"tabbable tabs-left\"> \n <ul class=\"nav nav-tabs\">\n";
+        private string strMeio = "</ul> \n <div class=\"tab-content\">\n";
+        private string strFim = "</div> \n </div>\n";
+        private string strLista;
+        private string strDivs;
+
         public override void Page_Load(object sender, EventArgs e)
         {
             if (!this.IsPostBack)
@@ -27,12 +33,15 @@ namespace wappKaraoke.Cadastros
                 csFases vcsFases = new csFases();
                 cdFase = vcsFases.CarregaDDL(cdFase);
 
-                //Filtrar somente as associações adicionadas no concurso
-                csAssociacoes vcsAssociacoesCantor = new csAssociacoes();
-                cdAssociacaoCantor = vcsAssociacoesCantor.CarregaDDL(cdAssociacaoCantor);
+                csCategorias vcsCategorias = new csCategorias();
+                cdCategoria = vcsCategorias.CarregaDDL(cdCategoria);
 
-                csCantores vcsCantores = new csCantores();
-                cdCantor = vcsCantores.CarregaDDL(cdCantor);
+                //Filtrar somente as associações adicionadas no concurso
+                //csAssociacoes vcsAssociacoesCantor = new csAssociacoes();
+                //cdAssociacaoCantor = vcsAssociacoesCantor.CarregaDDL(cdAssociacaoCantor);
+
+                //csCantores vcsCantores = new csCantores();
+                //cdCantor = vcsCantores.CarregaDDL(cdCantor);
 
                 //Associações
                 DataTable dt = new DataTable();
@@ -118,8 +127,8 @@ namespace wappKaraoke.Cadastros
                     dt.Rows.Add(dr);
                 }
 
-                gvCantoresConcurso.DataSource = dt;
-                gvCantoresConcurso.DataBind();
+                //gvCantoresConcurso.DataSource = dt;
+                //gvCantoresConcurso.DataBind();
             }
 
             base.Page_Load(sender, e);
@@ -170,16 +179,36 @@ namespace wappKaraoke.Cadastros
 
             //Cantores
             //Attribute to show the Plus Minus Button.
-            gvCantoresConcurso.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+            //gvCantoresConcurso.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
 
             //Attribute to hide column in Phone.
-            gvCantoresConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            gvCantoresConcurso.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-            gvCantoresConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-            gvCantoresConcurso.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+            //gvCantoresConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            //gvCantoresConcurso.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+            //gvCantoresConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+            //gvCantoresConcurso.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
 
             //Adds THEAD and TBODY to GridView.
-            gvCantoresConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
+            //gvCantoresConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
+        public void btnAdicionarCantor_OnClick(Object sender, EventArgs e)
+        {
+            if (Session["strLista"] != null)
+                strLista = Session["strLista"].ToString();
+
+            if (Session["strDivs"] != null)
+                strDivs = Session["strDivs"].ToString();
+
+            strLista += "<li><a href=\"#"
+                + cdCategoria.SelectedItem.Text + "\" data-toggle=\"tab\">" + cdCategoria.SelectedItem.Text + "</a></li>";
+
+            strDivs += "<div class=\"tab-pane\" id=\"" + cdCategoria.SelectedItem.Text + ">";
+            strDivs += "</div>";
+
+            Session["strLista"] = strLista;
+            Session["strDivs"] = strDivs;
+
+            ltCategorias.Text = strInicio + strLista + strMeio + strDivs + strFim;
         }
     }
 }

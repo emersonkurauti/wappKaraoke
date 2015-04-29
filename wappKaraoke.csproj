@@ -315,6 +315,7 @@
     <Content Include="js\footable.min.js" />
     <Compile Include="Classes\csAssociacoes.cs" />
     <Compile Include="Classes\csCantores.cs" />
+    <Compile Include="Classes\csCategorias.cs" />
     <Compile Include="Classes\csCidades.cs" />
     <Compile Include="Classes\csCorStatus.cs" />
     <Compile Include="Classes\csFases.cs" />

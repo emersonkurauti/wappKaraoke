@@ -292,22 +292,13 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.GridView gvFasesConcurso;
         
         /// <summary>
-        /// cdCantor control.
+        /// cdCategoria control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cdCantor;
-        
-        /// <summary>
-        /// cdAssociacaoCantor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cdAssociacaoCantor;
+        protected global::System.Web.UI.WebControls.DropDownList cdCategoria;
         
         /// <summary>
         /// btnAdicionarCantor control.
@@ -319,13 +310,13 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.LinkButton btnAdicionarCantor;
         
         /// <summary>
-        /// gvCantoresConcurso control.
+        /// ltCategorias control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvCantoresConcurso;
+        protected global::System.Web.UI.WebControls.Literal ltCategorias;
         
         /// <summary>
         /// btnSalvar control.
