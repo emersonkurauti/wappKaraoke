@@ -14,11 +14,24 @@ namespace wappKaraoke.Cadastros
         private string strInicio = "<div class=\"tabbable tabs-left\"> \n <ul class=\"nav nav-tabs\">\n";
         private string strMeio = "</ul> \n <div class=\"tab-content\">\n";
         private string strFim = "</div> \n </div>\n";
-        private string strInicioPanelDiv = "<div class=\"panel panel-default\" style=\"border-left: 0px\">\n" +
-                                     "<div class=\"panel-body\">\n" +
-                                     "<div class=\"row\"\n>\n" +
-                                     "<div class=\"col-sm-12\"\n>";
-        private string strFimPanelDiv = "</div>\n</div>\n</div>\n</div>";
+
+        private string strListaMenu = "<li class=\"active\"><a href=\"#div[idLista]\" data-toggle=\"tab\">[Nome]</a></li>\n";
+        private string strAbrePanel = "<div class=\"tab-pane active\" id=\"div[idPanel]\">\n";
+        private string strFechaPanel = "</div>\n";
+        private string strUpdatePanelIni = "<asp:UpdatePanel ID=\"up[UpdatePanel]\" runat=\"server\" UpdateMode=\"Conditional\"> \n <ContentTemplate>\n";
+        private string strUpdatePanelFim = "</ContentTemplate> \n </asp:UpdatePanel>\n";
+        private string strRowIni = "<div class=\"row\">\n";
+        private string strRowFim = "</div>\n";
+        private string strColIni = "<div class=\"col-sm-[Col]\">";
+        private string strColFim = "</div>\n";
+        private string strDDLCantores = "<asp:DropDownList ID=\"cdCantor_[Cod]\" class=\"form-control selectpicker\" style=\"text-align:left\"\n " +
+                                        "runat=\"server\" Width=\"100%\" AutoPostBack=\"False\">\n"+
+                                        "</asp:DropDownList>\n";
+        //private string strInicioPanelDiv = "<div class=\"panel panel-default\" style=\"border-left: 0px\">\n" +
+        //                             "<div class=\"panel-body\">\n" +
+        //                             "<div class=\"row\"\n>\n" +
+        //                             "<div class=\"col-sm-12\"\n>";
+        //private string strFimPanelDiv = "</div>\n</div>\n</div>\n</div>";
         private string strLista;
         private string strDivs;
 
@@ -212,13 +225,25 @@ namespace wappKaraoke.Cadastros
             if (Session["strDivs"] != null)
                 strDivs = Session["strDivs"].ToString().Replace("class=\"tab-pane active\"", "class=\"tab-pane\"");
 
-            strLista += "<li class=\"active\"><a href=\"#"
-                + cdCategoria.SelectedItem.Text + "\" data-toggle=\"tab\">" + cdCategoria.SelectedItem.Text + "</a></li>";
+            strLista += strListaMenu.Replace("[Nome]", cdCategoria.SelectedItem.Text).Replace("[idLista]", cdCategoria.SelectedItem.ToString());
 
-            strDivs += "<div class=\"tab-pane active\" id=\"" + cdCategoria.SelectedItem.Text + "\">";
-            //strDivs += strInicioPanelDiv;
-            //strDivs += strFimPanelDiv;
-            strDivs += "</div>";
+            strDivs += strAbrePanel.Replace("[idPanel]", cdCategoria.SelectedItem.ToString());
+            {
+                strDivs += strUpdatePanelIni.Replace("[UpdatePanel]", cdCategoria.SelectedIndex.ToString());
+                {
+                    strDivs += strRowIni;
+                    {
+                        strDivs += strColIni.Replace("[Col]", "5");
+                        {
+                            strDivs += strDDLCantores.Replace("[Cod]", "1");
+                        }
+                        strDivs += strColFim;
+                    }
+                    strDivs += strRowFim;
+                }
+                strDivs += strUpdatePanelFim;
+            }
+            strDivs += strFechaPanel;
 
             Session["strLista"] = strLista;
             Session["strDivs"] = strDivs;

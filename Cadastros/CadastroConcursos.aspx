@@ -25,12 +25,12 @@
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
-                        <li role="presentation" class="active"><a href="#Concurso" data-toggle="tab">Concurso</a></li>
-                        <li role="presentation"><a href="#Arquivos" data-toggle="tab">Arquivos</a></li>
-                        <li role="presentation"><a href="#Associacoes" data-toggle="tab">Associações</a></li>
-                        <li role="presentation"><a href="#Jurados" data-toggle="tab">Jurados</a></li>
-                        <li role="presentation"><a href="#Fases" data-toggle="tab">Fases</a></li>
-                        <li role="presentation"><a href="#Categorias" data-toggle="tab">Categorias</a></li>
+                        <li class="active"><a href="#Concurso" data-toggle="tab">Concurso</a></li>
+                        <li><a href="#Arquivos" data-toggle="tab">Arquivos</a></li>
+                        <li><a href="#Associacoes" data-toggle="tab">Associações</a></li>
+                        <li><a href="#Jurados" data-toggle="tab">Jurados</a></li>
+                        <li><a href="#Fases" data-toggle="tab">Fases</a></li>
+                        <li><a href="#Categorias" data-toggle="tab">Categorias</a></li>
                     </ul>
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="Concurso">
@@ -82,14 +82,14 @@
                                             <asp:LinkButton ID="btnFechar" 
                                                     runat="server" 
                                                     CssClass="btn btn-primary btn-block">
-                                                <i aria-hidden="true" class="glyphicon glyphicon-saved"></i>&nbsp;&nbsp;Fechar
+                                                <i class="glyphicon glyphicon-saved"></i>&nbsp;&nbsp;Fechar
                                             </asp:LinkButton>
                                         </div>
                                         <div class="col-sm-2">
                                             <asp:LinkButton ID="btnReabrir" 
                                                     runat="server" 
                                                     CssClass="btn btn-primary btn-block btn-warning">
-                                                <i aria-hidden="true" class="glyphicon glyphicon-open"></i>&nbsp;&nbsp;Reabrir
+                                                <i class="glyphicon glyphicon-open"></i>&nbsp;&nbsp;Reabrir
                                             </asp:LinkButton>
                                         </div>
                                     </div>
@@ -98,15 +98,15 @@
                             </div> <!--<div class="panel panel-default" style="border-top: 0px">-->                            
                         </div> <!--<div class="tab-pane active" id="Concurso">-->
                         <div class="tab-pane" id="Arquivos">
-                            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                            <asp:UpdatePanel ID="upArquivos" runat="server" UpdateMode="Conditional">
                                 <ContentTemplate>
                                     <div class="panel panel-default" style="border-top: 0px">
                                         <div class="panel-body">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <ul class="nav nav-tabs">
-                                                        <li role="presentation" class="active"><a href="#Imagens" data-toggle="tab">Imagens</a></li>
-                                                        <li role="presentation"><a href="#Documentos" data-toggle="tab">Documentos</a></li>
+                                                        <li class="active"><a href="#Imagens" data-toggle="tab">Imagens</a></li>
+                                                        <li><a href="#Documentos" data-toggle="tab">Documentos</a></li>
                                                     </ul>
                                                     <div id="my-tab-content-2" class="tab-content">
                                                         <div class="tab-pane active" id="Imagens">
@@ -127,14 +127,14 @@
                                                                                                         <asp:LinkButton ID="btnAmplia1" 
                                                                                                                 runat="server" 
                                                                                                                 CssClass="btn btn-primary btn-block">
-                                                                                                            <i aria-hidden="true" class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
+                                                                                                            <i class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
                                                                                                         </asp:LinkButton>
                                                                                                     </div>
                                                                                                     <div class="col-sm-6">
                                                                                                         <asp:LinkButton ID="btnRemove1" 
                                                                                                                 runat="server" 
                                                                                                                 CssClass="btn btn-primary btn-block btn-danger">
-                                                                                                            <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
+                                                                                                            <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
                                                                                                         </asp:LinkButton>
                                                                                                     </div>
                                                                                                 </div>
@@ -152,14 +152,14 @@
                                                                                                         <asp:LinkButton ID="btnAmplia2" 
                                                                                                                 runat="server" 
                                                                                                                 CssClass="btn btn-primary btn-block">
-                                                                                                            <i aria-hidden="true" class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
+                                                                                                            <i class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
                                                                                                         </asp:LinkButton>
                                                                                                     </div>
                                                                                                     <div class="col-sm-6">
                                                                                                         <asp:LinkButton ID="btnRemove2" 
                                                                                                                 runat="server" 
                                                                                                                 CssClass="btn btn-primary btn-block btn-danger">
-                                                                                                            <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
+                                                                                                            <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
                                                                                                         </asp:LinkButton>
                                                                                                     </div>
                                                                                                 </div>
@@ -177,14 +177,14 @@
                                                                                                         <asp:LinkButton ID="btnAmplia3" 
                                                                                                                 runat="server" 
                                                                                                                 CssClass="btn btn-primary btn-block">
-                                                                                                            <i aria-hidden="true" class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
+                                                                                                            <i class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
                                                                                                         </asp:LinkButton>
                                                                                                     </div>
                                                                                                     <div class="col-sm-6">
                                                                                                         <asp:LinkButton ID="btnRemove3" 
                                                                                                                 runat="server" 
                                                                                                                 CssClass="btn btn-primary btn-block btn-danger">
-                                                                                                            <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
+                                                                                                            <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
                                                                                                         </asp:LinkButton>
                                                                                                     </div>
                                                                                                 </div>
@@ -208,14 +208,14 @@
                                                                                                         <asp:LinkButton ID="LinkButton1" 
                                                                                                                 runat="server" 
                                                                                                                 CssClass="btn btn-primary btn-block">
-                                                                                                            <i aria-hidden="true" class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
+                                                                                                            <i class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
                                                                                                         </asp:LinkButton>
                                                                                                     </div>
                                                                                                     <div class="col-sm-6">
                                                                                                         <asp:LinkButton ID="LinkButton2" 
                                                                                                                 runat="server" 
                                                                                                                 CssClass="btn btn-primary btn-block btn-danger">
-                                                                                                            <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
+                                                                                                            <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
                                                                                                         </asp:LinkButton>
                                                                                                     </div>
                                                                                                 </div>
@@ -233,14 +233,14 @@
                                                                                                         <asp:LinkButton ID="LinkButton3" 
                                                                                                                 runat="server" 
                                                                                                                 CssClass="btn btn-primary btn-block">
-                                                                                                            <i aria-hidden="true" class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
+                                                                                                            <i class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
                                                                                                         </asp:LinkButton>
                                                                                                     </div>
                                                                                                     <div class="col-sm-6">
                                                                                                         <asp:LinkButton ID="LinkButton4" 
                                                                                                                 runat="server" 
                                                                                                                 CssClass="btn btn-primary btn-block btn-danger">
-                                                                                                            <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
+                                                                                                            <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
                                                                                                         </asp:LinkButton>
                                                                                                     </div>
                                                                                                 </div>
@@ -258,14 +258,14 @@
                                                                                                         <asp:LinkButton ID="LinkButton5" 
                                                                                                                 runat="server" 
                                                                                                                 CssClass="btn btn-primary btn-block">
-                                                                                                            <i aria-hidden="true" class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
+                                                                                                            <i class="glyphicon glyphicon-zoom-in"></i>&nbsp;&nbsp;Ampliar
                                                                                                         </asp:LinkButton>
                                                                                                     </div>
                                                                                                     <div class="col-sm-6">
                                                                                                         <asp:LinkButton ID="LinkButton6" 
                                                                                                                 runat="server" 
                                                                                                                 CssClass="btn btn-primary btn-block btn-danger">
-                                                                                                            <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
+                                                                                                            <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Remover
                                                                                                         </asp:LinkButton>
                                                                                                     </div>
                                                                                                 </div>
@@ -436,7 +436,7 @@
                                                     <asp:LinkButton ID="btnAdicionarFase" 
                                                             runat="server" 
                                                             CssClass="btn btn-success btn-block">
-                                                        <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
+                                                        <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
                                                     </asp:LinkButton>
                                                 </div>
                                             </div><!--<div class="row">-->
@@ -482,11 +482,11 @@
                                                     </asp:DropDownList>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <asp:LinkButton ID="btnAdicionarCantor" 
+                                                    <asp:LinkButton ID="btnAdicionarCategoria" 
                                                             runat="server" 
                                                             CssClass="btn btn-success btn-block"
                                                             OnClick="btnAdicionarCantor_OnClick">
-                                                        <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
+                                                        <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
                                                     </asp:LinkButton>
                                                 </div>
                                             </div><!--<div class="row">-->
@@ -507,14 +507,14 @@
                             <asp:LinkButton ID="btnSalvar" 
                                     runat="server" 
                                     CssClass="btn btn-primary btn-block btn-success">
-                                <i aria-hidden="true" class="glyphicon glyphicon-save"></i>&nbsp;&nbsp;Salvar
+                                <i class="glyphicon glyphicon-save"></i>&nbsp;&nbsp;Salvar
                             </asp:LinkButton>
                         </div>
                         <div class="col-sm-2" align="center" style="float: left">
                             <asp:LinkButton ID="btnCancelar" 
                                     runat="server" 
                                     CssClass="btn btn-primary btn-block btn-danger">
-                                <i aria-hidden="true" class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp;Cancelar
+                                <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp;Cancelar
                             </asp:LinkButton>
                         </div>
                         <div class="col-sm-8" align="right" style="float: right">                            

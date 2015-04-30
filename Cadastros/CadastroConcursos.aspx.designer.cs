@@ -94,6 +94,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.LinkButton btnReabrir;
         
         /// <summary>
+        /// upArquivos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upArquivos;
+        
+        /// <summary>
         /// btnAmplia1 control.
         /// </summary>
         /// <remarks>
@@ -355,13 +364,13 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.DropDownList cdCategoria;
         
         /// <summary>
-        /// btnAdicionarCantor control.
+        /// btnAdicionarCategoria control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnAdicionarCantor;
+        protected global::System.Web.UI.WebControls.LinkButton btnAdicionarCategoria;
         
         /// <summary>
         /// ltCategorias control.
