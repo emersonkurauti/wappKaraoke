@@ -26,7 +26,7 @@ namespace wappKaraoke.Cadastros
                                       "</asp:LinkButton>";
         private string strRowIni = "<div class=\"row\">\n";
         private string strRowFim = "</div>\n";
-        private string strColIni = "<div class=\"col-sm-[Col]\" id=\"Teste\">";
+        private string strColIni = "<div class=\"col-sm-[Col]\">";
         private string strColFim = "</div>\n";
         private string strQuebraLinha = "<br//>";
         private string strPanelBodyIni = "<div class=\"panel-body\">";
