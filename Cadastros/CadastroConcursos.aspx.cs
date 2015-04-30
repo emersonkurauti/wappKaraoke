@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using wappKaraoke.Classes;
 using System.Data;
+using System.Text;
 
 namespace wappKaraoke.Cadastros
 {
@@ -20,18 +21,16 @@ namespace wappKaraoke.Cadastros
         private string strFechaPanel = "</div>\n";
         private string strUpdatePanelIni = "<asp:UpdatePanel ID=\"up[UpdatePanel]\" runat=\"server\" UpdateMode=\"Conditional\"> \n <ContentTemplate>\n";
         private string strUpdatePanelFim = "</ContentTemplate> \n </asp:UpdatePanel>\n";
+        private string strButtonAdd = "<asp:LinkButton id=\"btnAdd[idBtn]\" class=\"btn btn-success btn-block\" runat=\"server\">" +
+                                      "<i class=\"glyphicon glyphicon-plus\"></i>&nbsp;&nbsp;Adicionar" +
+                                      "</asp:LinkButton>";
+        //private string strDDLCantores = "<asp:DropDownList id=\"cdCantor_[Cod]\" runat=\"server\" class=\"form-control selectpicker\">\n " +
+        //                                "</asp:DropDownList>\n";
         private string strRowIni = "<div class=\"row\">\n";
         private string strRowFim = "</div>\n";
-        private string strColIni = "<div class=\"col-sm-[Col]\">";
+        private string strColIni = "<div class=\"col-sm-[Col]\" id=\"Teste\">";
         private string strColFim = "</div>\n";
-        private string strDDLCantores = "<asp:DropDownList ID=\"cdCantor_[Cod]\" class=\"form-control selectpicker\" style=\"text-align:left\"\n " +
-                                        "runat=\"server\" Width=\"100%\" AutoPostBack=\"False\">\n"+
-                                        "</asp:DropDownList>\n";
-        //private string strInicioPanelDiv = "<div class=\"panel panel-default\" style=\"border-left: 0px\">\n" +
-        //                             "<div class=\"panel-body\">\n" +
-        //                             "<div class=\"row\"\n>\n" +
-        //                             "<div class=\"col-sm-12\"\n>";
-        //private string strFimPanelDiv = "</div>\n</div>\n</div>\n</div>";
+
         private string strLista;
         private string strDivs;
 
@@ -219,6 +218,8 @@ namespace wappKaraoke.Cadastros
 
         public void btnAdicionarCantor_OnClick(Object sender, EventArgs e)
         {
+            csCantores ocsCancotres = new csCantores();
+
             if (Session["strLista"] != null)
                 strLista = Session["strLista"].ToString().Replace("<li class=\"active\">", "<li>");
 
@@ -231,15 +232,26 @@ namespace wappKaraoke.Cadastros
             {
                 strDivs += strUpdatePanelIni.Replace("[UpdatePanel]", cdCategoria.SelectedIndex.ToString());
                 {
-                    strDivs += strRowIni;
+                    strDivs += strColIni.Replace("[Col]", "5");
                     {
-                        strDivs += strColIni.Replace("[Col]", "5");
-                        {
-                            strDivs += strDDLCantores.Replace("[Cod]", "1");
-                        }
-                        strDivs += strColFim;
+                        //DropDownList ddl = new DropDownList();
+                        //csCantores ocsCantores = new csCantores();
+                        //ddl.ID = "cdCantor_" + cdCategoria.SelectedIndex.ToString();
+                        //ddl = ocsCantores.CarregaDDL(ddl);
+
+                        //this.FindControl("Teste").Controls.Add(ddl);
+
+                        //strDivs += strDDLCantores.Replace("[Cod]", cdCategoria.SelectedIndex.ToString());//ocsCancotres.MontaSelectCantores(cdCategoria.SelectedIndex.ToString());
+                        strDivs += ocsCancotres.MontaSelectCantores(cdCategoria.SelectedIndex.ToString());
                     }
-                    strDivs += strRowFim;
+                    strDivs += strColFim;
+
+                    strDivs += strColIni.Replace("[Col]", "5");
+                    {
+                        strDivs += strButtonAdd.Replace("[idBtn]", cdCategoria.SelectedIndex.ToString());
+                    }
+                    strDivs += strColFim;
+
                 }
                 strDivs += strUpdatePanelFim;
             }
