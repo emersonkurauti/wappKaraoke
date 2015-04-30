@@ -39,18 +39,18 @@ namespace wappKaraoke.Classes
             return pDDL;
         }
 
-        public string MontaSelectCantores(string psId)
+        public string MontaSelect(string psId)
         {
-            string strSelect = "<select name=\"nm" + psId + "\" id=\"id" + psId + "\" class=\"form-control selectpicker\" style=\"width:100%;text-align:left\">";
+            string strSelect = "<select name=\"nmCantor_" + psId + "\" id=\"idCantor_" + psId + "\" class=\"form-control selectpicker\" style=\"width:100%;text-align:left\">";
 
-            strSelect += MontaOptionCantores();
+            strSelect += MontaOptions();
 
             strSelect += "</select>";
 
             return strSelect;
         }
 
-        private string MontaOptionCantores()
+        private string MontaOptions()
         {
             getDtDados();
             string strOprions = "";

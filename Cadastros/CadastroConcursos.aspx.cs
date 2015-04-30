@@ -24,12 +24,13 @@ namespace wappKaraoke.Cadastros
         private string strButtonAdd = "<asp:LinkButton id=\"btnAdd[idBtn]\" class=\"btn btn-success btn-block\" runat=\"server\">" +
                                       "<i class=\"glyphicon glyphicon-plus\"></i>&nbsp;&nbsp;Adicionar" +
                                       "</asp:LinkButton>";
-        //private string strDDLCantores = "<asp:DropDownList id=\"cdCantor_[Cod]\" runat=\"server\" class=\"form-control selectpicker\">\n " +
-        //                                "</asp:DropDownList>\n";
         private string strRowIni = "<div class=\"row\">\n";
         private string strRowFim = "</div>\n";
         private string strColIni = "<div class=\"col-sm-[Col]\" id=\"Teste\">";
         private string strColFim = "</div>\n";
+        private string strQuebraLinha = "<br//>";
+        private string strPanelBodyIni = "<div class=\"panel-body\">";
+        private string strPanelBodyFim = "</div>";
 
         private string strLista;
         private string strDivs;
@@ -219,6 +220,7 @@ namespace wappKaraoke.Cadastros
         public void btnAdicionarCantor_OnClick(Object sender, EventArgs e)
         {
             csCantores ocsCancotres = new csCantores();
+            csAssociacoes ocsAssociacoes = new csAssociacoes();
 
             if (Session["strLista"] != null)
                 strLista = Session["strLista"].ToString().Replace("<li class=\"active\">", "<li>");
@@ -232,25 +234,37 @@ namespace wappKaraoke.Cadastros
             {
                 strDivs += strUpdatePanelIni.Replace("[UpdatePanel]", cdCategoria.SelectedIndex.ToString());
                 {
-                    strDivs += strColIni.Replace("[Col]", "5");
+                    strDivs += strPanelBodyIni;
                     {
-                        //DropDownList ddl = new DropDownList();
-                        //csCantores ocsCantores = new csCantores();
-                        //ddl.ID = "cdCantor_" + cdCategoria.SelectedIndex.ToString();
-                        //ddl = ocsCantores.CarregaDDL(ddl);
+                        strDivs += strRowIni;
+                        {
+                            strDivs += strColIni.Replace("[Col]", "6");
+                            {
+                                strDivs += ocsCancotres.MontaSelect(cdCategoria.SelectedIndex.ToString());
+                            }
+                            strDivs += strColFim;
 
-                        //this.FindControl("Teste").Controls.Add(ddl);
+                            strDivs += strColIni.Replace("[Col]", "6");
+                            {
+                                strDivs += ocsAssociacoes.MontaSelectCantores(cdCategoria.SelectedIndex.ToString());
+                            }
+                            strDivs += strColFim;
+                        }
+                        strDivs += strRowFim;
 
-                        //strDivs += strDDLCantores.Replace("[Cod]", cdCategoria.SelectedIndex.ToString());//ocsCancotres.MontaSelectCantores(cdCategoria.SelectedIndex.ToString());
-                        strDivs += ocsCancotres.MontaSelectCantores(cdCategoria.SelectedIndex.ToString());
+                        strDivs += strQuebraLinha;
+
+                        strDivs += strRowIni;
+                        {
+                            strDivs += strColIni.Replace("[Col]", "5");
+                            {
+                                strDivs += strButtonAdd.Replace("[idBtn]", cdCategoria.SelectedIndex.ToString());
+                            }
+                            strDivs += strColFim;
+                        }
+                        strDivs += strRowFim;
                     }
-                    strDivs += strColFim;
-
-                    strDivs += strColIni.Replace("[Col]", "5");
-                    {
-                        strDivs += strButtonAdd.Replace("[idBtn]", cdCategoria.SelectedIndex.ToString());
-                    }
-                    strDivs += strColFim;
+                    strDivs += strPanelBodyFim;
 
                 }
                 strDivs += strUpdatePanelFim;

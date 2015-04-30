@@ -39,5 +39,33 @@ namespace wappKaraoke.Classes
 
             return pDDL;
         }
+
+        public string MontaSelectCantores(string psId)
+        {
+            string strSelect = "<select name=\"nmAssociacao_" + psId + "\" id=\"idAssociacao_" + psId + "\" class=\"form-control selectpicker\" style=\"width:100%;text-align:left\">";
+
+            strSelect += MontaOptions();
+
+            strSelect += "</select>";
+
+            return strSelect;
+        }
+
+        private string MontaOptions()
+        {
+            getDtDados();
+            string strOprions = "";
+
+            if (_dtDados.Rows.Count > 0)
+            {
+                strOprions += "<option value=\"" + _dtDados.Rows[0]["cdAssociacao"].ToString() + "\">" + _dtDados.Rows[0]["nmAssociacao"].ToString() + "</option>";
+
+                for (int i = 1; i < _dtDados.Rows.Count; i++)
+                {
+                    strOprions += "<option value=\"" + _dtDados.Rows[i]["cdAssociacao"].ToString() + "\">" + _dtDados.Rows[i]["nmAssociacao"].ToString() + "</option>";
+                }
+            }
+            return strOprions;
+        }
     }
 }
