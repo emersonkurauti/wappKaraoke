@@ -485,7 +485,7 @@
                                                     <asp:LinkButton ID="btnAdicionarCategoria" 
                                                             runat="server" 
                                                             CssClass="btn btn-success btn-block"
-                                                            OnClick="btnAdicionarCantor_OnClick">
+                                                            OnClick="btnAdicionarCategoria_OnClick">
                                                         <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
                                                     </asp:LinkButton>
                                                 </div>

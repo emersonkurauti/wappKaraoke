@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.UI.WebControls;
 using System.Data;
+using System.Web.UI.WebControls;
 
 namespace wappKaraoke.Classes
 {
-    public class csAssociacoes
+    public class csStatus
     {
         private DataTable _dtDados = new DataTable();
         public DataTable dtDados
@@ -18,13 +18,12 @@ namespace wappKaraoke.Classes
 
         private DataTable getDtDados()
         {
-            _dtDados.Columns.Add("cdAssociacao", typeof(int));
-            _dtDados.Columns.Add("nmAssociacao", typeof(string));
+            _dtDados.Columns.Add("cdStatus", typeof(int));
+            _dtDados.Columns.Add("deStatus", typeof(string));
 
-            _dtDados.Rows.Add(1, "ACAE");
-            _dtDados.Rows.Add(2, "ACEVI");
-            _dtDados.Rows.Add(3, "ACEO");
-            _dtDados.Rows.Add(3, "ACAD");
+            _dtDados.Rows.Add(1, "Chegou");
+            _dtDados.Rows.Add(2, "Camarim");
+            _dtDados.Rows.Add(3, "Cantando");
 
             return _dtDados;
         }
@@ -32,8 +31,8 @@ namespace wappKaraoke.Classes
         public DropDownList CarregaDDL(DropDownList pDDL)
         {
             pDDL.DataSource = getDtDados();
-            pDDL.DataValueField = "cdAssociacao";
-            pDDL.DataTextField = "nmAssociacao";
+            pDDL.DataValueField = "cdStatus";
+            pDDL.DataTextField = "deStatus";
             pDDL.DataBind();
             pDDL.SelectedIndex = 0;
 
@@ -42,7 +41,7 @@ namespace wappKaraoke.Classes
 
         public string MontaSelect(string psId)
         {
-            string strSelect = "<select name=\"nmAssociacao_" + psId + "\" id=\"idAssociacao_" + psId + "\" class=\"form-control selectpicker\" style=\"width:100%;text-align:left\">";
+            string strSelect = "<select name=\"nmStatus_" + psId + "\" id=\"idStatus_" + psId + "\" class=\"form-control selectpicker\" style=\"width:100%;text-align:left\">";
 
             strSelect += MontaOptions();
 
@@ -58,11 +57,11 @@ namespace wappKaraoke.Classes
 
             if (_dtDados.Rows.Count > 0)
             {
-                strOprions += "<option value=\"" + _dtDados.Rows[0]["cdAssociacao"].ToString() + "\">" + _dtDados.Rows[0]["nmAssociacao"].ToString() + "</option>";
+                strOprions += "<option value=\"" + _dtDados.Rows[0]["cdStatus"].ToString() + "\">" + _dtDados.Rows[0]["deStatus"].ToString() + "</option>";
 
                 for (int i = 1; i < _dtDados.Rows.Count; i++)
                 {
-                    strOprions += "<option value=\"" + _dtDados.Rows[i]["cdAssociacao"].ToString() + "\">" + _dtDados.Rows[i]["nmAssociacao"].ToString() + "</option>";
+                    strOprions += "<option value=\"" + _dtDados.Rows[i]["cdStatus"].ToString() + "\">" + _dtDados.Rows[i]["deStatus"].ToString() + "</option>";
                 }
             }
             return strOprions;

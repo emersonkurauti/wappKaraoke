@@ -38,5 +38,33 @@ namespace wappKaraoke.Classes
 
             return pDDL;
         }
+
+        public string MontaSelect(string psId)
+        {
+            string strSelect = "<select name=\"nmFase_" + psId + "\" id=\"idFase_" + psId + "\" class=\"form-control selectpicker\" style=\"width:100%;text-align:left\">";
+
+            strSelect += MontaOptions();
+
+            strSelect += "</select>";
+
+            return strSelect;
+        }
+
+        private string MontaOptions()
+        {
+            getDtDados();
+            string strOprions = "";
+
+            if (_dtDados.Rows.Count > 0)
+            {
+                strOprions += "<option value=\"" + _dtDados.Rows[0]["cdFase"].ToString() + "\">" + _dtDados.Rows[0]["deFase"].ToString() + "</option>";
+
+                for (int i = 1; i < _dtDados.Rows.Count; i++)
+                {
+                    strOprions += "<option value=\"" + _dtDados.Rows[i]["cdFase"].ToString() + "\">" + _dtDados.Rows[i]["deFase"].ToString() + "</option>";
+                }
+            }
+            return strOprions;
+        }
     }
 }

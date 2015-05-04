@@ -320,9 +320,12 @@
     <Compile Include="Classes\csCorStatus.cs" />
     <Compile Include="Classes\csFases.cs" />
     <Compile Include="Classes\csJurados.cs" />
+    <Compile Include="Classes\csMontaTable.cs" />
+    <Compile Include="Classes\csMusicas.cs" />
     <Compile Include="Classes\csPageDefault.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Classes\csStatus.cs" />
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

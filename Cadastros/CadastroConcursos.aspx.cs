@@ -217,10 +217,13 @@ namespace wappKaraoke.Cadastros
             Session["strDivs"] = null;
         }
 
-        public void btnAdicionarCantor_OnClick(Object sender, EventArgs e)
+        public void btnAdicionarCategoria_OnClick(Object sender, EventArgs e)
         {
             csCantores ocsCancotres = new csCantores();
             csAssociacoes ocsAssociacoes = new csAssociacoes();
+            csMusicas ocsMusicas = new csMusicas();
+            csFases ocsFases = new csFases();
+            csStatus ocsStatus = new csStatus();
 
             if (Session["strLista"] != null)
                 strLista = Session["strLista"].ToString().Replace("<li class=\"active\">", "<li>");
@@ -238,15 +241,16 @@ namespace wappKaraoke.Cadastros
                     {
                         strDivs += strRowIni;
                         {
+                            //Cantor
                             strDivs += strColIni.Replace("[Col]", "6");
                             {
                                 strDivs += ocsCancotres.MontaSelect(cdCategoria.SelectedIndex.ToString());
                             }
                             strDivs += strColFim;
-
+                            //Associação
                             strDivs += strColIni.Replace("[Col]", "6");
                             {
-                                strDivs += ocsAssociacoes.MontaSelectCantores(cdCategoria.SelectedIndex.ToString());
+                                strDivs += ocsAssociacoes.MontaSelect(cdCategoria.SelectedIndex.ToString());
                             }
                             strDivs += strColFim;
                         }
@@ -256,7 +260,33 @@ namespace wappKaraoke.Cadastros
 
                         strDivs += strRowIni;
                         {
-                            strDivs += strColIni.Replace("[Col]", "5");
+                            //Musica
+                            strDivs += strColIni.Replace("[Col]", "6");
+                            {
+                                strDivs += ocsMusicas.MontaSelect(cdCategoria.SelectedIndex.ToString());
+                            }
+                            strDivs += strColFim;
+                            //Fase
+                            strDivs += strColIni.Replace("[Col]", "6");
+                            {
+                                strDivs += ocsFases.MontaSelect(cdCategoria.SelectedIndex.ToString());
+                            }
+                            strDivs += strColFim;
+                        }
+                        strDivs += strRowFim;
+
+                        strDivs += strQuebraLinha;
+
+                        strDivs += strRowIni;
+                        {
+                            //Status
+                            strDivs += strColIni.Replace("[Col]", "6");
+                            {
+                                strDivs += ocsStatus.MontaSelect(cdCategoria.SelectedIndex.ToString());
+                            }
+                            strDivs += strColFim;
+                            //Adicionar
+                            strDivs += strColIni.Replace("[Col]", "6");
                             {
                                 strDivs += strButtonAdd.Replace("[idBtn]", cdCategoria.SelectedIndex.ToString());
                             }
@@ -275,6 +305,8 @@ namespace wappKaraoke.Cadastros
             Session["strDivs"] = strDivs;
 
             ltCategorias.Text = strInicio + strLista + strMeio + strDivs + strFim;
+
+            Session["ltCategorias"] = ltCategorias.Text;
         }
     }
 }
