@@ -103,6 +103,24 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.UpdatePanel upArquivos;
         
         /// <summary>
+        /// fluArquivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fluArquivo;
+        
+        /// <summary>
+        /// btnAdicionarArquivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnAdicionarArquivo;
+        
+        /// <summary>
         /// btnAmplia1 control.
         /// </summary>
         /// <remarks>

@@ -103,6 +103,27 @@
                                     <div class="panel panel-default" style="border-top: 0px">
                                         <div class="panel-body">
                                             <div class="row">
+                                                <div class="col-sm-2">
+                                                    <span class="btn btn-default btn-file">
+                                                        Selecionar Arquivo...<asp:FileUpload ID="fluArquivo" runat="server" />
+                                                    </span>                                                    
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <span class="form-control">
+                                                        <label class="radio-inline"><input type="radio" name="optradio">Imagem</label>
+                                                        <label class="radio-inline"><input type="radio" name="optradio">Documento</label> 
+                                                    </span>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <asp:LinkButton ID="btnAdicionarArquivo" 
+                                                            runat="server" 
+                                                            CssClass="btn btn-success btn-block">
+                                                        <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
+                                                    </asp:LinkButton>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div class="row">
                                                 <div class="col-sm-12">
                                                     <ul class="nav nav-tabs">
                                                         <li class="active"><a href="#Imagens" data-toggle="tab">Imagens</a></li>
