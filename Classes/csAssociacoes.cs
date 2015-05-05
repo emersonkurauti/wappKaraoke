@@ -24,7 +24,7 @@ namespace wappKaraoke.Classes
             _dtDados.Rows.Add(1, "ACAE");
             _dtDados.Rows.Add(2, "ACEVI");
             _dtDados.Rows.Add(3, "ACEO");
-            _dtDados.Rows.Add(3, "ACAD");
+            _dtDados.Rows.Add(4, "ACAD");
 
             return _dtDados;
         }

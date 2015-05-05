@@ -476,10 +476,46 @@
                                     <div class="panel panel-default" style="border-top: 0px">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-6">
                                                     <asp:DropDownList ID="cdCategoria" class="form-control selectpicker" style="text-align:left" 
                                                         runat="server" Width="100%" AutoPostBack="False">
                                                     </asp:DropDownList>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <asp:DropDownList ID="cdCantor" class="form-control selectpicker" style="text-align:left" 
+                                                        runat="server" Width="100%" AutoPostBack="False">
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <asp:DropDownList ID="cdMusica" class="form-control selectpicker" style="text-align:left" 
+                                                        runat="server" Width="100%" AutoPostBack="False">
+                                                    </asp:DropDownList>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <asp:DropDownList ID="cdAssociacaoCantor" class="form-control selectpicker" style="text-align:left" 
+                                                        runat="server" Width="100%" AutoPostBack="False">
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <asp:DropDownList ID="cdFaseCantor" class="form-control selectpicker" style="text-align:left" 
+                                                        runat="server" Width="100%" AutoPostBack="False">
+                                                    </asp:DropDownList>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <asp:DropDownList ID="cdStatus" class="form-control selectpicker" style="text-align:left" 
+                                                        runat="server" Width="100%" AutoPostBack="False">
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div class="row">
+                                                <div class="col-sm-10">
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <asp:LinkButton ID="btnAdicionarCategoria" 
@@ -517,7 +553,8 @@
                                 <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp;Cancelar
                             </asp:LinkButton>
                         </div>
-                        <div class="col-sm-8" align="right" style="float: right">                            
+                        <div class="col-sm-8" align="right" style="float: right">
+                            <asp:Label id="Label1" runat="server" />
                         </div>                        
                     </div>                    
                 </div><!--<div class="panel-body">-->

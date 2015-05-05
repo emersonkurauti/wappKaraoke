@@ -364,6 +364,51 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.DropDownList cdCategoria;
         
         /// <summary>
+        /// cdCantor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cdCantor;
+        
+        /// <summary>
+        /// cdMusica control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cdMusica;
+        
+        /// <summary>
+        /// cdAssociacaoCantor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cdAssociacaoCantor;
+        
+        /// <summary>
+        /// cdFaseCantor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cdFaseCantor;
+        
+        /// <summary>
+        /// cdStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cdStatus;
+        
+        /// <summary>
         /// btnAdicionarCategoria control.
         /// </summary>
         /// <remarks>
@@ -398,5 +443,14 @@ namespace wappKaraoke.Cadastros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnCancelar;
+        
+        /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
     }
 }

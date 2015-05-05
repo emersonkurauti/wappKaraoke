@@ -20,69 +20,77 @@ namespace wappKaraoke.Classes
             return "<table class=\"footable table table-bordered table-hover\" cellspacing=\"0\" rules=\"all\" border=\"1\" id=\"gvCantores_" + strIdGV + "\" style=\"border-collapse:collapse;\">"
                     + "<thead>"
                     + "<tr class=\"info\">"
-                    + "  <th data-hide=\"phone\" scope=\"col\">Cód.</th>" //Cód. Cantor
+                    //+ "  <th data-hide=\"phone\" scope=\"col\" visible=\"false\">Cód.</th>" //Cód. Cantor
                     + "  <th data-class=\"expand\" scope=\"col\">Cantor</th>" //Nome Cantor
-                    + "  <th data-hide=\"all\" scope=\"col\">Cód. Associação</th>"//Cód. Associação
+                    //+ "  <th data-hide=\"all\" scope=\"col\" visible=\"false\">Cód. Associação</th>"//Cód. Associação
                     + "  <th data-hide=\"all\" scope=\"col\">Associação</th>" //Nome Associação
-                    + "  <th data-hide=\"all\" scope=\"col\">Cód. Música</th>"//Cód. Música
+                    //+ "  <th data-hide=\"all\" scope=\"col\" visible=\"false\">Cód. Música</th>"//Cód. Música
                     + "  <th data-hide=\"all\" scope=\"col\">Música</th>" //Nome Música
-                    + "  <th data-hide=\"all\" scope=\"col\">Cód. Fase</th>"//Cód. Fase
-                    + "  <th data-hide=\"all\" scope=\"col\">Fase</th>" //Nome Fase
-                    + "  <th data-hide=\"all\" scope=\"col\">Cód. Status</th>"//Cód. Status
-                    + "  <th data-hide=\"all\" scope=\"col\">Status</th>" //Nome Status
+                    //+ "  <th data-hide=\"all\" scope=\"col\" visible=\"false\">Cód. Fase</th>"//Cód. Fase
+                    //+ "  <th data-hide=\"all\" scope=\"col\" visible=\"false\">Fase</th>" //Nome Fase
+                    //+ "  <th data-hide=\"all\" scope=\"col\" visible=\"false\">Cód. Status</th>"//Cód. Status
+                    //+ "  <th data-hide=\"all\" scope=\"col\" visible=\"false\">Status</th>" //Nome Status
                     + "  <th data-hide=\"phone\" scope=\"col\">&nbsp;</th>" //Editar
                     + "  <th data-hide=\"phone\" scope=\"col\">&nbsp;</th>" //Excluir
                     + "</tr>"
                     + "</thead><tbody>"
-                    + MontaLinhasGridView()
+                    + MontaLinhasGridView("gvCantores_" + strIdGV)
                     + "</tbody>"
                     + "</table>";
         }
 
-        public string MontaLinhasGridView()
+        public string MontaLinhasGridView(string strIdGV)
         {
-            string strLinhas = "<tr>";
+            string strLinhas = "";
 
             foreach (DataRow dr in _dtDados.Rows)
             {
+                strLinhas += "<tr>";
                 //Cantor
-                strLinhas += "<td style=\"width:5%;\">" + dr["cdCantor"] + "</td>";
+                //strLinhas += "<td style=\"width:5%;\">" + dr["cdCantor"] + "</td>";
                 strLinhas += "<td>" + dr["nmCantor"] + "</td>";
 
                 //Associação
-                strLinhas += "<td style=\"width:5%;\">" + dr["cdAssociacao"] + "</td>";
+                //strLinhas += "<td style=\"width:5%;\">" + dr["cdAssociacao"] + "</td>";
                 strLinhas += "<td>" + dr["nmAssociacao"] + "</td>";
 
                 //Fase
-                strLinhas += "<td style=\"width:5%;\">" + dr["cdFase"] + "</td>";
-                strLinhas += "<td>" + dr["deFase"] + "</td>";
+                //strLinhas += "<td style=\"width:5%;\">" + dr["cdFase"] + "</td>";
+                //strLinhas += "<td>" + dr["deFase"] + "</td>";
 
                 //Música
-                strLinhas += "<td style=\"width:5%;\">" + dr["cdMusica"] + "</td>";
+                //strLinhas += "<td style=\"width:5%;\">" + dr["cdMusica"] + "</td>";
                 strLinhas += "<td>" + dr["nmMusica"] + "</td>";
 
                 //Status
-                strLinhas += "<td style=\"width:5%;\">" + dr["cdStatus"] + "</td>";
-                strLinhas += "<td>" + dr["deStatus"] + "</td>";
+                //strLinhas += "<td style=\"width:5%;\">" + dr["cdStatus"] + "</td>";
+                //strLinhas += "<td>" + dr["deStatus"] + "</td>";
 
                 //Buttons
-                strLinhas += "<td style=\"width:15%;\"><input type=\"button\" value=\"Editar\" onclick=\"javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$gvAssociacoes&#39;,&#39;Select$1&#39;)\" class=\"btn btn-primary btn-block\" /></td>";
-                strLinhas += "<td style=\"width:15%;\"><input type=\"button\" value=\"Excluir\" onclick=\"javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$gvAssociacoes&#39;,&#39;Select$1&#39;)\" class=\"btn btn-primary btn-block btn-danger\" /></td>";
+                strLinhas += "<td style=\"width:15%;\"><input type=\"button\" value=\"Editar\" onclick=\"javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$" + strIdGV + "&#39;,&#39;Select$1&#39;)\" class=\"btn btn-primary btn-block\" /></td>";
+                strLinhas += "<td style=\"width:15%;\"><input type=\"button\" value=\"Excluir\" onclick=\"javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$" + strIdGV + "&#39;,&#39;Select$1&#39;)\" class=\"btn btn-primary btn-block btn-danger\" /></td>";
+
+                strLinhas += "</tr>";
             }
 
-
-            //        "<td style="width:5%;">0</td><td>Nome Associa&#231;&#227;o de teste - 0</td>
-            //        "<td>Nome Representante de teste - 0</td><td>emailteste0@hotmail.com</td><td style="width:15%;"><input type="button" value="Editar" onclick="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$gvAssociacoes&#39;,&#39;Select$0&#39;)" class="btn btn-primary btn-block" /></td><td style="width:15%;"><input type="button" value="Excluir" onclick="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$gvAssociacoes&#39;,&#39;Select$0&#39;)" class="btn btn-primary btn-block btn-danger" /></td>"
-            //    "</tr><tr>"
-            //        "<td style="width:5%;">1</td><td>Nome Associa&#231;&#227;o de teste - 1</td><td>Nome Representante de teste - 1</td><td>emailteste1@hotmail.com</td><td style="width:15%;"><input type="button" value="Editar" onclick="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$gvAssociacoes&#39;,&#39;Select$1&#39;)" class="btn btn-primary btn-block" /></td><td style="width:15%;"><input type="button" value="Excluir" onclick="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$gvAssociacoes&#39;,&#39;Select$1&#39;)" class="btn btn-primary btn-block btn-danger" /></td>"
-            //    "</tr><tr>"
-            //        "<td style="width:5%;">2</td><td>Nome Associa&#231;&#227;o de teste - 2</td><td>Nome Representante de teste - 2</td><td>emailteste2@hotmail.com</td><td style="width:15%;"><input type="button" value="Editar" onclick="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$gvAssociacoes&#39;,&#39;Select$2&#39;)" class="btn btn-primary btn-block" /></td><td style="width:15%;"><input type="button" value="Excluir" onclick="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$gvAssociacoes&#39;,&#39;Select$2&#39;)" class="btn btn-primary btn-block btn-danger" /></td>"
-            //    "</tr><tr>"
-            //        "<td style="width:5%;">3</td><td>Nome Associa&#231;&#227;o de teste - 3</td><td>Nome Representante de teste - 3</td><td>emailteste3@hotmail.com</td><td style="width:15%;"><input type="button" value="Editar" onclick="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$gvAssociacoes&#39;,&#39;Select$3&#39;)" class="btn btn-primary btn-block" /></td><td style="width:15%;"><input type="button" value="Excluir" onclick="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$gvAssociacoes&#39;,&#39;Select$3&#39;)" class="btn btn-primary btn-block btn-danger" /></td>"
-
-            strLinhas += "</tr>";
-
             return strLinhas;
+        }
+
+        public DataTable RetornaDTCantores()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("cdCantor", typeof(int));
+            dt.Columns.Add("nmCantor", typeof(string));
+            dt.Columns.Add("cdAssociacao", typeof(int));
+            dt.Columns.Add("nmAssociacao", typeof(string));
+            dt.Columns.Add("cdFase", typeof(int));
+            dt.Columns.Add("deFase", typeof(string));
+            dt.Columns.Add("cdMusica", typeof(int));
+            dt.Columns.Add("nmMusica", typeof(string));
+            dt.Columns.Add("cdStatus", typeof(int));
+            dt.Columns.Add("deStatus", typeof(string));
+
+            return dt;
         }
     }
 }
