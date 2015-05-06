@@ -135,6 +135,7 @@
     <Content Include="Cadastros\ConsultaJurados.aspx" />
     <Content Include="Cadastros\ConsultaMusicas.aspx" />
     <Content Include="Cadastros\ConsultaTipoStatus.aspx" />
+    <Content Include="Movimentacoes\AlterarStatusCantor.aspx" />
     <Content Include="Movimentacoes\NotasCantores.aspx" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
@@ -306,6 +307,13 @@
     <Content Include="css\footable.min.css" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\footable.min.js" />
+    <Compile Include="Movimentacoes\AlterarStatusCantor.aspx.cs">
+      <DependentUpon>AlterarStatusCantor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Movimentacoes\AlterarStatusCantor.aspx.designer.cs">
+      <DependentUpon>AlterarStatusCantor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Movimentacoes\NotasCantores.aspx.cs">
       <DependentUpon>NotasCantores.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -75,7 +75,8 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             Movimentações <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                        <li><a href="../Movimentacoes/NotasCantores.aspx">Notas do Cantor</a></li>
+                            <li><a href="../Movimentacoes/NotasCantores.aspx">Notas do Cantor</a></li>
+                            <li><a href="../Movimentacoes/AlterarStatusCantor.aspx">Status do Cantor</a></li>
                         </ul>
                     </li>
                     <li><a href="../Cadastros/ConsultaConcursos.aspx">Concurso</a></li>
