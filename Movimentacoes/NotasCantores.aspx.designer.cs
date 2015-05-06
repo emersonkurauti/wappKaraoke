@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace wappKaraoke.Cadastros {
+namespace wappKaraoke.Movimentacoes {
     
     
     public partial class NotasCantores {

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace wappKaraoke
+namespace wappKaraoke.Movimentacoes
 {
     public partial class Player : System.Web.UI.Page
     {

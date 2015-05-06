@@ -155,7 +155,7 @@
     <Content Include="js\jquery.js" />
     <Content Include="js\main.js" />
     <Content Include="Login.aspx" />
-    <Content Include="Player.aspx" />
+    <Content Include="Movimentacoes\Player.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -349,11 +349,11 @@
     <Compile Include="Master Page\mpKaraoke.Master.designer.cs">
       <DependentUpon>mpKaraoke.Master</DependentUpon>
     </Compile>
-    <Compile Include="Player.aspx.cs">
+    <Compile Include="Movimentacoes\Player.aspx.cs">
       <DependentUpon>Player.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Player.aspx.designer.cs">
+    <Compile Include="Movimentacoes\Player.aspx.designer.cs">
       <DependentUpon>Player.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

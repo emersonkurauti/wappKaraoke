@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using wappKaraoke.Classes;
 
-namespace wappKaraoke.Cadastros
+namespace wappKaraoke.Movimentacoes
 {
     public partial class NotasCantores : System.Web.UI.Page
     {

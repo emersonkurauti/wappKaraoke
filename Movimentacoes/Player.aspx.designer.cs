@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace wappKaraoke
+namespace wappKaraoke.Movimentacoes
 {
 
 

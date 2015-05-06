@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master Page/mpKaraoke.Master" AutoEventWireup="true" CodeBehind="Player.aspx.cs" Inherits="wappKaraoke.Player" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master Page/mpKaraoke.Master" AutoEventWireup="true" CodeBehind="Player.aspx.cs" Inherits="wappKaraoke.Movimentacoes.Player" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -13,6 +13,10 @@
                         <div class="col-sm-6">
                         </div>
                         <div class="col-sm-6">
+                            <audio controls>
+                                <source src="C:\Users\Emerson\Music\brunna\here without you.mp3" type="autio/mp3">
+                                <a href="C:\Users\Emerson\Music\brunna\here without you.mp3">Musica</a>
+                            </audio>
                         </div>
                         <div class="col-sm-6">
                         </div>
