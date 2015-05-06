@@ -35,9 +35,6 @@ namespace wappKaraoke.Cadastros
                                       "&nbsp;&nbsp;Adicionar" +
                                       "</a>";
 
-        //private string strLista;
-        //private string strDivs;
-
         public override void Page_Load(object sender, EventArgs e)
         {
             if (!this.IsPostBack)
