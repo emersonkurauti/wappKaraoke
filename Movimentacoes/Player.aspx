@@ -12,13 +12,12 @@
                     <div class="row">
                         <div class="col-sm-6">
                         </div>
-                        <div class="col-sm-6">
-                            <audio controls>
-                                <source src="C:\Users\Emerson\Music\brunna\here without you.mp3" type="autio/mp3">
-                                <a href="C:\Users\Emerson\Music\brunna\here without you.mp3">Musica</a>
-                            </audio>
+                        <div class="col-sm-6" style="text-align:center">
+                            <audio id="Audio"src="../hold_my_hand.mp3"/>
                         </div>
                         <div class="col-sm-6">
+                            <asp:Button ID="btnPlay" OnClientClick="document.getElementById('Audio').play(); return false;" runat="server" Text="Paly"/>
+                            <asp:Button ID="btnPause" OnClientClick="document.getElementById('Audio').pause(); return false;" runat="server" Text="Pause"/>
                         </div>
                     </div>
                 </div>

@@ -135,6 +135,8 @@
     <Content Include="Cadastros\ConsultaJurados.aspx" />
     <Content Include="Cadastros\ConsultaMusicas.aspx" />
     <Content Include="Cadastros\ConsultaTipoStatus.aspx" />
+    <Content Include="dewplayer-vol.swf" />
+    <Content Include="hold_my_hand.mp3" />
     <Content Include="Movimentacoes\AlterarStatusCantor.aspx" />
     <Content Include="Movimentacoes\NotasCantores.aspx" />
     <Content Include="css\bootstrap-theme.css" />
