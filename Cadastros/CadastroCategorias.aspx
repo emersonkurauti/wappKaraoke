@@ -10,9 +10,14 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-8">
                             <asp:TextBox ID="deCategoria" class="form-control" runat="server" 
                                 placeholder="Descrição da Categoria..." Visible="True">
+                            </asp:TextBox>
+                        </div>
+                        <div class="col-sm-4">
+                            <asp:TextBox ID="deFormulaPontuacao" class="form-control" runat="server" 
+                                placeholder="Fórmula..." Visible="True">
                             </asp:TextBox>
                         </div>
                     </div>

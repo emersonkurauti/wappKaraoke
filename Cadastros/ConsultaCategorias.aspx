@@ -52,6 +52,8 @@
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Descrição" DataField="deCategoria">
                                     </asp:BoundField>
+                                    <asp:BoundField HeaderText="Fórmula" DataField="deFormulaPontuacao">
+                                    </asp:BoundField>
                                     <asp:CommandField ButtonType="Button" SelectText="Editar" 
                                         ShowSelectButton="True">
                                         <ControlStyle CssClass="btn btn-primary btn-block" />
