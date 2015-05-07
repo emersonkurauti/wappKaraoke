@@ -310,6 +310,7 @@
     <Content Include="css\footable.min.css" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\footable.min.js" />
+    <Compile Include="Display\csDisplay.cs" />
     <Compile Include="Movimentacoes\AlterarStatusCantor.aspx.cs">
       <DependentUpon>AlterarStatusCantor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

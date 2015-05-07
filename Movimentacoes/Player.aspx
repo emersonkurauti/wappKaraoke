@@ -52,7 +52,8 @@
                         <div class="col-sm-3">
                             <asp:LinkButton ID="btnFinalizado" 
                                         runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-success ">
+                                        CssClass="btn btn-primary btn-block btn-success " 
+                                        OnClick="btnFinalizado_Click">
                                 <i aria-hidden="true" class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Finalizado
                             </asp:LinkButton>                     
                         </div>
