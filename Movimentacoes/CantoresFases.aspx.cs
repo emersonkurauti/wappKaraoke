@@ -15,6 +15,15 @@ namespace wappKaraoke.Movimentacoes
         {
             if (!IsPostBack)
             {
+                csCategorias vcsCategorias = new csCategorias();
+                cdCategoria = vcsCategorias.CarregaDDL(cdCategoria);
+
+                csFases vcsFases = new csFases();
+                cdFase = vcsFases.CarregaDDL(cdFase);
+
+                vcsFases =new csFases();
+                cdProxFase = vcsFases.CarregaDDL(cdProxFase);
+
                 DataTable dtFase = new DataTable();
                 dtFase.Columns.Add("nmCantor", typeof(string));
                 DataTable dtProxFase = new DataTable();

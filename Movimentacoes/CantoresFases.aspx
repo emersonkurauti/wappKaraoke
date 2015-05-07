@@ -36,9 +36,9 @@
                             <h4 style="text-align: center">PARA >></h4>
                         </div>
                         <div class="col-sm-5">
-                            <asp:TextBox ID="txtProxFase" class="form-control" runat="server" 
-                                placeholder="Próxima Fase" Visible="True" ReadOnly="true">
-                            </asp:TextBox>
+                            <asp:DropDownList ID="cdProxFase" class="form-control selectpicker" style="text-align:left" 
+                                runat="server" Width="100%" AutoPostBack="True">
+                            </asp:DropDownList>
                         </div>
                     </div>
                     <div class="row">
@@ -60,7 +60,19 @@
                         </div>
                         <div class="col-sm-2">
                             <!--Botões-->
-                            
+                            <br/>
+                            <asp:LinkButton ID="btnProxima" 
+                                        runat="server" 
+                                        CssClass="btn btn-primary btn-block btn-success">
+                                Passar&nbsp;&nbsp;<i aria-hidden="true" class="glyphicon glyphicon-arrow-right"></i>
+                            </asp:LinkButton>
+                            <br/>
+                            <asp:LinkButton ID="btnAnterior" 
+                                        runat="server" 
+                                        CssClass="btn btn-primary btn-block btn-success ">
+                                <i aria-hidden="true" class="glyphicon glyphicon-arrow-left"></i>&nbsp;&nbsp;Voltar
+                            </asp:LinkButton>
+                            <br/>
                         </div>
                         <div class="col-sm-5">
                             <!--Grid 2-->

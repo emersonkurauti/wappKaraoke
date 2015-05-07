@@ -31,13 +31,13 @@ namespace wappKaraoke.Movimentacoes {
         protected global::System.Web.UI.WebControls.DropDownList cdFase;
         
         /// <summary>
-        /// txtProxFase control.
+        /// cdProxFase control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtProxFase;
+        protected global::System.Web.UI.WebControls.DropDownList cdProxFase;
         
         /// <summary>
         /// gvFase control.
@@ -47,6 +47,24 @@ namespace wappKaraoke.Movimentacoes {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvFase;
+        
+        /// <summary>
+        /// btnProxima control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnProxima;
+        
+        /// <summary>
+        /// btnAnterior control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnAnterior;
         
         /// <summary>
         /// gvProxFase control.
