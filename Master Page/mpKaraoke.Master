@@ -77,6 +77,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="../Movimentacoes/NotasCantores.aspx">Notas do Cantor</a></li>
                             <li><a href="../Movimentacoes/AlterarStatusCantor.aspx">Status do Cantor</a></li>
+                            <li><a href="../Movimentacoes/CantoresFases.aspx">Cantores Fases</a></li>
                             <li><a href="../Movimentacoes/Player.aspx">Player</a></li>
                         </ul>
                     </li>

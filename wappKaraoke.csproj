@@ -138,6 +138,7 @@
     <Content Include="dewplayer-vol.swf" />
     <Content Include="hold_my_hand.mp3" />
     <Content Include="Movimentacoes\AlterarStatusCantor.aspx" />
+    <Content Include="Movimentacoes\CantoresFases.aspx" />
     <Content Include="Movimentacoes\NotasCantores.aspx" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
@@ -316,6 +317,13 @@
     </Compile>
     <Compile Include="Movimentacoes\AlterarStatusCantor.aspx.designer.cs">
       <DependentUpon>AlterarStatusCantor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Movimentacoes\CantoresFases.aspx.cs">
+      <DependentUpon>CantoresFases.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Movimentacoes\CantoresFases.aspx.designer.cs">
+      <DependentUpon>CantoresFases.aspx</DependentUpon>
     </Compile>
     <Compile Include="Movimentacoes\NotasCantores.aspx.cs">
       <DependentUpon>NotasCantores.aspx</DependentUpon>
