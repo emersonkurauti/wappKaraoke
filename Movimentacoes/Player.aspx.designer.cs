@@ -13,13 +13,13 @@ namespace wappKaraoke.Movimentacoes {
     public partial class Player {
         
         /// <summary>
-        /// btnPlay control.
+        /// btnVoltar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPlay;
+        protected global::System.Web.UI.WebControls.LinkButton btnVoltar;
         
         /// <summary>
         /// btnPause control.
@@ -28,6 +28,42 @@ namespace wappKaraoke.Movimentacoes {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPause;
+        protected global::System.Web.UI.WebControls.LinkButton btnPause;
+        
+        /// <summary>
+        /// btnPlay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnPlay;
+        
+        /// <summary>
+        /// btnAvancar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnAvancar;
+        
+        /// <summary>
+        /// nuCantor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox nuCantor;
+        
+        /// <summary>
+        /// btnFinalizado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnFinalizado;
     }
 }
