@@ -16,7 +16,7 @@ namespace wappKaraoke.Classes
             set { _dtDados = value; }
         }
 
-        private DataTable getDtDados()
+        public csCorStatus()
         {
             _dtDados.Columns.Add("deCor", typeof(string));
             _dtDados.Rows.Add("Amarelo");
@@ -25,7 +25,10 @@ namespace wappKaraoke.Classes
             _dtDados.Rows.Add("Magenta");
             _dtDados.Rows.Add("Verde");
             _dtDados.Rows.Add("Vermelho");
+        }
 
+        private DataTable getDtDados()
+        {
             return _dtDados;
         }
 

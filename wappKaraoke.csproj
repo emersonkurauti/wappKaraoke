@@ -310,6 +310,13 @@
     <Content Include="css\footable.min.css" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\footable.min.js" />
+    <Compile Include="Classes\Controller\conTipoStatus.cs" />
+    <Compile Include="Classes\Mensagem\csMensagem.cs" />
+    <Compile Include="Classes\Model\TipoStatus\caTipoStatus.cs" />
+    <Compile Include="Classes\Model\TipoStatus\coTipoStatus.cs" />
+    <Compile Include="Classes\Paginas Default\csPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Display\csDisplay.cs" />
     <Compile Include="Movimentacoes\AlterarStatusCantor.aspx.cs">
       <DependentUpon>AlterarStatusCantor.aspx</DependentUpon>
@@ -332,19 +339,19 @@
     <Compile Include="Movimentacoes\NotasCantores.aspx.designer.cs">
       <DependentUpon>NotasCantores.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Classes\csAssociacoes.cs" />
-    <Compile Include="Classes\csCantores.cs" />
-    <Compile Include="Classes\csCategorias.cs" />
-    <Compile Include="Classes\csCidades.cs" />
-    <Compile Include="Classes\csCorStatus.cs" />
-    <Compile Include="Classes\csFases.cs" />
-    <Compile Include="Classes\csJurados.cs" />
-    <Compile Include="Classes\csMontaTable.cs" />
-    <Compile Include="Classes\csMusicas.cs" />
-    <Compile Include="Classes\csPageDefault.cs">
+    <Compile Include="Classes\MontaDDL\csAssociacoes.cs" />
+    <Compile Include="Classes\MontaDDL\csCantores.cs" />
+    <Compile Include="Classes\MontaDDL\csCategorias.cs" />
+    <Compile Include="Classes\MontaDDL\csCidades.cs" />
+    <Compile Include="Classes\MontaDDL\csCorStatus.cs" />
+    <Compile Include="Classes\MontaDDL\csFases.cs" />
+    <Compile Include="Classes\MontaDDL\csJurados.cs" />
+    <Compile Include="Classes\MontaDDL\csMontaTable.cs" />
+    <Compile Include="Classes\MontaDDL\csMusicas.cs" />
+    <Compile Include="Classes\Paginas Default\csPageDefault.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Classes\csStatus.cs" />
+    <Compile Include="Classes\MontaDDL\csStatus.cs" />
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

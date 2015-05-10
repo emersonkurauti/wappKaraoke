@@ -5,7 +5,7 @@ using System.Web;
 
 namespace wappKaraoke.Classes
 {
-    public class csPageDefault : System.Web.UI.Page
+    public class csPage : System.Web.UI.Page
     {
         public virtual void Page_Load(object sender, EventArgs e)
         {
@@ -17,11 +17,11 @@ namespace wappKaraoke.Classes
         }
 
         public virtual void ConfirarGridView()
-        { 
+        {
         }
 
         public virtual void InicializaSessions()
-        { 
+        {
         }
     }
 }

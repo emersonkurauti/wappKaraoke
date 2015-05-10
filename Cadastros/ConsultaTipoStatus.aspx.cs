@@ -17,25 +17,6 @@ namespace wappKaraoke.Cadastros
             {
                 csCorStatus vcsCorStatus = new csCorStatus();
                 deCor = vcsCorStatus.CarregaDDL(deCor);
-
-                DataTable dt = new DataTable();
-                dt.Columns.Add("cdTpStatus", typeof(int));
-                dt.Columns.Add("deTpStatus", typeof(string));
-                dt.Columns.Add("deCor", typeof(string));
-
-                for (int i = 1; i < 15; i++)
-                {
-                    DataRow dr = dt.NewRow();
-
-                    dr["cdTpStatus"] = i;
-                    dr["deTpStatus"] = "Tipo Status de teste - " + i;
-                    dr["deCor"] = "Azul";
-
-                    dt.Rows.Add(dr);
-                }
-
-                gvDados.DataSource = dt;
-                gvDados.DataBind();
             }
 
             base.Page_Load(sender, e);
@@ -53,6 +34,11 @@ namespace wappKaraoke.Cadastros
 
             //Adds THEAD and TBODY to GridView.
             gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

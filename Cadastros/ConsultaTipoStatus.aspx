@@ -34,14 +34,16 @@
                         <div class="col-md-2">
                             <asp:LinkButton ID="btnBuscar" 
                                         runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-info">
+                                        CssClass="btn btn-primary btn-block btn-info" 
+                                onclick="btnBuscar_Click">
                                 <i aria-hidden="true" class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;Buscar
                             </asp:LinkButton>
                         </div>
                         <div class="col-md-2">
                             <asp:LinkButton ID="btnNovo1" 
                                         runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-success">
+                                        CssClass="btn btn-primary btn-block btn-success" 
+                                onclick="btnNovo1_Click">
                                 <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Novo Status
                             </asp:LinkButton>
                         </div>
@@ -81,7 +83,8 @@
                         <div class="col-sm-2">
                                <asp:LinkButton ID="btnNovo" 
                                         runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-success">
+                                        CssClass="btn btn-primary btn-block btn-success" 
+                                   onclick="btnNovo1_Click">
                                 <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Novo Status
                             </asp:LinkButton>
                         </div>
