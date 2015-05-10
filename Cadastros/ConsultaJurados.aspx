@@ -81,6 +81,8 @@
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Kanji" DataField="nmJuradoKanji" Visible="False">
                                     </asp:BoundField>
+                                    <asp:BoundField HeaderText="Telefone" DataField="nuTelefone">
+                                    </asp:BoundField>
                                     <asp:BoundField HeaderText="Cidade" DataField="cdCidade">
                                     </asp:BoundField>
                                     <asp:CommandField ButtonType="Button" SelectText="Editar" 

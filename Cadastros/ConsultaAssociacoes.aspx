@@ -24,6 +24,19 @@
                     </div>
                     <br />
                     <div class="row">
+                        <div class="col-sm-6">
+                            <asp:TextBox ID="nmPresidente" class="form-control" runat="server" 
+                                placeholder="Nome do Presidente..." Visible="True">
+                            </asp:TextBox>
+                        </div>
+                        <div class="col-sm-6">
+                            <asp:TextBox ID="nmRepresentante" class="form-control" runat="server" 
+                                placeholder="Nome do Representante..." Visible="True">
+                            </asp:TextBox>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
                         <div class="col-md-8">
                         </div>
                         <div class="col-md-2">
@@ -51,6 +64,10 @@
                                         <ItemStyle Width="5%" />
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Nome" DataField="nmAssociacao">
+                                    </asp:BoundField>
+                                    <asp:BoundField HeaderText="Presidente" DataField="nmPresidente">
+                                    </asp:BoundField>
+                                    <asp:BoundField HeaderText="Representante" DataField="nmRepresentante">
                                     </asp:BoundField>
                                     <asp:CommandField ButtonType="Button" SelectText="Editar" 
                                         ShowSelectButton="True">

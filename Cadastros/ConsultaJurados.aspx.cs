@@ -22,6 +22,7 @@ namespace wappKaraoke.Cadastros
                 dt.Columns.Add("cdJurado", typeof(int));
                 dt.Columns.Add("nmJurado", typeof(string));
                 dt.Columns.Add("nmJuradoKanji", typeof(string));
+                dt.Columns.Add("nuTelefone", typeof(string));
                 dt.Columns.Add("cdCidade", typeof(string));
 
                 for (int i = 0; i < 15; i++)
@@ -31,6 +32,7 @@ namespace wappKaraoke.Cadastros
                     dr["cdJurado"] = i;
                     dr["nmJurado"] = "Nome Jurado de teste - " + i;
                     dr["nmJuradoKanji"] = "Nome Kanji de teste - " + i;
+                    dr["nuTelefone"] = "018-3903-2349";
                     dr["cdCidade"] = "Cidade teste - " + i;
 
                     dt.Rows.Add(dr);
@@ -60,6 +62,7 @@ namespace wappKaraoke.Cadastros
             gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
             gvDados.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
             gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+            gvDados.HeaderRow.Cells[5].Attributes["data-hide"] = "phone";
 
             //Adds THEAD and TBODY to GridView.
             gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;

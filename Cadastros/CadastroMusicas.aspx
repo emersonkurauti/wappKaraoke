@@ -19,6 +19,14 @@
                     <br />
                     <div class="row">
                         <div class="col-sm-12">
+                            <asp:TextBox ID="nmMusicaKanji" class="form-control" runat="server" 
+                                placeholder="Nome da Música em Kanji..." Visible="True">
+                           </asp:TextBox>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12">
                            <asp:TextBox ID="nmCantor" class="form-control" runat="server" 
                                 placeholder="Nome do Cantor..." Visible="True">
                            </asp:TextBox> 
@@ -34,22 +42,14 @@
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-sm-12">
-                           <asp:TextBox ID="deCaminhoMusicaKaraoke" class="form-control" runat="server" 
-                                placeholder="Caminho da Música Karaokê..." Visible="True">
-                           </asp:TextBox>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
                         <div class="col-sm-2">
                            <asp:TextBox ID="nuAnoLanc" class="form-control" runat="server" 
                                 placeholder="Ex. 2003" Visible="True">
                            </asp:TextBox>
                         </div>
                         <div class="col-sm-10">
-                           <asp:TextBox ID="nmMusicaKanji" class="form-control" runat="server" 
-                                placeholder="Nome da Música em Kanji..." Visible="True">
+                           <asp:TextBox ID="deCaminhoMusicaKaraoke" class="form-control" runat="server" 
+                                placeholder="Caminho da Música Karaokê..." Visible="True">
                            </asp:TextBox>
                         </div>
                     </div>

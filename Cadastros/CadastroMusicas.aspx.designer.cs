@@ -22,6 +22,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox nmMusica;
         
         /// <summary>
+        /// nmMusicaKanji control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox nmMusicaKanji;
+        
+        /// <summary>
         /// nmCantor control.
         /// </summary>
         /// <remarks>
@@ -40,15 +49,6 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox deCaminhoMusica;
         
         /// <summary>
-        /// deCaminhoMusicaKaraoke control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox deCaminhoMusicaKaraoke;
-        
-        /// <summary>
         /// nuAnoLanc control.
         /// </summary>
         /// <remarks>
@@ -58,13 +58,13 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox nuAnoLanc;
         
         /// <summary>
-        /// nmMusicaKanji control.
+        /// deCaminhoMusicaKaraoke control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox nmMusicaKanji;
+        protected global::System.Web.UI.WebControls.TextBox deCaminhoMusicaKaraoke;
         
         /// <summary>
         /// btnSalvar control.

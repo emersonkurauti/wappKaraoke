@@ -18,12 +18,20 @@
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-sm-7">
+                        <div class="col-sm-12">
                            <asp:TextBox ID="nmJuradoKanji" class="form-control" runat="server" 
                                 placeholder="Nome do Jurado Kanji..." Visible="True">
                            </asp:TextBox> 
                         </div>
-                        <div class="col-sm-5">
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4">
+                           <asp:TextBox ID="nuTelefone" class="form-control" runat="server" 
+                                placeholder="Telefone..." Visible="True">
+                           </asp:TextBox> 
+                        </div>
+                        <div class="col-sm-8">
                            <asp:DropDownList ID="cdCidade" class="form-control selectpicker" style="text-align:left" 
                                 runat="server" Width="100%" AutoPostBack="True">
                             </asp:DropDownList>
