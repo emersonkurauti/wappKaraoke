@@ -36,11 +36,22 @@ namespace wappKaraoke.Cadastros
             base.Page_Load(sender, e);
         }
 
-        public override void ConfirarGridView()
+        protected override bool ConfirarGridView()
         {
-            base.ConfirarGridView();
-            //Adds THEAD and TBODY to GridView.
-            gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
+            if (!base.ConfirarGridView())
+                return false;
+
+            try
+            {
+                //Adds THEAD and TBODY to GridView.
+                gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

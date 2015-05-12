@@ -38,19 +38,28 @@ namespace wappKaraoke.Cadastros
             base.Page_Load(sender, e);
         }
 
-        public override void ConfirarGridView()
+        protected override bool ConfirarGridView()
         {
-            base.ConfirarGridView();
+            if (!base.ConfirarGridView())
+                return false;
 
-            //Attribute to show the Plus Minus Button.
-            gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+            try
+            {
+                //Attribute to show the Plus Minus Button.
+                gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
 
-            //Attribute to hide column in Phone.
-            gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+                //Attribute to hide column in Phone.
+                gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
 
-            //Adds THEAD and TBODY to GridView.
-            gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;            
+                //Adds THEAD and TBODY to GridView.
+                gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

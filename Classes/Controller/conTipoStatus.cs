@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using wappKaraoke.Classes.Model.TipoStatus;
-using wappKaraoke.Classes.Mensagem;
+using wappKaraoke.Mensagem;
 
 namespace wappKaraoke.Classes.Controller
 {

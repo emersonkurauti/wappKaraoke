@@ -9,7 +9,7 @@ namespace wappKaraoke.Classes.Model.TipoStatus
 {
     public class coTipoStatus : KuraFrameWork.ClasseBase.csModelBase
     {
-        private static  int _CC_cdRegistro;
+        private static int _CC_cdRegistro = 0;
         public static int CC_cdRegistro
         {
             get { return coTipoStatus._cdTpStatus; }
@@ -25,12 +25,14 @@ namespace wappKaraoke.Classes.Model.TipoStatus
             get { return _deTpStatus; }
             set { _deTpStatus = value; }
         }
+
 		private static int _cdTpStatus;
         public int cdTpStatus
         {
             get { return _cdTpStatus; }
             set { _cdTpStatus = value; }
         }
+
 		private static string _deCor = "";
         public string deCor
         {
@@ -48,8 +50,6 @@ namespace wappKaraoke.Classes.Model.TipoStatus
             _CC_cdRegistro = cdTpStatus;
             tobjCA = typeof(caTipoStatus);
         }
-
-
 
         /// <summary>
         /// Sobrescrito para retornar a chave

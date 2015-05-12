@@ -162,64 +162,74 @@ namespace wappKaraoke.Cadastros
             base.Page_Load(sender, e);
         }
 
-        public override void ConfirarGridView()
+        protected override bool ConfirarGridView()
         {
-            base.ConfirarGridView();
+            if (!base.ConfirarGridView())
+                return false;
 
-            //Associações
-            //Attribute to show the Plus Minus Button.
-            gvAssociacoes.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+            try
+            {
+                //Associações
+                //Attribute to show the Plus Minus Button.
+                gvAssociacoes.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
 
-            //Attribute to hide column in Phone.
-            gvAssociacoes.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            gvAssociacoes.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-            gvAssociacoes.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-            gvAssociacoes.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
-            gvAssociacoes.HeaderRow.Cells[5].Attributes["data-hide"] = "phone";
+                //Attribute to hide column in Phone.
+                gvAssociacoes.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+                gvAssociacoes.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+                gvAssociacoes.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+                gvAssociacoes.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+                gvAssociacoes.HeaderRow.Cells[5].Attributes["data-hide"] = "phone";
 
-            //Adds THEAD and TBODY to GridView.
-            gvAssociacoes.HeaderRow.TableSection = TableRowSection.TableHeader;
+                //Adds THEAD and TBODY to GridView.
+                gvAssociacoes.HeaderRow.TableSection = TableRowSection.TableHeader;
 
-            //Jurados
-            //Attribute to show the Plus Minus Button.
-            gvGrupoJuradoConcurso.HeaderRow.Cells[2].Attributes["data-class"] = "expand";
+                //Jurados
+                //Attribute to show the Plus Minus Button.
+                gvGrupoJuradoConcurso.HeaderRow.Cells[2].Attributes["data-class"] = "expand";
 
-            //Attribute to hide column in Phone.
-            gvGrupoJuradoConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            gvGrupoJuradoConcurso.HeaderRow.Cells[1].Attributes["data-hide"] = "phone";
-            gvGrupoJuradoConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-            gvGrupoJuradoConcurso.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+                //Attribute to hide column in Phone.
+                gvGrupoJuradoConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+                gvGrupoJuradoConcurso.HeaderRow.Cells[1].Attributes["data-hide"] = "phone";
+                gvGrupoJuradoConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+                gvGrupoJuradoConcurso.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
 
-            //Adds THEAD and TBODY to GridView.
-            gvGrupoJuradoConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
+                //Adds THEAD and TBODY to GridView.
+                gvGrupoJuradoConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
 
-            //Fases
-            //Attribute to show the Plus Minus Button.
-            gvFasesConcurso.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+                //Fases
+                //Attribute to show the Plus Minus Button.
+                gvFasesConcurso.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
 
-            //Attribute to hide column in Phone.
-            gvFasesConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            gvFasesConcurso.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-            gvFasesConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+                //Attribute to hide column in Phone.
+                gvFasesConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+                gvFasesConcurso.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+                gvFasesConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
 
-            //Adds THEAD and TBODY to GridView.
-            gvFasesConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
+                //Adds THEAD and TBODY to GridView.
+                gvFasesConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
 
-            //Cantores
-            //Attribute to show the Plus Minus Button.
-            //gvCantoresConcurso.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+                //Cantores
+                //Attribute to show the Plus Minus Button.
+                //gvCantoresConcurso.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
 
-            //Attribute to hide column in Phone.
-            //gvCantoresConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            //gvCantoresConcurso.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-            //gvCantoresConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-            //gvCantoresConcurso.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+                //Attribute to hide column in Phone.
+                //gvCantoresConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+                //gvCantoresConcurso.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+                //gvCantoresConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+                //gvCantoresConcurso.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
 
-            //Adds THEAD and TBODY to GridView.
-            //gvCantoresConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
+                //Adds THEAD and TBODY to GridView.
+                //gvCantoresConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public override void InicializaSessions()
+        protected override void InicializaSessions()
         {
             base.InicializaSessions();
 

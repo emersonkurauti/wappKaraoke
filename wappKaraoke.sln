@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wappKaraoke", "wappKaraoke.csproj", "{29767489-78E8-4836-A11C-D2E5111C1A47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KuraFrameWork", "..\..\..\KuraSoft\KuraFramework\KuraFrameWork.csproj", "{944A4514-EAFB-429B-A896-80B714179115}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{29767489-78E8-4836-A11C-D2E5111C1A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29767489-78E8-4836-A11C-D2E5111C1A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29767489-78E8-4836-A11C-D2E5111C1A47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{944A4514-EAFB-429B-A896-80B714179115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{944A4514-EAFB-429B-A896-80B714179115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{944A4514-EAFB-429B-A896-80B714179115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{944A4514-EAFB-429B-A896-80B714179115}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

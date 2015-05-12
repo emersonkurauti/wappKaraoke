@@ -388,7 +388,12 @@
     <None Include="fonts\glyphicons-halflings-regular.ttf" />
     <None Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\KuraSoft\KuraFramework\KuraFrameWork.csproj">
+      <Project>{944A4514-EAFB-429B-A896-80B714179115}</Project>
+      <Name>KuraFrameWork</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

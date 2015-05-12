@@ -50,9 +50,13 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
+                            <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
                             <br/>
                             <asp:GridView ID="gvDados" runat="server" 
-                                CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
+                                CssClass="footable table table-bordered table-hover" 
+                                AutoGenerateColumns="False" 
+                                onselectedindexchanged="gvDados_SelectedIndexChanged" 
+                                onrowdeleting="gvDados_RowDeleting">
                                 <Columns>
                                     <asp:BoundField HeaderText="Cód." DataField="cdTpStatus">
                                         <ItemStyle Width="5%" />
@@ -66,10 +70,9 @@
                                         <ControlStyle CssClass="btn btn-primary btn-block" />
                                         <ItemStyle Width="15%" />
                                     </asp:CommandField>
-                                    <asp:CommandField ButtonType="Button" SelectText="Excluir" 
-                                        ShowSelectButton="True">
+                                    <asp:CommandField DeleteText="Excluir" ShowDeleteButton="True">
                                         <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
-                                        <ItemStyle Width="15%" />
+                                    <ItemStyle Width="15%" />
                                     </asp:CommandField>
                                 </Columns>
                             </asp:GridView>

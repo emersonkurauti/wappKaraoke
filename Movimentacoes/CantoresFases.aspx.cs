@@ -51,12 +51,19 @@ namespace wappKaraoke.Movimentacoes
             base.Page_Load(sender, e);
         }
 
-        public override void ConfirarGridView()
+        protected override bool ConfirarGridView()
         {
-            base.ConfirarGridView();
+            if (!base.ConfirarGridView())
+                return false;
 
-            //gvFase.HeaderRow.TableSection = TableRowSection.TableHeader;
-            //gvProxFase.HeaderRow.TableSection = TableRowSection.TableHeader;
+            try
+            {
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

@@ -55,23 +55,34 @@ namespace wappKaraoke.Cadastros
             base.Page_Load(sender, e);
         }
 
-        public override void ConfirarGridView()
+        protected override bool ConfirarGridView()
         {
-            base.ConfirarGridView();
-            //Attribute to show the Plus Minus Button.
-            gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+            if (!base.ConfirarGridView())
+                return false;
 
-            //Attribute to hide column in Phone.
-            gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-            gvDados.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-            gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
-            gvDados.HeaderRow.Cells[5].Attributes["data-hide"] = "phone";
-            gvDados.HeaderRow.Cells[6].Attributes["data-hide"] = "phone";
-            gvDados.HeaderRow.Cells[7].Attributes["data-hide"] = "phone";
+            try
+            {
+                //Attribute to show the Plus Minus Button.
+                gvDados.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
 
-            //Adds THEAD and TBODY to GridView.
-            gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
+                //Attribute to hide column in Phone.
+                gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[5].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[6].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[7].Attributes["data-hide"] = "phone";
+
+                //Adds THEAD and TBODY to GridView.
+                gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

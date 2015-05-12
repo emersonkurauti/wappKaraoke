@@ -19,12 +19,12 @@ namespace wappKaraoke.Classes
         public csCorStatus()
         {
             _dtDados.Columns.Add("deCor", typeof(string));
-            _dtDados.Rows.Add("Amarelo");
-            _dtDados.Rows.Add("Azul");
-            _dtDados.Rows.Add("Laranja");
-            _dtDados.Rows.Add("Magenta");
-            _dtDados.Rows.Add("Verde");
-            _dtDados.Rows.Add("Vermelho");
+            _dtDados.Rows.Add("--Selecione a cor--");
+            _dtDados.Rows.Add("AMARELO");
+            _dtDados.Rows.Add("AZUL");
+            _dtDados.Rows.Add("LARANJADO");
+            _dtDados.Rows.Add("VERDE");
+            _dtDados.Rows.Add("VERMELHO");
         }
 
         private DataTable getDtDados()
