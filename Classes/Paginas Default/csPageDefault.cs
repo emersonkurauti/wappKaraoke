@@ -6,6 +6,7 @@ using System.Data;
 using System.Reflection;
 using System.Web.UI.WebControls;
 using wappKaraoke.Mensagem;
+using System.Web.UI;
 
 namespace wappKaraoke.Classes
 {
@@ -137,7 +138,7 @@ namespace wappKaraoke.Classes
             Response.Redirect(_strPaginaCadastro.Replace("Consulta", "Cadastro"));
         }
 
-        protected void gvDados_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        protected virtual void gvDados_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             //Mensagem("Deseja realmente exclir?", Page);
 
@@ -167,6 +168,89 @@ namespace wappKaraoke.Classes
             }
 
             AtualizaGridView();
+        }
+
+        protected virtual void btnBuscar_Click(object sender, EventArgs e)
+        {
+            DataTable dt;
+            string strFiltro = "";
+            int intCodigo;
+
+            _dtDados = (DataTable)Session["dtDados"];
+
+            _tobjCon = _objCon.GetType();
+            _objCo = _tobjCon.GetProperty("objCo").GetValue(_objCon, null);
+            _tobjCo = _objCo.GetType();
+
+            MethodInfo LimparAtributos = _tobjCo.GetMethod("LimparAtributos");
+            object obj = LimparAtributos.Invoke(_objCo, new object[] { });
+
+            try
+            {
+                object nmCampoChave = _tobjCa.GetProperty("nmCampoChave").GetValue(_tobjCa, null);
+
+                foreach (Control c in ((LinkButton)sender).Parent.Controls)
+                {
+                    foreach (DataColumn dc in _dtDados.Columns)
+                    {
+                        if ((c is TextBox) && (((TextBox)c).ID.ToUpper() == dc.ColumnName.ToUpper()) && (((TextBox)c).Text.Trim() != ""))
+                        {
+                            if (nmCampoChave.ToString().ToUpper() == dc.ColumnName.ToUpper())
+                            {
+                                Int32.TryParse(((TextBox)c).Text.Trim(), out intCodigo);
+                                strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " = " + intCodigo.ToString();
+                            }
+                            else
+                            {
+                                strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " LIKE '%" + ((TextBox)c).Text.Trim() + "%'";
+                            }
+                        }
+                        if ((c is DropDownList) && (((DropDownList)c).ID.ToUpper() == dc.ColumnName.ToUpper()) && (((DropDownList)c).SelectedIndex != 0))
+                        {
+                            Int32.TryParse(((DropDownList)c).SelectedValue, out intCodigo);
+
+                            if (intCodigo == 0)
+                                strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " = '" + ((DropDownList)c).SelectedValue.ToString() + "'";
+                            else
+                                strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " = " + ((DropDownList)c).SelectedValue;
+                        }
+                    }
+
+                }
+
+                //Seta o Filtro
+                PropertyInfo pstrFiltro = _tobjCo.GetProperty("strFiltro");
+                pstrFiltro.SetValue(_objCo, strFiltro, null);
+
+
+                MethodInfo Select = _objCon.GetType().GetMethod("Select");
+                object bSelect = Select.Invoke(Select, new object[] { });
+
+                if ((bool)bSelect)
+                {
+                    PropertyInfo pdtDados = _objCon.GetType().GetProperty("dtDados");
+                    dtDados = (DataTable)pdtDados.GetValue(_objCon, null);
+
+                    if (dtDados.Rows.Count == 0)
+                        _ltMensagemDefault.Text = base.MostraMensagem("Nenhum registro encontrado", "Realize o cadastro!", csMensagem.msgInfo);
+                }
+                else
+                {
+                    string strMensagemErro = _tobjCon.GetProperty("strMensagemErro").GetValue(_objCon, null).ToString();
+                    _ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
+                }
+
+                _gvDadosDefault.DataSource = _dtDados;
+                _gvDadosDefault.DataBind();
+
+                Session["dtDados"] = dtDados;
+
+                ConfirarGridView();
+            }
+            catch
+            {
+                ltMensagemDefault.Text = MostraMensagem(csMensagem.msgTitFalaAoConsultar, csMensagem.msgFalhaAoConsultarFiltro, csMensagem.msgDanger);
+            }
         }
 
         protected virtual string AndWhere(string sComando)

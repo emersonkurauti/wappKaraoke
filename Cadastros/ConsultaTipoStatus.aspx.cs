@@ -61,56 +61,5 @@ namespace wappKaraoke.Cadastros
 
             Session["gvRow"] = null;
         }
-
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            conTipoStatus objconTipoStatus = new conTipoStatus();
-            DataTable dt;
-            bool bFiltro = false;
-
-            objconTipoStatus.objCoTipoStatus.LimparAtributos();
-            int intCodigo;
-
-            try
-            {
-                if (cdTpStatus.Text != "")
-                {
-                    Int32.TryParse(cdTpStatus.Text, out intCodigo);
-                    objconTipoStatus.objCoTipoStatus.strFiltro += AndWhere(objconTipoStatus.objCoTipoStatus.strFiltro) + " cdTpStatus = " + intCodigo.ToString();
-                    bFiltro = true;
-                }
-
-                if (deCor.SelectedIndex != 0)
-                {
-                    objconTipoStatus.objCoTipoStatus.strFiltro += AndWhere(objconTipoStatus.objCoTipoStatus.strFiltro) + " deCor = '" + deCor.SelectedItem.Text + "'";
-                    bFiltro = true;
-                }
-
-                if (deTpStatus.Text != "")
-                {
-                    if (bFiltro)
-                        objconTipoStatus.objCoTipoStatus.strFiltro += AndWhere(objconTipoStatus.objCoTipoStatus.strFiltro) + " deTpStatus LIKE " + "'%" + deTpStatus.Text + "%'";
-                    else
-                        objconTipoStatus.objCoTipoStatus.strFiltro += AndWhere(objconTipoStatus.objCoTipoStatus.strFiltro) + " deTpStatus LIKE " + "'%" + deTpStatus.Text + "%'";
-                }
-
-
-
-                if (objconTipoStatus.objCoTipoStatus.Select(out dt))
-                {
-                    dtDados = dt;
-                    gvDados.DataSource = dtDados;
-                    gvDados.DataBind();
-                }
-
-                ConfirarGridView();
-
-                Session["dtDados"] = dtDados;
-            }
-            catch
-            {
-                ltMensagem.Text = MostraMensagem(csMensagem.msgTitFalaAoConsultar, csMensagem.msgFalhaAoConsultarFiltro, csMensagem.msgDanger);
-            }
-        }
     }
 }
