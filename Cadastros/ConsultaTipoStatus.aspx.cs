@@ -54,12 +54,5 @@ namespace wappKaraoke.Cadastros
                 return false;
             }
         }
-
-        protected override void InicializaSessions()
-        {
-            base.InicializaSessions();
-
-            Session["gvRow"] = null;
-        }
     }
 }

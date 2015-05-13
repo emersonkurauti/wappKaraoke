@@ -314,6 +314,7 @@
     <Compile Include="Classes\Mensagem\csMensagem.cs" />
     <Compile Include="Classes\Model\TipoStatus\caTipoStatus.cs" />
     <Compile Include="Classes\Model\TipoStatus\coTipoStatus.cs" />
+    <Compile Include="Classes\Paginas Default\csPageCadastro.cs" />
     <Compile Include="Classes\Paginas Default\csPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

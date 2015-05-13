@@ -34,6 +34,10 @@
         $(function () {
             $('[id*=gvDados]').footable();
         });
+
+        function ConfimarExclusao() {
+            return confirm('O registro será excluído!');
+        };
     </script>
 
     <asp:ContentPlaceHolder ID="head" runat="server">

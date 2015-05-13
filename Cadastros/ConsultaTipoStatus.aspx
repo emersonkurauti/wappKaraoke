@@ -2,7 +2,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <link href="../css/footable-0.1.css" rel="stylesheet" type="text/css" />
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default">
@@ -52,11 +51,11 @@
                         <div class="col-sm-12">
                             <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
                             <br/>
-                            <asp:GridView ID="gvDados" runat="server" 
+                            <asp:GridView DataKeyNames="cdTpStatus" ID="gvDados" runat="server" 
                                 CssClass="footable table table-bordered table-hover" 
                                 AutoGenerateColumns="False" 
-                                onselectedindexchanged="gvDados_SelectedIndexChanged" 
-                                onrowdeleting="gvDados_RowDeleting">
+                                OnRowDataBound="gvDados_RowDataBound" 
+                                OnRowCommand="gvDados_RowCommand" onrowdeleting="gvDados_RowDeleting">
                                 <Columns>
                                     <asp:BoundField HeaderText="Cód." DataField="cdTpStatus">
                                         <ItemStyle Width="5%" />
@@ -65,15 +64,28 @@
                                     <asp:BoundField HeaderText="Cor" DataField="deCor">
                                         <ItemStyle Width="15%" />
                                     </asp:BoundField>
-                                    <asp:CommandField ButtonType="Button" SelectText="Editar" 
-                                        ShowSelectButton="True">
-                                        <ControlStyle CssClass="btn btn-primary btn-block" />
-                                        <ItemStyle Width="15%" />
-                                    </asp:CommandField>
-                                    <asp:CommandField DeleteText="Excluir" ShowDeleteButton="True">
-                                        <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
-                                    <ItemStyle Width="15%" />
-                                    </asp:CommandField>
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="lnkEdit" runat="server"
+                                                CssClass="btn btn-primary btn-block" Text = "Editar"
+                                                CommandArgument='<%# Eval("cdTpStatus") %>'
+                                                CommandName='Edit'>
+                                                <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>
+                                            </asp:LinkButton>
+                                        </ItemTemplate>
+                                        <ItemStyle Width="5%" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="lnkDelete" runat="server"
+                                                CssClass="btn btn-primary btn-block btn-danger" Text = "Excluir"
+                                                CommandArgument='<%# Eval("cdTpStatus") + "$" + Eval("deTpStatus") %>'
+                                                CommandName='Delete'>
+                                                <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>
+                                            </asp:LinkButton>
+                                        </ItemTemplate>
+                                        <ItemStyle Width="5%" />
+                                    </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>
                         </div>

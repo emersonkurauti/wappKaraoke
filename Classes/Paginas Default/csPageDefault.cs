@@ -58,6 +58,13 @@ namespace wappKaraoke.Classes
             set { _ltMensagemDefault = value; }
         }
 
+        private HiddenField _hdConfirmacao;
+        public HiddenField hdConfirmacao
+        {
+            get { return _hdConfirmacao; }
+            set { _hdConfirmacao = value; }
+        }
+
         public override void Page_Load(object sender, EventArgs e)
         {
             if (ltMensagemDefault != null)
@@ -73,6 +80,30 @@ namespace wappKaraoke.Classes
 
             _strPaginaCadastro = Request.Path.Substring(Request.Path.LastIndexOf("/") + 1);
             base.Page_Load(sender, e);
+        }
+
+        protected override void InicializaSessions()
+        {
+            base.InicializaSessions();
+
+            Session["cdRegistro"] = null;
+        }
+
+        protected override bool ConfirarGridView()
+        {
+            if (!base.ConfirarGridView())
+                return false;
+
+            if (_dtDados == null)
+                return false;
+
+            if (_dtDados.Columns.Count == 0)
+                return false;
+
+            if (_dtDados.Rows.Count == 0)
+                return false;
+
+            return true;
         }
 
         protected virtual void AtualizaGridView()
@@ -109,70 +140,13 @@ namespace wappKaraoke.Classes
             ConfirarGridView();
         }
 
-        protected override bool ConfirarGridView()
-        {
-            if (!base.ConfirarGridView())
-                return false;
-
-            if (_dtDados == null)
-                return false;
-
-            if (_dtDados.Columns.Count == 0)
-                return false;
-
-            if (_dtDados.Rows.Count == 0)
-                return false;
-
-            return true;
-        }
-
         protected virtual void btnNovo1_Click(object sender, EventArgs e)
-        {
+        {           
             Response.Redirect(_strPaginaCadastro.Replace("Consulta", "Cadastro"));
-        }
-
-        protected virtual void gvDados_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridViewRow gvRow = ((GridView)sender).SelectedRow;
-            Session["gvRow"] = gvRow;
-            Response.Redirect(_strPaginaCadastro.Replace("Consulta", "Cadastro"));
-        }
-
-        protected virtual void gvDados_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            //Mensagem("Deseja realmente exclir?", Page);
-
-            _dtDados = (DataTable)Session["dtDados"];
-
-            _tobjCon = _objCon.GetType();
-            _objCon = Activator.CreateInstance(_tobjCon);
-            _objCo = _tobjCon.GetProperty("objCo").GetValue(_objCon, null);
-            _tobjCo = _objCo.GetType();
-
-            object nmCampoChave = _tobjCa.GetProperty("nmCampoChave").GetValue(_tobjCa, null);
-
-            PropertyInfo pCampoChave = _tobjCo.GetProperty(nmCampoChave.ToString());
-            pCampoChave.SetValue(_objCo, Convert.ToInt32(_dtDados.Rows[e.RowIndex][nmCampoChave.ToString()].ToString()), null);
-
-            MethodInfo Excluir = _tobjCon.GetMethod("Excluir");
-            object bExcluir = Excluir.Invoke(_tobjCon, new object[] { });
-
-            if ((bool)bExcluir)
-            {
-                _ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroExcluido, csMensagem.msgSucess);
-            }
-            else
-            {
-                string strMensagemErro = _tobjCon.GetProperty("strMensagemErro").GetValue(_objCon, null).ToString();
-                _ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
-            }
-
-            AtualizaGridView();
         }
 
         protected virtual void btnBuscar_Click(object sender, EventArgs e)
         {
-            DataTable dt;
             string strFiltro = "";
             int intCodigo;
 
@@ -259,6 +233,67 @@ namespace wappKaraoke.Classes
                     return " AND ";
             else
                 return " WHERE ";
+        }
+
+        protected virtual void RemoveRegistro(int intCodigo)
+        {
+            _dtDados = (DataTable)Session["dtDados"];
+
+            _tobjCon = _objCon.GetType();
+            _objCon = Activator.CreateInstance(_tobjCon);
+            _objCo = _tobjCon.GetProperty("objCo").GetValue(_objCon, null);
+            _tobjCo = _objCo.GetType();
+
+            object nmCampoChave = _tobjCa.GetProperty("nmCampoChave").GetValue(_tobjCa, null);
+
+            PropertyInfo pCampoChave = _tobjCo.GetProperty(nmCampoChave.ToString());
+            pCampoChave.SetValue(_objCo, intCodigo, null);
+
+            MethodInfo Excluir = _tobjCon.GetMethod("Excluir");
+            object bExcluir = Excluir.Invoke(_tobjCon, new object[] { });
+
+            if ((bool)bExcluir)
+            {
+                _ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroExcluido, csMensagem.msgSucess);
+            }
+            else
+            {
+                string strMensagemErro = _tobjCon.GetProperty("strMensagemErro").GetValue(_objCon, null).ToString();
+                _ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
+            }
+
+            AtualizaGridView();
+        }
+
+        protected virtual void gvDados_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Delete")
+            {
+                string[] strValores = e.CommandArgument.ToString().Split('$');
+                int intCodigo = Convert.ToInt32(strValores[0]);
+                RemoveRegistro(intCodigo);
+            }
+            else
+                if(e.CommandName == "Edit")
+                {
+                    Session["cdRegistro"] = Convert.ToInt32(e.CommandArgument);
+                    Response.Redirect(_strPaginaCadastro.Replace("Consulta", "Cadastro"));
+                }
+        }
+
+        protected virtual void gvDados_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                LinkButton l = (LinkButton)e.Row.FindControl("lnkDelete");
+                l.Attributes.Add("OnClick", "javascript:return "+
+                                 "confirm('O registro \"" + DataBinder.Eval(e.Row.DataItem, "deTpStatus") + "\" será removido!')"); 
+            }
+        }
+
+        protected virtual void gvDados_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
         }
     }
 }

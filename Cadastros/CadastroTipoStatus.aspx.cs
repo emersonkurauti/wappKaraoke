@@ -16,8 +16,17 @@ namespace wappKaraoke.Cadastros
             {
                 csCorStatus vcsCorStatus = new csCorStatus();
                 deCor = vcsCorStatus.CarregaDDL(deCor);
-                deCor = vcsCorStatus.CarregaDDL(deCor);
             }
+        }
+
+        protected void btnSalvar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
