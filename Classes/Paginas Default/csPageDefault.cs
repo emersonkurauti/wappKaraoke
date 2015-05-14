@@ -33,10 +33,6 @@ namespace wappKaraoke.Classes
             set { _gvDadosDefault = value; }
         }
 
-        private Type _tobjCon;
-        private object _objCo;
-        private Type _tobjCo;
-
         private HiddenField _hdConfirmacao;
         public HiddenField hdConfirmacao
         {
@@ -55,6 +51,12 @@ namespace wappKaraoke.Classes
                 {
                     AtualizaGridView();
                 }
+            }
+
+            if (Session["ltMensagemDefault"] != null)
+            {
+                ltMensagemDefault.Text = ((Literal)Session["ltMensagemDefault"]).Text;
+                Session["ltMensagemDefault"] = null;
             }
 
             _strPaginaCadastro = Request.Path.Substring(Request.Path.LastIndexOf("/") + 1);
@@ -85,15 +87,15 @@ namespace wappKaraoke.Classes
 
         protected virtual void AtualizaGridView()
         {
-            _tobjCon = objCon.GetType();
-            _objCo = _tobjCon.GetProperty("objCo").GetValue(objCon, null);
-            _tobjCo = _objCo.GetType();
+            tobjCon = objCon.GetType();
+            objCo = tobjCon.GetProperty("objCo").GetValue(objCon, null);
+            tobjCo = objCo.GetType();
 
-            MethodInfo LimparAtributos = _tobjCo.GetMethod("LimparAtributos");
-            object obj = LimparAtributos.Invoke(_objCo, new object[] { });
+            MethodInfo LimparAtributos = tobjCo.GetMethod("LimparAtributos");
+            object obj = LimparAtributos.Invoke(objCo, new object[] { });
 
-            MethodInfo Select = _tobjCon.GetMethod("Select");
-            object bSelect = Select.Invoke(_tobjCon, new object[] { });
+            MethodInfo Select = tobjCon.GetMethod("Select");
+            object bSelect = Select.Invoke(tobjCon, new object[] { });
 
             if ((bool)bSelect)
             {
@@ -105,7 +107,7 @@ namespace wappKaraoke.Classes
             }
             else
             {
-                string strMensagemErro = _tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
+                string strMensagemErro = tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
                 ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
             }
 
@@ -130,12 +132,12 @@ namespace wappKaraoke.Classes
 
             _dtDados = (DataTable)Session["dtDados"];
 
-            _tobjCon = objCon.GetType();
-            _objCo = _tobjCon.GetProperty("objCo").GetValue(objCon, null);
-            _tobjCo = _objCo.GetType();
+            tobjCon = objCon.GetType();
+            objCo = tobjCon.GetProperty("objCo").GetValue(objCon, null);
+            tobjCo = objCo.GetType();
 
-            MethodInfo LimparAtributos = _tobjCo.GetMethod("LimparAtributos");
-            object obj = LimparAtributos.Invoke(_objCo, new object[] { });
+            MethodInfo LimparAtributos = tobjCo.GetMethod("LimparAtributos");
+            object obj = LimparAtributos.Invoke(objCo, new object[] { });
 
             try
             {
@@ -171,8 +173,8 @@ namespace wappKaraoke.Classes
                 }
 
                 //Seta o Filtro
-                PropertyInfo pstrFiltro = _tobjCo.GetProperty("strFiltro");
-                pstrFiltro.SetValue(_objCo, strFiltro, null);
+                PropertyInfo pstrFiltro = tobjCo.GetProperty("strFiltro");
+                pstrFiltro.SetValue(objCo, strFiltro, null);
 
 
                 MethodInfo Select = objCon.GetType().GetMethod("Select");
@@ -188,7 +190,7 @@ namespace wappKaraoke.Classes
                 }
                 else
                 {
-                    string strMensagemErro = _tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
+                    string strMensagemErro = tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
                     ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
                 }
 
@@ -217,18 +219,18 @@ namespace wappKaraoke.Classes
         {
             _dtDados = (DataTable)Session["dtDados"];
 
-            _tobjCon = objCon.GetType();
-            objCon = Activator.CreateInstance(_tobjCon);
-            _objCo = _tobjCon.GetProperty("objCo").GetValue(objCon, null);
-            _tobjCo = _objCo.GetType();
+            tobjCon = objCon.GetType();
+            objCon = Activator.CreateInstance(tobjCon);
+            objCo = tobjCon.GetProperty("objCo").GetValue(objCon, null);
+            tobjCo = objCo.GetType();
 
             object nmCampoChave = tobjCa.GetProperty("nmCampoChave").GetValue(tobjCa, null);
 
-            PropertyInfo pCampoChave = _tobjCo.GetProperty(nmCampoChave.ToString());
-            pCampoChave.SetValue(_objCo, intCodigo, null);
+            PropertyInfo pCampoChave = tobjCo.GetProperty(nmCampoChave.ToString());
+            pCampoChave.SetValue(objCo, intCodigo, null);
 
-            MethodInfo Excluir = _tobjCon.GetMethod("Excluir");
-            object bExcluir = Excluir.Invoke(_tobjCon, new object[] { });
+            MethodInfo Excluir = tobjCon.GetMethod("Excluir");
+            object bExcluir = Excluir.Invoke(tobjCon, new object[] { });
 
             if ((bool)bExcluir)
             {
@@ -236,7 +238,7 @@ namespace wappKaraoke.Classes
             }
             else
             {
-                string strMensagemErro = _tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
+                string strMensagemErro = tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
                 ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
             }
 

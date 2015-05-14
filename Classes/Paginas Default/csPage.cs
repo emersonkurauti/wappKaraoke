@@ -24,6 +24,27 @@ namespace wappKaraoke.Classes
             set { _objCon = value; }
         }
 
+        private Type _tobjCon;
+        public Type tobjCon
+        {
+            get { return _tobjCon; }
+            set { _tobjCon = value; }
+        }
+
+        private object _objCo;
+        public object objCo
+        {
+            get { return _objCo; }
+            set { _objCo = value; }
+        }
+
+        private Type _tobjCo;
+        public Type tobjCo
+        {
+            get { return _tobjCo; }
+            set { _tobjCo = value; }
+        }
+
         private Literal _ltMensagemDefault;
         public Literal ltMensagemDefault
         {

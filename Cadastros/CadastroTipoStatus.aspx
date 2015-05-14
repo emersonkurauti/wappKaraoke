@@ -19,7 +19,7 @@
                         </div>
                         <div class="col-sm-2">
                             <asp:DropDownList ID="deCor" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True">
+                                runat="server" Width="100%" AutoPostBack="False">
                             </asp:DropDownList>
                         </div>
                     </div>

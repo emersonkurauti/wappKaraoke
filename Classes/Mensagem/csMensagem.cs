@@ -28,5 +28,7 @@ namespace wappKaraoke.Mensagem
         //Mensagem Padrão Operação
         public const string msgFalhaAoConsultarFiltro = "Ocorreu uma falhar ao consultar com o filtro informado.";
         public const string msgRegistroExcluido = "O registro foi excluído com sucesso!";
+        public const string msgRegistroInserido = "O registro foi inserido com sucesso!";
+        public const string msgRegistroAlterado = "O registro foi alterado com sucesso!";
     }
 }
