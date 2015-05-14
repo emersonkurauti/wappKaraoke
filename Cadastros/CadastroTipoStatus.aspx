@@ -10,6 +10,8 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
+                        <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
+                            <br/>
                         <div class="col-sm-10">
                             <asp:TextBox ID="deTpStatus" class="form-control" runat="server" 
                                 placeholder="Descrição do Status..." Visible="True">

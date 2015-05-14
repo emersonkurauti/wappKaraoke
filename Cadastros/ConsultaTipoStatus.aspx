@@ -68,7 +68,6 @@
                                         <ItemTemplate>
                                             <asp:LinkButton ID="lnkEdit" runat="server"
                                                 CssClass="btn btn-primary btn-block" Text = "Editar"
-                                                CommandArgument='<%# Eval("cdTpStatus") %>'
                                                 CommandName='Edit'>
                                                 <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>
                                             </asp:LinkButton>

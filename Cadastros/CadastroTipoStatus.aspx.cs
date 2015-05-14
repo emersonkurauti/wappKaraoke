@@ -5,28 +5,26 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using wappKaraoke.Classes;
+using wappKaraoke.Classes.Model.TipoStatus;
+using wappKaraoke.Classes.Controller;
 
 namespace wappKaraoke.Cadastros
 {
-    public partial class CadastroTipoStatus : System.Web.UI.Page
+    public partial class CadastroTipoStatus : csPageCadastro
     {
-        protected void Page_Load(object sender, EventArgs e)
+        public override void Page_Load(object sender, EventArgs e)
         {
+            ltMensagemDefault = ltMensagem;
+            tobjCa = typeof(caTipoStatus);
+            objCon = new conTipoStatus();
+
             if (!this.IsPostBack)
             {
                 csCorStatus vcsCorStatus = new csCorStatus();
                 deCor = vcsCorStatus.CarregaDDL(deCor);
             }
-        }
 
-        protected void btnSalvar_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btnCancelar_Click(object sender, EventArgs e)
-        {
-
+            base.Page_Load(sender, e);
         }
     }
 }

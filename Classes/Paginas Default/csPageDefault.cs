@@ -26,20 +26,6 @@ namespace wappKaraoke.Classes
             set { _dtDados = value; }
         }
 
-        private Type _tobjCa;
-        public Type tobjCa
-        {
-            get { return _tobjCa; }
-            set { _tobjCa = value; }
-        }
-
-        private object _objCon;
-        public object objCon
-        {
-            get { return _objCon; }
-            set { _objCon = value; }
-        }
-
         private GridView _gvDadosDefault;
         public GridView gvDadosDefault
         {
@@ -50,13 +36,6 @@ namespace wappKaraoke.Classes
         private Type _tobjCon;
         private object _objCo;
         private Type _tobjCo;
-
-        private Literal _ltMensagemDefault;
-        public Literal ltMensagemDefault
-        {
-            get { return _ltMensagemDefault; }
-            set { _ltMensagemDefault = value; }
-        }
 
         private HiddenField _hdConfirmacao;
         public HiddenField hdConfirmacao
@@ -72,7 +51,7 @@ namespace wappKaraoke.Classes
 
             if (!IsPostBack)
             {
-                if (_objCon != null)
+                if (objCon != null)
                 {
                     AtualizaGridView();
                 }
@@ -85,13 +64,11 @@ namespace wappKaraoke.Classes
         protected override void InicializaSessions()
         {
             base.InicializaSessions();
-
-            Session["cdRegistro"] = null;
         }
 
-        protected override bool ConfirarGridView()
+        protected override bool ConfigurarGridView()
         {
-            if (!base.ConfirarGridView())
+            if (!base.ConfigurarGridView())
                 return false;
 
             if (_dtDados == null)
@@ -108,8 +85,8 @@ namespace wappKaraoke.Classes
 
         protected virtual void AtualizaGridView()
         {
-            _tobjCon = _objCon.GetType();
-            _objCo = _tobjCon.GetProperty("objCo").GetValue(_objCon, null);
+            _tobjCon = objCon.GetType();
+            _objCo = _tobjCon.GetProperty("objCo").GetValue(objCon, null);
             _tobjCo = _objCo.GetType();
 
             MethodInfo LimparAtributos = _tobjCo.GetMethod("LimparAtributos");
@@ -120,16 +97,16 @@ namespace wappKaraoke.Classes
 
             if ((bool)bSelect)
             {
-                PropertyInfo pdtDados = _objCon.GetType().GetProperty("dtDados");
-                dtDados = (DataTable)pdtDados.GetValue(_objCon, null);
+                PropertyInfo pdtDados = objCon.GetType().GetProperty("dtDados");
+                dtDados = (DataTable)pdtDados.GetValue(objCon, null);
 
                 if (dtDados.Rows.Count == 0)
-                    _ltMensagemDefault.Text = base.MostraMensagem("Nenhum registro encontrado", "Realize o cadastro!", csMensagem.msgInfo);
+                    ltMensagemDefault.Text = base.MostraMensagem("Nenhum registro encontrado", "Realize o cadastro!", csMensagem.msgInfo);
             }
             else
             {
-                string strMensagemErro = _tobjCon.GetProperty("strMensagemErro").GetValue(_objCon, null).ToString();
-                _ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
+                string strMensagemErro = _tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
+                ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
             }
 
             _gvDadosDefault.DataSource = _dtDados;
@@ -137,11 +114,12 @@ namespace wappKaraoke.Classes
 
             Session["dtDados"] = dtDados;
 
-            ConfirarGridView();
+            ConfigurarGridView();
         }
 
         protected virtual void btnNovo1_Click(object sender, EventArgs e)
-        {           
+        {
+            Session["IndexRowDados"] = null;
             Response.Redirect(_strPaginaCadastro.Replace("Consulta", "Cadastro"));
         }
 
@@ -152,8 +130,8 @@ namespace wappKaraoke.Classes
 
             _dtDados = (DataTable)Session["dtDados"];
 
-            _tobjCon = _objCon.GetType();
-            _objCo = _tobjCon.GetProperty("objCo").GetValue(_objCon, null);
+            _tobjCon = objCon.GetType();
+            _objCo = _tobjCon.GetProperty("objCo").GetValue(objCon, null);
             _tobjCo = _objCo.GetType();
 
             MethodInfo LimparAtributos = _tobjCo.GetMethod("LimparAtributos");
@@ -161,7 +139,7 @@ namespace wappKaraoke.Classes
 
             try
             {
-                object nmCampoChave = _tobjCa.GetProperty("nmCampoChave").GetValue(_tobjCa, null);
+                object nmCampoChave = tobjCa.GetProperty("nmCampoChave").GetValue(tobjCa, null);
 
                 foreach (Control c in ((LinkButton)sender).Parent.Controls)
                 {
@@ -197,21 +175,21 @@ namespace wappKaraoke.Classes
                 pstrFiltro.SetValue(_objCo, strFiltro, null);
 
 
-                MethodInfo Select = _objCon.GetType().GetMethod("Select");
+                MethodInfo Select = objCon.GetType().GetMethod("Select");
                 object bSelect = Select.Invoke(Select, new object[] { });
 
                 if ((bool)bSelect)
                 {
-                    PropertyInfo pdtDados = _objCon.GetType().GetProperty("dtDados");
-                    dtDados = (DataTable)pdtDados.GetValue(_objCon, null);
+                    PropertyInfo pdtDados = objCon.GetType().GetProperty("dtDados");
+                    dtDados = (DataTable)pdtDados.GetValue(objCon, null);
 
                     if (dtDados.Rows.Count == 0)
-                        _ltMensagemDefault.Text = base.MostraMensagem("Nenhum registro encontrado", "Realize o cadastro!", csMensagem.msgInfo);
+                        ltMensagemDefault.Text = base.MostraMensagem("Nenhum registro encontrado", "Realize o cadastro!", csMensagem.msgInfo);
                 }
                 else
                 {
-                    string strMensagemErro = _tobjCon.GetProperty("strMensagemErro").GetValue(_objCon, null).ToString();
-                    _ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
+                    string strMensagemErro = _tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
+                    ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
                 }
 
                 _gvDadosDefault.DataSource = _dtDados;
@@ -219,7 +197,7 @@ namespace wappKaraoke.Classes
 
                 Session["dtDados"] = dtDados;
 
-                ConfirarGridView();
+                ConfigurarGridView();
             }
             catch
             {
@@ -239,12 +217,12 @@ namespace wappKaraoke.Classes
         {
             _dtDados = (DataTable)Session["dtDados"];
 
-            _tobjCon = _objCon.GetType();
-            _objCon = Activator.CreateInstance(_tobjCon);
-            _objCo = _tobjCon.GetProperty("objCo").GetValue(_objCon, null);
+            _tobjCon = objCon.GetType();
+            objCon = Activator.CreateInstance(_tobjCon);
+            _objCo = _tobjCon.GetProperty("objCo").GetValue(objCon, null);
             _tobjCo = _objCo.GetType();
 
-            object nmCampoChave = _tobjCa.GetProperty("nmCampoChave").GetValue(_tobjCa, null);
+            object nmCampoChave = tobjCa.GetProperty("nmCampoChave").GetValue(tobjCa, null);
 
             PropertyInfo pCampoChave = _tobjCo.GetProperty(nmCampoChave.ToString());
             pCampoChave.SetValue(_objCo, intCodigo, null);
@@ -254,12 +232,12 @@ namespace wappKaraoke.Classes
 
             if ((bool)bExcluir)
             {
-                _ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroExcluido, csMensagem.msgSucess);
+                ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroExcluido, csMensagem.msgSucess);
             }
             else
             {
-                string strMensagemErro = _tobjCon.GetProperty("strMensagemErro").GetValue(_objCon, null).ToString();
-                _ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
+                string strMensagemErro = _tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
+                ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
             }
 
             AtualizaGridView();
@@ -276,7 +254,7 @@ namespace wappKaraoke.Classes
             else
                 if(e.CommandName == "Edit")
                 {
-                    Session["cdRegistro"] = Convert.ToInt32(e.CommandArgument);
+                    Session["IndexRowDados"] = Convert.ToInt32(e.CommandArgument);
                     Response.Redirect(_strPaginaCadastro.Replace("Consulta", "Cadastro"));
                 }
         }
@@ -285,9 +263,12 @@ namespace wappKaraoke.Classes
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                LinkButton l = (LinkButton)e.Row.FindControl("lnkDelete");
-                l.Attributes.Add("OnClick", "javascript:return "+
-                                 "confirm('O registro \"" + DataBinder.Eval(e.Row.DataItem, "deTpStatus") + "\" será removido!')"); 
+                LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDelete");
+                lnkDelete.Attributes.Add("OnClick", "javascript:return "+
+                                 "confirm('O registro \"" + DataBinder.Eval(e.Row.DataItem, "deTpStatus") + "\" será removido!')");
+
+                LinkButton lnkEdit = (LinkButton)e.Row.FindControl("lnkEdit");
+                lnkEdit.CommandArgument = e.Row.RowIndex.ToString();
             }
         }
 

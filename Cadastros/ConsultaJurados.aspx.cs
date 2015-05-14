@@ -51,9 +51,9 @@ namespace wappKaraoke.Cadastros
             base.Page_Load(sender, e);
         }
 
-        protected override bool ConfirarGridView()
+        protected override bool ConfigurarGridView()
         {
-            if (!base.ConfirarGridView())
+            if (!base.ConfigurarGridView())
                 return false;
 
             try
