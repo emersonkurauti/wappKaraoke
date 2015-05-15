@@ -56,6 +56,11 @@ namespace wappKaraoke.Classes.Controller
         /// <returns></returns>
         public static bool Inserir()
         {
+            _strMensagemErro = "";
+
+            if (!ValidaCampoObrigatorio())
+                return false;
+
             if (!_objCoTipoStatus.Inserir())
             {
                 _strMensagemErro = csMensagem.msgInserir;
@@ -71,6 +76,9 @@ namespace wappKaraoke.Classes.Controller
         public static bool Alterar()
         {
             _strMensagemErro = "";
+
+            if (!ValidaCampoObrigatorio())
+                return false;
 
             if (!_objCoTipoStatus.Alterar())
             {
@@ -93,6 +101,26 @@ namespace wappKaraoke.Classes.Controller
                 _strMensagemErro = csMensagem.msgRemover;
                 return false;
             }
+            return true;
+        }
+
+        /// <summary>
+        /// ValidaCampoObrigatório
+        /// </summary>
+        /// <returns></returns>
+        protected static bool ValidaCampoObrigatorio()
+        {
+            if (_objCo.deCor.Contains("--"))
+            {
+                _strMensagemErro = "Selecione uma cor.";
+                return false;
+            }
+            if (_objCo.deTpStatus.Trim().Equals(""))
+            {
+                _strMensagemErro = "Informe a descrição da cor.";
+                return false;
+            }
+
             return true;
         }
     }

@@ -25,16 +25,27 @@ namespace wappKaraoke.Classes
 
         public override void Page_Load(object sender, EventArgs e)
         {
+            if (ltMensagemDefault != null)
+                ltMensagemDefault.Text = "";
+
             if (!IsPostBack)
             {
                 CarregarDados(((Page)sender).Controls);
             }
+
+            if (Session["ltMensagemDefault"] != null)
+            {
+                ltMensagemDefault.Text = ((Literal)Session["ltMensagemDefault"]).Text;
+                Session["ltMensagemDefault"] = null;
+            }
+
             _strPaginaConsulta = Request.Path.Substring(Request.Path.LastIndexOf("/") + 1);
             base.Page_Load(sender, e);
         }
 
         protected virtual void btnSalvar_Click(object sender, EventArgs e)
         {
+            bool bErro = false;
             object vobjCon;
             bool bInserindo = Session["IndexRowDados"] == null;
 
@@ -53,8 +64,9 @@ namespace wappKaraoke.Classes
                 }
                 else
                 {
+                    bErro = true;
                     string strMensagemErro = tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
-                    ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
+                    ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgWarning);
                 }
             }
             else
@@ -70,13 +82,16 @@ namespace wappKaraoke.Classes
                 }
                 else
                 {
+                    bErro = true;
                     string strMensagemErro = tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
-                    ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgDanger);
+                    ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgWarning);
                 }
             }
 
             Session["ltMensagemDefault"] = ltMensagemDefault;
-            Response.Redirect(_strPaginaConsulta.Replace("Cadastro", "Consulta"));
+
+            if (!bErro)
+                Response.Redirect(_strPaginaConsulta.Replace("Cadastro", "Consulta"));
         }
 
         protected virtual void btnCancelar_Click(object sender, EventArgs e)
