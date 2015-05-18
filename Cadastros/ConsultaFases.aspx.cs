@@ -6,6 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using wappKaraoke.Classes;
+using wappKaraoke.Classes.Model.Fases;
+using wappKaraoke.Classes.Controller;
+using wappKaraoke.Classes.Mensagem;
 
 namespace wappKaraoke.Cadastros
 {
@@ -13,25 +16,10 @@ namespace wappKaraoke.Cadastros
     {
         public override void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
-            {
-                DataTable dt = new DataTable();
-                dt.Columns.Add("cdFase", typeof(int));
-                dt.Columns.Add("deFase", typeof(string));
-
-                for (int i = 1; i < 15; i++)
-                {
-                    DataRow dr = dt.NewRow();
-
-                    dr["cdFase"] = i;
-                    dr["deFase"] = "Fase de teste - " + i;
-
-                    dt.Rows.Add(dr);
-                }
-
-                gvDados.DataSource = dt;
-                gvDados.DataBind();
-            }
+            gvDadosDefault = gvDados;
+            ltMensagemDefault = ltMensagem;
+            tobjCa = typeof(caFases);
+            objCon = new conFases();
 
             base.Page_Load(sender, e);
         }

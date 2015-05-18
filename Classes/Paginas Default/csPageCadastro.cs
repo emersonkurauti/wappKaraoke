@@ -6,7 +6,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI;
 using System.Data;
 using System.Reflection;
-using wappKaraoke.Mensagem;
+using wappKaraoke.Classes.Mensagem;
 
 namespace wappKaraoke.Classes
 {

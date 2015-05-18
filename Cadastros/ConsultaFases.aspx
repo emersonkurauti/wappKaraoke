@@ -29,20 +29,23 @@
                         <div class="col-md-2">
                             <asp:LinkButton ID="btnBuscar" 
                                         runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-info">
+                                        CssClass="btn btn-primary btn-block btn-info"
+                                        onclick="btnBuscar_Click">
                                 <i aria-hidden="true" class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;Buscar
                             </asp:LinkButton>
                         </div>
                         <div class="col-md-2">
                             <asp:LinkButton ID="btnNovo1" 
                                         runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-success">
+                                        CssClass="btn btn-primary btn-block btn-success"
+                                        onclick="btnNovo1_Click">
                                 <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Nova Fase
                             </asp:LinkButton>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
+                            <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
                             <br/>
                             <asp:GridView ID="gvDados" runat="server"
                                 CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
@@ -52,16 +55,27 @@
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Descrição" DataField="deFase">
                                     </asp:BoundField>
-                                    <asp:CommandField ButtonType="Button" SelectText="Editar" 
-                                        ShowSelectButton="True">
-                                        <ControlStyle CssClass="btn btn-primary btn-block" />
-                                        <ItemStyle Width="15%" />
-                                    </asp:CommandField>
-                                    <asp:CommandField ButtonType="Button" SelectText="Excluir" 
-                                        ShowSelectButton="True">
-                                        <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
-                                        <ItemStyle Width="15%" />
-                                    </asp:CommandField>
+                                    <asp:TemplateField>
+	                                    <ItemTemplate>
+		                                    <asp:LinkButton ID="lnkEdit" runat="server"
+			                                    CssClass="btn btn-primary btn-block" Text = "Editar"
+			                                    CommandName='Edit'>
+			                                    <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>
+		                                    </asp:LinkButton>
+	                                    </ItemTemplate>
+	                                    <ItemStyle Width="5%" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField>
+	                                    <ItemTemplate>
+		                                    <asp:LinkButton ID="lnkDelete" runat="server"
+			                                    CssClass="btn btn-primary btn-block btn-danger" Text = "Excluir"
+			                                    CommandArgument='<%# Eval("cdFase") + "$" + Eval("deFase") %>'
+			                                    CommandName='Delete'>
+			                                    <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>
+		                                    </asp:LinkButton>
+	                                    </ItemTemplate>
+	                                    <ItemStyle Width="5%" />
+                                    </asp:TemplateField>
                                 </Columns>
                                 <HeaderStyle CssClass="info" />
                             </asp:GridView>
@@ -75,7 +89,8 @@
                         <div class="col-sm-2">
                                <asp:LinkButton ID="btnNovo" 
                                         runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-success">
+                                        CssClass="btn btn-primary btn-block btn-success"
+                                        onclick="btnNovo1_Click">
                                 <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Nova Fase
                             </asp:LinkButton>
                         </div>

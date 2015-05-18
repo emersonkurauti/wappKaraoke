@@ -5,7 +5,7 @@ using System.Web;
 using System.Data;
 using System.Reflection;
 using System.Web.UI.WebControls;
-using wappKaraoke.Mensagem;
+using wappKaraoke.Classes.Mensagem;
 using System.Web.UI;
 
 namespace wappKaraoke.Classes

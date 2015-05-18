@@ -3,34 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using wappKaraoke.Classes.Model.TipoStatus;
+using wappKaraoke.Classes.Model.Fases;
 using wappKaraoke.Classes.Mensagem;
 
 namespace wappKaraoke.Classes.Controller
 {
-    public class conTipoStatus : KuraFrameWork.ClasseBase.csControllerBase
+    public class conFases : KuraFrameWork.ClasseBase.csControllerBase
     {
-        private static coTipoStatus _objCo;
-        public static coTipoStatus  objCo
+        private static coFases _objCo;
+        public static coFases  objCo
         {
-            get { return conTipoStatus._objCoTipoStatus; }
-            set { conTipoStatus._objCoTipoStatus = value; }
+            get { return conFases._objCoFases; }
+            set { conFases._objCoFases = value; }
         }
 
-        private static coTipoStatus _objCoTipoStatus;
-        public coTipoStatus objCoTipoStatus
+        private static coFases _objCoFases;
+        public coFases objCoFases
         {
-            get { return _objCoTipoStatus; }
-            set { _objCoTipoStatus = value; }
+            get { return _objCoFases; }
+            set { _objCoFases = value; }
         }
 
         /// <summary>
         /// Construtor
         /// </summary>
-        public conTipoStatus()
+        public conFases()
         {
-            _objCoTipoStatus = new coTipoStatus();
-            _objCo = _objCoTipoStatus;
+            _objCoFases = new coFases();
+            _objCo = _objCoFases;
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace wappKaraoke.Classes.Controller
         {
             _strMensagemErro = "";
 
-            if (!_objCoTipoStatus.Select(out _dtDados))
+            if (!_objCoFases.Select(out _dtDados))
             {
                 _strMensagemErro = csMensagem.msgConsultar;
                 return false;
@@ -61,7 +61,7 @@ namespace wappKaraoke.Classes.Controller
             if (!ValidaCampoObrigatorio())
                 return false;
 
-            if (!_objCoTipoStatus.Inserir())
+            if (!_objCoFases.Inserir())
             {
                 _strMensagemErro = csMensagem.msgInserir;
                 return false;
@@ -80,7 +80,7 @@ namespace wappKaraoke.Classes.Controller
             if (!ValidaCampoObrigatorio())
                 return false;
 
-            if (!_objCoTipoStatus.Alterar())
+            if (!_objCoFases.Alterar())
             {
                 _strMensagemErro = csMensagem.msgAlterar;
                 return false;
@@ -96,7 +96,7 @@ namespace wappKaraoke.Classes.Controller
         {
             _strMensagemErro = "";
 
-            if (!_objCoTipoStatus.Excluir())
+            if (!_objCoFases.Excluir())
             {
                 _strMensagemErro = csMensagem.msgRemover;
                 return false;
@@ -110,14 +110,9 @@ namespace wappKaraoke.Classes.Controller
         /// <returns></returns>
         protected static bool ValidaCampoObrigatorio()
         {
-            if (_objCo.deCor.Contains("--"))
+            if (_objCo.deFase.Trim().Equals(""))
             {
-                _strMensagemErro = "Selecione uma cor.";
-                return false;
-            }
-            if (_objCo.deTpStatus.Trim().Equals(""))
-            {
-                _strMensagemErro = "Informe a descrição da cor.";
+                _strMensagemErro = "Informe a descrição da Fase.";
                 return false;
             }
 

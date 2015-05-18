@@ -8,7 +8,7 @@ using System.Data;
 using wappKaraoke.Classes;
 using wappKaraoke.Classes.Model.TipoStatus;
 using wappKaraoke.Classes.Controller;
-using wappKaraoke.Mensagem;
+using wappKaraoke.Classes.Mensagem;
 
 namespace wappKaraoke.Cadastros
 {

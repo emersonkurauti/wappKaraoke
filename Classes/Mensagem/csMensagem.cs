@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace wappKaraoke.Mensagem
+namespace wappKaraoke.Classes.Mensagem
 {
     static class csMensagem
     {
