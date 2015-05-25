@@ -6,6 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using wappKaraoke.Classes;
+using wappKaraoke.Classes.Model.Cidades;
+using wappKaraoke.Classes.Controller;
+using wappKaraoke.Classes.Mensagem;
 
 namespace wappKaraoke.Cadastros
 {
@@ -13,27 +16,10 @@ namespace wappKaraoke.Cadastros
     {
         public override void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
-            {
-                DataTable dt = new DataTable();
-                dt.Columns.Add("cdCidade", typeof(int));
-                dt.Columns.Add("nmCidade", typeof(string));
-                dt.Columns.Add("deUF", typeof(string));
-
-                for (int i = 1; i < 15; i++)
-                {
-                    DataRow dr = dt.NewRow();
-
-                    dr["cdCidade"] = i;
-                    dr["nmCidade"] = "Cidade de teste - " + i;
-                    dr["deUF"] = "SP";
-
-                    dt.Rows.Add(dr);
-                }
-
-                gvDados.DataSource = dt;
-                gvDados.DataBind();
-            }
+            gvDadosDefault = gvDados;
+            ltMensagemDefault = ltMensagem;
+            tobjCa = typeof(caCidades);
+            objCon = new conCidades();
 
             base.Page_Load(sender, e);
         }

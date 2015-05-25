@@ -267,7 +267,8 @@ namespace wappKaraoke.Classes
             {
                 LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDelete");
                 lnkDelete.Attributes.Add("OnClick", "javascript:return "+
-                                 "confirm('O registro \"" + DataBinder.Eval(e.Row.DataItem, "deTpStatus") + "\" será removido!')");
+                    "confirm('O registro será removido!')");
+                /*"confirm('O registro \"" + DataBinder.Eval(e.Row.DataItem, obj.dePrincipal) + "\" será removido!')");*/
 
                 LinkButton lnkEdit = (LinkButton)e.Row.FindControl("lnkEdit");
                 lnkEdit.CommandArgument = e.Row.RowIndex.ToString();

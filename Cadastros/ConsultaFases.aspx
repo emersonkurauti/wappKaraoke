@@ -48,7 +48,11 @@
                             <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
                             <br/>
                             <asp:GridView ID="gvDados" runat="server"
-                                CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
+                                CssClass="footable table table-bordered table-hover" 
+                                AutoGenerateColumns="False"
+                                OnRowDataBound="gvDados_RowDataBound" 
+                                OnRowCommand="gvDados_RowCommand" 
+                                onrowdeleting="gvDados_RowDeleting">
                                 <Columns>
                                     <asp:BoundField HeaderText="Cód." DataField="cdFase">
                                         <ItemStyle Width="5%" />
