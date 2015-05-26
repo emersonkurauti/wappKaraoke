@@ -59,7 +59,7 @@ namespace wappKaraoke.Classes.Paginas_Default
             set { _dtDados = value; }
         }
 
-        private DataTable getDtDados()
+        public virtual DataTable getDtDados()
         {
             DataTable dt;
 
@@ -103,7 +103,7 @@ namespace wappKaraoke.Classes.Paginas_Default
             return _dtDados;
         }
 
-        public DropDownList CarregaDDL(DropDownList pDDL)
+        public virtual DropDownList CarregaDDL(DropDownList pDDL)
         {
             object nmCampoChave = tobjCa.GetProperty("nmCampoChave").GetValue(tobjCa, null);
             object dePrincipal = tobjCa.GetProperty("dePrincipal").GetValue(tobjCa, null);
@@ -115,6 +115,42 @@ namespace wappKaraoke.Classes.Paginas_Default
             pDDL.SelectedIndex = 0;
 
             return pDDL;
+        }
+
+        public virtual string MontaSelect(string psId)
+        {
+            object nmCampoChave = tobjCa.GetProperty("nmCampoChave").GetValue(tobjCa, null);
+
+            string strSelect = "<select name=\"" + nmCampoChave.ToString() + "_" +
+                                psId + "\" id=\"" + nmCampoChave.ToString() + "_" + psId + "\" class=\"form-control selectpicker\" style=\"width:100%;text-align:left\">";
+
+            strSelect += MontaOptions();
+
+            strSelect += "</select>";
+
+            return strSelect;
+        }
+
+        protected virtual string MontaOptions()
+        {
+            getDtDados();
+            string strOprions = "";
+
+            object nmCampoChave = tobjCa.GetProperty("nmCampoChave").GetValue(tobjCa, null);
+            object dePrincipal = tobjCa.GetProperty("dePrincipal").GetValue(tobjCa, null);
+
+            if (_dtDados.Rows.Count > 0)
+            {
+                strOprions += "<option value=\"" + _dtDados.Rows[0][nmCampoChave.ToString()].ToString() +
+                                "\">" + _dtDados.Rows[0][dePrincipal.ToString()].ToString() + "</option>";
+
+                for (int i = 1; i < _dtDados.Rows.Count; i++)
+                {
+                    strOprions += "<option value=\"" + _dtDados.Rows[i][nmCampoChave.ToString()].ToString() +
+                                    "\">" + _dtDados.Rows[i][dePrincipal.ToString()].ToString() + "</option>";
+                }
+            }
+            return strOprions;
         }
     }
 }
