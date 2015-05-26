@@ -21,19 +21,19 @@ namespace wappKaraoke.Cadastros
             tobjCa = typeof(caJurados);
             objCon = new conJurados();
 
+            base.Page_Load(sender, e);
+
             if (!this.IsPostBack)
             {
                 csCidades vcsCidades = new csCidades();
                 cdCidade = vcsCidades.CarregaDDL(cdCidade);
 
-                //for (int i = 0; i < 15; i++)
-                //{
-                //    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmJurado"].ToString() +
-                //        " <br/> " + dt.Rows[i]["nmNomeKanji"].ToString();
-                //}
+                for (int i = 0; i < dtDados.Rows.Count; i++)
+                {
+                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dtDados.Rows[i]["nmJurado"].ToString() +
+                        " <br/> " + dtDados.Rows[i]["nmNomeKanji"].ToString();
+                }
             }
-
-            base.Page_Load(sender, e);
         }
 
         protected override bool ConfigurarGridView()

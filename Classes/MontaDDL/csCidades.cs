@@ -6,37 +6,17 @@ using System.Data;
 using System.Web.UI.WebControls;
 using wappKaraoke.Classes.Controller;
 using wappKaraoke.Classes.Model.Cidades;
+using wappKaraoke.Classes.Paginas_Default;
 
 namespace wappKaraoke.Classes
 {
-    public class csCidades
+    public class csCidades : Paginas_Default.csMontaDDL
     {
-        private DataTable _dtDados;
-        public DataTable dtDados
+        public csCidades()
         {
-            get { return getDtDados(); }
-            set { _dtDados = value; }
-        }
-
-        private DataTable getDtDados()
-        {
-            conCidades objCon = new conCidades();
-
-            objCon.objCoCidades.LimparAtributos();
-            objCon.objCoCidades.Select(out _dtDados);
-
-            return _dtDados;
-        }
-
-        public DropDownList CarregaDDL(DropDownList pDDL)
-        {
-            pDDL.DataSource = getDtDados();
-            pDDL.DataValueField = caCidades.nmCampoChave;
-            pDDL.DataTextField = caCidades.dePrincipal;
-            pDDL.DataBind();
-            pDDL.SelectedIndex = 0;
-
-            return pDDL;
+            strTextoCombo = "a Cidade";
+            tobjCa = typeof(caCidades);
+            objCon = new conCidades();
         }
     }
 }

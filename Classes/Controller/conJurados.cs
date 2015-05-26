@@ -118,6 +118,12 @@ namespace wappKaraoke.Classes.Controller
                 return false;
             }
 
+            if (_objCo.cdCidade == 0)
+            {
+                _strMensagemErro = "Selecione a cidade do Jurado.";
+                return false;
+            }
+
             return true;
         }
     }

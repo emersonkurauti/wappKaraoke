@@ -326,6 +326,7 @@
     <Compile Include="Classes\Model\Jurados\coJurados.cs" />
     <Compile Include="Classes\Model\TipoStatus\caTipoStatus.cs" />
     <Compile Include="Classes\Model\TipoStatus\coTipoStatus.cs" />
+    <Compile Include="Classes\Paginas Default\csMontaDDL.cs" />
     <Compile Include="Classes\Paginas Default\csPageCadastro.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
