@@ -310,14 +310,20 @@
     <Content Include="css\footable.min.css" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\footable.min.js" />
+    <Compile Include="Classes\Controller\conAssociacoes.cs" />
     <Compile Include="Classes\Controller\conCidades.cs" />
     <Compile Include="Classes\Controller\conFases.cs" />
+    <Compile Include="Classes\Controller\conJurados.cs" />
     <Compile Include="Classes\Controller\conTipoStatus.cs" />
     <Compile Include="Classes\Mensagem\csMensagem.cs" />
+    <Compile Include="Classes\Model\Associacoes\caAssociacoes.cs" />
+    <Compile Include="Classes\Model\Associacoes\coAssociacoes.cs" />
     <Compile Include="Classes\Model\Cidades\caCidades.cs" />
     <Compile Include="Classes\Model\Cidades\coCidades.cs" />
     <Compile Include="Classes\Model\Fases\caFases.cs" />
     <Compile Include="Classes\Model\Fases\coFases.cs" />
+    <Compile Include="Classes\Model\Jurados\caJurados.cs" />
+    <Compile Include="Classes\Model\Jurados\coJurados.cs" />
     <Compile Include="Classes\Model\TipoStatus\caTipoStatus.cs" />
     <Compile Include="Classes\Model\TipoStatus\coTipoStatus.cs" />
     <Compile Include="Classes\Paginas Default\csPageCadastro.cs">
@@ -403,6 +409,7 @@
       <Name>KuraFrameWork</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

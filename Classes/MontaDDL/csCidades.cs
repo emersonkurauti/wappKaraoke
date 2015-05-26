@@ -4,12 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Web.UI.WebControls;
+using wappKaraoke.Classes.Controller;
+using wappKaraoke.Classes.Model.Cidades;
 
 namespace wappKaraoke.Classes
 {
     public class csCidades
     {
-        private DataTable _dtDados = new DataTable();
+        private DataTable _dtDados;
         public DataTable dtDados
         {
             get { return getDtDados(); }
@@ -18,12 +20,10 @@ namespace wappKaraoke.Classes
 
         private DataTable getDtDados()
         {
-            _dtDados.Columns.Add("cdCidade", typeof(int));
-            _dtDados.Columns.Add("nmCidade", typeof(string));
+            conCidades objCon = new conCidades();
 
-            _dtDados.Rows.Add(1, "Presidente Prudente");
-            _dtDados.Rows.Add(2, "Presidente Venceslau");
-            _dtDados.Rows.Add(3, "Presidente Bernardes");
+            objCon.objCoCidades.LimparAtributos();
+            objCon.objCoCidades.Select(out _dtDados);
 
             return _dtDados;
         }
@@ -31,8 +31,8 @@ namespace wappKaraoke.Classes
         public DropDownList CarregaDDL(DropDownList pDDL)
         {
             pDDL.DataSource = getDtDados();
-            pDDL.DataValueField = "cdCidade";
-            pDDL.DataTextField = "nmCidade";
+            pDDL.DataValueField = caCidades.nmCampoChave;
+            pDDL.DataTextField = caCidades.dePrincipal;
             pDDL.DataBind();
             pDDL.SelectedIndex = 0;
 

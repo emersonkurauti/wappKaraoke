@@ -31,13 +31,13 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox nmJurado;
         
         /// <summary>
-        /// nmJuradoKanji control.
+        /// nmNomeKanji control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox nmJuradoKanji;
+        protected global::System.Web.UI.WebControls.TextBox nmNomeKanji;
         
         /// <summary>
         /// cdCidade control.
@@ -65,6 +65,15 @@ namespace wappKaraoke.Cadastros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnNovo1;
+        
+        /// <summary>
+        /// ltMensagem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltMensagem;
         
         /// <summary>
         /// gvDados control.

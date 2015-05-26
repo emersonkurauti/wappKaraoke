@@ -6,6 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using wappKaraoke.Classes;
 using System.Data;
+using wappKaraoke.Classes.Model.Jurados;
+using wappKaraoke.Classes.Controller;
+using wappKaraoke.Classes.Mensagem;
 
 namespace wappKaraoke.Cadastros
 {
@@ -13,39 +16,21 @@ namespace wappKaraoke.Cadastros
     {
         public override void Page_Load(object sender, EventArgs e)
         {
+            gvDadosDefault = gvDados;
+            ltMensagemDefault = ltMensagem;
+            tobjCa = typeof(caJurados);
+            objCon = new conJurados();
+
             if (!this.IsPostBack)
             {
                 csCidades vcsCidades = new csCidades();
                 cdCidade = vcsCidades.CarregaDDL(cdCidade);
 
-                DataTable dt = new DataTable();
-                dt.Columns.Add("cdJurado", typeof(int));
-                dt.Columns.Add("nmJurado", typeof(string));
-                dt.Columns.Add("nmJuradoKanji", typeof(string));
-                dt.Columns.Add("nuTelefone", typeof(string));
-                dt.Columns.Add("cdCidade", typeof(string));
-
-                for (int i = 0; i < 15; i++)
-                {
-                    DataRow dr = dt.NewRow();
-
-                    dr["cdJurado"] = i;
-                    dr["nmJurado"] = "Nome Jurado de teste - " + i;
-                    dr["nmJuradoKanji"] = "Nome Kanji de teste - " + i;
-                    dr["nuTelefone"] = "018-3903-2349";
-                    dr["cdCidade"] = "Cidade teste - " + i;
-
-                    dt.Rows.Add(dr);
-                }
-
-                gvDados.DataSource = dt;
-                gvDados.DataBind();
-
-                for (int i = 0; i < 15; i++)
-                {
-                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmJurado"].ToString() +
-                        " <br/> " + dt.Rows[i]["nmJuradoKanji"].ToString();
-                }
+                //for (int i = 0; i < 15; i++)
+                //{
+                //    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmJurado"].ToString() +
+                //        " <br/> " + dt.Rows[i]["nmNomeKanji"].ToString();
+                //}
             }
 
             base.Page_Load(sender, e);
