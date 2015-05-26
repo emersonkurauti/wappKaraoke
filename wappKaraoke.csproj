@@ -311,6 +311,7 @@
     <Content Include="js\jquery.min.js" />
     <Content Include="js\footable.min.js" />
     <Compile Include="Classes\Controller\conAssociacoes.cs" />
+    <Compile Include="Classes\Controller\conCategorias.cs" />
     <Compile Include="Classes\Controller\conCidades.cs" />
     <Compile Include="Classes\Controller\conFases.cs" />
     <Compile Include="Classes\Controller\conJurados.cs" />
@@ -318,6 +319,8 @@
     <Compile Include="Classes\Mensagem\csMensagem.cs" />
     <Compile Include="Classes\Model\Associacoes\caAssociacoes.cs" />
     <Compile Include="Classes\Model\Associacoes\coAssociacoes.cs" />
+    <Compile Include="Classes\Model\Categorias\caCategorias.cs" />
+    <Compile Include="Classes\Model\Categorias\coCategorias.cs" />
     <Compile Include="Classes\Model\Cidades\caCidades.cs" />
     <Compile Include="Classes\Model\Cidades\coCidades.cs" />
     <Compile Include="Classes\Model\Fases\caFases.cs" />

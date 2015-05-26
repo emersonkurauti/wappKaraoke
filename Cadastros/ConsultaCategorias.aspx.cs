@@ -6,6 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using wappKaraoke.Classes;
+using wappKaraoke.Classes.Model.Categorias;
+using wappKaraoke.Classes.Controller;
+using wappKaraoke.Classes.Mensagem;
 
 namespace wappKaraoke.Cadastros
 {
@@ -13,27 +16,10 @@ namespace wappKaraoke.Cadastros
     {
         public override void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
-            {
-                DataTable dt = new DataTable();
-                dt.Columns.Add("cdCategoria", typeof(int));
-                dt.Columns.Add("deCategoria", typeof(string));
-                dt.Columns.Add("deFormulaPontuacao", typeof(string));
-
-                for (int i = 1; i < 15; i++)
-                {
-                    DataRow dr = dt.NewRow();
-
-                    dr["cdCategoria"] = i;
-                    dr["deCategoria"] = "Categoria de teste - " + i;
-                    dr["deFormulaPontuacao"] = "N1*1 + N2*3 + N3*7";
-
-                    dt.Rows.Add(dr);
-                }
-
-                gvDados.DataSource = dt;
-                gvDados.DataBind();
-            }
+            gvDadosDefault = gvDados;
+            ltMensagemDefault = ltMensagem;
+            tobjCa = typeof(caCategorias);
+            objCon = new conCategorias();
 
             base.Page_Load(sender, e);
         }
