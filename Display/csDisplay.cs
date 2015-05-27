@@ -28,7 +28,7 @@ namespace wappKaraoke.Display
             _serialPort.ReadTimeout = 500;
             _serialPort.WriteTimeout = 500;
 
-            _serialPort.Open();
+            //_serialPort.Open();
         }
 
         public void MudarNumero(string strNumero)

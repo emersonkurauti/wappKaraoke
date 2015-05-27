@@ -13,6 +13,15 @@ namespace wappKaraoke.Cadastros {
     public partial class CadastroMusicas {
         
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        
+        /// <summary>
         /// ltMensagem control.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox nmMusicaKanji;
         
         /// <summary>
+        /// nuAnoLanc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox nuAnoLanc;
+        
+        /// <summary>
         /// nmCantor control.
         /// </summary>
         /// <remarks>
@@ -47,6 +65,24 @@ namespace wappKaraoke.Cadastros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox nmCantor;
+        
+        /// <summary>
+        /// upFileUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upFileUpload;
+        
+        /// <summary>
+        /// fluArquivoCantado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fluArquivoCantado;
         
         /// <summary>
         /// deCaminhoMusica control.
@@ -58,13 +94,13 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox deCaminhoMusica;
         
         /// <summary>
-        /// nuAnoLanc control.
+        /// fluArquivoKaraoke control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox nuAnoLanc;
+        protected global::System.Web.UI.WebControls.FileUpload fluArquivoKaraoke;
         
         /// <summary>
         /// deCaminhoMusicaKaraoke control.

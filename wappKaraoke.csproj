@@ -307,6 +307,11 @@
     <Compile Include="Cadastros\ConsultaTipoStatus.aspx.designer.cs">
       <DependentUpon>ConsultaTipoStatus.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Content Include="css\footable.min.css" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\footable.min.js" />
@@ -412,6 +417,10 @@
     <None Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="fonts\glyphicons-halflings-regular.ttf" />
     <None Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\KuraSoft\KuraFramework\KuraFrameWork.csproj">

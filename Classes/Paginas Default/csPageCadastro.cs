@@ -12,6 +12,13 @@ namespace wappKaraoke.Classes
 {
     public class csPageCadastro : csPage
     {
+        private bool _bErro;
+        public bool bErro
+        {
+            get { return _bErro; }
+            set { _bErro = value; }
+        }
+
         protected int IndexRowDados;
         protected DataTable dtDados;
         protected ControlCollection ccControles;
@@ -45,7 +52,7 @@ namespace wappKaraoke.Classes
 
         protected virtual void btnSalvar_Click(object sender, EventArgs e)
         {
-            bool bErro = false;
+            _bErro = false;
             object vobjCon;
             bool bInserindo = Session["IndexRowDados"] == null;
 
@@ -64,7 +71,7 @@ namespace wappKaraoke.Classes
                 }
                 else
                 {
-                    bErro = true;
+                    _bErro = true;
                     string strMensagemErro = tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
                     ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgWarning);
                 }
@@ -82,7 +89,7 @@ namespace wappKaraoke.Classes
                 }
                 else
                 {
-                    bErro = true;
+                    _bErro = true;
                     string strMensagemErro = tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
                     ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgWarning);
                 }
@@ -90,7 +97,7 @@ namespace wappKaraoke.Classes
 
             Session["ltMensagemDefault"] = ltMensagemDefault;
 
-            if (!bErro)
+            if (!_bErro)
                 Response.Redirect(_strPaginaConsulta.Replace("Cadastro", "Consulta"));
         }
 
