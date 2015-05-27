@@ -316,6 +316,7 @@
     <Compile Include="Classes\Controller\conCidades.cs" />
     <Compile Include="Classes\Controller\conFases.cs" />
     <Compile Include="Classes\Controller\conJurados.cs" />
+    <Compile Include="Classes\Controller\conMusicas.cs" />
     <Compile Include="Classes\Controller\conTipoStatus.cs" />
     <Compile Include="Classes\Mensagem\csMensagem.cs" />
     <Compile Include="Classes\Model\Associacoes\caAssociacoes.cs" />
@@ -330,6 +331,8 @@
     <Compile Include="Classes\Model\Fases\coFases.cs" />
     <Compile Include="Classes\Model\Jurados\caJurados.cs" />
     <Compile Include="Classes\Model\Jurados\coJurados.cs" />
+    <Compile Include="Classes\Model\Musicas\caMusicas.cs" />
+    <Compile Include="Classes\Model\Musicas\coMusicas.cs" />
     <Compile Include="Classes\Model\TipoStatus\caTipoStatus.cs" />
     <Compile Include="Classes\Model\TipoStatus\coTipoStatus.cs" />
     <Compile Include="Classes\Paginas Default\csMontaDDL.cs" />

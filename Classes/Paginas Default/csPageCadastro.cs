@@ -146,13 +146,13 @@ namespace wappKaraoke.Classes
                     pCampo = tobjCo.GetProperty(((TextBox)c).ID);
                     temp = tobjCo.GetProperty(((TextBox)c).ID).GetValue(objCo, null);
 
-                    if (temp is int)
+                    if (temp is int && ((TextBox)c).Text.Trim() != "")
                         pCampo.SetValue(objCo, Convert.ToInt32(((TextBox)c).Text), null);
                     else
                         if (temp is string)
                             pCampo.SetValue(objCo, ((TextBox)c).Text, null);
                         else
-                            if (temp is DateTime && ((TextBox)c).Text != "")
+                            if (temp is DateTime && ((TextBox)c).Text.Trim() != "")
                                 pCampo.SetValue(objCo, Convert.ToDateTime(((TextBox)c).Text), null);
                 }
                 else

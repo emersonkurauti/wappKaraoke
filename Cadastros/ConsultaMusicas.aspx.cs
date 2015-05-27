@@ -6,6 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using wappKaraoke.Classes;
+using wappKaraoke.Classes.Model.Musicas;
+using wappKaraoke.Classes.Controller;
+using wappKaraoke.Classes.Mensagem;
 
 namespace wappKaraoke.Cadastros
 {
@@ -13,38 +16,21 @@ namespace wappKaraoke.Cadastros
     {
         public override void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
-            {
-                DataTable dt = new DataTable();
-                dt.Columns.Add("cdMusica", typeof(int));
-                dt.Columns.Add("nmMusica", typeof(string));
-                dt.Columns.Add("nmCantor", typeof(string));
-                dt.Columns.Add("nuAnoLanc", typeof(int));
-                dt.Columns.Add("nmMusicaKanji", typeof(string));
-
-                for (int i = 0; i < 15; i++)
-                {
-                    DataRow dr = dt.NewRow();
-
-                    dr["cdMusica"] = i;
-                    dr["nmMusica"] = "Nome Música de teste - " + i;
-                    dr["nmCantor"] = "Nome Cantor de teste - " + i;
-                    dr["nuAnoLanc"] = 2000 + i;
-                    dr["nmMusicaKanji"] = "日本語を - " + i;
-
-                    dt.Rows.Add(dr);
-                }
-
-                gvDados.DataSource = dt;
-                gvDados.DataBind();
-
-                for (int i = 0; i < 15; i++)
-                {
-                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmMusica"].ToString() + " <br/> " + dt.Rows[i]["nmMusicaKanji"].ToString();
-                }
-            }
+            gvDadosDefault = gvDados;
+            ltMensagemDefault = ltMensagem;
+            tobjCa = typeof(caMusicas);
+            objCon = new conMusicas();
 
             base.Page_Load(sender, e);
+
+            if (!this.IsPostBack)
+            {
+                for (int i = 0; i < dtDados.Rows.Count; i++)
+                {
+                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dtDados.Rows[i]["nmMusica"].ToString() + " <br/> " + 
+                        dtDados.Rows[i]["nmMusicaKanji"].ToString();
+                }
+            }
         }
 
         protected override bool ConfigurarGridView()
