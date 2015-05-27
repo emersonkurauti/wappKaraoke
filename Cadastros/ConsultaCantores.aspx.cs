@@ -6,6 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using wappKaraoke.Classes;
 using System.Data;
+using wappKaraoke.Classes.Model.Cantores;
+using wappKaraoke.Classes.Controller;
+using wappKaraoke.Classes.Mensagem;
 
 namespace wappKaraoke.Cadastros
 {
@@ -13,50 +16,24 @@ namespace wappKaraoke.Cadastros
     {
         public override void Page_Load(object sender, EventArgs e)
         {
+            gvDadosDefault = gvDados;
+            ltMensagemDefault = ltMensagem;
+            tobjCa = typeof(caCantores);
+            objCon = new conCantores();
+
+            base.Page_Load(sender, e);
+
             if (!this.IsPostBack)
             {
                 csCidades vcsCidades = new csCidades();
                 cdCidade = vcsCidades.CarregaDDL(cdCidade);
 
-                DataTable dt = new DataTable();
-                dt.Columns.Add("cdCantor", typeof(int));
-                dt.Columns.Add("nmCantor", typeof(string));
-                dt.Columns.Add("nmNomeKanji", typeof(string));
-                dt.Columns.Add("nmNomeArtistico", typeof(string));
-                dt.Columns.Add("nuRG", typeof(string));
-                dt.Columns.Add("nuTelefone", typeof(string));
-                dt.Columns.Add("deEmail", typeof(string));
-                dt.Columns.Add("dtNascimento", typeof(string));
-                dt.Columns.Add("cdCidade", typeof(string));
-
-                for (int i = 0; i < 15; i++)
+                for (int i = 0; i < dtDados.Rows.Count; i++)
                 {
-                    DataRow dr = dt.NewRow();
-
-                    dr["cdCantor"] = i;
-                    dr["nmCantor"] = "Nome Cantor de teste - " + i;
-                    dr["nmNomeKanji"] = "Nome Kanji de teste - " + i;
-                    dr["nmNomeArtistico"] = "Nome Artistico - " + i;
-                    dr["nuRG"] = 493996575 + i;
-                    dr["nuTelefone"] = "3903-234 " + i;
-                    dr["deEmail"] = "emailteste" + i + "@hotmail.com ";
-                    dr["dtNascimento"] = "12/01/" + (i + 1990);
-                    dr["cdCidade"] = "Cidade teste - " + i;
-
-                    dt.Rows.Add(dr);
-                }
-
-                gvDados.DataSource = dt;
-                gvDados.DataBind();
-
-                for (int i = 0; i < 15; i++)
-                {
-                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmCantor"].ToString() +
-                        " <br/> " + dt.Rows[i]["nmNomeKanji"].ToString();
+                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dtDados.Rows[i]["nmCantor"].ToString() +
+                        " <br/> " + dtDados.Rows[i]["nmNomeKanji"].ToString();
                 }
             }
-
-            base.Page_Load(sender, e);
         }
 
         protected override bool ConfigurarGridView()

@@ -151,6 +151,9 @@ namespace wappKaraoke.Classes
                     else
                         if (temp is string)
                             pCampo.SetValue(objCo, ((TextBox)c).Text, null);
+                        else
+                            if (temp is DateTime && ((TextBox)c).Text != "")
+                                pCampo.SetValue(objCo, Convert.ToDateTime(((TextBox)c).Text), null);
                 }
                 else
                     if (c is DropDownList)
