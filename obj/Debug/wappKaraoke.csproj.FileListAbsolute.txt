@@ -1,8 +1,8 @@
 C:\Projetos\Karaoke\wappKaraoke\bin\wappKaraoke.dll
 C:\Projetos\Karaoke\wappKaraoke\bin\wappKaraoke.pdb
-C:\Projetos\Karaoke\wappKaraoke\obj\Debug\wappKaraoke.dll
-C:\Projetos\Karaoke\wappKaraoke\obj\Debug\wappKaraoke.pdb
 C:\Projetos\Karaoke\wappKaraoke\bin\KuraFrameWork.dll
 C:\Projetos\Karaoke\wappKaraoke\bin\Oracle.DataAccess.dll
 C:\Projetos\Karaoke\wappKaraoke\bin\KuraFrameWork.pdb
 C:\Projetos\Karaoke\wappKaraoke\obj\Debug\wappKaraoke.csprojResolveAssemblyReference.cache
+C:\Projetos\Karaoke\wappKaraoke\obj\Debug\wappKaraoke.dll
+C:\Projetos\Karaoke\wappKaraoke\obj\Debug\wappKaraoke.pdb

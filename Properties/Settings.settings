@@ -3,19 +3,19 @@
   <Profiles />
   <Settings>
     <Setting Name="sCaminhoKaraoke" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">../Arquivos/Musicas/Karaoke</Value>
+      <Value Profile="(Default)">Arquivos\Musicas\Karaoke\</Value>
     </Setting>
     <Setting Name="sCaminhoCantado" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">../Arquivos/Musicas/Cantado</Value>
+      <Value Profile="(Default)">Arquivos\Musicas\Cantado\</Value>
     </Setting>
     <Setting Name="sCaminhoKaraokeConcurso" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">../Arquivos/Musicas/KaraokeConcurso</Value>
+      <Value Profile="(Default)">Arquivos\Musicas\KaraokeConcurso\</Value>
     </Setting>
     <Setting Name="sCaminhoArqImagens" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">../Arquivos/Imagens</Value>
+      <Value Profile="(Default)">Arquivos\Imagens\</Value>
     </Setting>
     <Setting Name="sCaminhoArqDocumentos" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">../Arquivos/Documentos</Value>
+      <Value Profile="(Default)">Arquivos\Documentos\</Value>
     </Setting>
   </Settings>
 </SettingsFile>

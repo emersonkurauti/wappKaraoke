@@ -25,7 +25,7 @@ namespace wappKaraoke.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("../Arquivos/Musicas/Karaoke")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Arquivos\\Musicas\\Karaoke\\")]
         public string sCaminhoKaraoke {
             get {
                 return ((string)(this["sCaminhoKaraoke"]));
@@ -34,7 +34,7 @@ namespace wappKaraoke.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("../Arquivos/Musicas/Cantado")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Arquivos\\Musicas\\Cantado\\")]
         public string sCaminhoCantado {
             get {
                 return ((string)(this["sCaminhoCantado"]));
@@ -43,7 +43,7 @@ namespace wappKaraoke.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("../Arquivos/Musicas/KaraokeConcurso")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Arquivos\\Musicas\\KaraokeConcurso\\")]
         public string sCaminhoKaraokeConcurso {
             get {
                 return ((string)(this["sCaminhoKaraokeConcurso"]));
@@ -52,7 +52,7 @@ namespace wappKaraoke.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("../Arquivos/Imagens")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Arquivos\\Imagens\\")]
         public string sCaminhoArqImagens {
             get {
                 return ((string)(this["sCaminhoArqImagens"]));
@@ -61,7 +61,7 @@ namespace wappKaraoke.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("../Arquivos/Documentos")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Arquivos\\Documentos\\")]
         public string sCaminhoArqDocumentos {
             get {
                 return ((string)(this["sCaminhoArqDocumentos"]));

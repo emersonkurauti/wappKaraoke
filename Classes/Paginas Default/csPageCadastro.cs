@@ -12,7 +12,7 @@ namespace wappKaraoke.Classes
 {
     public class csPageCadastro : csPage
     {
-        private bool _bErro;
+        private bool _bErro = false;
         public bool bErro
         {
             get { return _bErro; }
@@ -52,50 +52,52 @@ namespace wappKaraoke.Classes
 
         protected virtual void btnSalvar_Click(object sender, EventArgs e)
         {
-            _bErro = false;
             object vobjCon;
             bool bInserindo = Session["IndexRowDados"] == null;
 
-            PreencheObjeto(((LinkButton)sender).Parent.Controls, out vobjCon);
-
-            tobjCon = vobjCon.GetType();
-
-            if (bInserindo)
+            if (!_bErro)
             {
-                MethodInfo Inserir = tobjCon.GetMethod("Inserir");
-                object bInserir = Inserir.Invoke(Inserir, new object[] { });
+                PreencheObjeto(((LinkButton)sender).Parent.Controls, out vobjCon);
 
-                if ((bool)bInserir)
+                tobjCon = vobjCon.GetType();
+
+                if (bInserindo)
                 {
-                    ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroInserido, csMensagem.msgSucess);
+                    MethodInfo Inserir = tobjCon.GetMethod("Inserir");
+                    object bInserir = Inserir.Invoke(Inserir, new object[] { });
+
+                    if ((bool)bInserir)
+                    {
+                        ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroInserido, csMensagem.msgSucess);
+                    }
+                    else
+                    {
+                        _bErro = true;
+                        string strMensagemErro = tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
+                        ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgWarning);
+                    }
                 }
                 else
                 {
-                    _bErro = true;
-                    string strMensagemErro = tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
-                    ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgWarning);
+                    CarregaChave(ref vobjCon);
+
+                    MethodInfo Alterar = tobjCon.GetMethod("Alterar");
+                    object bAlterar = Alterar.Invoke(Alterar, new object[] { });
+
+                    if ((bool)bAlterar)
+                    {
+                        ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroAlterado, csMensagem.msgSucess);
+                    }
+                    else
+                    {
+                        _bErro = true;
+                        string strMensagemErro = tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
+                        ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgWarning);
+                    }
                 }
+
+                Session["ltMensagemDefault"] = ltMensagemDefault;
             }
-            else
-            {
-                CarregaChave(ref vobjCon);
-
-                MethodInfo Alterar = tobjCon.GetMethod("Alterar");
-                object bAlterar = Alterar.Invoke(Alterar, new object[] { });
-
-                if ((bool)bAlterar)
-                {
-                    ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroAlterado, csMensagem.msgSucess);
-                }
-                else
-                {
-                    _bErro = true;
-                    string strMensagemErro = tobjCon.GetProperty("strMensagemErro").GetValue(objCon, null).ToString();
-                    ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, strMensagemErro, csMensagem.msgWarning);
-                }
-            }
-
-            Session["ltMensagemDefault"] = ltMensagemDefault;
 
             if (!_bErro)
                 Response.Redirect(_strPaginaConsulta.Replace("Cadastro", "Consulta"));

@@ -1,14 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master Page/mpKaraoke.Master" AutoEventWireup="true" CodeBehind="CadastroMusicas.aspx.cs" Inherits="wappKaraoke.Cadastros.CadastroMusicas" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script language="javascript" type="text/javascript">
-        function pegarArquivoCantado() {
-            document.getElementById('<%=deCaminhoMusica.ClientID%>').value = document.getElementById('<%=fluArquivoCantado.ClientID %>').value;
+    <script type="text/javascript" >
+        function PegaNomeArquivoCantado() {
+            document.getElementById('<%=deCaminhoMusica.ClientID%>').value = document.getElementById('<%=fluArquivoCantado.ClientID%>').value;
         }
-
-        function pegarArquivoKaraoke() {
-            document.getElementById('<%=deCaminhoMusicaKaraoke.ClientID%>').value = document.getElementById('<%=fluArquivoKaraoke.ClientID %>').value;
+        function PegaNomeArquivoKaraoke() {
+            document.getElementById('<%=deCaminhoMusicaKaraoke.ClientID%>').value = document.getElementById('<%=fluArquivoKaraoke.ClientID%>').value;
         }
-  </script>
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"/>
@@ -49,40 +48,39 @@
                         </div>
                     </div>
                     <br />
-                    <asp:UpdatePanel ID="upFileUpload" runat="server" UpdateMode="Always">
-                        <ContentTemplate>
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <span class="btn btn-default btn-file">
-                                        Selecionar Arquivo...
-                                        <asp:FileUpload ID="fluArquivoCantado" 
-                                        runat="server" 
-                                        onchange='pegarArquivoCantado();'/>
-                                    </span>                                                    
-                                </div>
-                                <div class="col-sm-10">
-                                    <asp:TextBox ID="deCaminhoMusica" class="form-control" runat="server" 
-                                        placeholder="Música Cantada..." Visible="True">
-                                    </asp:TextBox>
-                                </div>
+                    <div class="row">
+                            <div class="col-sm-2">
+                                <span class="btn btn-default btn-file">
+                                    Selecionar Arquivo...
+                                    <asp:FileUpload ID="fluArquivoCantado" 
+                                    runat="server" 
+                                    onchange="PegaNomeArquivoCantado()"/>
+                                </span>                                
                             </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <span class="btn btn-default btn-file">
-                                        Selecionar Arquivo...
-                                        <asp:FileUpload ID="fluArquivoKaraoke" 
-                                        runat="server" onchange='pegarArquivoKaraoke();' />
-                                    </span>                                                    
-                                </div>
-                                <div class="col-sm-10">
-                                   <asp:TextBox ID="deCaminhoMusicaKaraoke" class="form-control" runat="server" 
-                                        placeholder="Música do Karaokê..." Visible="True">
-                                   </asp:TextBox>
-                                </div>
+                            <div class="col-sm-10">
+                                <asp:TextBox ID="deCaminhoMusica" class="form-control" runat="server" 
+                                    placeholder="Música Cantada..." Visible="True"
+                                    ReadOnly="true">
+                                </asp:TextBox>
                             </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <span class="btn btn-default btn-file">
+                                    Selecionar Arquivo...
+                                    <asp:FileUpload ID="fluArquivoKaraoke" 
+                                    runat="server" 
+                                    onchange="PegaNomeArquivoKaraoke()"/>
+                                </span>                                                    
+                            </div>
+                            <div class="col-sm-10">
+                                <asp:TextBox ID="deCaminhoMusicaKaraoke" class="form-control" runat="server" 
+                                    placeholder="Música do Karaokê..." Visible="True"
+                                    ReadOnly="true">
+                                </asp:TextBox>
+                            </div>
+                        </div>
                     <br />
                     <div class="row">
                         <div class="col-sm-2" align="left" style="float: left">
