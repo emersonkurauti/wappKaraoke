@@ -3,14 +3,15 @@
     <script type="text/javascript" >
         function PegaNomeArquivoCantado() {
             document.getElementById('<%=deCaminhoMusica.ClientID%>').value = document.getElementById('<%=fluArquivoCantado.ClientID%>').value;
+            __doPostBack('fluArquivoCantado', 'CarregaMusicaCantado;' + document.getElementById('<%=deCaminhoMusica.ClientID%>').value);
         }
         function PegaNomeArquivoKaraoke() {
             document.getElementById('<%=deCaminhoMusicaKaraoke.ClientID%>').value = document.getElementById('<%=fluArquivoKaraoke.ClientID%>').value;
+            __doPostBack('fluArquivoKaraoke', 'CarregaMusicaKaraoke;' + document.getElementById('<%=deCaminhoMusicaKaraoke.ClientID%>').value);
         }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server"/>
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default">
@@ -49,38 +50,72 @@
                     </div>
                     <br />
                     <div class="row">
-                            <div class="col-sm-2">
-                                <span class="btn btn-default btn-file">
-                                    Selecionar Arquivo...
-                                    <asp:FileUpload ID="fluArquivoCantado" 
-                                    runat="server" 
-                                    onchange="PegaNomeArquivoCantado()"/>
-                                </span>                                
-                            </div>
-                            <div class="col-sm-10">
-                                <asp:TextBox ID="deCaminhoMusica" class="form-control" runat="server" 
-                                    placeholder="Música Cantada..." Visible="True"
-                                    ReadOnly="true">
-                                </asp:TextBox>
-                            </div>
+                        <div class="col-sm-2">
+                            <span class="btn btn-default btn-file">
+                                Selecionar Arquivo...
+                                <asp:FileUpload ID="fluArquivoCantado" 
+                                runat="server" 
+                                onchange="PegaNomeArquivoCantado()"/>
+                            </span>                                
                         </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <span class="btn btn-default btn-file">
-                                    Selecionar Arquivo...
-                                    <asp:FileUpload ID="fluArquivoKaraoke" 
-                                    runat="server" 
-                                    onchange="PegaNomeArquivoKaraoke()"/>
-                                </span>                                                    
-                            </div>
-                            <div class="col-sm-10">
-                                <asp:TextBox ID="deCaminhoMusicaKaraoke" class="form-control" runat="server" 
-                                    placeholder="Música do Karaokê..." Visible="True"
-                                    ReadOnly="true">
-                                </asp:TextBox>
-                            </div>
+                        <div class="col-sm-8">
+                            <asp:TextBox ID="deCaminhoMusica" class="form-control" runat="server" 
+                                placeholder="Música Cantada..." Visible="True"
+                                ReadOnly="true">
+                            </asp:TextBox>
                         </div>
+                        <div class="col-sm-1">
+                            <asp:Literal ID="ltAudioCantado" runat="server"></asp:Literal>
+                            <asp:LinkButton ID="btnPlayCantado" 
+                                        runat="server" 
+                                        CssClass="btn btn-primary btn-block btn-primary "
+                                        OnClientClick="document.getElementById('AudioCantado').play(); return false;">
+                                &nbsp;&nbsp;<i aria-hidden="true" class="glyphicon glyphicon-play"></i>&nbsp;&nbsp;
+                            </asp:LinkButton>
+                        </div>
+                        <div class="col-sm-1">
+                            <asp:LinkButton ID="btnPauseCantado" 
+                                        runat="server" 
+                                        CssClass="btn btn-primary btn-block btn-primary "
+                                        OnClientClick="document.getElementById('AudioCantado').pause(); return false;">
+                                &nbsp;&nbsp;<i aria-hidden="true" class="glyphicon glyphicon-pause"></i>&nbsp;&nbsp;
+                            </asp:LinkButton>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <span class="btn btn-default btn-file">
+                                Selecionar Arquivo...
+                                <asp:FileUpload ID="fluArquivoKaraoke" 
+                                runat="server" 
+                                onchange="PegaNomeArquivoKaraoke()"/>
+                            </span>                                                    
+                        </div>
+                        <div class="col-sm-8">
+                            <asp:TextBox ID="deCaminhoMusicaKaraoke" class="form-control" runat="server" 
+                                placeholder="Música do Karaokê..." Visible="True"
+                                ReadOnly="true">
+                            </asp:TextBox>
+                        </div>
+                        <div class="col-sm-1">
+                            <asp:Literal ID="ltAudioKaraoke" runat="server"></asp:Literal>
+                            <asp:LinkButton ID="btnPlayKaraoke" 
+                                        runat="server" 
+                                        CssClass="btn btn-primary btn-block btn-primary "
+                                        onclientclick="document.getElementById('AudioKaraoke').play(); return false;">
+                                &nbsp;&nbsp;<i aria-hidden="true" class="glyphicon glyphicon-play"></i>&nbsp;&nbsp;
+                            </asp:LinkButton>
+                        </div>
+                        <div class="col-sm-1">
+                            <asp:LinkButton ID="btnPauseKaraoke" 
+                                        runat="server" 
+                                        CssClass="btn btn-primary btn-block btn-primary "
+                                        OnClientClick="document.getElementById('AudioKaraoke').pause(); return false;">
+                                &nbsp;&nbsp;<i aria-hidden="true" class="glyphicon glyphicon-pause"></i>&nbsp;&nbsp;
+                            </asp:LinkButton>
+                        </div>
+                    </div>
                     <br />
                     <div class="row">
                         <div class="col-sm-2" align="left" style="float: left">

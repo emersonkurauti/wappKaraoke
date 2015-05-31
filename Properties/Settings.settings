@@ -17,5 +17,8 @@
     <Setting Name="sCaminhoArqDocumentos" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Arquivos\Documentos\</Value>
     </Setting>
+    <Setting Name="sCaminhoTemp" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Arquivos\Temp\</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

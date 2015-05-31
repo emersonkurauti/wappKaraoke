@@ -26,14 +26,14 @@ namespace wappKaraoke.Cadastros
         private string strRowFim = "</div>\n";
         private string strPanelBodyIni = "<div class=\"panel-body\">";
         private string strPanelBodyFim = "</div>";
-        private string strColIni = "<div class=\"col-sm-[Col]\">";
-        private string strColFim = "</div>\n";
-        private string strQuebraLinha = "<br//>";
-        private string strButtonAdd = "<a id=\"btnAdd[idBtn]\" class=\"btn btn-success btn-block\" OnClientClick=\"btnAddCantor_OnClick()\">" +
-                                      "<i class=\"glyphicon glyphicon-plus\">" +
-                                      "</i>" +
-                                      "&nbsp;&nbsp;Adicionar" +
-                                      "</a>";
+        //private string strColIni = "<div class=\"col-sm-[Col]\">";
+        //private string strColFim = "</div>\n";
+        //private string strQuebraLinha = "<br//>";
+        //private string strButtonAdd = "<a id=\"btnAdd[idBtn]\" class=\"btn btn-success btn-block\" OnClientClick=\"btnAddCantor_OnClick()\">" +
+        //                              "<i class=\"glyphicon glyphicon-plus\">" +
+        //                              "</i>" +
+        //                              "&nbsp;&nbsp;Adicionar" +
+        //                              "</a>";
 
         public override void Page_Load(object sender, EventArgs e)
         {

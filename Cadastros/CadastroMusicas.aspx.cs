@@ -14,11 +14,68 @@ namespace wappKaraoke.Cadastros
     {
         public override void Page_Load(object sender, EventArgs e)
         {
+            if (Request["__EVENTARGUMENT"] != null && Request["__EVENTARGUMENT"].Contains("CarregaMusica"))
+            {
+                string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(0, Request["__EVENTARGUMENT"].ToString().IndexOf(';'));
+                string strCaminhoTemp = Request.PhysicalApplicationPath +
+                    wappKaraoke.Properties.Settings.Default.sCaminhoTemp;
+                int intTamanhoParam;
+                string strMusica;
+
+                if (strParametro.Equals("CarregaMusicaCantado"))
+                {
+                    intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
+                    strMusica = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
+
+                    ltAudioCantado.Text = "<div><audio id=\"AudioCantado\" src=\"../"
+                            + wappKaraoke.Properties.Settings.Default.sCaminhoTemp.Replace("\\", "/")
+                            + strMusica + "\"/></div>";
+
+                    fluArquivoCantado.SaveAs(strCaminhoTemp + fluArquivoCantado.FileName);
+                    deCaminhoMusica.Text = strMusica;
+                }
+                else
+                    if (strParametro.Equals("CarregaMusicaKaraoke"))
+                    {
+                        intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
+                        strMusica = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
+                        ltAudioKaraoke.Text = "<div><audio id=\"AudioKaraoke\" src=\"../" +
+                                wappKaraoke.Properties.Settings.Default.sCaminhoTemp.Replace("\\", "/")
+                                + strMusica + "\"/></div>";
+
+                        fluArquivoKaraoke.SaveAs(strCaminhoTemp + fluArquivoKaraoke.FileName);
+                        deCaminhoMusicaKaraoke.Text = strMusica;
+                    }
+
+                return;
+            }
+
             ltMensagemDefault = ltMensagem;
             tobjCa = typeof(caMusicas);
             objCon = new conMusicas();
 
             base.Page_Load(sender, e);
+
+            if (!IsPostBack)
+            {
+                Session["_deCaminhoMusicaCantado"] = deCaminhoMusica.Text;
+                Session["_deCaminhoMusicaKaraoke"] = deCaminhoMusicaKaraoke.Text;
+            }
+
+            ltAudioCantado.Text = "<div><audio id=\"AudioCantado\" src=\"../"
+                + wappKaraoke.Properties.Settings.Default.sCaminhoCantado.Replace("\\", "/")
+                + deCaminhoMusica.Text + "\"/></div>";
+
+            ltAudioKaraoke.Text = "<div><audio id=\"AudioKaraoke\" src=\"../"
+                + wappKaraoke.Properties.Settings.Default.sCaminhoKaraoke.Replace("\\", "/")
+                + deCaminhoMusicaKaraoke.Text + "\"/></div>";
+
+        }
+
+        protected override void CarregarDados(ControlCollection pControles)
+        {
+
+            base.CarregarDados(pControles);
         }
 
         protected override void btnSalvar_Click(object sender, EventArgs e)
@@ -28,18 +85,31 @@ namespace wappKaraoke.Cadastros
             
             bErro = false;
 
+            string strCaminhoTemp = Request.PhysicalApplicationPath +
+                wappKaraoke.Properties.Settings.Default.sCaminhoTemp;
             string strCaminhoCantado = Request.PhysicalApplicationPath +
                 wappKaraoke.Properties.Settings.Default.sCaminhoCantado;
             string strCaminhoKaraoke = Request.PhysicalApplicationPath +
                 wappKaraoke.Properties.Settings.Default.sCaminhoKaraoke;
 
             //Salva Arquivos
-            if (fluArquivoCantado.PostedFile != null && fluArquivoCantado.PostedFile.FileName != "")
+            if (deCaminhoMusica.Text != "")
             {
                 try
                 {
-                    fluArquivoCantado.SaveAs(strCaminhoCantado + fluArquivoCantado.PostedFile.FileName);
-                    bAlterouCantado = true;
+                    if (System.IO.File.Exists(strCaminhoTemp + deCaminhoMusica.Text))
+                    {
+                        try
+                        {
+                            if (Session["_deCaminhoMusicaCantado"] != null && Session["_deCaminhoMusicaCantado"].ToString() != "")
+                                System.IO.File.Delete(strCaminhoCantado + Session["_deCaminhoMusicaCantado"].ToString());
+                        }
+                        catch { }
+
+                        System.IO.File.Move(strCaminhoTemp + deCaminhoMusica.Text,
+                            strCaminhoCantado + deCaminhoMusica.Text);
+                        bAlterouCantado = true;
+                    }
                 }
                 catch
                 {
@@ -48,12 +118,23 @@ namespace wappKaraoke.Cadastros
                 }
             }
 
-            if (fluArquivoKaraoke.PostedFile != null && fluArquivoKaraoke.PostedFile.FileName != "")
+            if (deCaminhoMusicaKaraoke.Text != "")
             {
                 try
                 {
-                    fluArquivoKaraoke.SaveAs(strCaminhoKaraoke + fluArquivoKaraoke.PostedFile.FileName);
-                    bAlterouKaraoke = true;
+                    if (System.IO.File.Exists(strCaminhoTemp + deCaminhoMusicaKaraoke.Text))
+                    {
+                        try
+                        {
+                            if (Session["_deCaminhoMusicaKaraoke"] != null && Session["_deCaminhoMusicaKaraoke"].ToString() != "")
+                                System.IO.File.Delete(strCaminhoKaraoke + Session["_deCaminhoMusicaKaraoke"].ToString());
+                        }
+                        catch { }
+
+                        System.IO.File.Move(strCaminhoTemp + deCaminhoMusicaKaraoke.Text,
+                            strCaminhoKaraoke + deCaminhoMusicaKaraoke.Text);
+                        bAlterouKaraoke = true;
+                    }
                 }
                 catch
                 {

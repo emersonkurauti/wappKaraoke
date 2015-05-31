@@ -67,5 +67,14 @@ namespace wappKaraoke.Properties {
                 return ((string)(this["sCaminhoArqDocumentos"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Arquivos\\Temp\\")]
+        public string sCaminhoTemp {
+            get {
+                return ((string)(this["sCaminhoTemp"]));
+            }
+        }
     }
 }

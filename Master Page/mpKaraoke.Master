@@ -1,6 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="mpKaraoke.master.cs" Inherits="wappKaraoke.mpKaraoke" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html >
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
@@ -64,14 +64,13 @@
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         Geral <span class="caret"></span></a>
                       <ul class="dropdown-menu" role="menu">
-                        <li><a href="../Cadastros/ConsultaMusicas.aspx">Músicas</a></li>
-                        <li><a href="../Cadastros/ConsultaCantores.aspx">Cantores</a></li>
-                        <li><a href="../Cadastros/ConsultaJurados.aspx">Jurados</a></li>
-                        <li><a href="../Cadastros/ConsultaCategorias.aspx">Categorias</a></li>
                         <li><a href="../Cadastros/ConsultaAssociacoes.aspx">Associações</a></li>
-                        <li><a href="../Cadastros/ConsultaFases.aspx">Fases</a></li>
-                        <li><a href="../Cadastros/ConsultaGrupos.aspx">Grupos</a></li>
+                        <li><a href="../Cadastros/ConsultaCantores.aspx">Cantores</a></li>
+                        <li><a href="../Cadastros/ConsultaCategorias.aspx">Categorias</a></li>
                         <li><a href="../Cadastros/ConsultaCidades.aspx">Cidades</a></li>
+                        <li><a href="../Cadastros/ConsultaFases.aspx">Fases</a></li>
+                        <li><a href="../Cadastros/ConsultaJurados.aspx">Jurados</a></li>
+                        <li><a href="../Cadastros/ConsultaMusicas.aspx">Músicas</a></li>
                         <li><a href="../Cadastros/ConsultaTipoStatus.aspx">Tipos de Status</a></li>
                       </ul>
                     </li>
@@ -79,10 +78,10 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             Movimentações <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="../Movimentacoes/NotasCantores.aspx">Notas do Cantor</a></li>
-                            <li><a href="../Movimentacoes/AlterarStatusCantor.aspx">Status do Cantor</a></li>
                             <li><a href="../Movimentacoes/CantoresFases.aspx">Cantores Fases</a></li>
+                            <li><a href="../Movimentacoes/NotasCantores.aspx">Notas do Cantor</a></li>
                             <li><a href="../Movimentacoes/Player.aspx">Player</a></li>
+                            <li><a href="../Movimentacoes/AlterarStatusCantor.aspx">Status do Cantor</a></li>
                         </ul>
                     </li>
                     <li><a href="../Cadastros/ConsultaConcursos.aspx">Concurso</a></li>

@@ -23,14 +23,7 @@ namespace wappKaraoke.Cadastros
 
             base.Page_Load(sender, e);
 
-            if (!this.IsPostBack)
-            {
-                for (int i = 0; i < dtDados.Rows.Count; i++)
-                {
-                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dtDados.Rows[i]["nmMusica"].ToString() + " <br/> " + 
-                        dtDados.Rows[i]["nmMusicaKanji"].ToString();
-                }
-            }
+            NomeKanji();
         }
 
         protected override bool ConfigurarGridView()
@@ -48,7 +41,6 @@ namespace wappKaraoke.Cadastros
                 gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
                 gvDados.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
                 gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
-                gvDados.HeaderRow.Cells[7].Attributes["data-hide"] = "phone";
 
                 //Adds THEAD and TBODY to GridView.
                 gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;
@@ -58,6 +50,25 @@ namespace wappKaraoke.Cadastros
             catch
             {
                 return false;
+            }
+        }
+
+        protected override void btnBuscar_Click(object sender, EventArgs e)
+        {
+            base.btnBuscar_Click(sender, e);
+
+            NomeKanji();
+        }
+
+        protected void NomeKanji()
+        {
+            if (dtDados != null)
+            {
+                for (int i = 0; i < dtDados.Rows.Count; i++)
+                {
+                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dtDados.Rows[i]["nmMusica"].ToString() + " <br/> " +
+                        dtDados.Rows[i]["nmMusicaKanji"].ToString();
+                }
             }
         }
     }

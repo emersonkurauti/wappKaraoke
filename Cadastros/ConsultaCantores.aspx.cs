@@ -23,17 +23,7 @@ namespace wappKaraoke.Cadastros
 
             base.Page_Load(sender, e);
 
-            if (!this.IsPostBack)
-            {
-                csCidades vcsCidades = new csCidades();
-                cdCidade = vcsCidades.CarregaDDL(cdCidade);
-
-                for (int i = 0; i < dtDados.Rows.Count; i++)
-                {
-                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dtDados.Rows[i]["nmCantor"].ToString() +
-                        " <br/> " + dtDados.Rows[i]["nmNomeKanji"].ToString();
-                }
-            }
+            NomeKanji();
         }
 
         protected override bool ConfigurarGridView()
@@ -64,6 +54,28 @@ namespace wappKaraoke.Cadastros
             catch
             {
                 return false;
+            }
+        }
+
+        protected override void btnBuscar_Click(object sender, EventArgs e)
+        {
+            base.btnBuscar_Click(sender, e);
+
+            NomeKanji();
+        }
+
+        protected void NomeKanji()
+        {
+            if (dtDados != null)
+            {
+                csCidades vcsCidades = new csCidades();
+                cdCidade = vcsCidades.CarregaDDL(cdCidade);
+
+                for (int i = 0; i < dtDados.Rows.Count; i++)
+                {
+                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dtDados.Rows[i]["nmCantor"].ToString() +
+                        " <br/> " + dtDados.Rows[i]["nmNomeKanji"].ToString();
+                }
             }
         }
     }

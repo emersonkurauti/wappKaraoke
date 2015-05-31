@@ -13,15 +13,6 @@ namespace wappKaraoke.Cadastros {
     public partial class CadastroMusicas {
         
         /// <summary>
-        /// ScriptManager1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
-        /// <summary>
         /// ltMensagem control.
         /// </summary>
         /// <remarks>
@@ -85,6 +76,33 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox deCaminhoMusica;
         
         /// <summary>
+        /// ltAudioCantado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltAudioCantado;
+        
+        /// <summary>
+        /// btnPlayCantado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnPlayCantado;
+        
+        /// <summary>
+        /// btnPauseCantado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnPauseCantado;
+        
+        /// <summary>
         /// fluArquivoKaraoke control.
         /// </summary>
         /// <remarks>
@@ -101,6 +119,33 @@ namespace wappKaraoke.Cadastros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox deCaminhoMusicaKaraoke;
+        
+        /// <summary>
+        /// ltAudioKaraoke control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltAudioKaraoke;
+        
+        /// <summary>
+        /// btnPlayKaraoke control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnPlayKaraoke;
+        
+        /// <summary>
+        /// btnPauseKaraoke control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnPauseKaraoke;
         
         /// <summary>
         /// btnSalvar control.

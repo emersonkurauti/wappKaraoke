@@ -106,17 +106,6 @@
 				                        </ItemTemplate>
 				                        <ItemStyle Width="5%" />
 			                        </asp:TemplateField>
-                                    <asp:TemplateField>
-				                        <ItemTemplate>
-					                        <asp:LinkButton ID="lnkArquivos" runat="server"
-						                        CssClass="btn btn-primary btn-block btn-warning" Text = "Arquivos"
-						                        CommandArgument='<%# Eval("cdMusica") + "$" + Eval("nmMusica") %>'
-						                        CommandName='Arquivos'>
-						                        <i aria-hidden="true" class="glyphicon glyphicon-music"></i>
-					                        </asp:LinkButton>
-				                        </ItemTemplate>
-				                        <ItemStyle Width="5%" />
-			                        </asp:TemplateField>
                                 </Columns>
                                 <HeaderStyle CssClass="info" />
                             </asp:GridView>
