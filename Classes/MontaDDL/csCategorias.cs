@@ -4,39 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Web.UI.WebControls;
+using wappKaraoke.Classes.Paginas_Default;
+using wappKaraoke.Classes.Model.Categorias;
+using wappKaraoke.Classes.Controller;
 
 namespace wappKaraoke.Classes
 {
-    public class csCategorias
+    public class csCategorias : Paginas_Default.csMontaDDL
     {
-        private DataTable _dtDados = new DataTable();
-        public DataTable dtDados
+        public csCategorias()
         {
-            get { return getDtDados(); }
-            set { _dtDados = value; }
-        }
-
-        private DataTable getDtDados()
-        {
-            _dtDados.Columns.Add("cdCategoria", typeof(int));
-            _dtDados.Columns.Add("deCategoria", typeof(string));
-
-            _dtDados.Rows.Add(1, "Veterano A");
-            _dtDados.Rows.Add(2, "Infantil B");
-            _dtDados.Rows.Add(3, "Juvenil");
-
-            return _dtDados;
-        }
-
-        public DropDownList CarregaDDL(DropDownList pDDL)
-        {
-            pDDL.DataSource = getDtDados();
-            pDDL.DataValueField = "cdCategoria";
-            pDDL.DataTextField = "deCategoria";
-            pDDL.DataBind();
-            pDDL.SelectedIndex = 0;
-
-            return pDDL;
+            strTextoCombo = "a Categoria";
+            tobjCa = typeof(caCategorias);
+            objCon = new conCategorias();
         }
     }
 }

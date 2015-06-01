@@ -24,6 +24,7 @@
                     <span class="panel-title">Cadastro de Concursos</span>
                 </div>
                 <div class="panel-body">
+                    <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#Concurso" data-toggle="tab">Concurso</a></li>
                         <li><a href="#Arquivos" data-toggle="tab">Arquivos</a></li>
@@ -60,7 +61,7 @@
                                     <div class="row">                        
                                         <div class="col-sm-4">
                                             <div class='input-group date'>
-                                                <asp:TextBox ID="dtIniConsurso" runat="server" class="form-control"
+                                                <asp:TextBox ID="dtIniConcurso" runat="server" class="form-control"
                                                     placeholder="Ex. 13/01/2015" Visible="True">
                                                 </asp:TextBox>
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
@@ -70,7 +71,7 @@
                                         </div>
                                         <div class="col-sm-4">
                                             <div class='input-group date'>
-                                                <asp:TextBox ID="dtFimConsurso" runat="server" class="form-control"
+                                                <asp:TextBox ID="dtFimConcurso" runat="server" class="form-control"
                                                     placeholder="Ex. 13/01/2015" Visible="True">
                                                 </asp:TextBox>
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
@@ -563,14 +564,16 @@
                         <div class="col-sm-2" align="left" style="float: left">
                             <asp:LinkButton ID="btnSalvar" 
                                     runat="server" 
-                                    CssClass="btn btn-primary btn-block btn-success">
+                                    CssClass="btn btn-primary btn-block btn-success"
+                                    onclick="btnSalvar_Click">
                                 <i class="glyphicon glyphicon-save"></i>&nbsp;&nbsp;Salvar
                             </asp:LinkButton>
                         </div>
                         <div class="col-sm-2" align="center" style="float: left">
                             <asp:LinkButton ID="btnCancelar" 
                                     runat="server" 
-                                    CssClass="btn btn-primary btn-block btn-danger">
+                                    CssClass="btn btn-primary btn-block btn-danger"
+                                    onclick="btnCancelar_Click">
                                 <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp;Cancelar
                             </asp:LinkButton>
                         </div>

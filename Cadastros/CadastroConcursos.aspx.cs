@@ -8,10 +8,13 @@ using wappKaraoke.Classes;
 using System.Data;
 using System.Text;
 using System.Collections;
+using wappKaraoke.Classes;
+using wappKaraoke.Classes.Model.Concursos;
+using wappKaraoke.Classes.Controller;
 
 namespace wappKaraoke.Cadastros
 {
-    public partial class CadastroConcursos : csPageDefault
+    public partial class CadastroConcursos : csPageCadastro
     {
         private string strInicio = "<div class=\"tabbable tabs-left\"> \n <ul class=\"nav nav-tabs\">\n";
         private string strMeio = "</ul> \n <div class=\"tab-content\">\n";
@@ -26,17 +29,13 @@ namespace wappKaraoke.Cadastros
         private string strRowFim = "</div>\n";
         private string strPanelBodyIni = "<div class=\"panel-body\">";
         private string strPanelBodyFim = "</div>";
-        //private string strColIni = "<div class=\"col-sm-[Col]\">";
-        //private string strColFim = "</div>\n";
-        //private string strQuebraLinha = "<br//>";
-        //private string strButtonAdd = "<a id=\"btnAdd[idBtn]\" class=\"btn btn-success btn-block\" OnClientClick=\"btnAddCantor_OnClick()\">" +
-        //                              "<i class=\"glyphicon glyphicon-plus\">" +
-        //                              "</i>" +
-        //                              "&nbsp;&nbsp;Adicionar" +
-        //                              "</a>";
 
         public override void Page_Load(object sender, EventArgs e)
         {
+            ltMensagemDefault = ltMensagem;
+            tobjCa = typeof(caConcursos);
+            objCon = new conConcursos();
+
             if (!this.IsPostBack)
             {
                 csCidades vcsCidades = new csCidades();

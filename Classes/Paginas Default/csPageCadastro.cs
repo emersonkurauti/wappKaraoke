@@ -130,6 +130,11 @@ namespace wappKaraoke.Classes
                                 {
                                     ((DropDownList)c).SelectedValue = dtDados.Rows[IndexRowDados][i].ToString();
                                 }
+                                else
+                                    if (c is CheckBox)
+                                    {
+                                        ((CheckBox)c).Checked = dtDados.Rows[IndexRowDados][i].ToString() == "S" ? true : false;
+                                    }
                         }
                     }
                 }
@@ -176,6 +181,14 @@ namespace wappKaraoke.Classes
                             if (temp is string)
                                 pCampo.SetValue(objCo, ((DropDownList)c).SelectedValue, null);
                     }
+                    else
+                        if (c is CheckBox)
+                        {
+                            pCampo = tobjCo.GetProperty(((CheckBox)c).ID);
+                            temp = tobjCo.GetProperty(((CheckBox)c).ID).GetValue(objCo, null);
+
+                            pCampo.SetValue(objCo, ((CheckBox)c).Checked ? "S" : "N", null);
+                        }
             }
 
             pObjCon = vobjCon;

@@ -31,6 +31,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
+        /// ltMensagem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltMensagem;
+        
+        /// <summary>
         /// nmConcurso control.
         /// </summary>
         /// <remarks>
@@ -58,22 +67,22 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.DropDownList cdCidade;
         
         /// <summary>
-        /// dtIniConsurso control.
+        /// dtIniConcurso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dtIniConsurso;
+        protected global::System.Web.UI.WebControls.TextBox dtIniConcurso;
         
         /// <summary>
-        /// dtFimConsurso control.
+        /// dtFimConcurso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dtFimConsurso;
+        protected global::System.Web.UI.WebControls.TextBox dtFimConcurso;
         
         /// <summary>
         /// btnFechar control.

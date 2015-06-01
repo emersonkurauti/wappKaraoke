@@ -291,6 +291,9 @@
     <Compile Include="Cadastros\ConsultaTipoStatus.aspx.designer.cs">
       <DependentUpon>ConsultaTipoStatus.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Controller\conConcursos.cs" />
+    <Compile Include="Classes\Model\Concursos\caConcursos.cs" />
+    <Compile Include="Classes\Model\Concursos\coConcursos.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

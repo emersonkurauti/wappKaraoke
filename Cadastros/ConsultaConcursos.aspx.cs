@@ -6,6 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using wappKaraoke.Classes;
+using wappKaraoke.Classes.Model.Concursos;
+using wappKaraoke.Classes.Controller;
+using wappKaraoke.Classes.Mensagem;
 
 namespace wappKaraoke.Cadastros
 {
@@ -13,46 +16,20 @@ namespace wappKaraoke.Cadastros
     {
         public override void Page_Load(object sender, EventArgs e)
         {
+            gvDadosDefault = gvDados;
+            ltMensagemDefault = ltMensagem;
+            tobjCa = typeof(caConcursos);
+            objCon = new conConcursos();
+
+            base.Page_Load(sender, e);
+
             if (!this.IsPostBack)
             {
                 csCidades vcsCidades = new csCidades();
                 cdCidade = vcsCidades.CarregaDDL(cdCidade);
 
-                DataTable dt = new DataTable();
-                dt.Columns.Add("cdConcurso", typeof(int));
-                dt.Columns.Add("nmConcurso", typeof(string));
-                dt.Columns.Add("nmConcursoKanji", typeof(string));
-                dt.Columns.Add("dtIniConcurso", typeof(string));
-                dt.Columns.Add("dtFimConcurso", typeof(string));
-                dt.Columns.Add("cdCidade", typeof(string));
-                dt.Columns.Add("flFinalizado", typeof(string));
-
-                for (int i = 0; i < 15; i++)
-                {
-                    DataRow dr = dt.NewRow();
-
-                    dr["cdConcurso"] = i;
-                    dr["nmConcurso"] = "Nome Concurso de teste - " + i;
-                    dr["nmConcursoKanji"] = "Nome Kanji de teste - " + i;
-                    dr["dtIniConcurso"] = "01/10/" + (i + 200);
-                    dr["dtFimConcurso"] = (i + 1) + "/10/" + (i + 200);
-                    dr["cdCidade"] = "Cidade teste - " + i;
-                    dr["flFinalizado"] = "Sim";
-
-                    dt.Rows.Add(dr);
-                }
-
-                gvDados.DataSource = dt;
-                gvDados.DataBind();
-
-                for (int i = 0; i < 15; i++)
-                {
-                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmConcurso"].ToString() +
-                        " <br/> " + dt.Rows[i]["nmConcursoKanji"].ToString();
-                }
+                NomeKanji();
             }
-
-            base.Page_Load(sender, e);
         }
 
         protected override bool ConfigurarGridView()
@@ -82,6 +59,25 @@ namespace wappKaraoke.Cadastros
             catch
             {
                 return false;
+            }
+        }
+
+        protected override void btnBuscar_Click(object sender, EventArgs e)
+        {
+            base.btnBuscar_Click(sender, e);
+
+            NomeKanji();
+        }
+
+        protected void NomeKanji()
+        {
+            if (dtDados != null)
+            {
+                for (int i = 0; i < dtDados.Rows.Count; i++)
+                {
+                    ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dtDados.Rows[i]["nmConcurso"].ToString() +
+                        " <br/> " + dtDados.Rows[i]["nmConcursoKanji"].ToString();
+                }
             }
         }
     }
