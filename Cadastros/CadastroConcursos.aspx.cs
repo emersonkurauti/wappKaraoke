@@ -10,11 +10,16 @@ using System.Text;
 using System.Collections;
 using wappKaraoke.Classes.Model.Concursos;
 using wappKaraoke.Classes.Controller;
+using wappKaraoke.Classes.Mensagem;
+using wappKaraoke.Classes.Model.Arquivos;
 
 namespace wappKaraoke.Cadastros
 {
     public partial class CadastroConcursos : csPageCadastro
     {
+        private DataTable _dtDocumentos;
+        private DataTable _dtImagens;
+
         private string strInicio = "<div class=\"tabbable tabs-left\"> \n <ul class=\"nav nav-tabs\">\n";
         private string strMeio = "</ul> \n <div class=\"tab-content\">\n";
         private string strFim = "</div> \n </div>\n";
@@ -31,10 +36,7 @@ namespace wappKaraoke.Cadastros
 
         public override void Page_Load(object sender, EventArgs e)
         {
-            if (Request["__EVENTARGUMENT"] != null && Request["__EVENTARGUMENT"].Contains("CarregaArquivo"))
-            {
-                return;
-            }
+            ltMensagemArquivos.Text = "";
 
             ltMensagemDefault = ltMensagem;
             tobjCa = typeof(caConcursos);
@@ -42,37 +44,11 @@ namespace wappKaraoke.Cadastros
 
             if (!this.IsPostBack)
             {
-                csCidades vcsCidades = new csCidades();
-                cdCidade = vcsCidades.CarregaDDL(cdCidade);
+                PegarChaveConcurso();
 
-                csAssociacoes vcsAssociacoes = new csAssociacoes();
-                cdAssociacao = vcsAssociacoes.CarregaDDL(cdAssociacao);
+                CarregarDDL();
 
-                csJurados vcsJurados = new csJurados();
-                cdJurado = vcsJurados.CarregaDDL(cdJurado);
-
-                csFases vcsFases = new csFases();
-                cdFase = vcsFases.CarregaDDL(cdFase);
-
-                csCategorias vcsCategorias = new csCategorias();
-                cdCategoria = vcsCategorias.CarregaDDL(cdCategoria);
-
-                //Filtrar somente as associações adicionadas no concurso
-                csAssociacoes vcsAssociacoesCancores = new csAssociacoes();
-                cdAssociacaoCantor = vcsAssociacoesCancores.CarregaDDL(cdAssociacaoCantor);
-
-                //Filtrar somente fases adicionadas no concurso
-                csFases vcsFasesConcurso = new csFases();
-                cdFaseCantor = vcsFasesConcurso.CarregaDDL(cdFaseCantor);
-
-                csCantores vcsCancotres = new csCantores();
-                cdCantor = vcsCancotres.CarregaDDL(cdCantor);
-
-                csMusicas vcsMusicas = new csMusicas();
-                cdMusica = vcsMusicas.CarregaDDL(cdMusica);
-
-                csStatus vcsStatus = new csStatus();
-                cdStatus = vcsStatus.CarregaDDL(cdStatus);
+                CarregarArquivos();
 
                 //Associações
                 DataTable dt = new DataTable();
@@ -415,6 +391,98 @@ namespace wappKaraoke.Cadastros
             }
 
             ltCategorias.Text = strInicio + strLista + strMeio + strDivs + strFim;
+        }
+
+        protected void PegarChaveConcurso()
+        {
+            if (Session["IndexRowDados"] != null)
+            {
+                IndexRowDados = (int)Session["IndexRowDados"];
+                dtDados = (DataTable)Session["dtDados"];
+
+                Session["cdConcurso"] = dtDados.Rows[IndexRowDados][caArquivos.nmCampoChave.ToString()].ToString();
+            }
+            else
+                Session["cdConcurso"] = 0;
+        }
+
+        protected void CarregarDDL()
+        {
+            csCidades vcsCidades = new csCidades();
+            cdCidade = vcsCidades.CarregaDDL(cdCidade);
+
+            csAssociacoes vcsAssociacoes = new csAssociacoes();
+            cdAssociacao = vcsAssociacoes.CarregaDDL(cdAssociacao);
+
+            csJurados vcsJurados = new csJurados();
+            cdJurado = vcsJurados.CarregaDDL(cdJurado);
+
+            csFases vcsFases = new csFases();
+            cdFase = vcsFases.CarregaDDL(cdFase);
+
+            csCategorias vcsCategorias = new csCategorias();
+            cdCategoria = vcsCategorias.CarregaDDL(cdCategoria);
+
+            //Filtrar somente as associações adicionadas no concurso
+            csAssociacoes vcsAssociacoesCancores = new csAssociacoes();
+            cdAssociacaoCantor = vcsAssociacoesCancores.CarregaDDL(cdAssociacaoCantor);
+
+            //Filtrar somente fases adicionadas no concurso
+            csFases vcsFasesConcurso = new csFases();
+            cdFaseCantor = vcsFasesConcurso.CarregaDDL(cdFaseCantor);
+
+            csCantores vcsCancotres = new csCantores();
+            cdCantor = vcsCancotres.CarregaDDL(cdCantor);
+
+            csMusicas vcsMusicas = new csMusicas();
+            cdMusica = vcsMusicas.CarregaDDL(cdMusica);
+
+            csStatus vcsStatus = new csStatus();
+            cdStatus = vcsStatus.CarregaDDL(cdStatus);
+        }
+
+        protected void CarregarArquivos()
+        {
+            conArquivos objConArquivos = new conArquivos();
+            if (Session["_dtImagens"] != null)
+                _dtImagens = (DataTable)Session["_dtImagens"];
+            else
+            {
+                objConArquivos.objCoArquivos.LimparAtributos();
+                objConArquivos.objCoArquivos.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+                objConArquivos.objCoArquivos.cdTipoArquivo = csConstantes.cCdTipoArquivoImagem;
+            }
+
+            if (Session["_dtDocumentos"] != null)
+                _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+            else
+            {
+                objConArquivos.objCoArquivos.LimparAtributos();
+                objConArquivos.objCoArquivos.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+                objConArquivos.objCoArquivos.cdTipoArquivo = csConstantes.cCdTipoArquivoDocumento;
+            }
+        }
+
+        protected void btnAdicionarArquivo_Click(object sender, EventArgs e)
+        {
+            if (deCaminhoArquivo.Text != "")
+            {
+                if (Convert.ToInt32(hdfCdTpArquivo.ToString()) == csConstantes.cCdTipoArquivoImagem)
+                {
+                    if (Session["_dtImagens"] != null)
+                        _dtImagens = (DataTable)Session["_dtImagens"];
+
+                }
+                else if (Convert.ToInt32(hdfCdTpArquivo.ToString()) == csConstantes.cCdTipoArquivoDocumento)
+                {
+                    if (Session["_dtDocumentos"] != null)
+                        _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+                }
+            }
+            else
+            {
+                ltMensagemArquivos.Text = MostraMensagem("Falha", "Selecione um arquivo para adicionar.", csMensagem.msgWarning);
+            }
         }
     }
 }

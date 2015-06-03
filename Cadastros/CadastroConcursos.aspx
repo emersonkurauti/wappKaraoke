@@ -14,8 +14,33 @@
         });
 
         function PegaNomeArquivo() {
-            document.getElementById('<%=deCaminhoArquivo.ClientID%>').value = document.getElementById('<%=fluArquivo.ClientID%>').value;
-            //__doPostBack('fluArquivo', 'CarregaArquivo;' + document.getElementById('<%=deCaminhoArquivo.ClientID%>').value);
+            var sNomeArquivo = document.getElementById('<%=fluArquivo.ClientID%>').value;
+            document.getElementById('<%=deCaminhoArquivo.ClientID%>').value = sNomeArquivo;
+
+            if (EhImagem(sNomeArquivo)) {
+                document.getElementById('cdTpArquivoImagem').checked = true;
+                hdfCdTpArquivo = 1;
+            } else {
+                document.getElementById('cdTpArquivoDocumento').checked = true;
+                hdfCdTpArquivo = 2;
+            }
+        }
+
+        function EhImagem(sNomeArquivo) {
+            var vExtensoes, sExtensao, bEhImagem;
+
+            vExtensoes = new Array('.jpg', '.jpeg', '.bpm', '.gif', '.png');
+            sExtensao = sNomeArquivo.substring(sNomeArquivo.lastIndexOf(".")).toLowerCase();
+            bEhImagem = false;
+
+            for (var i = 0; i <= sNomeArquivo.length; i++) {
+                if (vExtensoes[i] == sExtensao) {
+                    bEhImagem = true;
+                    break;
+                }
+            }
+
+            return bEhImagem;
         }
     </script>
     <asp:Literal ID="ltJavaScript" runat="server"></asp:Literal> <!--Caso precise de agrupamento nas tabelas-->
@@ -120,69 +145,82 @@
                                 <div class="panel-body">
                                     <asp:UpdatePanel ID="upArquivos" runat="server">
                                         <ContentTemplate>
+                                            <asp:Literal ID="ltMensagemArquivos" runat="server"></asp:Literal>
                                             <div class="row">
                                                 <div class="col-sm-2">
-                                            <span class="btn btn-default btn-file">
-                                                Selecionar Arquivo...
-                                                <asp:FileUpload ID="fluArquivo" runat="server" 
-                                                onchange="PegaNomeArquivo()"/>
-                                            </span>                                                    
-                                        </div>
-                                                <div class="col-sm-5">
-                                            <asp:TextBox ID="deCaminhoArquivo" class="form-control" runat="server" 
-                                                placeholder="Nome Arquivo..." Visible="True"
-                                                ReadOnly="true">
-                                            </asp:TextBox>
-                                        </div>
+                                                    <span class="btn btn-default btn-file">
+                                                        Selecionar Arquivo...
+                                                        <asp:FileUpload ID="fluArquivo" runat="server" 
+                                                        onchange="PegaNomeArquivo()"/>
+                                                    </span>                                                    
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <asp:TextBox ID="deCaminhoArquivo" class="form-control" runat="server" 
+                                                        placeholder="Nome Arquivo..." Visible="True"
+                                                        ReadOnly="true">
+                                                    </asp:TextBox>
+                                                </div>
                                                 <div class="col-sm-3">
-                                            <span class="form-control">
-                                                <asp:RadioButtonList ID="cdTipoArquivo" runat="server" 
-                                                Enabled="False" RepeatDirection="Horizontal">
-                                                    <asp:ListItem Selected="True" Value="1">&nbsp;&nbsp;Imagem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</asp:ListItem>
-                                                    <asp:ListItem Value="2">&nbsp;&nbsp;Documento</asp:ListItem>
-                                                </asp:RadioButtonList>
-                                            </span>
-                                        </div>
-                                                <div class="col-sm-2">
-                                            <asp:LinkButton ID="btnAdicionarArquivo" 
-                                                    runat="server" 
-                                                    CssClass="btn btn-success btn-block">
-                                                <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
-                                            </asp:LinkButton>
-                                        </div>
+                                                    <span class="form-control">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="cdTpArquivo" id="cdTpArquivoImagem" disabled="disabled">Imagem
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
+                                                        </label> 
+                                                        <asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
+                                                    </span>
+                                                </div>
                                             </div>
                                             <br/>
                                             <div class="row">
-                                            <div class="col-sm-12">
-                                                <ul class="nav nav-tabs">
-                                                    <li class="active"><a href="#Imagens" data-toggle="tab">Imagens</a></li>
-                                                    <li><a href="#Documentos" data-toggle="tab">Documentos</a></li>
-                                                </ul>
-                                                <div id="my-tab-content-2" class="tab-content"> 
-                                                    <div class="tab-pane active" id="Imagens">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <div class="tab-pane active" id="Imagens">
-                                                        <div class="panel panel-default" style="border-top: 0px">
-                                                            <div class="panel-body">
-                                                                <div class="row">
-                                                                    <div class="col-sm-12">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    </div> <!--<div class="tab-pane active" id="Imagens">-->
-                                                    <div class="tab-pane" id="Documentos">
-                                                        <div class="panel panel-default" style="border-top: 0px">
-                                                            <div class="panel-body">
-                                                                <div class="row">
-                                                                    <div class="col-sm-12">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div> <!--<div class="tab-pane active" id="Documentos">-->
+                                                <div class="col-sm-10">
+                                                    <asp:TextBox ID="deArquivo" class="form-control" runat="server" 
+                                                        placeholder="Descrição do arquivo..." Visible="True">
+                                                    </asp:TextBox>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <asp:LinkButton ID="btnAdicionarArquivo" 
+                                                        runat="server" 
+                                                        CssClass="btn btn-success btn-block" 
+                                                        onclick="btnAdicionarArquivo_Click">
+                                                        <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
+                                                    </asp:LinkButton>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <ul class="nav nav-tabs">
+                                                        <li class="active"><a href="#Imagens" data-toggle="tab">Imagens</a></li>
+                                                        <li><a href="#Documentos" data-toggle="tab">Documentos</a></li>
+                                                    </ul>
+                                                    <div id="my-tab-content-2" class="tab-content"> 
+                                                        <div class="tab-pane active" id="Imagens">
+                                                            <div class="panel panel-default" style="border-top: 0px">
+                                                                <div class="panel-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <asp:Literal ID="ltImagens" runat="server"></asp:Literal>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div> <!--<div class="tab-pane active" id="Imagens-->
+                                                        <div class="tab-pane" id="Documentos">
+                                                            <div class="panel panel-default" style="border-top: 0px">
+                                                                <div class="panel-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <asp:Literal ID="ltDocumentos" runat="server"></asp:Literal>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div> <!--<div class="tab-pane active" id="Documentos">-->
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
                                 </div>

@@ -291,9 +291,16 @@
     <Compile Include="Cadastros\ConsultaTipoStatus.aspx.designer.cs">
       <DependentUpon>ConsultaTipoStatus.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Constantes\csConstantes.cs" />
+    <Compile Include="Classes\Controller\conArquivos.cs" />
     <Compile Include="Classes\Controller\conConcursos.cs" />
+    <Compile Include="Classes\Controller\conTipoArquivo.cs" />
+    <Compile Include="Classes\Model\Arquivos\caArquivos.cs" />
+    <Compile Include="Classes\Model\Arquivos\coArquivos.cs" />
     <Compile Include="Classes\Model\Concursos\caConcursos.cs" />
     <Compile Include="Classes\Model\Concursos\coConcursos.cs" />
+    <Compile Include="Classes\Model\TipoArquivo\caTipoArquivo.cs" />
+    <Compile Include="Classes\Model\TipoArquivo\coTipoArquivo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

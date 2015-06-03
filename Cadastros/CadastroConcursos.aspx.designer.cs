@@ -121,6 +121,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.UpdatePanel upArquivos;
         
         /// <summary>
+        /// ltMensagemArquivos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltMensagemArquivos;
+        
+        /// <summary>
         /// fluArquivo control.
         /// </summary>
         /// <remarks>
@@ -139,13 +148,22 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox deCaminhoArquivo;
         
         /// <summary>
-        /// cdTipoArquivo control.
+        /// hdfCdTpArquivo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList cdTipoArquivo;
+        protected global::System.Web.UI.WebControls.HiddenField hdfCdTpArquivo;
+        
+        /// <summary>
+        /// deArquivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox deArquivo;
         
         /// <summary>
         /// btnAdicionarArquivo control.
@@ -155,6 +173,24 @@ namespace wappKaraoke.Cadastros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnAdicionarArquivo;
+        
+        /// <summary>
+        /// ltImagens control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltImagens;
+        
+        /// <summary>
+        /// ltDocumentos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltDocumentos;
         
         /// <summary>
         /// upConcursoAssociacoes control.
