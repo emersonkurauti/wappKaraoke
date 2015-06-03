@@ -52,7 +52,7 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <span class="btn btn-default btn-file">
-                                Selecionar Arquivo...
+                                Selecionar Cantado...
                                 <asp:FileUpload ID="fluArquivoCantado" 
                                 runat="server" 
                                 onchange="PegaNomeArquivoCantado()"/>
@@ -86,7 +86,7 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <span class="btn btn-default btn-file">
-                                Selecionar Arquivo...
+                                Selecionar Karaoke...
                                 <asp:FileUpload ID="fluArquivoKaraoke" 
                                 runat="server" 
                                 onchange="PegaNomeArquivoKaraoke()"/>

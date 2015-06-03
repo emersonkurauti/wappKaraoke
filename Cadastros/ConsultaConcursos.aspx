@@ -118,9 +118,11 @@
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Kanji" DataField="nmConcursoKanji" Visible="false">
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Dt. Ini. Concurso" DataField="dtIniConcurso">
+                                    <asp:BoundField HeaderText="Dt. Ini. Concurso" DataField="dtIniConcurso" 
+                                        DataFormatString="{0:dd/MM/yyyy}">
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Dt. Fim Concurso" DataField="dtFimConcurso">
+                                    <asp:BoundField HeaderText="Dt. Fim Concurso" DataField="dtFimConcurso"
+                                        DataFormatString="{0:dd/MM/yyyy}">
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Cidade" DataField="CC_nmCidade">
                                     </asp:BoundField>

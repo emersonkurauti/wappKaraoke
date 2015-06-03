@@ -121,7 +121,8 @@
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="E-Mail" DataField="deEmail">
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Dt. Nasc." DataField="dtNascimento">
+                                    <asp:BoundField HeaderText="Dt. Nasc." DataField="dtNascimento"
+                                        DataFormatString="{0:dd/MM/yyyy}">
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Cidade" DataField="cdCidade">
                                     </asp:BoundField>

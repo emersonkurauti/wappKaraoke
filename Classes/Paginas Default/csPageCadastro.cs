@@ -123,7 +123,13 @@ namespace wappKaraoke.Classes
                         {
                             if (c is TextBox)
                             {
-                                ((TextBox)c).Text = dtDados.Rows[IndexRowDados][i].ToString();
+                                if (c.ID.ToUpper().Substring(0, 2).Equals("DT"))
+                                {
+                                    if (!dtDados.Rows[IndexRowDados][i].ToString().Substring(0, 10).Equals("01/01/0001"))
+                                        ((TextBox)c).Text = dtDados.Rows[IndexRowDados][i].ToString().Substring(0, 10);
+                                }
+                                else
+                                    ((TextBox)c).Text = dtDados.Rows[IndexRowDados][i].ToString();
                             }
                             else
                                 if (c is DropDownList)

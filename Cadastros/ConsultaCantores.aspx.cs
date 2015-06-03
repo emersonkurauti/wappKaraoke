@@ -78,5 +78,19 @@ namespace wappKaraoke.Cadastros
                 }
             }
         }
+
+        protected override void gvDados_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            base.gvDados_RowDataBound(sender, e);
+
+            string sData;
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                sData = DataBinder.Eval(e.Row.DataItem, "dtNascimento").ToString();
+
+                if (sData.Substring(0, 10).Equals("01/01/0001"))
+                    e.Row.Cells[4].Text = "";
+            }
+        }
     }
 }

@@ -132,13 +132,23 @@ namespace wappKaraoke.Classes.Model.Concursos
         /// <returns></returns>
         public override bool Inserir()
         {
-            if (base.Inserir())
+            objBanco.BeginTransaction();
+
+            try
             {
-                cdConcurso = objBanco.cdChave;
+                if (base.Inserir())
+                {
+                    cdConcurso = objBanco.cdChave;
+                }
+
+                objBanco.CommitTransaction();
                 return true;
             }
-
-            return false;
+            catch
+            {
+                objBanco.RollbackTransaction();
+                return false;
+            }
         }
     }
 }

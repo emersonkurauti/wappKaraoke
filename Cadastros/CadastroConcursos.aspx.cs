@@ -8,7 +8,6 @@ using wappKaraoke.Classes;
 using System.Data;
 using System.Text;
 using System.Collections;
-using wappKaraoke.Classes;
 using wappKaraoke.Classes.Model.Concursos;
 using wappKaraoke.Classes.Controller;
 
@@ -32,6 +31,11 @@ namespace wappKaraoke.Cadastros
 
         public override void Page_Load(object sender, EventArgs e)
         {
+            if (Request["__EVENTARGUMENT"] != null && Request["__EVENTARGUMENT"].Contains("CarregaArquivo"))
+            {
+                return;
+            }
+
             ltMensagemDefault = ltMensagem;
             tobjCa = typeof(caConcursos);
             objCon = new conConcursos();
@@ -234,6 +238,16 @@ namespace wappKaraoke.Cadastros
 
             Session["strLista"] = null;
             Session["strDivs"] = null;
+        }
+
+        public void btnFechar_Click(Object sender, EventArgs e)
+        {
+            flFinalizado.Checked = true;
+        }
+
+        public void btnReabrir_Click(Object sender, EventArgs e)
+        {
+            flFinalizado.Checked = false;
         }
 
         public void btnAdicionarCategoria_OnClick(Object sender, EventArgs e)

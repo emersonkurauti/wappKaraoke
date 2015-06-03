@@ -49,6 +49,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox nmConcurso;
         
         /// <summary>
+        /// flFinalizado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox flFinalizado;
+        
+        /// <summary>
         /// nmConcursoKanji control.
         /// </summary>
         /// <remarks>
@@ -103,15 +112,6 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.LinkButton btnReabrir;
         
         /// <summary>
-        /// upArquivos control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upArquivos;
-        
-        /// <summary>
         /// fluArquivo control.
         /// </summary>
         /// <remarks>
@@ -121,6 +121,24 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.FileUpload fluArquivo;
         
         /// <summary>
+        /// deCaminhoArquivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox deCaminhoArquivo;
+        
+        /// <summary>
+        /// cdTipoArquivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList cdTipoArquivo;
+        
+        /// <summary>
         /// btnAdicionarArquivo control.
         /// </summary>
         /// <remarks>
@@ -128,6 +146,15 @@ namespace wappKaraoke.Cadastros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnAdicionarArquivo;
+        
+        /// <summary>
+        /// upArquivos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upArquivos;
         
         /// <summary>
         /// btnAmplia1 control.

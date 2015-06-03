@@ -168,6 +168,10 @@ namespace wappKaraoke.Classes
                             else
                                 strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " = " + ((DropDownList)c).SelectedValue;
                         }
+                        if ((c is CheckBox) && (((CheckBox)c).ID.ToUpper() == dc.ColumnName.ToUpper()))
+                        {
+                            strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " = '" + (((CheckBox)c).Checked ? "S" : "N") + "'";
+                        }
                     }
 
                 }

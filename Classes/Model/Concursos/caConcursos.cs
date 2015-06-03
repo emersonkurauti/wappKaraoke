@@ -35,7 +35,7 @@ namespace wappKaraoke.Classes.Model.Concursos
 
         public static bool _bControlaTransacao
         {
-            get { return true; }
+            get { return false; }
         }
 
         public static string CC_cdRegistro
