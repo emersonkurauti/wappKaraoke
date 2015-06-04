@@ -11,7 +11,25 @@
 <title>Bootstrap Image Gallery</title>
 <meta name="description" content="Bootstrap Image Gallery is an extension to blueimp Gallery, a touch-enabled, responsive and customizable image and video gallery. It displays images and videos in the modal dialog of the Bootstrap framework, features swipe, mouse and keyboard navigation, transition effects, fullscreen support and on-demand content loading and can be extended to display additional content types.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../css/bootstrap-3-0-2-gallery.min.css" rel="stylesheet" type="text/css" />
+    
+
+    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../assets/css/docs.css" rel="stylesheet">
+    <link href="../assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <!--<link rel="shortcut icon" href="../assets/ico/favicon.png">   ICONE DA PAGINA -->
+
+    <link href="../css/footable-0.1.css" rel="stylesheet" type="text/css" />
+    <link href="../css/footable.min.css" rel="stylesheet" type="text/css" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.css" rel="stylesheet">
+
+    <script src="../js/1.8.2/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/footable-0.1.js" type="text/javascript"></script>
+    <script src="../js/jquery.min.js" type="text/javascript"></script>    
+    <script src="../js/footable.min.js" type="text/javascript"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+
     <link href="../css/blueimp-gallery.min.css" rel="stylesheet" type="text/css" />
     <link href="../css/bootstrap-image-gallery.css" rel="stylesheet" type="text/css" />
 </head>
