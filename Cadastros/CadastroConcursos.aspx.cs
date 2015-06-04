@@ -148,44 +148,10 @@ namespace wappKaraoke.Cadastros
 
             try
             {
-                //Associações
-                //Attribute to show the Plus Minus Button.
-                gvAssociacoes.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
-
-                //Attribute to hide column in Phone.
-                gvAssociacoes.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-                gvAssociacoes.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-                gvAssociacoes.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-                gvAssociacoes.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
-                gvAssociacoes.HeaderRow.Cells[5].Attributes["data-hide"] = "phone";
-
-                //Adds THEAD and TBODY to GridView.
-                gvAssociacoes.HeaderRow.TableSection = TableRowSection.TableHeader;
-
-                //Jurados
-                //Attribute to show the Plus Minus Button.
-                gvGrupoJuradoConcurso.HeaderRow.Cells[2].Attributes["data-class"] = "expand";
-
-                //Attribute to hide column in Phone.
-                gvGrupoJuradoConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-                gvGrupoJuradoConcurso.HeaderRow.Cells[1].Attributes["data-hide"] = "phone";
-                gvGrupoJuradoConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-                gvGrupoJuradoConcurso.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
-
-                //Adds THEAD and TBODY to GridView.
-                gvGrupoJuradoConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
-
-                //Fases
-                //Attribute to show the Plus Minus Button.
-                gvFasesConcurso.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
-
-                //Attribute to hide column in Phone.
-                gvFasesConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-                gvFasesConcurso.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-                gvFasesConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-
-                //Adds THEAD and TBODY to GridView.
-                gvFasesConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
+                ConfiguraGridAssociacoes();
+                ConfiguraGridJurados();
+                ConfiguraGridFases();
+                ConfiguraGridDocumentos();
 
                 //Cantores
                 //Attribute to show the Plus Minus Button.
@@ -208,12 +174,73 @@ namespace wappKaraoke.Cadastros
             }
         }
 
+        private void ConfiguraGridAssociacoes()
+        {
+            //Associações
+            //Attribute to show the Plus Minus Button.
+            gvAssociacoes.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+
+            //Attribute to hide column in Phone.
+            gvAssociacoes.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            gvAssociacoes.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+            gvAssociacoes.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+            gvAssociacoes.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+            gvAssociacoes.HeaderRow.Cells[5].Attributes["data-hide"] = "phone";
+
+            //Adds THEAD and TBODY to GridView.
+            gvAssociacoes.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
+        private void ConfiguraGridJurados()
+        {
+            //Attribute to show the Plus Minus Button.
+            gvGrupoJuradoConcurso.HeaderRow.Cells[2].Attributes["data-class"] = "expand";
+
+            //Attribute to hide column in Phone.
+            gvGrupoJuradoConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            gvGrupoJuradoConcurso.HeaderRow.Cells[1].Attributes["data-hide"] = "phone";
+            gvGrupoJuradoConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+            gvGrupoJuradoConcurso.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+
+            //Adds THEAD and TBODY to GridView.
+            gvGrupoJuradoConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
+        private void ConfiguraGridFases()
+        {
+            //Attribute to show the Plus Minus Button.
+            gvFasesConcurso.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+
+            //Attribute to hide column in Phone.
+            gvFasesConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            gvFasesConcurso.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+            gvFasesConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+
+            //Adds THEAD and TBODY to GridView.
+            gvFasesConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
+        private void ConfiguraGridDocumentos()
+        {
+            //Attribute to show the Plus Minus Button.
+            gvDocumentos.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+
+            //Attribute to hide column in Phone.
+            gvDocumentos.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            gvDocumentos.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+
+            //Adds THEAD and TBODY to GridView.
+            gvDocumentos.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
         protected override void InicializaSessions()
         {
             base.InicializaSessions();
 
             Session["strLista"] = null;
             Session["strDivs"] = null;
+            Session["_dtImagens"] = null;
+            Session["_dtDocumentos"] = null;
         }
 
         public void btnFechar_Click(Object sender, EventArgs e)
@@ -393,20 +420,20 @@ namespace wappKaraoke.Cadastros
             ltCategorias.Text = strInicio + strLista + strMeio + strDivs + strFim;
         }
 
-        protected void PegarChaveConcurso()
+        private void PegarChaveConcurso()
         {
             if (Session["IndexRowDados"] != null)
             {
                 IndexRowDados = (int)Session["IndexRowDados"];
                 dtDados = (DataTable)Session["dtDados"];
 
-                Session["cdConcurso"] = dtDados.Rows[IndexRowDados][caArquivos.nmCampoChave.ToString()].ToString();
+                Session["cdConcurso"] = dtDados.Rows[IndexRowDados][caConcursos.nmCampoChave.ToString()].ToString();
             }
             else
                 Session["cdConcurso"] = 0;
         }
 
-        protected void CarregarDDL()
+        private void CarregarDDL()
         {
             csCidades vcsCidades = new csCidades();
             cdCidade = vcsCidades.CarregaDDL(cdCidade);
@@ -441,25 +468,39 @@ namespace wappKaraoke.Cadastros
             cdStatus = vcsStatus.CarregaDDL(cdStatus);
         }
 
-        protected void CarregarArquivos()
+        private void CarregarArquivos()
         {
             conArquivos objConArquivos = new conArquivos();
+            objConArquivos.objCoArquivos.LimparAtributos();
+            objConArquivos.objCoArquivos.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+
             if (Session["_dtImagens"] != null)
                 _dtImagens = (DataTable)Session["_dtImagens"];
             else
             {
-                objConArquivos.objCoArquivos.LimparAtributos();
-                objConArquivos.objCoArquivos.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
                 objConArquivos.objCoArquivos.cdTipoArquivo = csConstantes.cCdTipoArquivoImagem;
+
+                if (!conArquivos.Select())
+                    ltMensagemArquivos.Text = MostraMensagem("Falha", "Problemas ao carregar imagens.", csMensagem.msgDanger);
+
+                Session["_dtImagens"] = objConArquivos.dtDados;
+
+                CarregarImagens();
             }
 
             if (Session["_dtDocumentos"] != null)
                 _dtDocumentos = (DataTable)Session["_dtDocumentos"];
             else
             {
-                objConArquivos.objCoArquivos.LimparAtributos();
-                objConArquivos.objCoArquivos.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
                 objConArquivos.objCoArquivos.cdTipoArquivo = csConstantes.cCdTipoArquivoDocumento;
+
+                if (!conArquivos.Select())
+                    ltMensagemArquivos.Text = MostraMensagem("Falha", "Problemas ao carregar documentos.", csMensagem.msgDanger);
+
+                gvDocumentos.DataSource = objConArquivos.dtDados;
+                gvDocumentos.DataBind();
+
+                Session["_dtDocumentos"] = objConArquivos.dtDados;
             }
         }
 
@@ -482,6 +523,27 @@ namespace wappKaraoke.Cadastros
             else
             {
                 ltMensagemArquivos.Text = MostraMensagem("Falha", "Selecione um arquivo para adicionar.", csMensagem.msgWarning);
+            }
+        }
+
+        private void CarregarImagens() 
+        {
+            if (Session["_dtImagens"] != null)
+            {
+                int seq = 0;
+                string strCaminho = "../" + wappKaraoke.Properties.Settings.Default.sCaminhoArqImagens.Replace("\\", "/");
+
+                _dtImagens = (DataTable)Session["_dtImagens"];
+
+                ltImagens.Text = csDinamico.strInicioLista;
+
+                foreach (DataRow dr in _dtImagens.Rows)
+                {
+                    ltImagens.Text += csDinamico.strDivImagem.Replace("[strCaminhoImagem]", strCaminho + dr[caArquivos.nmArquivo].ToString()).Replace("[strDescImagem]",
+                        dr[caArquivos.deArquivo].ToString()).Replace("[strSeqImagem]", (seq++).ToString());
+                }
+
+                ltImagens.Text += csDinamico.strFinalLista;
             }
         }
     }

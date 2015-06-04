@@ -133,7 +133,20 @@
     <Content Include="Cadastros\ConsultaJurados.aspx" />
     <Content Include="Cadastros\ConsultaMusicas.aspx" />
     <Content Include="Cadastros\ConsultaTipoStatus.aspx" />
+    <Content Include="Cadastros\galeria.aspx" />
+    <Content Include="css\blueimp-gallery.min.css" />
+    <Content Include="css\bootstrap-3-0-2-gallery.min.css" />
+    <Content Include="js\bootstrap-3-0-2-gallery.min.js" />
+    <Content Include="css\bootstrap-image-gallery.css" />
+    <Content Include="css\bootstrap-image-gallery.min.css" />
+    <Content Include="css\demo.css" />
     <Content Include="hold_my_hand.mp3" />
+    <Content Include="img\loading.gif" />
+    <Content Include="js\bootstrap-image-gallery.js" />
+    <Content Include="js\bootstrap-image-gallery.min.js" />
+    <Content Include="js\demo-gallery.js" />
+    <Content Include="js\jquery-10-0-2-gallery.min.js" />
+    <Content Include="js\jquery.blueimp-gallery.min.js" />
     <Content Include="Movimentacoes\AlterarStatusCantor.aspx" />
     <Content Include="Movimentacoes\CantoresFases.aspx" />
     <Content Include="Movimentacoes\NotasCantores.aspx" />
@@ -291,10 +304,18 @@
     <Compile Include="Cadastros\ConsultaTipoStatus.aspx.designer.cs">
       <DependentUpon>ConsultaTipoStatus.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Cadastros\galeria.aspx.cs">
+      <DependentUpon>galeria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cadastros\galeria.aspx.designer.cs">
+      <DependentUpon>galeria.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Classes\Constantes\csConstantes.cs" />
     <Compile Include="Classes\Controller\conArquivos.cs" />
     <Compile Include="Classes\Controller\conConcursos.cs" />
     <Compile Include="Classes\Controller\conTipoArquivo.cs" />
+    <Compile Include="Classes\Dinamico\csDinamico.cs" />
     <Compile Include="Classes\Model\Arquivos\caArquivos.cs" />
     <Compile Include="Classes\Model\Arquivos\coArquivos.cs" />
     <Compile Include="Classes\Model\Concursos\caConcursos.cs" />

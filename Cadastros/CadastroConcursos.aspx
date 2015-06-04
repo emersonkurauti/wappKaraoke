@@ -13,6 +13,10 @@
             $('[id*=gvFasesConcurso]').footable();
         });
 
+        $(function () {
+            $('[id*=gvDocumentos]').footable();
+        });
+
         function PegaNomeArquivo() {
             var sNomeArquivo = document.getElementById('<%=fluArquivo.ClientID%>').value;
             document.getElementById('<%=deCaminhoArquivo.ClientID%>').value = sNomeArquivo;
@@ -143,7 +147,7 @@
                         <div class="tab-pane" id="Arquivos">
                             <div class="panel panel-default" style="border-top: 0px">
                                 <div class="panel-body">
-                                    <asp:UpdatePanel ID="upArquivos" runat="server">
+                                    <asp:UpdatePanel ID="upArquivos" runat="server" UpdateMode="Conditional">
                                         <ContentTemplate>
                                             <asp:Literal ID="ltMensagemArquivos" runat="server"></asp:Literal>
                                             <div class="row">
@@ -165,10 +169,9 @@
                                                         <label class="radio-inline">
                                                             <input type="radio" name="cdTpArquivo" id="cdTpArquivoImagem" disabled="disabled">Imagem
                                                         </label>
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
+                                                        &nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
                                                         </label> 
-                                                        <asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
+                                                        &nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
                                                     </span>
                                                 </div>
                                             </div>
@@ -201,6 +204,13 @@
                                                                 <div class="panel-body">
                                                                     <div class="row">
                                                                         <div class="col-sm-12">
+                                                                            <link href="../css/bootstrap-3-0-2-gallery.min.css" rel="stylesheet" type="text/css" />
+                                                                            <link href="../css/blueimp-gallery.min.css" rel="stylesheet" type="text/css" />
+                                                                            <link href="../css/bootstrap-image-gallery.css" rel="stylesheet" type="text/css" />
+                                                                            <script src="../js/jquery-10-0-2-gallery.min.js" type="text/javascript"></script>
+                                                                            <script src="../js/bootstrap-3-0-2-gallery.min.js" type="text/javascript"></script>
+                                                                            <script src="../js/jquery.blueimp-gallery.min.js" type="text/javascript"></script>
+                                                                            <script src="../js/bootstrap-image-gallery.js" type="text/javascript"></script>
                                                                             <asp:Literal ID="ltImagens" runat="server"></asp:Literal>
                                                                         </div>
                                                                     </div>
@@ -212,7 +222,41 @@
                                                                 <div class="panel-body">
                                                                     <div class="row">
                                                                         <div class="col-sm-12">
-                                                                            <asp:Literal ID="ltDocumentos" runat="server"></asp:Literal>
+                                                                            <asp:GridView ID="gvDocumentos" runat="server"
+                                                                                CssClass="footable table table-bordered table-hover footable" 
+                                                                                AutoGenerateColumns="False">
+                                                                                <Columns>
+                                                                                    <asp:BoundField HeaderText="Cód." DataField="cdArquivo">
+                                                                                        <ItemStyle Width="5%" />
+                                                                                    </asp:BoundField>
+                                                                                    <asp:BoundField HeaderText="Nome" DataField="nmArquivo">
+                                                                                    </asp:BoundField>
+                                                                                    <asp:BoundField HeaderText="Descrição" DataField="deArquivo">
+                                                                                    </asp:BoundField>
+                                                                                    <asp:TemplateField>
+	                                                                                    <ItemTemplate>
+		                                                                                    <asp:LinkButton ID="lnkEdit" runat="server"
+			                                                                                    CssClass="btn btn-primary btn-block" Text = "Editar"
+			                                                                                    CommandName='Edit'>
+			                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>
+		                                                                                    </asp:LinkButton>
+	                                                                                    </ItemTemplate>
+	                                                                                    <ItemStyle Width="5%" />
+                                                                                    </asp:TemplateField>
+                                                                                    <asp:TemplateField>
+	                                                                                    <ItemTemplate>
+		                                                                                    <asp:LinkButton ID="lnkDelete" runat="server"
+			                                                                                    CssClass="btn btn-primary btn-block btn-danger" Text = "Excluir"
+			                                                                                    CommandArgument='<%# Eval("cdArquivo") + "$" + Eval("nmArquivo") %>'
+			                                                                                    CommandName='Delete'>
+			                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>
+		                                                                                    </asp:LinkButton>
+	                                                                                    </ItemTemplate>
+	                                                                                    <ItemStyle Width="5%" />
+                                                                                    </asp:TemplateField>
+                                                                                </Columns>
+                                                                                <HeaderStyle CssClass="info" />
+                                                                            </asp:GridView>
                                                                         </div>
                                                                     </div>
                                                                 </div>
