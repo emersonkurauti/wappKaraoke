@@ -21,9 +21,11 @@
 	<div class="container">
 		<h1>Bootstrap Image Gallery Demo</h1>
 		<form class="form-inline">
-		
+		<asp:ScriptManager ID="ScriptManager1"/>
 		<br>
 		<!-- The container for the list of example images -->
+        <asp:UpdatePanel ID="upArquivos" UpdateMode="Conditional">
+            <ContentTemplate>
 		<div id="links"></div>
             <div class="row-fluid">
                 <ul class="thumbnails">
@@ -54,8 +56,11 @@
 				</ul>
             </div>
 		<br>
+            </ContentTemplate>
+        </asp:UpdatePanel>
         </form>
 	</div>
+
 	<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
 	<div id="blueimp-gallery" class="blueimp-gallery">
 		<!-- The container for the modal slides -->
@@ -91,7 +96,6 @@
 		</div>
 	</div>
         <script src="../js/jquery-10-0-2-gallery.min.js" type="text/javascript"></script>
-        <script src="../js/bootstrap-3-0-2-gallery.min.js" type="text/javascript"></script>
         <script src="../js/jquery.blueimp-gallery.min.js" type="text/javascript"></script>
         <script src="../js/bootstrap-image-gallery.js" type="text/javascript"></script>
 </body> 
