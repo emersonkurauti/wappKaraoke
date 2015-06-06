@@ -18,10 +18,10 @@
         });
 
         function PegaNomeArquivo() {
-            var sNomeArquivo = document.getElementById('<%=fluArquivo.ClientID%>').value;
-            document.getElementById('<%=deCaminhoArquivo.ClientID%>').value = sNomeArquivo;
+            hdfNmArquivo = document.getElementById('<%=fluArquivo.ClientID%>').value;
+            document.getElementById('<%=nmArquivo.ClientID%>').setAttribute("value", hdfNmArquivo);
 
-            if (EhImagem(sNomeArquivo)) {
+            if (EhImagem(hdfNmArquivo)) {
                 document.getElementById('cdTpArquivoImagem').checked = true;
                 hdfCdTpArquivo = 1;
             } else {
@@ -147,7 +147,7 @@
                         <div class="tab-pane" id="Arquivos">
                             <div class="panel panel-default" style="border-top: 0px">
                                 <div class="panel-body">
-                                    <asp:UpdatePanel ID="upArquivos" runat="server" UpdateMode="Conditional">
+                                    <asp:UpdatePanel ID="upArquivos" runat="server" UpdateMode="Always">
                                         <ContentTemplate>
                                             <asp:Literal ID="ltMensagemArquivos" runat="server"></asp:Literal>
                                             <div class="row">
@@ -159,19 +159,20 @@
                                                     </span>                                                    
                                                 </div>
                                                 <div class="col-sm-7">
-                                                    <asp:TextBox ID="deCaminhoArquivo" class="form-control" runat="server" 
+                                                    <asp:TextBox ID="nmArquivo" class="form-control" runat="server" 
                                                         placeholder="Nome Arquivo..." Visible="True"
                                                         ReadOnly="true">
                                                     </asp:TextBox>
+                                                    <asp:HiddenField ID="hdfNmArquivo" runat="server" />
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <span class="form-control">
                                                         <label class="radio-inline">
                                                             <input type="radio" name="cdTpArquivo" id="cdTpArquivoImagem" disabled="disabled">Imagem
                                                         </label>
-                                                        &nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
                                                         </label> 
-                                                        &nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
                                                     </span>
                                                 </div>
                                             </div>
@@ -187,7 +188,7 @@
                                                         runat="server" 
                                                         CssClass="btn btn-success btn-block" 
                                                         onclick="btnAdicionarArquivo_Click">
-                                                        <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
+                                                        <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
                                                     </asp:LinkButton>
                                                 </div>
                                             </div>
@@ -235,7 +236,7 @@
 		                                                                                    <asp:LinkButton ID="lnkEdit" runat="server"
 			                                                                                    CssClass="btn btn-primary btn-block" Text = "Editar"
 			                                                                                    CommandName='Edit'>
-			                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-edit"></i>
+			                                                                                    <i class="glyphicon glyphicon-edit"></i>
 		                                                                                    </asp:LinkButton>
 	                                                                                    </ItemTemplate>
 	                                                                                    <ItemStyle Width="5%" />
@@ -246,7 +247,7 @@
 			                                                                                    CssClass="btn btn-primary btn-block btn-danger" Text = "Excluir"
 			                                                                                    CommandArgument='<%# Eval("cdArquivo") + "$" + Eval("nmArquivo") %>'
 			                                                                                    CommandName='Delete'>
-			                                                                                    <i aria-hidden="true" class="glyphicon glyphicon-trash"></i>
+			                                                                                    <i class="glyphicon glyphicon-trash"></i>
 		                                                                                    </asp:LinkButton>
 	                                                                                    </ItemTemplate>
 	                                                                                    <ItemStyle Width="5%" />
@@ -295,7 +296,7 @@
                                                     <asp:LinkButton ID="btnAdidiconarAssociacao" 
                                                             runat="server" 
                                                             CssClass="btn btn-success btn-block">
-                                                        <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
+                                                        <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
                                                     </asp:LinkButton>
                                                 </div>
                                             </div> <!--<div class="row">-->
@@ -351,7 +352,7 @@
                                                     <asp:LinkButton ID="btnAdicionarGrupoJurado" 
                                                             runat="server" 
                                                             CssClass="btn btn-success btn-block">
-                                                        <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
+                                                        <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
                                                     </asp:LinkButton>
                                                 </div>
                                             </div> <!--<div class="row">-->
@@ -539,17 +540,12 @@
 		<div class="slides"></div>
 		<!-- Controls for the borderless lightbox -->
 		<h3 class="title"></h3>
-		<a class="prev">‹</a>
-		<a class="next">›</a>
-		<a class="close">×</a>
-		<a class="play-pause"></a>
-		<ol class="indicator"></ol>
-		<!-- The modal dialog, which will be used to wrap the lightbox content -->
+		<a class="prev">‹lass="next">›lass="close">×lass="play-pause">class="indicator">- The modal dialog, which will be used to wrap the lightbox content -->
 		<div class="modal fade">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" aria-hidden="true">&times;</button>
+						<button type="button" class="close">&times;</button>
 						<h4 class="modal-title"></h4>
 					</div>
 					<div class="modal-body next"></div>

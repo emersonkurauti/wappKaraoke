@@ -42,6 +42,8 @@ namespace wappKaraoke.Cadastros
             tobjCa = typeof(caConcursos);
             objCon = new conConcursos();
 
+            base.Page_Load(sender, e);
+
             if (!this.IsPostBack)
             {
                 PegarChaveConcurso();
@@ -137,8 +139,6 @@ namespace wappKaraoke.Cadastros
                 //gvCantoresConcurso.DataSource = dt;
                 //gvCantoresConcurso.DataBind();
             }
-
-            base.Page_Load(sender, e);
         }
 
         protected override bool ConfigurarGridView()
@@ -506,24 +506,45 @@ namespace wappKaraoke.Cadastros
 
         protected void btnAdicionarArquivo_Click(object sender, EventArgs e)
         {
-            if (deCaminhoArquivo.Text != "")
+            if (nmArquivo.Text != "")
             {
-                if (Convert.ToInt32(hdfCdTpArquivo.ToString()) == csConstantes.cCdTipoArquivoImagem)
+                if (Convert.ToInt32(hdfCdTpArquivo.Value.ToString()) == csConstantes.cCdTipoArquivoImagem)
                 {
                     if (Session["_dtImagens"] != null)
+                    {
                         _dtImagens = (DataTable)Session["_dtImagens"];
+                        AddArquivo(ref _dtImagens);
+                    }
 
                 }
-                else if (Convert.ToInt32(hdfCdTpArquivo.ToString()) == csConstantes.cCdTipoArquivoDocumento)
+                else if (Convert.ToInt32(hdfCdTpArquivo.Value.ToString()) == csConstantes.cCdTipoArquivoDocumento)
                 {
                     if (Session["_dtDocumentos"] != null)
+                    {
                         _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+                        AddArquivo(ref _dtDocumentos);                        
+                    }
                 }
+
+                CarregarArquivos();
             }
             else
             {
                 ltMensagemArquivos.Text = MostraMensagem("Falha", "Selecione um arquivo para adicionar.", csMensagem.msgWarning);
             }
+        }
+
+        private void AddArquivo(ref DataTable pdtArquivo)
+        {
+            DataRow dr = pdtArquivo.NewRow();
+
+            dr[caArquivos.cdArquivo] = 0;
+            dr[caArquivos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
+            dr[caArquivos.cdTipoArquivo] = Convert.ToInt32(hdfCdTpArquivo.ToString());
+            dr[caArquivos.nmArquivo] = nmArquivo.Text;
+            dr[caArquivos.deArquivo] = deArquivo.Text;
+
+            pdtArquivo.Rows.Add(dr);
         }
 
         private void CarregarImagens() 
