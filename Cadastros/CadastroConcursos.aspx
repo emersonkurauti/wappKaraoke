@@ -170,9 +170,9 @@
                                                         <label class="radio-inline">
                                                             <input type="radio" name="cdTpArquivo" id="cdTpArquivoImagem" disabled="disabled">Imagem
                                                         </label>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
                                                         </label> 
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
                                                     </span>
                                                 </div>
                                             </div>
@@ -293,9 +293,10 @@
                                                     </asp:TextBox>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <asp:LinkButton ID="btnAdidiconarAssociacao" 
-                                                            runat="server" 
-                                                            CssClass="btn btn-success btn-block">
+                                                    <asp:LinkButton ID="btnAdicionarAssociacao" 
+                                                        runat="server" 
+                                                        CssClass="btn btn-success btn-block" 
+                                                        onclick="btnAdicionarAssociacao_Click">
                                                         <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
                                                     </asp:LinkButton>
                                                 </div>
@@ -309,7 +310,7 @@
                                                             <asp:BoundField HeaderText="Cód." DataField="cdAssociacao">
                                                                 <ItemStyle Width="5%" />
                                                             </asp:BoundField>
-                                                            <asp:BoundField DataField="nmAssociacao" HeaderText="Associação" />
+                                                            <asp:BoundField DataField="CC_nmAssociacao" HeaderText="Associação" />
                                                             <asp:BoundField DataField="nmRepresentante" HeaderText="Representante" />
                                                             <asp:BoundField DataField="deEmail" HeaderText="E-mail" />
                                                             <asp:CommandField ButtonType="Button" SelectText="Editar" 
@@ -541,9 +542,9 @@
 		<!-- Controls for the borderless lightbox -->
 		<h3 class="title"></h3>
 		<a class="prev">‹lass="next">›lass="close">×lass="play-pause">class="indicator">- The modal dialog, which will be used to wrap the lightbox content -->
-		<div class="modal fade">
-			<div class="modal-dialog">
-				<div class="modal-content">
+		modal fade">
+			dal-dialog">
+				modal-content">
 					<div class="modal-header">
 						<button type="button" class="close">&times;</button>
 						<h4 class="modal-title"></h4>

@@ -12,6 +12,7 @@ using wappKaraoke.Classes.Model.Concursos;
 using wappKaraoke.Classes.Controller;
 using wappKaraoke.Classes.Mensagem;
 using wappKaraoke.Classes.Model.Arquivos;
+using wappKaraoke.Classes.Model.ConcursosAssociacoes;
 
 namespace wappKaraoke.Cadastros
 {
@@ -19,6 +20,7 @@ namespace wappKaraoke.Cadastros
     {
         private DataTable _dtDocumentos;
         private DataTable _dtImagens;
+        private DataTable _dtAssociacoes;
 
         private string strInicio = "<div class=\"tabbable tabs-left\"> \n <ul class=\"nav nav-tabs\">\n";
         private string strMeio = "</ul> \n <div class=\"tab-content\">\n";
@@ -51,29 +53,9 @@ namespace wappKaraoke.Cadastros
                 CarregarDDL();
 
                 CarregarArquivos();
+                CarregarAssociacoes();
 
-                //Associações
-                DataTable dt = new DataTable();
-                dt.Columns.Add("cdAssociacao", typeof(int));
-                dt.Columns.Add("nmAssociacao", typeof(string));
-                dt.Columns.Add("nmRepresentante", typeof(string));
-                dt.Columns.Add("deEmail", typeof(string));
-
-                for (int i = 0; i < 4; i++)
-                {
-                    DataRow dr = dt.NewRow();
-
-                    dr["cdAssociacao"] = i;
-                    dr["nmAssociacao"] = "Nome Associação de teste - " + i;
-                    dr["nmRepresentante"] = "Nome Representante de teste - " + i;
-                    dr["deEmail"] = "emailteste" + i + "@hotmail.com";
-
-                    dt.Rows.Add(dr);
-                }
-
-                gvAssociacoes.DataSource = dt;
-                gvAssociacoes.DataBind();
-
+                DataTable dt;
                 //Jurados
                 dt = new DataTable();
                 dt.Columns.Add("cdJurado", typeof(int));
@@ -241,6 +223,7 @@ namespace wappKaraoke.Cadastros
             Session["strDivs"] = null;
             Session["_dtImagens"] = null;
             Session["_dtDocumentos"] = null;
+            Session["_dtAssociacoes"] = null;
         }
 
         public void btnFechar_Click(Object sender, EventArgs e)
@@ -501,6 +484,7 @@ namespace wappKaraoke.Cadastros
                 gvDocumentos.DataBind();
 
                 Session["_dtDocumentos"] = objConArquivos.dtDados;
+                ConfiguraGridDocumentos();
             }
         }
 
@@ -566,6 +550,29 @@ namespace wappKaraoke.Cadastros
 
                 ltImagens.Text += csDinamico.strFinalLista;
             }
+        }
+
+        private void CarregarAssociacoes()
+        {
+            conConcursosAssociacoes objConConcursosAssociacoes = new conConcursosAssociacoes();
+            objConConcursosAssociacoes.objCoConcursosAssociacoes.LimparAtributos();
+            objConConcursosAssociacoes.objCoConcursosAssociacoes.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+
+            if (!conConcursosAssociacoes.Select())
+            {
+                ltMensagemArquivos.Text = MostraMensagem("Falha", "Problemas ao carregar Associações.", csMensagem.msgDanger);
+                return;
+            }
+
+            gvAssociacoes.DataSource = objConConcursosAssociacoes.dtDados;
+            gvAssociacoes.DataBind();
+
+            Session["_dtAssociacoes"] = objConConcursosAssociacoes.dtDados;
+            ConfiguraGridAssociacoes();
+        }
+
+        protected void btnAdicionarAssociacao_Click(object sender, EventArgs e)
+        {
         }
     }
 }

@@ -238,13 +238,13 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox deEmail;
         
         /// <summary>
-        /// btnAdidiconarAssociacao control.
+        /// btnAdicionarAssociacao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnAdidiconarAssociacao;
+        protected global::System.Web.UI.WebControls.LinkButton btnAdicionarAssociacao;
         
         /// <summary>
         /// gvAssociacoes control.
