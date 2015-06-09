@@ -91,7 +91,6 @@ namespace wappKaraoke.Cadastros
             {
                 ConfiguraGridAssociacoes();
                 ConfiguraGridJurados();
-                ConfiguraGridFases();
                 ConfiguraGridDocumentos();
 
                 //Cantores
@@ -381,9 +380,6 @@ namespace wappKaraoke.Cadastros
 
             csJurados vcsJurados = new csJurados();
             cdJurado = vcsJurados.CarregaDDL(cdJurado);
-
-            csFases vcsFases = new csFases();
-            cdFase = vcsFases.CarregaDDL(cdFase);
 
             csCategorias vcsCategorias = new csCategorias();
             cdCategoria = vcsCategorias.CarregaDDL(cdCategoria);
