@@ -170,9 +170,9 @@
                                                         <label class="radio-inline">
                                                             <input type="radio" name="cdTpArquivo" id="cdTpArquivoImagem" disabled="disabled">Imagem
                                                         </label>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
+                                                        &nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
                                                         </label> 
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
+                                                        &nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
                                                     </span>
                                                 </div>
                                             </div>
@@ -273,6 +273,7 @@
                                 <ContentTemplate>
                                     <div class="panel panel-default" style="border-top: 0px">
                                         <div class="panel-body">
+                                            <asp:Literal ID="ltMensagemAssociacoes" runat="server"></asp:Literal>
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <asp:DropDownList ID="cdAssociacao" class="form-control selectpicker" style="text-align:left" 
@@ -349,6 +350,7 @@
                                 <ContentTemplate>
                                     <div class="panel panel-default" style="border-top: 0px">
                                         <div class="panel-body">
+                                            <asp:Literal ID="ltMensagemJurados" runat="server"></asp:Literal>
                                             <div class="row">
                                                 <div class="col-sm-5">
                                                     <asp:DropDownList ID="cdJurado" class="form-control selectpicker" style="text-align:left" 
@@ -362,8 +364,9 @@
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <asp:LinkButton ID="btnAdicionarGrupoJurado" 
-                                                            runat="server" 
-                                                            CssClass="btn btn-success btn-block">
+                                                        runat="server" 
+                                                        CssClass="btn btn-success btn-block" 
+                                                        onclick="btnAdicionarGrupoJurado_Click">
                                                         <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
                                                     </asp:LinkButton>
                                                 </div>
@@ -384,16 +387,27 @@
                                                                     </asp:Literal>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:CommandField ButtonType="Button" SelectText="Editar" 
-                                                                ShowSelectButton="True">
-                                                                <ControlStyle CssClass="btn btn-primary btn-block" />
-                                                                <ItemStyle Width="15%" />
-                                                            </asp:CommandField>
-                                                            <asp:CommandField ButtonType="Button" SelectText="Excluir" 
-                                                                ShowSelectButton="True">
-                                                                <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
-                                                                <ItemStyle Width="15%" />
-                                                            </asp:CommandField>
+                                                            <asp:TemplateField>
+	                                                            <ItemTemplate>
+		                                                            <asp:LinkButton ID="lnkEdit" runat="server"
+			                                                            CssClass="btn btn-primary btn-block" Text = "Editar"
+			                                                            CommandName='Edit'>
+			                                                            <i class="glyphicon glyphicon-edit"></i>
+		                                                            </asp:LinkButton>
+	                                                            </ItemTemplate>
+	                                                            <ItemStyle Width="5%" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField>
+	                                                            <ItemTemplate>
+		                                                            <asp:LinkButton ID="lnkDelete" runat="server"
+			                                                            CssClass="btn btn-primary btn-block btn-danger" Text = "Excluir"
+			                                                            CommandArgument='<%# Eval("cdJurado") %>'
+			                                                            CommandName='Delete'>
+			                                                            <i class="glyphicon glyphicon-trash"></i>
+		                                                            </asp:LinkButton>
+	                                                            </ItemTemplate>
+	                                                            <ItemStyle Width="5%" />
+                                                            </asp:TemplateField>
                                                         </Columns>
                                                         <HeaderStyle CssClass="info" />
                                                     </asp:GridView>
@@ -404,60 +418,12 @@
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div> <!--<div class="tab-pane" id="Jurados">-->
-                        <div class="tab-pane" id="Fases">
-                            <asp:UpdatePanel ID="upConcursoFases" runat="server" UpdateMode="Conditional">
-                                <ContentTemplate>
-                                    <div class="panel panel-default" style="border-top: 0px">
-                                        <div class="panel-body">
-                                            <div class="row">
-                                                <div class="col-sm-10">
-                                                    <asp:DropDownList ID="cdFase" class="form-control selectpicker" style="text-align:left" 
-                                                        runat="server" Width="100%" AutoPostBack="False">
-                                                    </asp:DropDownList>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <asp:LinkButton ID="btnAdicionarFase" 
-                                                            runat="server" 
-                                                            CssClass="btn btn-success btn-block">
-                                                        <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
-                                                    </asp:LinkButton>
-                                                </div>
-                                            </div><!--<div class="row">-->
-                                            <br/>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <asp:GridView ID="gvFasesConcurso" runat="server"
-                                                        CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
-                                                        <Columns>
-                                                            <asp:BoundField HeaderText="Cód." DataField="cdFase">
-                                                                <ItemStyle Width="5%" />
-                                                            </asp:BoundField>
-                                                            <asp:BoundField DataField="deFase" HeaderText="Fase" />
-                                                            <asp:CommandField ButtonType="Button" SelectText="Editar" 
-                                                                ShowSelectButton="True">
-                                                                <ControlStyle CssClass="btn btn-primary btn-block" />
-                                                                <ItemStyle Width="15%" />
-                                                            </asp:CommandField>
-                                                            <asp:CommandField ButtonType="Button" SelectText="Excluir" 
-                                                                ShowSelectButton="True">
-                                                                <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
-                                                                <ItemStyle Width="15%" />
-                                                            </asp:CommandField>
-                                                        </Columns>
-                                                        <HeaderStyle CssClass="info" />
-                                                    </asp:GridView>
-                                                </div>
-                                            </div> <!--<div class="row">-->
-                                        </div>
-                                    </div>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
-                        </div> <!--<div class="tab-pane" id="Fases">-->
                         <div class="tab-pane" id="Categorias">
                             <asp:UpdatePanel ID="upCantoresCategorias" runat="server" UpdateMode="Conditional">
                                 <ContentTemplate>
                                     <div class="panel panel-default" style="border-top: 0px">
                                         <div class="panel-body">
+                                            <asp:Literal ID="ltMensagensCategorias" runat="server"></asp:Literal>
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <asp:DropDownList ID="cdCategoria" class="form-control selectpicker" style="text-align:left" 
@@ -552,13 +518,17 @@
 		<div class="slides"></div>
 		<!-- Controls for the borderless lightbox -->
 		<h3 class="title"></h3>
-		<a class="prev">‹lass="next">›lass="close">×lass="play-pause">class="indicator">- The modal dialog, which will be used to wrap the lightbox content -->
-		modal fade">
-			dal-dialog">
-				modal-content">
-					modal-header">
-						<button type="button" class="close">&times;</button>
-						<h4 class="modal-title"></h4>
+		<a class="prev">‹</a>
+		<a class="next">›</a>
+		<a class="close">×</a>
+		<a class="play-pause"></a>
+		<ol class="indicator"></ol>
+		<!-- The modal dialog, which will be used to wrap the lightbox content -->
+		<div class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+                        <button type="button" class="close" aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body next"></div>
 					<div class="modal-footer">

@@ -13,6 +13,8 @@ using wappKaraoke.Classes.Controller;
 using wappKaraoke.Classes.Mensagem;
 using wappKaraoke.Classes.Model.Arquivos;
 using wappKaraoke.Classes.Model.ConcursosAssociacoes;
+using wappKaraoke.Classes.Model.Grupos;
+using wappKaraoke.Classes.Model.Jurados;
 
 namespace wappKaraoke.Cadastros
 {
@@ -21,6 +23,7 @@ namespace wappKaraoke.Cadastros
         private DataTable _dtDocumentos;
         private DataTable _dtImagens;
         private DataTable _dtAssociacoes;
+        private DataTable _dtGruposJurados;
 
         private string strInicio = "<div class=\"tabbable tabs-left\"> \n <ul class=\"nav nav-tabs\">\n";
         private string strMeio = "</ul> \n <div class=\"tab-content\">\n";
@@ -54,53 +57,9 @@ namespace wappKaraoke.Cadastros
 
                 CarregarArquivos();
                 CarregarAssociacoes();
+                CarregarGruposJurados();
 
                 DataTable dt;
-                //Jurados
-                dt = new DataTable();
-                dt.Columns.Add("cdJurado", typeof(int));
-                dt.Columns.Add("nmJurado", typeof(string));
-                dt.Columns.Add("nmNomeKanji", typeof(string));
-                dt.Columns.Add("deGrupo", typeof(string));
-
-                for (int i = 0; i < 4; i++)
-                {
-                    DataRow dr = dt.NewRow();
-
-                    dr["cdJurado"] = i;
-                    dr["nmJurado"] = "Nome Jurado de teste - " + i;
-                    dr["nmNomeKanji"] = "Nome KANJI" + i;
-                    dr["deGrupo"] = "GRUPO " + i;
-
-                    dt.Rows.Add(dr);
-                }
-
-                gvGrupoJuradoConcurso.DataSource = dt;
-                gvGrupoJuradoConcurso.DataBind();
-
-                for (int i = 0; i < 4; i++)
-                {
-                    ((Literal)gvGrupoJuradoConcurso.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dt.Rows[i]["nmJurado"].ToString() + " <br/> " + dt.Rows[i]["nmNomeKanji"].ToString();
-                }
-
-                //Fases
-                dt = new DataTable();
-                dt.Columns.Add("cdFase", typeof(int));
-                dt.Columns.Add("deFase", typeof(string));
-
-                for (int i = 0; i < 4; i++)
-                {
-                    DataRow dr = dt.NewRow();
-
-                    dr["cdFase"] = i;
-                    dr["deFase"] = "Fase Teste - " + i;
-
-                    dt.Rows.Add(dr);
-                }
-
-                gvFasesConcurso.DataSource = dt;
-                gvFasesConcurso.DataBind();
-
                 //Cantores
                 dt = new DataTable();
                 dt.Columns.Add("cdCantor", typeof(int));
@@ -175,6 +134,15 @@ namespace wappKaraoke.Cadastros
 
         private void ConfiguraGridJurados()
         {
+            _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
+
+            for (int i = 0; i < _dtGruposJurados.Rows.Count; i++)
+            {
+                ((Literal)gvGrupoJuradoConcurso.Rows[i].FindControl("ltNomeKanji")).Text = @"" +
+                    _dtGruposJurados.Rows[i]["CC_nmJurado"].ToString() + " <br/> " +
+                    _dtGruposJurados.Rows[i]["CC_nmNomeKanji"].ToString();
+            }
+
             //Attribute to show the Plus Minus Button.
             gvGrupoJuradoConcurso.HeaderRow.Cells[2].Attributes["data-class"] = "expand";
 
@@ -187,21 +155,7 @@ namespace wappKaraoke.Cadastros
             //Adds THEAD and TBODY to GridView.
             gvGrupoJuradoConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
-
-        private void ConfiguraGridFases()
-        {
-            //Attribute to show the Plus Minus Button.
-            gvFasesConcurso.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
-
-            //Attribute to hide column in Phone.
-            gvFasesConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            gvFasesConcurso.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-            gvFasesConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-
-            //Adds THEAD and TBODY to GridView.
-            gvFasesConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
-        }
-
+        
         private void ConfiguraGridDocumentos()
         {
             //Attribute to show the Plus Minus Button.
@@ -224,6 +178,7 @@ namespace wappKaraoke.Cadastros
             Session["_dtImagens"] = null;
             Session["_dtDocumentos"] = null;
             Session["_dtAssociacoes"] = null;
+            Session["_dtGruposJurados"] = null;
         }
 
         public void btnFechar_Click(Object sender, EventArgs e)
@@ -451,6 +406,19 @@ namespace wappKaraoke.Cadastros
             cdStatus = vcsStatus.CarregaDDL(cdStatus);
         }
 
+        private void AddArquivo(ref DataTable pdtArquivo)
+        {
+            DataRow dr = pdtArquivo.NewRow();
+
+            dr[caArquivos.cdArquivo] = 0;
+            dr[caArquivos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
+            dr[caArquivos.cdTipoArquivo] = Convert.ToInt32(hdfCdTpArquivo.ToString());
+            dr[caArquivos.nmArquivo] = nmArquivo.Text;
+            dr[caArquivos.deArquivo] = deArquivo.Text;
+
+            pdtArquivo.Rows.Add(dr);
+        }
+
         private void CarregarArquivos()
         {
             conArquivos objConArquivos = new conArquivos();
@@ -518,19 +486,6 @@ namespace wappKaraoke.Cadastros
             }
         }
 
-        private void AddArquivo(ref DataTable pdtArquivo)
-        {
-            DataRow dr = pdtArquivo.NewRow();
-
-            dr[caArquivos.cdArquivo] = 0;
-            dr[caArquivos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
-            dr[caArquivos.cdTipoArquivo] = Convert.ToInt32(hdfCdTpArquivo.ToString());
-            dr[caArquivos.nmArquivo] = nmArquivo.Text;
-            dr[caArquivos.deArquivo] = deArquivo.Text;
-
-            pdtArquivo.Rows.Add(dr);
-        }
-
         private void CarregarImagens() 
         {
             if (Session["_dtImagens"] != null)
@@ -560,7 +515,7 @@ namespace wappKaraoke.Cadastros
 
             if (!conConcursosAssociacoes.Select())
             {
-                ltMensagemArquivos.Text = MostraMensagem("Falha", "Problemas ao carregar Associações.", csMensagem.msgDanger);
+                ltMensagemAssociacoes.Text = MostraMensagem("Falha", "Problemas ao carregar Associações.", csMensagem.msgDanger);
                 return;
             }
 
@@ -592,6 +547,62 @@ namespace wappKaraoke.Cadastros
                 Session["_dtAssociacoes"] = _dtAssociacoes;
                 ConfiguraGridAssociacoes();
             }
+            else
+                ltMensagemAssociacoes.Text = MostraMensagem("Validação!", "Deve ser selecionada a Associação.", csMensagem.msgWarning);
+        }
+
+        private void CarregarGruposJurados()
+        {
+            conGrupos objConGrupos = new conGrupos();
+            objConGrupos.objCoGrupos.LimparAtributos();
+            objConGrupos.objCoGrupos.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+
+            if (!conGrupos.Select())
+            {
+                ltMensagemJurados.Text = MostraMensagem("Falha", "Problemas ao carregar Grupos/Jurados.", csMensagem.msgDanger);
+                return;
+            }
+
+            gvGrupoJuradoConcurso.DataSource = objConGrupos.dtDados;
+            gvGrupoJuradoConcurso.DataBind();
+
+            Session["_dtGruposJurados"] = objConGrupos.dtDados;
+            ConfiguraGridJurados();
+        }
+
+        protected void btnAdicionarGrupoJurado_Click(object sender, EventArgs e)
+        {
+            if (cdJurado.SelectedIndex > 0)
+            {
+                conJurados objConJurados = new conJurados();
+                objConJurados.objCoJurados.LimparAtributos();
+                objConJurados.objCoJurados.cdJurado = Convert.ToInt32(cdJurado.SelectedValue);
+
+                if (!conJurados.Select())
+                {
+                    ltMensagemJurados.Text = MostraMensagem("Falha", "Problemas ao carregar dados do Jurado.", csMensagem.msgDanger);
+                    return;
+                }
+
+                _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
+                DataRow dr = _dtGruposJurados.NewRow();
+
+                dr[caGrupos.cdJurado] = cdJurado.SelectedValue;
+                dr[caGrupos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
+                dr[caGrupos.deGrupo] = deGrupo.Text;
+                dr[caGrupos.CC_nmJurado] = objConJurados.dtDados.Rows[0][caJurados.nmJurado].ToString();
+                dr[caGrupos.CC_nmNomeKanji] = objConJurados.dtDados.Rows[0][caJurados.nmNomeKanji].ToString();
+
+                _dtGruposJurados.Rows.Add(dr);
+
+                gvGrupoJuradoConcurso.DataSource = _dtGruposJurados;
+                gvGrupoJuradoConcurso.DataBind();
+
+                Session["_dtGruposJurados"] = _dtGruposJurados;
+                ConfiguraGridJurados();
+            }
+            else
+                ltMensagemJurados.Text = MostraMensagem("Validação!", "Deve ser selecionado o Jurado.", csMensagem.msgWarning);
         }
     }
 }

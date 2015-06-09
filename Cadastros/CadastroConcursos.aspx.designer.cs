@@ -211,6 +211,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.UpdatePanel upConcursoAssociacoes;
         
         /// <summary>
+        /// ltMensagemAssociacoes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltMensagemAssociacoes;
+        
+        /// <summary>
         /// cdAssociacao control.
         /// </summary>
         /// <remarks>
@@ -265,6 +274,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.UpdatePanel upConcursoJurados;
         
         /// <summary>
+        /// ltMensagemJurados control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltMensagemJurados;
+        
+        /// <summary>
         /// cdJurado control.
         /// </summary>
         /// <remarks>
@@ -301,42 +319,6 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.GridView gvGrupoJuradoConcurso;
         
         /// <summary>
-        /// upConcursoFases control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upConcursoFases;
-        
-        /// <summary>
-        /// cdFase control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cdFase;
-        
-        /// <summary>
-        /// btnAdicionarFase control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnAdicionarFase;
-        
-        /// <summary>
-        /// gvFasesConcurso control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvFasesConcurso;
-        
-        /// <summary>
         /// upCantoresCategorias control.
         /// </summary>
         /// <remarks>
@@ -344,6 +326,15 @@ namespace wappKaraoke.Cadastros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upCantoresCategorias;
+        
+        /// <summary>
+        /// ltMensagensCategorias control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltMensagensCategorias;
         
         /// <summary>
         /// cdCategoria control.

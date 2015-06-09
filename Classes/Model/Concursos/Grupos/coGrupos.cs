@@ -48,6 +48,13 @@ namespace wappKaraoke.Classes.Model.Grupos
             set { _CC_nmJurado = value; }
         }
 
+		private static string _CC_nmNomeKanji = "";
+        public string CC_nmNomeKanji
+        {
+            get { return _CC_nmNomeKanji; }
+            set { _CC_nmNomeKanji = value; }
+        }
+
         /// <summary>
         /// Construtor
         /// </summary>
@@ -74,6 +81,8 @@ namespace wappKaraoke.Classes.Model.Grupos
 
                dtDados.Columns[caGrupos.CC_nmJurado].ReadOnly = false;
                dtDados.Columns[caGrupos.CC_nmJurado].MaxLength = 100;
+               dtDados.Columns[caGrupos.CC_nmNomeKanji].ReadOnly = false;
+               dtDados.Columns[caGrupos.CC_nmNomeKanji].MaxLength = 100;
 
                foreach (DataRow dr in dtAux.Rows)
                {
@@ -86,6 +95,7 @@ namespace wappKaraoke.Classes.Model.Grupos
                        if (objConJurados.dtDados.Rows.Count > 0)
                        {
                            dr[caGrupos.CC_nmJurado] = objConJurados.dtDados.Rows[0][caJurados.nmJurado].ToString();
+                           dr[caGrupos.CC_nmNomeKanji] = objConJurados.dtDados.Rows[0][caJurados.nmNomeKanji].ToString();
 
                        }
                    }

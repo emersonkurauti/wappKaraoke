@@ -82,6 +82,10 @@ namespace wappKaraoke.Classes.Model.Grupos
         {
             get { return "CC_nmJurado"; }
         }
+		public static string CC_nmNomeKanji
+        {
+            get { return "CC_nmNomeKanji"; }
+        }
 
         /// <summary>
         /// Retorna os fields para montar DataGridView
@@ -91,11 +95,11 @@ namespace wappKaraoke.Classes.Model.Grupos
         /// <param name="strNome"></param>
         public static void RetornarFields()
         {
-            _strFields = CC_cdRegistro  + "," + cdConcurso + "," + cdJurado + "," + deGrupo + "," + CC_nmJurado;
+            _strFields = CC_cdRegistro  + "," + cdConcurso + "," + cdJurado + "," + deGrupo + "," + CC_nmJurado + "," + CC_nmNomeKanji;
 
-            _strNome = "Cd. Registro, cdConcurso, cdJurado, deGrupo, CC_nmJurado";
+            _strNome = "Cd. Registro, cdConcurso, cdJurado, deGrupo, CC_nmJurado, CC_nmNomeKanji";
 
-            _strVisivel = "0, 1, 1, 1, 1";
+            _strVisivel = "0, 1, 1, 1, 1, 1";
         }
     }
 }
