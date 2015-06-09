@@ -170,9 +170,9 @@
                                                         <label class="radio-inline">
                                                             <input type="radio" name="cdTpArquivo" id="cdTpArquivoImagem" disabled="disabled">Imagem
                                                         </label>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
                                                         </label> 
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
                                                     </span>
                                                 </div>
                                             </div>
@@ -313,16 +313,27 @@
                                                             <asp:BoundField DataField="CC_nmAssociacao" HeaderText="Associação" />
                                                             <asp:BoundField DataField="nmRepresentante" HeaderText="Representante" />
                                                             <asp:BoundField DataField="deEmail" HeaderText="E-mail" />
-                                                            <asp:CommandField ButtonType="Button" SelectText="Editar" 
-                                                                ShowSelectButton="True">
-                                                                <ControlStyle CssClass="btn btn-primary btn-block" />
-                                                                <ItemStyle Width="15%" />
-                                                            </asp:CommandField>
-                                                            <asp:CommandField ButtonType="Button" SelectText="Excluir" 
-                                                                ShowSelectButton="True">
-                                                                <ControlStyle CssClass="btn btn-primary btn-block btn-danger" />
-                                                                <ItemStyle Width="15%" />
-                                                            </asp:CommandField>
+                                                            <asp:TemplateField>
+	                                                            <ItemTemplate>
+		                                                            <asp:LinkButton ID="lnkEdit" runat="server"
+			                                                            CssClass="btn btn-primary btn-block" Text = "Editar"
+			                                                            CommandName='Edit'>
+			                                                            <i class="glyphicon glyphicon-edit"></i>
+		                                                            </asp:LinkButton>
+	                                                            </ItemTemplate>
+	                                                            <ItemStyle Width="5%" />
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField>
+	                                                            <ItemTemplate>
+		                                                            <asp:LinkButton ID="lnkDelete" runat="server"
+			                                                            CssClass="btn btn-primary btn-block btn-danger" Text = "Excluir"
+			                                                            CommandArgument='<%# Eval("cdAssociacao") + "$" + Eval("CC_nmAssociacao") %>'
+			                                                            CommandName='Delete'>
+			                                                            <i class="glyphicon glyphicon-trash"></i>
+		                                                            </asp:LinkButton>
+	                                                            </ItemTemplate>
+	                                                            <ItemStyle Width="5%" />
+                                                            </asp:TemplateField>
                                                         </Columns>
                                                         <HeaderStyle CssClass="info" />
                                                     </asp:GridView>
@@ -545,7 +556,7 @@
 		modal fade">
 			dal-dialog">
 				modal-content">
-					<div class="modal-header">
+					modal-header">
 						<button type="button" class="close">&times;</button>
 						<h4 class="modal-title"></h4>
 					</div>

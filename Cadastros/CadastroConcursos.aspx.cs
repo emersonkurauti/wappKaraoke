@@ -573,6 +573,25 @@ namespace wappKaraoke.Cadastros
 
         protected void btnAdicionarAssociacao_Click(object sender, EventArgs e)
         {
+            if (cdAssociacao.SelectedIndex > 0)
+            {
+                _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
+                DataRow dr = _dtAssociacoes.NewRow();
+
+                dr[caConcursosAssociacoes.cdAssociacao] = cdAssociacao.SelectedValue;
+                dr[caConcursosAssociacoes.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
+                dr[caConcursosAssociacoes.deEmail] = deEmail.Text;
+                dr[caConcursosAssociacoes.nmRepresentante] = nmRepresentante.Text;
+                dr[caConcursosAssociacoes.CC_nmAssociacao] = cdAssociacao.SelectedItem.ToString();
+
+                _dtAssociacoes.Rows.Add(dr);
+
+                gvAssociacoes.DataSource = _dtAssociacoes;
+                gvAssociacoes.DataBind();
+
+                Session["_dtAssociacoes"] = _dtAssociacoes;
+                ConfiguraGridAssociacoes();
+            }
         }
     }
 }
