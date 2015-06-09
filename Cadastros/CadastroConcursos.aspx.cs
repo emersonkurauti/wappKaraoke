@@ -402,13 +402,18 @@ namespace wappKaraoke.Cadastros
             cdStatus = vcsStatus.CarregaDDL(cdStatus);
         }
 
+        private void CopiarArquivoParaTemp()
+        {
+ 
+        }
+
         private void AddArquivo(ref DataTable pdtArquivo)
         {
             DataRow dr = pdtArquivo.NewRow();
 
             dr[caArquivos.cdArquivo] = 0;
             dr[caArquivos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
-            dr[caArquivos.cdTipoArquivo] = Convert.ToInt32(hdfCdTpArquivo.ToString());
+            dr[caArquivos.cdTipoArquivo] = Convert.ToInt32(hdfCdTpArquivo.Value.ToString());
             dr[caArquivos.nmArquivo] = nmArquivo.Text;
             dr[caArquivos.deArquivo] = deArquivo.Text;
 
@@ -454,12 +459,13 @@ namespace wappKaraoke.Cadastros
 
         protected void btnAdicionarArquivo_Click(object sender, EventArgs e)
         {
-            if (nmArquivo.Text != "")
+            if (hdfNmArquivo.Value.ToString() != "")
             {
                 if (Convert.ToInt32(hdfCdTpArquivo.Value.ToString()) == csConstantes.cCdTipoArquivoImagem)
                 {
                     if (Session["_dtImagens"] != null)
                     {
+                        //Copiar para temp
                         _dtImagens = (DataTable)Session["_dtImagens"];
                         AddArquivo(ref _dtImagens);
                     }
@@ -469,6 +475,7 @@ namespace wappKaraoke.Cadastros
                 {
                     if (Session["_dtDocumentos"] != null)
                     {
+                        //Copiar para temp
                         _dtDocumentos = (DataTable)Session["_dtDocumentos"];
                         AddArquivo(ref _dtDocumentos);                        
                     }
@@ -480,6 +487,9 @@ namespace wappKaraoke.Cadastros
             {
                 ltMensagemArquivos.Text = MostraMensagem("Falha", "Selecione um arquivo para adicionar.", csMensagem.msgWarning);
             }
+
+            hdfNmArquivo.Value = "";
+            hdfCdTpArquivo.Value = "";
         }
 
         private void CarregarImagens() 
@@ -599,6 +609,11 @@ namespace wappKaraoke.Cadastros
             }
             else
                 ltMensagemJurados.Text = MostraMensagem("Validação!", "Deve ser selecionado o Jurado.", csMensagem.msgWarning);
+        }
+
+        protected void upArquivos_PreRender(object sender, EventArgs e)
+        {
+            this.ScriptManager1.RegisterPostBackControl(btnAdicionarArquivo);
         }
     }
 }

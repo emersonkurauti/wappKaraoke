@@ -18,15 +18,16 @@
         });
 
         function PegaNomeArquivo() {
-            hdfNmArquivo = document.getElementById('<%=fluArquivo.ClientID%>').value;
-            document.getElementById('<%=nmArquivo.ClientID%>').setAttribute("value", hdfNmArquivo);
+            var sNomeArquivo = document.getElementById('<%=fluArquivo.ClientID%>').value;
+            document.getElementById('<%=nmArquivo.ClientID%>').setAttribute("value", sNomeArquivo);
+            document.getElementById("<%= hdfNmArquivo.ClientID.ToString() %>").value = sNomeArquivo;
 
-            if (EhImagem(hdfNmArquivo)) {
+            if (EhImagem(sNomeArquivo)) {
                 document.getElementById('cdTpArquivoImagem').checked = true;
-                hdfCdTpArquivo = 1;
+                document.getElementById("<%= hdfCdTpArquivo.ClientID.ToString() %>").value = 1;
             } else {
                 document.getElementById('cdTpArquivoDocumento').checked = true;
-                hdfCdTpArquivo = 2;
+                document.getElementById("<%= hdfCdTpArquivo.ClientID.ToString() %>").value = 2;
             }
         }
 
@@ -64,7 +65,6 @@
                         <li><a href="#Arquivos" data-toggle="tab">Arquivos</a></li>
                         <li><a href="#Associacoes" data-toggle="tab">Associações</a></li>
                         <li><a href="#Jurados" data-toggle="tab">Jurados</a></li>
-                        <li><a href="#Fases" data-toggle="tab">Fases</a></li>
                         <li><a href="#Categorias" data-toggle="tab">Categorias</a></li>
                     </ul>
                     <div id="my-tab-content" class="tab-content">
@@ -147,16 +147,17 @@
                         <div class="tab-pane" id="Arquivos">
                             <div class="panel panel-default" style="border-top: 0px">
                                 <div class="panel-body">
-                                    <asp:UpdatePanel ID="upArquivos" runat="server" UpdateMode="Always">
+                                    <asp:UpdatePanel ID="upArquivos" runat="server" UpdateMode="Conditional" 
+                                        onprerender="upArquivos_PreRender">
                                         <ContentTemplate>
                                             <asp:Literal ID="ltMensagemArquivos" runat="server"></asp:Literal>
                                             <div class="row">
                                                 <div class="col-sm-2">
                                                     <span class="btn btn-default btn-file">
                                                         Selecionar Arquivo...
-                                                        <asp:FileUpload ID="fluArquivo" runat="server" 
-                                                        onchange="PegaNomeArquivo()"/>
-                                                    </span>                                                    
+                                                        <asp:FileUpload ID="fluArquivo" runat="server"
+                                                        onchange="PegaNomeArquivo();"/>
+                                                    </span>                                  
                                                 </div>
                                                 <div class="col-sm-7">
                                                     <asp:TextBox ID="nmArquivo" class="form-control" runat="server" 
@@ -517,6 +518,8 @@
 		<!-- The container for the modal slides -->
 		<div class="slides"></div>
 		<!-- Controls for the borderless lightbox -->
+		<h3 class="title"></h3>
+		<a class="prev">‹->
 		<h3 class="title"></h3>
 		<a class="prev">‹</a>
 		<a class="next">›</a>
