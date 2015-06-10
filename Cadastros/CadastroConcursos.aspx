@@ -47,6 +47,34 @@
 
             return bEhImagem;
         }
+
+        function AtivaAbaArquivosImagens() {
+            document.getElementById('MenuConcurso').setAttribute('class', '');
+            document.getElementById('MenuArquivos').setAttribute('class', 'active');
+
+            document.getElementById('Concursos').setAttribute('class', 'tab-pane');
+            document.getElementById('Arquivos').setAttribute('class', 'tab-pane active');
+
+            document.getElementById('MenuImagem').setAttribute('class', 'active');
+            document.getElementById('MenuDocumento').setAttribute('class', '');
+
+            document.getElementById('Imagens').setAttribute('class', 'tab-pane active');
+            document.getElementById('Documentos').setAttribute('class', 'tab-pane');
+        }
+
+        function AtivaAbaArquivosDocumentos() {
+            document.getElementById('MenuConcurso').setAttribute('class', '');
+            document.getElementById('MenuArquivos').setAttribute('class', 'active');
+
+            document.getElementById('Concursos').setAttribute('class', 'tab-pane');
+            document.getElementById('Arquivos').setAttribute('class', 'tab-pane active');
+
+            document.getElementById('MenuImagem').setAttribute('class', '');
+            document.getElementById('MenuDocumento').setAttribute('class', 'active');
+
+            document.getElementById('Imagens').setAttribute('class', 'tab-pane');
+            document.getElementById('Documentos').setAttribute('class', 'tab-pane active');
+        }
     </script>
     <asp:Literal ID="ltJavaScript" runat="server"></asp:Literal> <!--Caso precise de agrupamento nas tabelas-->
 </asp:Content>
@@ -61,11 +89,11 @@
                 <div class="panel-body">
                     <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#Concurso" data-toggle="tab">Concurso</a></li>
-                        <li><a href="#Arquivos" data-toggle="tab">Arquivos</a></li>
-                        <li><a href="#Associacoes" data-toggle="tab">Associações</a></li>
-                        <li><a href="#Jurados" data-toggle="tab">Jurados</a></li>
-                        <li><a href="#Categorias" data-toggle="tab">Categorias</a></li>
+                        <li id="MenuConcurso" class="active"><a href="#Concurso" data-toggle="tab">Concurso</a></li>
+                        <li id="MenuArquivos"><a href="#Arquivos" data-toggle="tab">Arquivos</a></li>
+                        <li id="MenuAssociacoes"><a href="#Associacoes" data-toggle="tab">Associações</a></li>
+                        <li id="MenuJurados"><a href="#Jurados" data-toggle="tab">Jurados</a></li>
+                        <li id="MenuCategorias"><a href="#Categorias" data-toggle="tab">Categorias</a></li>
                     </ul>
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="Concurso">
@@ -153,11 +181,11 @@
                                             <asp:Literal ID="ltMensagemArquivos" runat="server"></asp:Literal>
                                             <div class="row">
                                                 <div class="col-sm-2">
-                                                    <span class="btn btn-default btn-file">
+                                                   <span class="btn btn-default btn-file">
                                                         Selecionar Arquivo...
                                                         <asp:FileUpload ID="fluArquivo" runat="server"
                                                         onchange="PegaNomeArquivo();"/>
-                                                    </span>                                  
+                                                    </span>                  
                                                 </div>
                                                 <div class="col-sm-7">
                                                     <asp:TextBox ID="nmArquivo" class="form-control" runat="server" 
@@ -171,9 +199,9 @@
                                                         <label class="radio-inline">
                                                             <input type="radio" name="cdTpArquivo" id="cdTpArquivoImagem" disabled="disabled">Imagem
                                                         </label>
-                                                        &nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
+                                                        <label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
                                                         </label> 
-                                                        &nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
+                                                        <asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
                                                     </span>
                                                 </div>
                                             </div>
@@ -197,8 +225,8 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <ul class="nav nav-tabs">
-                                                        <li class="active"><a href="#Imagens" data-toggle="tab">Imagens</a></li>
-                                                        <li><a href="#Documentos" data-toggle="tab">Documentos</a></li>
+                                                        <li id="MenuImagem" class="active"><a href="#Imagens" data-toggle="tab">Imagens</a></li>
+                                                        <li id="MenuDocumento"><a href="#Documentos" data-toggle="tab">Documentos</a></li>
                                                     </ul>
                                                     <div id="my-tab-content-2" class="tab-content"> 
                                                         <div class="tab-pane active" id="Imagens">
@@ -514,12 +542,11 @@
         </div> 
     </div>
 
-    <div id="blueimp-gallery" class="blueimp-gallery">
+    <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+	<div id="blueimp-gallery" class="blueimp-gallery">
 		<!-- The container for the modal slides -->
 		<div class="slides"></div>
 		<!-- Controls for the borderless lightbox -->
-		<h3 class="title"></h3>
-		<a class="prev">‹->
 		<h3 class="title"></h3>
 		<a class="prev">‹</a>
 		<a class="next">›</a>
@@ -531,16 +558,17 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-                        <button type="button" class="close" aria-hidden="true">&times;</button>
+						<button type="button" class="close" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"></h4>
 					</div>
 					<div class="modal-body next"></div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default pull-left prev">
 							<i class="glyphicon glyphicon-chevron-left"></i>
-							Anterior
+							Previous
 						</button>
 						<button type="button" class="btn btn-primary next">
-							Próxima
+							Next
 							<i class="glyphicon glyphicon-chevron-right"></i>
 						</button>
 					</div>

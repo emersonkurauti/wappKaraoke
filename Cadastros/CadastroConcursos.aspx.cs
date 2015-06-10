@@ -404,7 +404,8 @@ namespace wappKaraoke.Cadastros
 
         private void CopiarArquivoParaTemp()
         {
- 
+            string strCaminhoTemp = Request.PhysicalApplicationPath + wappKaraoke.Properties.Settings.Default.sCaminhoTemp;
+            fluArquivo.SaveAs(strCaminhoTemp + fluArquivo.FileName);
         }
 
         private void AddArquivo(ref DataTable pdtArquivo)
@@ -414,7 +415,7 @@ namespace wappKaraoke.Cadastros
             dr[caArquivos.cdArquivo] = 0;
             dr[caArquivos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
             dr[caArquivos.cdTipoArquivo] = Convert.ToInt32(hdfCdTpArquivo.Value.ToString());
-            dr[caArquivos.nmArquivo] = nmArquivo.Text;
+            dr[caArquivos.nmArquivo] = hdfNmArquivo.Value.ToString();
             dr[caArquivos.deArquivo] = deArquivo.Text;
 
             pdtArquivo.Rows.Add(dr);
@@ -436,9 +437,9 @@ namespace wappKaraoke.Cadastros
                     ltMensagemArquivos.Text = MostraMensagem("Falha", "Problemas ao carregar imagens.", csMensagem.msgDanger);
 
                 Session["_dtImagens"] = objConArquivos.dtDados;
-
-                CarregarImagens();
             }
+
+            CarregarImagens();
 
             if (Session["_dtDocumentos"] != null)
                 _dtDocumentos = (DataTable)Session["_dtDocumentos"];
@@ -449,12 +450,14 @@ namespace wappKaraoke.Cadastros
                 if (!conArquivos.Select())
                     ltMensagemArquivos.Text = MostraMensagem("Falha", "Problemas ao carregar documentos.", csMensagem.msgDanger);
 
-                gvDocumentos.DataSource = objConArquivos.dtDados;
-                gvDocumentos.DataBind();
-
-                Session["_dtDocumentos"] = objConArquivos.dtDados;
-                ConfiguraGridDocumentos();
+                _dtDocumentos = objConArquivos.dtDados;
             }
+
+            gvDocumentos.DataSource = _dtDocumentos;
+            gvDocumentos.DataBind();
+
+            Session["_dtDocumentos"] = _dtDocumentos;
+            ConfiguraGridDocumentos();
         }
 
         protected void btnAdicionarArquivo_Click(object sender, EventArgs e)
@@ -465,22 +468,26 @@ namespace wappKaraoke.Cadastros
                 {
                     if (Session["_dtImagens"] != null)
                     {
-                        //Copiar para temp
+                        CopiarArquivoParaTemp();
                         _dtImagens = (DataTable)Session["_dtImagens"];
                         AddArquivo(ref _dtImagens);
                     }
 
+                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosImagens();", true);
                 }
                 else if (Convert.ToInt32(hdfCdTpArquivo.Value.ToString()) == csConstantes.cCdTipoArquivoDocumento)
                 {
                     if (Session["_dtDocumentos"] != null)
                     {
-                        //Copiar para temp
+                        CopiarArquivoParaTemp();
                         _dtDocumentos = (DataTable)Session["_dtDocumentos"];
                         AddArquivo(ref _dtDocumentos);                        
                     }
+
+                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosDocumentos();", true);
                 }
 
+                deArquivo.Text = "";
                 CarregarArquivos();
             }
             else
@@ -498,6 +505,8 @@ namespace wappKaraoke.Cadastros
             {
                 int seq = 0;
                 string strCaminho = "../" + wappKaraoke.Properties.Settings.Default.sCaminhoArqImagens.Replace("\\", "/");
+                string strCaminhoTemp = "../" + wappKaraoke.Properties.Settings.Default.sCaminhoTemp.Replace("\\", "/");
+                string strCaminhoImg = "";
 
                 _dtImagens = (DataTable)Session["_dtImagens"];
 
@@ -505,8 +514,13 @@ namespace wappKaraoke.Cadastros
 
                 foreach (DataRow dr in _dtImagens.Rows)
                 {
-                    ltImagens.Text += csDinamico.strDivImagem.Replace("[strCaminhoImagem]", strCaminho + dr[caArquivos.nmArquivo].ToString()).Replace("[strDescImagem]",
-                        dr[caArquivos.deArquivo].ToString()).Replace("[strSeqImagem]", (seq++).ToString());
+                    if (Convert.ToInt32(dr[caArquivos.cdArquivo].ToString()) != 0)
+                        strCaminhoImg = strCaminho;
+                    else
+                        strCaminhoImg = strCaminhoTemp;
+
+                    ltImagens.Text += csDinamico.strDivImagem.Replace("[strCaminhoImagem]", strCaminhoImg + dr[caArquivos.nmArquivo].ToString()).Replace("[strDescImagem]",
+                            dr[caArquivos.deArquivo].ToString()).Replace("[strSeqImagem]", (seq++).ToString());
                 }
 
                 ltImagens.Text += csDinamico.strFinalLista;
