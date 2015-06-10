@@ -49,31 +49,13 @@
         }
 
         function AtivaAbaArquivosImagens() {
-            document.getElementById('MenuConcurso').setAttribute('class', '');
-            document.getElementById('MenuArquivos').setAttribute('class', 'active');
-
-            document.getElementById('Concursos').setAttribute('class', 'tab-pane');
-            document.getElementById('Arquivos').setAttribute('class', 'tab-pane active');
-
-            document.getElementById('MenuImagem').setAttribute('class', 'active');
-            document.getElementById('MenuDocumento').setAttribute('class', '');
-
-            document.getElementById('Imagens').setAttribute('class', 'tab-pane active');
-            document.getElementById('Documentos').setAttribute('class', 'tab-pane');
+            document.getElementById('lnkArquivos').click();
+            document.getElementById('lnkImagens').click();
         }
 
         function AtivaAbaArquivosDocumentos() {
-            document.getElementById('MenuConcurso').setAttribute('class', '');
-            document.getElementById('MenuArquivos').setAttribute('class', 'active');
-
-            document.getElementById('Concursos').setAttribute('class', 'tab-pane');
-            document.getElementById('Arquivos').setAttribute('class', 'tab-pane active');
-
-            document.getElementById('MenuImagem').setAttribute('class', '');
-            document.getElementById('MenuDocumento').setAttribute('class', 'active');
-
-            document.getElementById('Imagens').setAttribute('class', 'tab-pane');
-            document.getElementById('Documentos').setAttribute('class', 'tab-pane active');
+            document.getElementById('lnkArquivos').click();
+            document.getElementById('lnkDocumentos').click();
         }
     </script>
     <asp:Literal ID="ltJavaScript" runat="server"></asp:Literal> <!--Caso precise de agrupamento nas tabelas-->
@@ -89,11 +71,11 @@
                 <div class="panel-body">
                     <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
                     <ul class="nav nav-tabs">
-                        <li id="MenuConcurso" class="active"><a href="#Concurso" data-toggle="tab">Concurso</a></li>
-                        <li id="MenuArquivos"><a href="#Arquivos" data-toggle="tab">Arquivos</a></li>
-                        <li id="MenuAssociacoes"><a href="#Associacoes" data-toggle="tab">Associações</a></li>
-                        <li id="MenuJurados"><a href="#Jurados" data-toggle="tab">Jurados</a></li>
-                        <li id="MenuCategorias"><a href="#Categorias" data-toggle="tab">Categorias</a></li>
+                        <li id="MenuConcurso" class="active"><a id="lnkConcurso" href="#Concurso" data-toggle="tab">Concurso</a></li>
+                        <li id="MenuArquivos"><a id="lnkArquivos" href="#Arquivos" data-toggle="tab">Arquivos</a></li>
+                        <li id="MenuAssociacoes"><a id="lnkAssociacoes" href="#Associacoes" data-toggle="tab">Associações</a></li>
+                        <li id="MenuJurados"><a id="lnkJurados" href="#Jurados" data-toggle="tab">Jurados</a></li>
+                        <li id="MenuCategorias"><a id="lnkCategorias" href="#Categorias" data-toggle="tab">Categorias</a></li>
                     </ul>
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="Concurso">
@@ -225,8 +207,8 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <ul class="nav nav-tabs">
-                                                        <li id="MenuImagem" class="active"><a href="#Imagens" data-toggle="tab">Imagens</a></li>
-                                                        <li id="MenuDocumento"><a href="#Documentos" data-toggle="tab">Documentos</a></li>
+                                                        <li id="MenuImagem" class="active"><a id="lnkImagens" href="#Imagens" data-toggle="tab">Imagens</a></li>
+                                                        <li id="MenuDocumento"><a id="lnkDocumentos" href="#Documentos" data-toggle="tab">Documentos</a></li>
                                                     </ul>
                                                     <div id="my-tab-content-2" class="tab-content"> 
                                                         <div class="tab-pane active" id="Imagens">

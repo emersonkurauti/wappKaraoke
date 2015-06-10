@@ -493,6 +493,7 @@ namespace wappKaraoke.Cadastros
             else
             {
                 ltMensagemArquivos.Text = MostraMensagem("Falha", "Selecione um arquivo para adicionar.", csMensagem.msgWarning);
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosImagens();", true);
             }
 
             hdfNmArquivo.Value = "";
@@ -514,6 +515,11 @@ namespace wappKaraoke.Cadastros
 
                 foreach (DataRow dr in _dtImagens.Rows)
                 {
+                    if (seq!=0 && seq % 3 == 0)
+                    {
+                        ltImagens.Text += csDinamico.strFinalLista;
+                        ltImagens.Text += csDinamico.strInicioLista;
+                    }
                     if (Convert.ToInt32(dr[caArquivos.cdArquivo].ToString()) != 0)
                         strCaminhoImg = strCaminho;
                     else

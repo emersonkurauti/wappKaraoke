@@ -14,10 +14,10 @@ namespace wappKaraoke.Classes
             "   <li class=\"span4\">" +"\n"+
             "        <div class=\"thumbnail\">" + "\n" +
             "          <a href=\"[strCaminhoImagem]\" title=\"[strDescImagem]\" data-gallery=\"\">" + "\n" +
-            "   	        <img src=\"[strCaminhoImagem]\" />" + "\n" +
+            "   	        <img src=\"[strCaminhoImagem]\" alert=\"[strDescImagem]\" />" + "\n" +
             "          </a>" + "\n" +
             "   	    <div class=\"caption\">" + "\n" +
-            "   		    <p>[strDescImagem]</p>" + "\n" +
+            "   		    <div class=\"well well-sm\">[strDescImagem]</div>" + "\n" +
             "   		    <div class=\"row\">" + "\n" +
             "   			    <div class=\"col-sm-6\">" + "\n" +
             "	    			    <a href=\"[strCaminhoImagem]\" title=\"[strDescImagem]\"" + "\n" +

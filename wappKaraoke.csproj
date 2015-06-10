@@ -311,6 +311,7 @@
     <Compile Include="Cadastros\galeria.aspx.designer.cs">
       <DependentUpon>galeria.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Controller\conCantoresFases.cs" />
     <Compile Include="Classes\Controller\conConcursosAssociacoes.cs" />
     <Compile Include="Classes\Constantes\csConstantes.cs" />
     <Compile Include="Classes\Controller\conArquivos.cs" />
@@ -321,6 +322,8 @@
     <Compile Include="Classes\Model\Arquivos\caArquivos.cs" />
     <Compile Include="Classes\Model\Arquivos\coArquivos.cs" />
     <Compile Include="Classes\Model\Concursos\caConcursos.cs" />
+    <Compile Include="Classes\Model\Concursos\Cantores\caCantoresFases.cs" />
+    <Compile Include="Classes\Model\Concursos\Cantores\coCantoresFases.cs" />
     <Compile Include="Classes\Model\Concursos\coConcursos.cs" />
     <Compile Include="Classes\Model\Concursos\ConcursosAssociacoes\caConcursosAssociacoes.cs" />
     <Compile Include="Classes\Model\Concursos\ConcursosAssociacoes\coConcursosAssociacoes.cs" />
