@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data;
+using wappKaraoke.Classes.Model.CantoresFases;
+using wappKaraoke.Classes.Model.Associacoes;
 
 namespace wappKaraoke.Classes
 {
@@ -48,11 +50,11 @@ namespace wappKaraoke.Classes
                 strLinhas += "<tr>";
                 //Cantor
                 //strLinhas += "<td style=\"width:5%;\">" + dr["cdCantor"] + "</td>";
-                strLinhas += "<td>" + dr["nmCantor"] + "</td>";
+                strLinhas += "<td>" + dr[caCantoresFases.CC_nmCantor] + "</td>";
 
                 //Associação
                 //strLinhas += "<td style=\"width:5%;\">" + dr["cdAssociacao"] + "</td>";
-                strLinhas += "<td>" + dr["nmAssociacao"] + "</td>";
+                strLinhas += "<td>" + dr["CC_nmAssociacao"] + "</td>";
 
                 //Fase
                 //strLinhas += "<td style=\"width:5%;\">" + dr["cdFase"] + "</td>";
@@ -60,7 +62,7 @@ namespace wappKaraoke.Classes
 
                 //Música
                 //strLinhas += "<td style=\"width:5%;\">" + dr["cdMusica"] + "</td>";
-                strLinhas += "<td>" + dr["nmMusica"] + "</td>";
+                strLinhas += "<td>" + dr[caCantoresFases.CC_nmMusica] + "</td>";
 
                 //Status
                 //strLinhas += "<td style=\"width:5%;\">" + dr["cdStatus"] + "</td>";
@@ -80,15 +82,15 @@ namespace wappKaraoke.Classes
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("cdCantor", typeof(int));
-            dt.Columns.Add("nmCantor", typeof(string));
+            dt.Columns.Add("CC_nmCantor", typeof(string));
             dt.Columns.Add("cdAssociacao", typeof(int));
             dt.Columns.Add("nmAssociacao", typeof(string));
             dt.Columns.Add("cdFase", typeof(int));
-            dt.Columns.Add("deFase", typeof(string));
+            dt.Columns.Add("CC_deFase", typeof(string));
             dt.Columns.Add("cdMusica", typeof(int));
-            dt.Columns.Add("nmMusica", typeof(string));
+            dt.Columns.Add("CC_nmMusica", typeof(string));
             dt.Columns.Add("cdStatus", typeof(int));
-            dt.Columns.Add("deStatus", typeof(string));
+            dt.Columns.Add("CC_deStatus", typeof(string));
 
             return dt;
         }

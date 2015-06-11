@@ -166,92 +166,116 @@ namespace wappKaraoke.Classes.Model.CantoresFases
        /// </summary>
        /// <param name="dtDados"></param>
        /// <returns></returns>
-       public override bool Select(out DataTable dtDados)
-       {
-           if (base.Select(out dtDados))
-           {
-               conCantores objConCantores = new conCantores();
-               conMusicas objConMusicas = new conMusicas();
-               conTipoStatus objConTipoStatus = new conTipoStatus();
-               conFases objConFases = new conFases();
-               conCategorias objConCategorias = new conCategorias();
+        public override bool Select(out DataTable dtDados)
+        {
+            if (base.Select(out dtDados))
+            {
+                conCantores objConCantores = new conCantores();
+                conMusicas objConMusicas = new conMusicas();
+                conTipoStatus objConTipoStatus = new conTipoStatus();
+                conFases objConFases = new conFases();
+                conCategorias objConCategorias = new conCategorias();
 
-               DataTable dtAux = dtDados;
+                DataTable dtAux = dtDados;
 
-               dtDados.Columns[caCantoresFases.CC_nmCantor].ReadOnly = false;
-               dtDados.Columns[caCantoresFases.CC_nmCantor].MaxLength = 100;
-               dtDados.Columns[caCantoresFases.CC_nmMusica].ReadOnly = false;
-               dtDados.Columns[caCantoresFases.CC_nmMusica].MaxLength = 100;
-               dtDados.Columns[caCantoresFases.CC_deTpStatus].ReadOnly = false;
-               dtDados.Columns[caCantoresFases.CC_deTpStatus].MaxLength = 100;
-               dtDados.Columns[caCantoresFases.CC_deFase].ReadOnly = false;
-               dtDados.Columns[caCantoresFases.CC_deFase].MaxLength = 100;
-               dtDados.Columns[caCantoresFases.CC_deCategoria].ReadOnly = false;
-               dtDados.Columns[caCantoresFases.CC_deCategoria].MaxLength = 100;
-               dtDados.Columns[caCantoresFases.CC_nmNomeKanji].ReadOnly = false;
-               dtDados.Columns[caCantoresFases.CC_nmNomeKanji].MaxLength = 100;
-               dtDados.Columns[caCantoresFases.CC_nmMusicaKanji].ReadOnly = false;
-               dtDados.Columns[caCantoresFases.CC_nmMusicaKanji].MaxLength = 100;
+                dtDados.Columns[caCantoresFases.CC_nmCantor].ReadOnly = false;
+                dtDados.Columns[caCantoresFases.CC_nmCantor].MaxLength = 100;
+                dtDados.Columns[caCantoresFases.CC_nmMusica].ReadOnly = false;
+                dtDados.Columns[caCantoresFases.CC_nmMusica].MaxLength = 100;
+                dtDados.Columns[caCantoresFases.CC_deTpStatus].ReadOnly = false;
+                dtDados.Columns[caCantoresFases.CC_deTpStatus].MaxLength = 100;
+                dtDados.Columns[caCantoresFases.CC_deFase].ReadOnly = false;
+                dtDados.Columns[caCantoresFases.CC_deFase].MaxLength = 100;
+                dtDados.Columns[caCantoresFases.CC_deCategoria].ReadOnly = false;
+                dtDados.Columns[caCantoresFases.CC_deCategoria].MaxLength = 100;
+                dtDados.Columns[caCantoresFases.CC_nmNomeKanji].ReadOnly = false;
+                dtDados.Columns[caCantoresFases.CC_nmNomeKanji].MaxLength = 100;
+                dtDados.Columns[caCantoresFases.CC_nmMusicaKanji].ReadOnly = false;
+                dtDados.Columns[caCantoresFases.CC_nmMusicaKanji].MaxLength = 100;
 
-               foreach (DataRow dr in dtAux.Rows)
-               {
-                   objConCantores.objCoCantores.LimparAtributos();
-                   objConCantores.objCoCantores.cdCantor = Convert.ToInt32(dr[caCantoresFases.cdCantor].ToString());
-                   objConMusicas.objCoMusicas.LimparAtributos();
-                   objConMusicas.objCoMusicas.cdMusica = Convert.ToInt32(dr[caCantoresFases.cdMusica].ToString());
-                   objConTipoStatus.objCoTipoStatus.LimparAtributos();
-                   objConTipoStatus.objCoTipoStatus.cdTpStatus = Convert.ToInt32(dr[caCantoresFases.cdTpStatus].ToString());
-                   objConFases.objCoFases.LimparAtributos();
-                   objConFases.objCoFases.cdFase = Convert.ToInt32(dr[caCantoresFases.cdFase].ToString());
-                   objConCategorias.objCoCategorias.LimparAtributos();
-                   objConCategorias.objCoCategorias.cdCategoria = Convert.ToInt32(dr[caCantoresFases.cdCategoria].ToString());
+                foreach (DataRow dr in dtAux.Rows)
+                {
+                    objConCantores.objCoCantores.LimparAtributos();
+                    objConCantores.objCoCantores.cdCantor = Convert.ToInt32(dr[caCantoresFases.cdCantor].ToString());
+                    objConMusicas.objCoMusicas.LimparAtributos();
+                    objConMusicas.objCoMusicas.cdMusica = Convert.ToInt32(dr[caCantoresFases.cdMusica].ToString());
+                    objConTipoStatus.objCoTipoStatus.LimparAtributos();
+                    objConTipoStatus.objCoTipoStatus.cdTpStatus = Convert.ToInt32(dr[caCantoresFases.cdTpStatus].ToString());
+                    objConFases.objCoFases.LimparAtributos();
+                    objConFases.objCoFases.cdFase = Convert.ToInt32(dr[caCantoresFases.cdFase].ToString());
+                    objConCategorias.objCoCategorias.LimparAtributos();
+                    objConCategorias.objCoCategorias.cdCategoria = Convert.ToInt32(dr[caCantoresFases.cdCategoria].ToString());
 
-                   if (conTipoStatus.Select())
-                   {
-                       if (objConTipoStatus.dtDados.Rows.Count > 0)
-                       {
-                           dr[caCantoresFases.CC_deTpStatus] = objConTipoStatus.dtDados.Rows[0][caTipoStatus.deTpStatus].ToString();
-                       }
-                   }
-                   if (conFases.Select())
-                   {
-                       if (objConFases.dtDados.Rows.Count > 0)
-                       {
-                           dr[caCantoresFases.CC_deFase] = objConFases.dtDados.Rows[0][caFases.deFase].ToString();
-                       }
-                   }
-                   if (conCategorias.Select())
-                   {
-                       if (objConCategorias.dtDados.Rows.Count > 0)
-                       {
-                           dr[caCantoresFases.CC_deCategoria] = objConCategorias.dtDados.Rows[0][caCategorias.deCategoria].ToString();
-                       }
-                   }
-                   if (conCantores.Select())
-                   {
-                       if (objConCantores.dtDados.Rows.Count > 0)
-                       {
-                           dr[caCantoresFases.CC_nmCantor] = objConCantores.dtDados.Rows[0][caCantores.nmCantor].ToString();
-                           dr[caCantoresFases.CC_nmNomeKanji] = objConCantores.dtDados.Rows[0][caCantores.nmNomeKanji].ToString();
-                       }
-                   }
-                   if (conMusicas.Select())
-                   {
-                       if (objConMusicas.dtDados.Rows.Count > 0)
-                       {
-                           dr[caCantoresFases.CC_nmMusica] = objConMusicas.dtDados.Rows[0][caMusicas.nmMusica].ToString();
-                           dr[caCantoresFases.CC_nmMusicaKanji] = objConMusicas.dtDados.Rows[0][caMusicas.nmMusicaKanji].ToString();
-                       }
-                   }
-               }
+                    if (conTipoStatus.Select())
+                    {
+                        if (objConTipoStatus.dtDados.Rows.Count > 0)
+                        {
+                            dr[caCantoresFases.CC_deTpStatus] = objConTipoStatus.dtDados.Rows[0][caTipoStatus.deTpStatus].ToString();
+                        }
+                    }
+                    if (conFases.Select())
+                    {
+                        if (objConFases.dtDados.Rows.Count > 0)
+                        {
+                            dr[caCantoresFases.CC_deFase] = objConFases.dtDados.Rows[0][caFases.deFase].ToString();
+                        }
+                    }
+                    if (conCategorias.Select())
+                    {
+                        if (objConCategorias.dtDados.Rows.Count > 0)
+                        {
+                            dr[caCantoresFases.CC_deCategoria] = objConCategorias.dtDados.Rows[0][caCategorias.deCategoria].ToString();
+                        }
+                    }
+                    if (conCantores.Select())
+                    {
+                        if (objConCantores.dtDados.Rows.Count > 0)
+                        {
+                            dr[caCantoresFases.CC_nmCantor] = objConCantores.dtDados.Rows[0][caCantores.nmCantor].ToString();
+                            dr[caCantoresFases.CC_nmNomeKanji] = objConCantores.dtDados.Rows[0][caCantores.nmNomeKanji].ToString();
+                        }
+                    }
+                    if (conMusicas.Select())
+                    {
+                        if (objConMusicas.dtDados.Rows.Count > 0)
+                        {
+                            dr[caCantoresFases.CC_nmMusica] = objConMusicas.dtDados.Rows[0][caMusicas.nmMusica].ToString();
+                            dr[caCantoresFases.CC_nmMusicaKanji] = objConMusicas.dtDados.Rows[0][caMusicas.nmMusicaKanji].ToString();
+                        }
+                    }
+                }
 
-               dtDados = dtAux;
-           }
-           else
-               return false;
+                dtDados = dtAux;
+            }
+            else
+                return false;
 
-           return true;
-       }
+            return true;
+        }
+
+        /// <summary>
+        /// Retorna somete as categorias existentes no concurso
+        /// </summary>
+        /// <param name="dtDados"></param>
+        /// <returns></returns>
+        public bool SelectCategoriasConcurso(out DataTable dtDados)
+        {
+            string strComando = @"SELECT C.cdCategoria, C.deCategoria FROM CANTORESFASES CF " +
+                                 " INNER JOIN CATEGORIAS C on C.cdCategoria = CF.cdCategoria " +
+                                 " WHERE CF.cdConcurso = " + _cdConcurso +
+                                 " GROUP BY C.cdCategoria, C.deCategoria";
+            try
+            {
+                dtDados = objBanco.RetornaDT(strComando);
+                return true;
+            }
+            catch
+            {
+                dtDados = null;
+                return false;
+            }
+        }
+
         /// <summary>
         /// Sobrescrito para retornar a chave
         /// </summary>

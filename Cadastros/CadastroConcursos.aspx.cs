@@ -15,6 +15,8 @@ using wappKaraoke.Classes.Model.Arquivos;
 using wappKaraoke.Classes.Model.ConcursosAssociacoes;
 using wappKaraoke.Classes.Model.Grupos;
 using wappKaraoke.Classes.Model.Jurados;
+using wappKaraoke.Classes.Model.CantoresFases;
+using wappKaraoke.Classes.Model.Categorias;
 
 namespace wappKaraoke.Cadastros
 {
@@ -24,6 +26,9 @@ namespace wappKaraoke.Cadastros
         private DataTable _dtImagens;
         private DataTable _dtAssociacoes;
         private DataTable _dtGruposJurados;
+
+        private string strScriptGridView = "";
+        private string ScriptGridView = @"$(function () { $('[id*=[idGridView]').footable(); });";
 
         private string strInicio = "<div class=\"tabbable tabs-left\"> \n <ul class=\"nav nav-tabs\">\n";
         private string strMeio = "</ul> \n <div class=\"tab-content\">\n";
@@ -58,27 +63,7 @@ namespace wappKaraoke.Cadastros
                 CarregarArquivos();
                 CarregarAssociacoes();
                 CarregarGruposJurados();
-
-                DataTable dt;
-                //Cantores
-                dt = new DataTable();
-                dt.Columns.Add("cdCantor", typeof(int));
-                dt.Columns.Add("nmCantor", typeof(string));
-                dt.Columns.Add("nmAssociacao", typeof(string));
-
-                for (int i = 0; i < 4; i++)
-                {
-                    DataRow dr = dt.NewRow();
-
-                    dr["cdCantor"] = i;
-                    dr["nmCantor"] = "Cantor de Teste - " + i;
-                    dr["nmAssociacao"] = "Associacao de Teste - " + i;
-
-                    dt.Rows.Add(dr);
-                }
-
-                //gvCantoresConcurso.DataSource = dt;
-                //gvCantoresConcurso.DataBind();
+                CarregarCantoresCategorias();
             }
         }
 
@@ -178,6 +163,8 @@ namespace wappKaraoke.Cadastros
             Session["_dtDocumentos"] = null;
             Session["_dtAssociacoes"] = null;
             Session["_dtGruposJurados"] = null;
+            Session["alCdCategoria"] = null;
+            Session["alDeCategoria"] = null;            
         }
 
         public void btnFechar_Click(Object sender, EventArgs e)
@@ -193,72 +180,9 @@ namespace wappKaraoke.Cadastros
         public void btnAdicionarCategoria_OnClick(Object sender, EventArgs e)
         {
             AdicionaCantorCategoriaConcurso(cdCategoria.SelectedValue.ToString(), cdCategoria.SelectedItem.ToString());
-            //csMontaTable ocsMontaTable = new csMontaTable();
-            //DataTable dtDados;
-
-            //if (Session["strLista"] != null)
-            //    strLista = Session["strLista"].ToString().Replace("<li class=\"active\">", "<li>");
-
-            //if (Session["strDivs"] != null)
-            //    strDivs = Session["strDivs"].ToString().Replace("class=\"tab-pane active\"", "class=\"tab-pane\"");
-
-
-            //ltJavaScript.Text = "<script type=\"text/javascript\">";
-
-            //strLista += strListaMenu.Replace("[Nome]", cdCategoria.SelectedItem.Text).Replace("[idLista]", cdCategoria.SelectedValue.ToString());
-
-            //strDivs += strAbrePanel.Replace("[idPanel]", cdCategoria.SelectedValue.ToString());
-            //{
-            //    strDivs += strUpdatePanelIni.Replace("[UpdatePanel]", cdCategoria.SelectedIndex.ToString());
-            //    {
-            //        strDivs += strPanelBodyIni;
-            //        {
-            //            strDivs += strRowIni;
-            //            {
-            //                if (Session["dvCantores_" + cdCategoria.SelectedIndex.ToString()] != null)
-            //                    dtDados = (DataTable)Session["dvCantores_" + cdCategoria.SelectedIndex.ToString()];
-            //                else
-            //                    dtDados = ocsMontaTable.RetornaDTCantores();
-
-            //                DataRow dr = dtDados.NewRow();
-            //                dr["cdCantor"] = cdCantor.SelectedValue;
-            //                dr["nmCantor"] = cdCantor.SelectedItem.Text;
-            //                dr["cdMusica"] = cdMusica.SelectedValue;
-            //                dr["nmMusica"] = cdMusica.SelectedItem.Text;
-            //                dr["cdFase"] = cdFaseCantor.SelectedValue;
-            //                dr["deFase"] = cdFaseCantor.SelectedItem.Text;
-            //                dr["cdStatus"] = cdStatus.SelectedValue;
-            //                dr["deStatus"] = cdStatus.SelectedItem.Text;
-            //                dr["cdAssociacao"] = cdAssociacaoCantor.SelectedValue;
-            //                dr["nmAssociacao"] = cdAssociacaoCantor.SelectedItem.Text;
-            //                dtDados.Rows.Add(dr);
-
-            //                ocsMontaTable.dtDados = dtDados;
-            //                strDivs += ocsMontaTable.MontaDataGridView(cdCategoria.SelectedIndex.ToString());
-
-            //                ltJavaScript.Text += "$(function () {" +
-            //                                     "    $('[id*=gvCantores_" + cdCategoria.SelectedIndex.ToString() + "]').footable();" +
-            //                                     "});";
-            //            }
-            //            strDivs += strRowFim;
-            //        }
-            //        strDivs += strPanelBodyFim;
-
-            //    }
-            //    strDivs += strUpdatePanelFim;
-            //}
-            //strDivs += strFechaPanel;
-
-            //Session["strLista"] = strLista;
-            //Session["strDivs"] = strDivs;
-
-            //ltCategorias.Text = strInicio + strLista + strMeio + strDivs + strFim;
-            //Session["ltCategorias"] = ltCategorias.Text;
-
-            //ltJavaScript.Text += "</script>";
         }
 
-        private void AdicionaCantorCategoriaConcurso(string strCdCategoria, string strDeCategoria)
+        private void AdicionaCantorCategoriaConcurso(string strCdCategoria, string strDeCategoria, bool bEstaCarregando = false)
         {
             ArrayList alCdCategoria = new ArrayList();
             ArrayList alDeCategoria = new ArrayList();
@@ -271,7 +195,9 @@ namespace wappKaraoke.Cadastros
 
             InsereCategoria(strCdCategoria, strDeCategoria, ref alCdCategoria, ref alDeCategoria);
 
-            PreencheLiteral(strCdCategoria, alCdCategoria, alDeCategoria);
+            PreencheLiteral(strCdCategoria, alCdCategoria, alDeCategoria, bEstaCarregando);
+
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "", strScriptGridView, true);
 
             Session["alCdCategoria"] = alCdCategoria;
             Session["alDeCategoria"] = alDeCategoria;
@@ -293,7 +219,7 @@ namespace wappKaraoke.Cadastros
             }
         }
 
-        private void PreencheLiteral(string strCdCategoria, ArrayList palCdCategoria, ArrayList palDeCategoria)
+        private void PreencheLiteral(string strCdCategoria, ArrayList palCdCategoria, ArrayList palDeCategoria, bool bEstaCarregando = false)
         {
             csMontaTable ocsMontaTable = new csMontaTable();
             DataTable dtDados;
@@ -321,22 +247,44 @@ namespace wappKaraoke.Cadastros
                                 if (Session["dvCantores_" + palCdCategoria[i].ToString()] != null)
                                     dtDados = (DataTable)Session["dvCantores_" + palCdCategoria[i].ToString()];
                                 else
-                                    dtDados = ocsMontaTable.RetornaDTCantores();
-
-                                if (palCdCategoria[i].ToString() == strCdCategoria)
                                 {
-                                    DataRow dr = dtDados.NewRow();
-                                    dr["cdCantor"] = cdCantor.SelectedValue;
-                                    dr["nmCantor"] = cdCantor.SelectedItem.Text;
-                                    dr["cdMusica"] = cdMusica.SelectedValue;
-                                    dr["nmMusica"] = cdMusica.SelectedItem.Text;
-                                    dr["cdFase"] = cdFaseCantor.SelectedValue;
-                                    dr["deFase"] = cdFaseCantor.SelectedItem.Text;
-                                    dr["cdStatus"] = cdStatus.SelectedValue;
-                                    dr["deStatus"] = cdStatus.SelectedItem.Text;
-                                    dr["cdAssociacao"] = cdAssociacaoCantor.SelectedValue;
-                                    dr["nmAssociacao"] = cdAssociacaoCantor.SelectedItem.Text;
-                                    dtDados.Rows.Add(dr);
+                                    dtDados = ocsMontaTable.RetornaDTCantores();
+                                    strScriptGridView += ScriptGridView.Replace("[idGridView]", "dvCantores_" + palCdCategoria[i].ToString());
+                                }
+
+                                if (bEstaCarregando)
+                                {
+                                    conCantoresFases objConCantoresFases = new conCantoresFases();
+                                    objConCantoresFases.objCoCantoresFases.LimparAtributos();
+                                    objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+                                    objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(strCdCategoria);
+
+                                    if (!conCantoresFases.Select())
+                                    {
+                                        ltMensagensCategorias.Text = MostraMensagem("Falha!", "Falha ao carregar os cantores do concurso.", csMensagem.msgDanger);
+                                        return;
+                                    }
+
+                                    if (objConCantoresFases.dtDados != null)
+                                        dtDados = objConCantoresFases.dtDados;
+                                }
+                                else
+                                {
+                                    if (palCdCategoria[i].ToString() == strCdCategoria)
+                                    {
+                                        DataRow dr = dtDados.NewRow();
+                                        dr["cdCantor"] = cdCantor.SelectedValue;
+                                        dr["nmCantor"] = cdCantor.SelectedItem.Text;
+                                        dr["cdMusica"] = cdMusica.SelectedValue;
+                                        dr["nmMusica"] = cdMusica.SelectedItem.Text;
+                                        dr["cdFase"] = cdFaseCantor.SelectedValue;
+                                        dr["deFase"] = cdFaseCantor.SelectedItem.Text;
+                                        dr["cdStatus"] = cdStatus.SelectedValue;
+                                        dr["deStatus"] = cdStatus.SelectedItem.Text;
+                                        dr["cdAssociacao"] = cdAssociacaoCantor.SelectedValue;
+                                        dr["nmAssociacao"] = cdAssociacaoCantor.SelectedItem.Text;
+                                        dtDados.Rows.Add(dr);
+                                    }
                                 }
 
                                 Session["dvCantores_" + palCdCategoria[i].ToString()] = dtDados;
@@ -388,7 +336,6 @@ namespace wappKaraoke.Cadastros
             csAssociacoes vcsAssociacoesCancores = new csAssociacoes();
             cdAssociacaoCantor = vcsAssociacoesCancores.CarregaDDL(cdAssociacaoCantor);
 
-            //Filtrar somente fases adicionadas no concurso
             csFases vcsFasesConcurso = new csFases();
             cdFaseCantor = vcsFasesConcurso.CarregaDDL(cdFaseCantor);
 
@@ -634,6 +581,27 @@ namespace wappKaraoke.Cadastros
         protected void upArquivos_PreRender(object sender, EventArgs e)
         {
             this.ScriptManager1.RegisterPostBackControl(btnAdicionarArquivo);
+        }
+
+        private void CarregarCantoresCategorias()
+        {
+            conCantoresFases objConCantoresFases = new conCantoresFases();
+            objConCantoresFases.objCoCantoresFases.LimparAtributos();
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+
+            if (!conCantoresFases.SelectCategoriasConcurso())
+            {
+                ltMensagensCategorias.Text = MostraMensagem("Falha!", "Falha ao carregar as categorias do concurso.", csMensagem.msgDanger);
+                return;
+            }
+
+            foreach (DataRow dr in objConCantoresFases.dtDados.Rows)
+            {
+                AdicionaCantorCategoriaConcurso(dr[caCategorias.cdCategoria].ToString(), dr[caCategorias.deCategoria].ToString(), true);
+            }
+
+
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "", strScriptGridView, true);
         }
     }
 }

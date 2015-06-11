@@ -10,10 +10,6 @@
         });
 
         $(function () {
-            $('[id*=gvFasesConcurso]').footable();
-        });
-
-        $(function () {
             $('[id*=gvDocumentos]').footable();
         });
 
