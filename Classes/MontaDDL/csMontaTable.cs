@@ -54,7 +54,7 @@ namespace wappKaraoke.Classes
 
                 //Associação
                 //strLinhas += "<td style=\"width:5%;\">" + dr["cdAssociacao"] + "</td>";
-                strLinhas += "<td>" + dr["CC_nmAssociacao"] + "</td>";
+                //strLinhas += "<td>" + dr["CC_nmAssociacao"] + "</td>";
 
                 //Fase
                 //strLinhas += "<td style=\"width:5%;\">" + dr["cdFase"] + "</td>";

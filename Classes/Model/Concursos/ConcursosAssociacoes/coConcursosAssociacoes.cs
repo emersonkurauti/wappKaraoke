@@ -71,40 +71,64 @@ namespace wappKaraoke.Classes.Model.ConcursosAssociacoes
        /// </summary>
        /// <param name="dtDados"></param>
        /// <returns></returns>
-       public override bool Select(out DataTable dtDados)
-       {
-           if (base.Select(out dtDados))
-           {
-               conAssociacoes objConAssociacoes = new conAssociacoes();
+        public override bool Select(out DataTable dtDados)
+        {
+            if (base.Select(out dtDados))
+            {
+                conAssociacoes objConAssociacoes = new conAssociacoes();
 
-               DataTable dtAux = dtDados;
+                DataTable dtAux = dtDados;
 
-               dtDados.Columns[caConcursosAssociacoes.CC_nmAssociacao].ReadOnly = false;
-               dtDados.Columns[caConcursosAssociacoes.CC_nmAssociacao].MaxLength = 100;
+                dtDados.Columns[caConcursosAssociacoes.CC_nmAssociacao].ReadOnly = false;
+                dtDados.Columns[caConcursosAssociacoes.CC_nmAssociacao].MaxLength = 100;
 
-               foreach (DataRow dr in dtAux.Rows)
-               {
-                   objConAssociacoes.objCoAssociacoes.LimparAtributos();
-                   objConAssociacoes.objCoAssociacoes.cdAssociacao = Convert.ToInt32(dr[caConcursosAssociacoes.cdAssociacao].ToString());
+                foreach (DataRow dr in dtAux.Rows)
+                {
+                    objConAssociacoes.objCoAssociacoes.LimparAtributos();
+                    objConAssociacoes.objCoAssociacoes.cdAssociacao = Convert.ToInt32(dr[caConcursosAssociacoes.cdAssociacao].ToString());
 
 
-                   if (conAssociacoes.Select())
-                   {
-                       if (objConAssociacoes.dtDados.Rows.Count > 0)
-                       {
-                           dr[caConcursosAssociacoes.CC_nmAssociacao] = objConAssociacoes.dtDados.Rows[0][caAssociacoes.nmAssociacao].ToString();
+                    if (conAssociacoes.Select())
+                    {
+                        if (objConAssociacoes.dtDados.Rows.Count > 0)
+                        {
+                            dr[caConcursosAssociacoes.CC_nmAssociacao] = objConAssociacoes.dtDados.Rows[0][caAssociacoes.nmAssociacao].ToString();
+                        }
+                    }
+                }
 
-                       }
-                   }
-               }
+                dtDados = dtAux;
+            }
+            else
+                return false;
 
-               dtDados = dtAux;
-           }
-           else
-               return false;
+            return true;
+        }
 
-           return true;
-       }
+        /// <summary>
+        /// Retorna somete as associacoes existentes no concurso
+        /// </summary>
+        /// <param name="dtDados"></param>
+        /// <returns></returns>
+        public bool SelectAssociacoesConcurso(out DataTable dtDados)
+        {
+            string strComando = @"SELECT A.cdAssociacao, A.nmAssociacao FROM CONCURSOSASSOCIACOES CA " +
+                                 " INNER JOIN ASSOCIACOES A on A.cdAssociacao = CA.cdAssociacao " +
+                                 " WHERE CA.cdConcurso = " + _cdConcurso +
+                                 " GROUP BY A.cdAssociacao, A.nmAssociacao";
+            try
+            {
+                AtualizaObj();
+                dtDados = objBanco.RetornaDT(strComando);
+                return true;
+            }
+            catch
+            {
+                dtDados = null;
+                return false;
+            }
+        }
+
         /// <summary>
         /// Sobrescrito para retornar a chave
         /// </summary>

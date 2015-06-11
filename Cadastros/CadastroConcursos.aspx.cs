@@ -332,8 +332,9 @@ namespace wappKaraoke.Cadastros
             csCategorias vcsCategorias = new csCategorias();
             cdCategoria = vcsCategorias.CarregaDDL(cdCategoria);
 
-            //Filtrar somente as associações adicionadas no concurso
             csAssociacoes vcsAssociacoesCancores = new csAssociacoes();
+            vcsAssociacoesCancores.bFiltraConcurso = true;
+            vcsAssociacoesCancores.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
             cdAssociacaoCantor = vcsAssociacoesCancores.CarregaDDL(cdAssociacaoCantor);
 
             csFases vcsFasesConcurso = new csFases();

@@ -63,9 +63,7 @@ namespace wappKaraoke.Classes.Paginas_Default
         {
             DataTable dt;
 
-            tobjCon = objCon.GetType();
-            objCo = tobjCon.GetProperty("objCo").GetValue(objCon, null);
-            tobjCo = objCo.GetType();
+            PreparaObjetos();
 
             MethodInfo LimparAtributos = tobjCo.GetMethod("LimparAtributos");
             object obj = LimparAtributos.Invoke(objCo, new object[] { });
@@ -78,24 +76,9 @@ namespace wappKaraoke.Classes.Paginas_Default
                 PropertyInfo pdtDados = objCon.GetType().GetProperty("dtDados");
                 dt = (DataTable)pdtDados.GetValue(objCon, null);
 
-                MethodInfo RetornaEstruturaDT = tobjCo.GetMethod("RetornaEstruturaDT");
-                object objEstruturaDT = RetornaEstruturaDT.Invoke(objCo, new object[] { });
+                MontarEstrutura();
 
-                _dtDados = (DataTable)objEstruturaDT;
-
-                object nmCampoChave = tobjCa.GetProperty("nmCampoChave").GetValue(tobjCa, null);
-                object dePrincipal = tobjCa.GetProperty("dePrincipal").GetValue(tobjCa, null);
-
-                DataRow dr = _dtDados.NewRow();
-                dr[nmCampoChave.ToString()] = 0;
-                dr[dePrincipal.ToString()] = "--Selecione " + _strTextoCombo + "--";
-
-                _dtDados.Rows.Add(dr);
-
-                foreach (DataRow drCopy in dt.Rows)
-                {
-                    _dtDados.ImportRow(drCopy);
-                }
+                AdicionaPrimeiraLinha(dt);
             }
             else
                 return null;
@@ -151,6 +134,38 @@ namespace wappKaraoke.Classes.Paginas_Default
                 }
             }
             return strOprions;
+        }
+
+        public virtual void AdicionaPrimeiraLinha(DataTable pdtDadosACopiar)
+        {
+            object nmCampoChave = tobjCa.GetProperty("nmCampoChave").GetValue(tobjCa, null);
+            object dePrincipal = tobjCa.GetProperty("dePrincipal").GetValue(tobjCa, null);
+
+            DataRow dr = _dtDados.NewRow();
+            dr[nmCampoChave.ToString()] = 0;
+            dr[dePrincipal.ToString()] = "--Selecione " + _strTextoCombo + "--";
+
+            _dtDados.Rows.Add(dr);
+
+            foreach (DataRow drCopy in pdtDadosACopiar.Rows)
+            {
+                _dtDados.ImportRow(drCopy);
+            }
+        }
+
+        public virtual void MontarEstrutura()
+        {
+            MethodInfo RetornaEstruturaDT = tobjCo.GetMethod("RetornaEstruturaDT");
+            object objEstruturaDT = RetornaEstruturaDT.Invoke(objCo, new object[] { });
+
+            _dtDados = (DataTable)objEstruturaDT;
+        }
+
+        public virtual void PreparaObjetos()
+        {
+            tobjCon = objCon.GetType();
+            objCo = tobjCon.GetProperty("objCo").GetValue(objCon, null);
+            tobjCo = objCo.GetType();
         }
     }
 }

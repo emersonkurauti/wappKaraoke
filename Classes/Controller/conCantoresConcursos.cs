@@ -3,34 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using wappKaraoke.Classes.Model.ConcursosAssociacoes;
+using wappKaraoke.Classes.Model.CantoresConcursos;
 using wappKaraoke.Classes.Mensagem;
 
 namespace wappKaraoke.Classes.Controller
 {
-    public class conConcursosAssociacoes : KuraFrameWork.ClasseBase.csControllerBase
+    public class conCantoresConcursos : KuraFrameWork.ClasseBase.csControllerBase
     {
-        private static coConcursosAssociacoes _objCo;
-        public static coConcursosAssociacoes  objCo
+        private static coCantoresConcursos _objCo;
+        public static coCantoresConcursos  objCo
         {
-            get { return conConcursosAssociacoes._objCoConcursosAssociacoes; }
-            set { conConcursosAssociacoes._objCoConcursosAssociacoes = value; }
+            get { return conCantoresConcursos._objCoCantoresConcursos; }
+            set { conCantoresConcursos._objCoCantoresConcursos = value; }
         }
 
-        private static coConcursosAssociacoes _objCoConcursosAssociacoes;
-        public coConcursosAssociacoes objCoConcursosAssociacoes
+        private static coCantoresConcursos _objCoCantoresConcursos;
+        public coCantoresConcursos objCoCantoresConcursos
         {
-            get { return _objCoConcursosAssociacoes; }
-            set { _objCoConcursosAssociacoes = value; }
+            get { return _objCoCantoresConcursos; }
+            set { _objCoCantoresConcursos = value; }
         }
 
         /// <summary>
         /// Construtor
         /// </summary>
-        public conConcursosAssociacoes()
+        public conCantoresConcursos()
         {
-            _objCoConcursosAssociacoes = new coConcursosAssociacoes();
-            _objCo = _objCoConcursosAssociacoes;
+            _objCoCantoresConcursos = new coCantoresConcursos();
+            _objCo = _objCoCantoresConcursos;
         }
 
         /// <summary>
@@ -41,24 +41,7 @@ namespace wappKaraoke.Classes.Controller
         {
             _strMensagemErro = "";
 
-            if (!_objCoConcursosAssociacoes.Select(out _dtDados))
-            {
-                _strMensagemErro = csMensagem.msgConsultar;
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Select associações do concurso
-        /// </summary>
-        /// <returns></returns>
-        public static bool SelectAssociacoesConcurso()
-        {
-            _strMensagemErro = "";
-
-            if (!_objCoConcursosAssociacoes.SelectAssociacoesConcurso(out _dtDados))
+            if (!_objCoCantoresConcursos.Select(out _dtDados))
             {
                 _strMensagemErro = csMensagem.msgConsultar;
                 return false;
@@ -75,7 +58,7 @@ namespace wappKaraoke.Classes.Controller
         {
             _strMensagemErro = "";
 
-            if (!_objCoConcursosAssociacoes.Inserir())
+            if (!_objCoCantoresConcursos.Inserir())
             {
             _strMensagemErro = "";
 
@@ -93,7 +76,7 @@ namespace wappKaraoke.Classes.Controller
         {
             _strMensagemErro = "";
 
-            if (!_objCoConcursosAssociacoes.Alterar())
+            if (!_objCoCantoresConcursos.Alterar())
             {
                 _strMensagemErro = csMensagem.msgAlterar;
                 return false;
@@ -109,7 +92,7 @@ namespace wappKaraoke.Classes.Controller
         {
             _strMensagemErro = "";
 
-            if (!_objCoConcursosAssociacoes.Excluir())
+            if (!_objCoCantoresConcursos.Excluir())
             {
                 _strMensagemErro = csMensagem.msgRemover;
                 return false;
