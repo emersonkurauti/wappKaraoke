@@ -17,6 +17,11 @@ using wappKaraoke.Classes.Model.Grupos;
 using wappKaraoke.Classes.Model.Jurados;
 using wappKaraoke.Classes.Model.CantoresFases;
 using wappKaraoke.Classes.Model.Categorias;
+using wappKaraoke.Classes.Model.Cantores;
+using wappKaraoke.Classes.Model.Musicas;
+using wappKaraoke.Classes.Model.Associacoes;
+using wappKaraoke.Classes.Model.Fases;
+using wappKaraoke.Classes.Model.TipoStatus;
 
 namespace wappKaraoke.Cadastros
 {
@@ -273,16 +278,24 @@ namespace wappKaraoke.Cadastros
                                     if (palCdCategoria[i].ToString() == strCdCategoria)
                                     {
                                         DataRow dr = dtDados.NewRow();
-                                        dr["cdCantor"] = cdCantor.SelectedValue;
-                                        dr["nmCantor"] = cdCantor.SelectedItem.Text;
-                                        dr["cdMusica"] = cdMusica.SelectedValue;
-                                        dr["nmMusica"] = cdMusica.SelectedItem.Text;
-                                        dr["cdFase"] = cdFaseCantor.SelectedValue;
-                                        dr["deFase"] = cdFaseCantor.SelectedItem.Text;
-                                        dr["cdStatus"] = cdStatus.SelectedValue;
-                                        dr["deStatus"] = cdStatus.SelectedItem.Text;
-                                        dr["cdAssociacao"] = cdAssociacaoCantor.SelectedValue;
-                                        dr["nmAssociacao"] = cdAssociacaoCantor.SelectedItem.Text;
+                                        dr[caConcursos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
+                                        //Cantor
+                                        dr[caCantores.cdCantor] = cdCantor.SelectedValue;
+                                        dr[caCantores.nmCantor] = cdCantor.SelectedItem.Text;
+                                        dr[caCantores.nmNomeKanji] = "";
+                                        //Associação
+                                        dr[caAssociacoes.cdAssociacao] = cdAssociacaoCantor.SelectedValue;
+                                        dr[caAssociacoes.nmAssociacao] = cdAssociacaoCantor.SelectedItem.Text;
+                                        //Música
+                                        dr[caMusicas.cdMusica] = cdMusica.SelectedValue;
+                                        dr[caMusicas.nmMusica] = cdMusica.SelectedItem.Text;
+                                        dr[caMusicas.nmMusicaKanji] = "";
+                                        
+                                        dr[caFases.cdFase] = cdFaseCantor.SelectedValue;
+                                        dr[caCategorias.cdCategoria] = cdCategoria.SelectedValue;
+                                        dr[caTipoStatus.cdTpStatus] = cdStatus.SelectedValue;
+                                        dr[caCantoresFases.nuCantor] = "";
+                                        dr[caCantoresFases.nuOrdemApresentacao] = 0;
                                         dtDados.Rows.Add(dr);
                                     }
                                 }
