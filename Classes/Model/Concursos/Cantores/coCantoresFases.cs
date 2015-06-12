@@ -264,16 +264,125 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  " INNER JOIN CATEGORIAS C on C.cdCategoria = CF.cdCategoria " +
                                  " WHERE CF.cdConcurso = " + _cdConcurso +
                                  " GROUP BY C.cdCategoria, C.deCategoria";
-            try
-            {
-                dtDados = objBanco.RetornaDT(strComando);
-                return true;
-            }
-            catch
-            {
-                dtDados = null;
-                return false;
-            }
+
+            return objBanco.SelectPersonalizado(out dtDados, strComando);
+        }
+
+        /// <summary>
+        /// Retorna somete as categorias existentes no concurso
+        /// </summary>
+        /// <param name="dtDados"></param>
+        /// <returns></returns>
+        public bool SelectCantoresFasesConcurso(out DataTable dtDados)
+        {
+            string strComando = @"SELECT CF.cdConcurso, CAN.cdCantor, CAN.nmCantor, CAN.nmNomeKanji, " +
+                                 "       MUS.cdMusica, MUS.nmMusica, MUS.nmMusicaKanji, " +
+                                 "       ASS.cdAssociacao, ASS.nmAssociacao, CF.cdFase, " +
+                                 "       CF.cdCategoria, CF.cdTpStatus, CF.nuCantor, CF.nuOrdemApresentacao " +
+                                 "  FROM CANTORESFASES CF " +
+                                 " INNER JOIN CANTORES CAN on CAN.cdCantor = CF.cdCantor " +
+                                 " INNER JOIN MUSICAS MUS on MUS.cdMusica = CF.cdMusica " +
+                                 " INNER JOIN CONCURSOSASSOCIACOES CA on CA.cdConcurso = CF.cdConcurso" +
+                                 " INNER JOIN ASSOCIACOES ASS on ASS.cdAssociacao = CA.cdAssociacao" +
+                                 " WHERE CF.cdConcurso = " + _cdConcurso;
+
+            return objBanco.SelectPersonalizado(out dtDados, strComando);
+        }
+
+        /// <summary>
+        /// Retorna a estrtura para a tabela de Cantores Fases Concursos
+        /// </summary>
+        /// <returns></returns>
+        public DataTable RetornaEstruturaDtCantoresFasesConcursos()
+        { 
+            DataTable dt = new DataTable();
+            DataColumn dc;
+
+            dc = new DataColumn();
+            dc.DataType = typeof(int);
+            dc.ColumnName = "cdConcurso";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(int);
+            dc.ColumnName = "cdCantor";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(string);
+            dc.ColumnName = "nmCantor";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(string);
+            dc.ColumnName = "nmNomeKanji";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(int);
+            dc.ColumnName = "cdMusica";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(string);
+            dc.ColumnName = "nmMusica";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(string);
+            dc.ColumnName = "nmMusicaKanji";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(int);
+            dc.ColumnName = "cdAssociacao";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(string);
+            dc.ColumnName = "nmAssociacao";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(int);
+            dc.ColumnName = "cdFase";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(int);
+            dc.ColumnName = "cdCategoria";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(int);
+            dc.ColumnName = "cdTpStatus";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(string);
+            dc.ColumnName = "nuCantor";
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(int);
+            dc.ColumnName = "nuOrdemApresentacao";
+
+            dt.Columns.Add(dc);
+
+            return dt;
         }
 
         /// <summary>

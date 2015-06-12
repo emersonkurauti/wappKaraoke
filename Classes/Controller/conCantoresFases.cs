@@ -63,6 +63,19 @@ namespace wappKaraoke.Classes.Controller
             return true;
         }
 
+        public static bool SelectCantoresFasesConcurso()
+        {
+            _strMensagemErro = "";
+
+            if (!_objCoCantoresFases.SelectCantoresFasesConcurso(out _dtDados))
+            {
+                _strMensagemErro = csMensagem.msgConsultar;
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Inserir
         /// </summary>

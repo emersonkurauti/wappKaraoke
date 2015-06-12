@@ -72,50 +72,51 @@ namespace wappKaraoke.Classes.Model.CantoresConcursos
        /// </summary>
        /// <param name="dtDados"></param>
        /// <returns></returns>
-       public override bool Select(out DataTable dtDados)
-       {
-           if (base.Select(out dtDados))
-           {
-               conCantores objConCantores = new conCantores();
-               conAssociacoes objConAssociacoes = new conAssociacoes();
+        public override bool Select(out DataTable dtDados)
+        {
+            if (base.Select(out dtDados))
+            {
+                conCantores objConCantores = new conCantores();
+                conAssociacoes objConAssociacoes = new conAssociacoes();
 
-               DataTable dtAux = dtDados;
+                DataTable dtAux = dtDados;
 
-               dtDados.Columns[caCantoresConcursos.CC_nmCantor].ReadOnly = false;
-               dtDados.Columns[caCantoresConcursos.CC_nmCantor].MaxLength = 100;
-               dtDados.Columns[caCantoresConcursos.CC_nmAssociacao].ReadOnly = false;
-               dtDados.Columns[caCantoresConcursos.CC_nmAssociacao].MaxLength = 100;
+                dtDados.Columns[caCantoresConcursos.CC_nmCantor].ReadOnly = false;
+                dtDados.Columns[caCantoresConcursos.CC_nmCantor].MaxLength = 100;
+                dtDados.Columns[caCantoresConcursos.CC_nmAssociacao].ReadOnly = false;
+                dtDados.Columns[caCantoresConcursos.CC_nmAssociacao].MaxLength = 100;
 
-               foreach (DataRow dr in dtAux.Rows)
-               {
-                   objConCantores.objCoCantores.LimparAtributos();
-                   objConCantores.objCoCantores.cdCantor = Convert.ToInt32(dr[caCantoresConcursos.cdCantor].ToString());
-                   objConAssociacoes.objCoAssociacoes.LimparAtributos();
-                   objConAssociacoes.objCoAssociacoes.cdAssociacao = Convert.ToInt32(dr[caCantoresConcursos.cdAssociacao].ToString());
+                foreach (DataRow dr in dtAux.Rows)
+                {
+                    objConCantores.objCoCantores.LimparAtributos();
+                    objConCantores.objCoCantores.cdCantor = Convert.ToInt32(dr[caCantoresConcursos.cdCantor].ToString());
+                    objConAssociacoes.objCoAssociacoes.LimparAtributos();
+                    objConAssociacoes.objCoAssociacoes.cdAssociacao = Convert.ToInt32(dr[caCantoresConcursos.cdAssociacao].ToString());
 
-                   if (conAssociacoes.Select())
-                   {
-                       if (objConAssociacoes.dtDados.Rows.Count > 0)
-                       {
-                           dr[caCantoresConcursos.CC_nmCantor] = objConCantores.dtDados.Rows[0][caCantores.nmCantor].ToString();
-                       }
-                   }
-                   if (conAssociacoes.Select())
-                   {
-                       if (objConAssociacoes.dtDados.Rows.Count > 0)
-                       {
-                           dr[caCantoresConcursos.CC_nmAssociacao] = objConAssociacoes.dtDados.Rows[0][caAssociacoes.nmAssociacao].ToString();
-                       }
-                   }
-               }
+                    if (conAssociacoes.Select())
+                    {
+                        if (objConAssociacoes.dtDados.Rows.Count > 0)
+                        {
+                            dr[caCantoresConcursos.CC_nmCantor] = objConCantores.dtDados.Rows[0][caCantores.nmCantor].ToString();
+                        }
+                    }
+                    if (conAssociacoes.Select())
+                    {
+                        if (objConAssociacoes.dtDados.Rows.Count > 0)
+                        {
+                            dr[caCantoresConcursos.CC_nmAssociacao] = objConAssociacoes.dtDados.Rows[0][caAssociacoes.nmAssociacao].ToString();
+                        }
+                    }
+                }
 
-               dtDados = dtAux;
-           }
-           else
-               return false;
+                dtDados = dtAux;
+            }
+            else
+                return false;
 
-           return true;
-       }
+            return true;
+        }
+
         /// <summary>
         /// Sobrescrito para retornar a chave
         /// </summary>
