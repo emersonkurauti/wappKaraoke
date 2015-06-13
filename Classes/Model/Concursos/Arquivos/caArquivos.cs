@@ -66,7 +66,11 @@ namespace wappKaraoke.Classes.Model.Arquivos
 		/// <summary>
 		/// Atributos
 	 	/// </summary>        
-		public static string cdTipoArquivo
+        public static string CC_Controle
+        {
+            get { return "CC_Controle"; }
+        }
+        public static string cdTipoArquivo
         {
             get { return "cdTipoArquivo"; }
         }
@@ -103,11 +107,11 @@ namespace wappKaraoke.Classes.Model.Arquivos
         /// <param name="strNome"></param>
         public static void RetornarFields()
         {
-            _strFields = CC_cdRegistro  + "," + cdTipoArquivo + "," + cdConcurso + "," + deArquivo + "," + deCaminhoArquivo + "," + nmArquivo + "," + cdArquivo + "," + CC_deTipoArquivo;
+            _strFields = CC_Controle + "," + CC_cdRegistro + "," + cdTipoArquivo + "," + cdConcurso + "," + deArquivo + "," + deCaminhoArquivo + "," + nmArquivo + "," + cdArquivo + "," + CC_deTipoArquivo;
 
-            _strNome = "Cd. Registro, cdTipoArquivo, cdConcurso, deArquivo, deCaminhoArquivo, nmArquivo, cdArquivo, CC_deTipoArquivo";
+            _strNome = "Controle, Cd. Registro, cdTipoArquivo, cdConcurso, deArquivo, deCaminhoArquivo, nmArquivo, cdArquivo, CC_deTipoArquivo";
 
-            _strVisivel = "0, 1, 1, 1, 1, 1, 1, 1";
+            _strVisivel = "0, 0, 1, 1, 1, 1, 1, 1, 1";
         }
     }
 }

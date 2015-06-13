@@ -20,7 +20,14 @@ namespace wappKaraoke.Classes.Model.Arquivos
 		/// <summary>
 		/// Atributos
 		/// </summary>        
-		private static int _cdTipoArquivo;
+        private static string _CC_Controle = "";
+        public string CC_Controle
+        {
+            get { return _CC_Controle; }
+            set { _CC_Controle = value; }
+        }
+
+        private static int _cdTipoArquivo;
         public int cdTipoArquivo
         {
             get { return _cdTipoArquivo; }

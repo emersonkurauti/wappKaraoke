@@ -320,8 +320,8 @@
     <Compile Include="Classes\Controller\conGrupos.cs" />
     <Compile Include="Classes\Controller\conTipoArquivo.cs" />
     <Compile Include="Classes\Dinamico\csDinamico.cs" />
-    <Compile Include="Classes\Model\Arquivos\caArquivos.cs" />
-    <Compile Include="Classes\Model\Arquivos\coArquivos.cs" />
+    <Compile Include="Classes\Model\Concursos\Arquivos\caArquivos.cs" />
+    <Compile Include="Classes\Model\Concursos\Arquivos\coArquivos.cs" />
     <Compile Include="Classes\Model\Concursos\caConcursos.cs" />
     <Compile Include="Classes\Model\Concursos\Cantores\caCantoresConcursos.cs" />
     <Compile Include="Classes\Model\Concursos\Cantores\caCantoresFases.cs" />

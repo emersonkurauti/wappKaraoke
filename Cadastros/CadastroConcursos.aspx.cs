@@ -618,6 +618,8 @@ namespace wappKaraoke.Cadastros
         {
             DataTable dtResult = new DataTable();
 
+            dtResult = conArquivos.objCo.RetornaEstruturaDT();
+
             foreach (DataRow dr in dt1.Rows)
             {
                 dtResult.ImportRow(dr);
