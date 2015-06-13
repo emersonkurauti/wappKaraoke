@@ -55,9 +55,7 @@ namespace wappKaraoke.Cadastros
 
             ltMensagemDefault = ltMensagem;
             tobjCa = typeof(caConcursos);
-            objCon = new conConcursos();
-
-            base.Page_Load(sender, e);
+            objCon = new conConcursos();            
 
             if (!this.IsPostBack)
             {
@@ -70,6 +68,8 @@ namespace wappKaraoke.Cadastros
                 CarregarGruposJurados();
                 CarregarCantoresCategorias();
             }
+
+            base.Page_Load(sender, e);
         }
 
         protected override bool ConfigurarGridView()
@@ -164,10 +164,6 @@ namespace wappKaraoke.Cadastros
 
             Session["strLista"] = null;
             Session["strDivs"] = null;
-            Session["_dtImagens"] = null;
-            Session["_dtDocumentos"] = null;
-            Session["_dtAssociacoes"] = null;
-            Session["_dtGruposJurados"] = null;
             Session["alCdCategoria"] = null;
             Session["alDeCategoria"] = null;            
         }
@@ -616,6 +612,82 @@ namespace wappKaraoke.Cadastros
 
 
             Page.ClientScript.RegisterStartupScript(this.GetType(), "", strScriptGridView, true);
+        }
+
+        private DataTable UnionDataTable(DataTable dt1, DataTable dt2)
+        {
+            DataTable dtResult = new DataTable();
+
+            foreach (DataRow dr in dt1.Rows)
+            {
+                dtResult.ImportRow(dr);
+            }
+            foreach (DataRow dr in dt2.Rows)
+            {
+                dtResult.ImportRow(dr);
+            }
+
+            return dtResult;
+        }
+
+        private void PreencheObjetos(coConcursos objCoConcurso)
+        {
+            DateTime dtData;
+            objCoConcurso.cdConcurso = Session["IndexRowDados"] == null ? 0 : Convert.ToInt32(Session["cdConcurso"].ToString());
+            objCoConcurso.nmConcurso = nmConcurso.Text;
+            objCoConcurso.nmConcursoKanji = nmConcursoKanji.Text;
+            objCoConcurso.cdCidade = Convert.ToInt32(cdCidade.SelectedValue.ToString());
+            objCoConcurso.flFinalizado = flFinalizado.Checked ? "S" : "N";
+            DateTime.TryParse(dtIniConcurso.Text, out dtData);
+            objCoConcurso.dtIniConcurso = dtData;
+            DateTime.TryParse(dtFimConcurso.Text, out dtData);
+            objCoConcurso.dtFimConcurso = dtData;
+
+            //Arquivos
+            objCoConcurso.dtArquivos = UnionDataTable(((DataTable)Session["_dtDocumentos"]), ((DataTable)Session["_dtImagens"]));
+        }
+
+        protected override void btnSalvar_Click(object sender, EventArgs e)
+        {
+            conConcursos objConConcursos = new conConcursos();
+            bool bInserindo = Session["IndexRowDados"] == null;
+
+            objConConcursos.objCoConcursos.LimparAtributos();
+
+            if (!bErro)
+            {
+                PreencheObjetos(objConConcursos.objCoConcursos);
+
+                if (bInserindo)
+                {
+                    if (conConcursos.Inserir())
+                    {
+                        ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroInserido, csMensagem.msgSucess);
+                    }
+                    else
+                    {
+                        bErro = true;
+                        ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
+                    }
+                }
+                else
+                {
+                    if (conConcursos.Alterar())
+                    {
+                        ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroAlterado, csMensagem.msgSucess);
+                    }
+                    else
+                    {
+                        bErro = true;
+                        ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
+                    }
+                }
+
+                Session["ltMensagemDefault"] = ltMensagemDefault;
+            }
+
+            if (!bErro)
+                Response.Redirect(strPaginaConsulta.Replace("Cadastro", "Consulta"));
         }
     }
 }

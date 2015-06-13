@@ -3,13 +3,7 @@
     <script type="text/javascript">
         $(function () {
             $('[id*=gvAssociacoes]').footable();
-        });
-
-        $(function () {
             $('[id*=gvGrupoJuradoConcurso]').footable();
-        });
-
-        $(function () {
             $('[id*=gvDocumentos]').footable();
         });
 
@@ -103,7 +97,7 @@
                                         </div>
                                         <div class="col-sm-4">
                                             <asp:DropDownList ID="cdCidade" class="form-control selectpicker" style="text-align:left" 
-                                                runat="server" Width="100%" AutoPostBack="True">
+                                                runat="server" Width="100%">
                                             </asp:DropDownList>
                                         </div>
                                     </div>

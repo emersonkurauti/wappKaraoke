@@ -10,6 +10,13 @@ namespace wappKaraoke.Classes.Model.Concursos
 {
     public class coConcursos : KuraFrameWork.ClasseBase.csModelBase
     {
+        private DataTable _dtArquivos;
+        public DataTable dtArquivos
+        {
+            get { return _dtArquivos; }
+            set { _dtArquivos = value; }
+        }
+
         private static  int _CC_cdRegistro;
         public static int CC_cdRegistro
         {
