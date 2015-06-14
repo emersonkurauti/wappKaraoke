@@ -66,6 +66,29 @@ namespace wappKaraoke.Cadastros
 
                     CarregarImagens();
                 }
+                else if (Request["__EVENTARGUMENT"].Contains("EditarImagem"))
+                { 
+                    int intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
+                    string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
+                    CarregarImagens(Convert.ToInt32(strParametro));
+                }
+                else if (Request["__EVENTARGUMENT"].Contains("SalvarImagem"))
+                {
+                    int intPosIni = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
+                    int intPosFim = Request["__EVENTARGUMENT"].ToString().LastIndexOf(';');
+
+                    string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intPosIni, intPosFim - intPosIni);
+                    string strValor = Request["__EVENTARGUMENT"].ToString().Substring(intPosFim + 1, Request["__EVENTARGUMENT"].ToString().Length - (intPosFim + 1));
+                    _dtImagens = (DataTable)Session["_dtImagens"];
+
+                    _dtImagens.Columns[caArquivos.CC_Controle].ReadOnly = false;
+                    _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpAlterado;
+                    _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.deArquivo] = strValor;
+
+                    Session["_dtImagens"] = _dtImagens;
+
+                    CarregarImagens();
+                }
                 return;
             }
             ltMensagemArquivos.Text = "";
@@ -475,7 +498,7 @@ namespace wappKaraoke.Cadastros
             hdfCdTpArquivo.Value = "";
         }
 
-        private void CarregarImagens() 
+        private void CarregarImagens(int pnIndexImgEditar = -1) 
         {
             if (Session["_dtImagens"] != null)
             {
@@ -493,6 +516,8 @@ namespace wappKaraoke.Cadastros
                 {
                     if (dr[caArquivos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpExcluido)
                     {
+                        string strDivImagem = pnIndexImgEditar == seq ? csDinamico.strDivImagemEdit : csDinamico.strDivImagem;
+
                         if (seq != 0 && seq % 3 == 0)
                         {
                             ltImagens.Text += csDinamico.strFinalLista;
@@ -503,12 +528,21 @@ namespace wappKaraoke.Cadastros
                         else
                             strCaminhoImg = strCaminhoTemp;
 
-                        ltImagens.Text += csDinamico.strDivImagem.Replace("[strCaminhoImagem]", strCaminhoImg + dr[caArquivos.nmArquivo].ToString()).Replace("[strDescImagem]",
+                        ltImagens.Text += strDivImagem.Replace("[strCaminhoImagem]", strCaminhoImg + dr[caArquivos.nmArquivo].ToString()).Replace("[strDescImagem]",
                                 dr[caArquivos.deArquivo].ToString()).Replace("[strSeqImagem]", (seq).ToString());
 
-                        strScript += "function lnkEditar_" + seq.ToString() + "_Click() {" + "\n" +
-                            "  alert('teste');" + "\n" +
-                            "} \n";
+                        if (pnIndexImgEditar == seq)
+                        {
+                            strScript += "function lnkSalvar_" + seq.ToString() + "_Click() {" + "\n" +
+                                "  __doPostBack('lnkSalvar_" + seq.ToString() + "', 'SalvarImagem;" + seq.ToString() + ";'+ document.getElementById('deArquivoEdit').value);" + "\n" +
+                                "} \n";
+                        }
+                        else
+                        {
+                            strScript += "function lnkEditar_" + seq.ToString() + "_Click() {" + "\n" +
+                                "  __doPostBack('lnkEditar_" + seq.ToString() + "', 'EditarImagem;" + seq.ToString() + "');" + "\n" +
+                                "} \n";
+                        }
 
                         strScript += "function lnkRemover_" + seq.ToString() + "_Click() {" + "\n" +
                             "  __doPostBack('lnkRemover_" + seq.ToString() + "', 'RemoveImagem;" + seq.ToString() + "');" + "\n" +

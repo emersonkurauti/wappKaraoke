@@ -52,6 +52,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"/>
+    <asp:HiddenField ID="hdfDescImg" runat="server" />
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default">

@@ -35,5 +35,33 @@ namespace wappKaraoke.Classes
             "	     </div>" + "\n" +
             "       </div>" + "\n" +
             "   </li>";
+
+        public static string strDivImagemEdit = "\n" +
+            "   <li class=\"span4\">" + "\n" +
+            "        <div class=\"thumbnail\">" + "\n" +
+            "          <a href=\"[strCaminhoImagem]\" title=\"[strDescImagem]\" data-gallery=\"\">" + "\n" +
+            "   	        <img src=\"[strCaminhoImagem]\" alert=\"[strDescImagem]\" />" + "\n" +
+            "          </a>" + "\n" +
+            "   	    <div class=\"caption\">" + "\n" +
+            "   		    <input type=\"text\" ID=\"deArquivoEdit\" class=\"form-control\" " + "\n" +
+            "                 placeholder=\"Descrição da Imagem...\" value=\"[strDescImagem]\" />" + "\n" +
+            "               <br/>" + "\n" +
+            "   		    <div class=\"row\">" + "\n" +
+            "   			    <div class=\"col-sm-6\">" + "\n" +
+            "	    			    <a ID=\"lnkSalvar_[strSeqImagem]\" class=\"btn btn-primary btn-block btn-sucess\" " + "\n" +
+            "                           onClick=\"lnkSalvar_[strSeqImagem]_Click();\">" + "\n" +
+            "	    				    <i class=\"glyphicon glyphicon-save\"></i>&nbsp;&nbsp;Salvar" + "\n" +
+            "	    			    </a>" + "\n" +
+            "	    		    </div>" + "\n" +
+            "	    		    <div class=\"col-sm-6\">" + "\n" +
+            "                       <a ID=\"lnkRemover_[strSeqImagem]\" class=\"btn btn-primary btn-block btn-danger\" " + "\n" +
+            "                           onClick=\"lnkRemover_[strSeqImagem]_Click();\">" + "\n" +
+            "	    				    <i class=\"glyphicon glyphicon-trash\"></i>&nbsp;&nbsp;Remover" + "\n" +
+            "	    			    </a>" + "\n" +
+            "	    		    </div>" + "\n" +
+            "	    	    </div>" + "\n" +
+            "	     </div>" + "\n" +
+            "       </div>" + "\n" +
+            "   </li>";
     }
 }
