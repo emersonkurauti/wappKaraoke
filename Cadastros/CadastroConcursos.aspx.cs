@@ -369,6 +369,7 @@ namespace wappKaraoke.Cadastros
         {
             DataRow dr = pdtArquivo.NewRow();
 
+            dr[caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpInserido;
             dr[caArquivos.cdArquivo] = 0;
             dr[caArquivos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
             dr[caArquivos.cdTipoArquivo] = Convert.ToInt32(hdfCdTpArquivo.Value.ToString());

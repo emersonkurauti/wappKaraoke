@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using wappKaraoke.Classes.Controller;
 using wappKaraoke.Classes.Model.Cidades;
+using wappKaraoke.Classes.Model.Arquivos;
 
 namespace wappKaraoke.Classes.Model.Concursos
 {
@@ -99,40 +100,41 @@ namespace wappKaraoke.Classes.Model.Concursos
        /// </summary>
        /// <param name="dtDados"></param>
        /// <returns></returns>
-       public override bool Select(out DataTable dtDados)
-       {
-           if (base.Select(out dtDados))
-           {
-               conCidades objConCidades = new conCidades();
+        public override bool Select(out DataTable dtDados)
+        {
+            if (base.Select(out dtDados))
+            {
+                conCidades objConCidades = new conCidades();
 
-               DataTable dtAux = dtDados;
+                DataTable dtAux = dtDados;
 
-               dtDados.Columns[caConcursos.CC_nmCidade].ReadOnly = false;
-               dtDados.Columns[caConcursos.CC_nmCidade].MaxLength = 100;
+                dtDados.Columns[caConcursos.CC_nmCidade].ReadOnly = false;
+                dtDados.Columns[caConcursos.CC_nmCidade].MaxLength = 100;
 
-               foreach (DataRow dr in dtAux.Rows)
-               {
-                   objConCidades.objCoCidades.LimparAtributos();
-                   objConCidades.objCoCidades.cdCidade = Convert.ToInt32(dr[caConcursos.cdCidade].ToString());
+                foreach (DataRow dr in dtAux.Rows)
+                {
+                    objConCidades.objCoCidades.LimparAtributos();
+                    objConCidades.objCoCidades.cdCidade = Convert.ToInt32(dr[caConcursos.cdCidade].ToString());
 
 
-                   if (conCidades.Select())
-                   {
-                       if (objConCidades.dtDados.Rows.Count > 0)
-                       {
-                           dr[caConcursos.CC_nmCidade] = objConCidades.dtDados.Rows[0][caCidades.nmCidade].ToString();
+                    if (conCidades.Select())
+                    {
+                        if (objConCidades.dtDados.Rows.Count > 0)
+                        {
+                            dr[caConcursos.CC_nmCidade] = objConCidades.dtDados.Rows[0][caCidades.nmCidade].ToString();
 
-                       }
-                   }
-               }
+                        }
+                    }
+                }
 
-               dtDados = dtAux;
-           }
-           else
-               return false;
+                dtDados = dtAux;
+            }
+            else
+                return false;
 
-           return true;
-       }
+            return true;
+        }
+
         /// <summary>
         /// Sobrescrito para retornar a chave
         /// </summary>
@@ -146,6 +148,12 @@ namespace wappKaraoke.Classes.Model.Concursos
                 if (base.Inserir())
                 {
                     cdConcurso = objBanco.cdChave;
+
+                    if (!InserirArquivos())
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
                 }
 
                 objBanco.CommitTransaction();
@@ -154,6 +162,66 @@ namespace wappKaraoke.Classes.Model.Concursos
             catch
             {
                 objBanco.RollbackTransaction();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Insere os arquivos 
+        /// </summary>
+        /// <returns></returns>
+        private bool InserirArquivos()
+        {
+            conArquivos objConArquivos = new conArquivos();
+            try
+            {
+                foreach (DataRow dr in _dtArquivos.Rows)
+                {
+                    if (dr[caArquivos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpCarregado)
+                    {
+                        objConArquivos.objCoArquivos.LimparAtributos();
+                        objConArquivos.objCoArquivos.nmArquivo = dr[caArquivos.nmArquivo].ToString();
+                        objConArquivos.objCoArquivos.deArquivo = dr[caArquivos.deArquivo].ToString();
+                        objConArquivos.objCoArquivos.cdConcurso = Convert.ToInt32(dr[caArquivos.cdConcurso].ToString());
+                        objConArquivos.objCoArquivos.cdTipoArquivo = Convert.ToInt32(dr[caArquivos.cdTipoArquivo].ToString());
+
+                        if (dr[caArquivos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpInserido)
+                        {
+                            objConArquivos.objCoArquivos.cdArquivo = Convert.ToInt32(dr[caArquivos.cdArquivo].ToString());
+
+                            if (dr[caArquivos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpAlterado)
+                            {
+                                if (!conArquivos.Alterar())
+                                {
+                                    return false;
+                                }
+                            }
+                            else if (dr[caArquivos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpExcluido)
+                            {
+                                if (!conArquivos.Excluir())
+                                {
+                                    return false;
+                                }
+
+                                //Remover os arquivos
+                            }
+                        }
+                        else
+                        {
+                            if (!conArquivos.Inserir())
+                            {
+                                return false;
+                            }
+
+                            //Mover os arquivos da pasta temp para a oficial
+                        }
+                    }
+
+                }
+                return true;
+            }
+            catch
+            {
                 return false;
             }
         }
