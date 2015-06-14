@@ -51,6 +51,23 @@ namespace wappKaraoke.Cadastros
 
         public override void Page_Load(object sender, EventArgs e)
         {
+            if (Request["__EVENTARGUMENT"] != null)
+            {
+                if (Request["__EVENTARGUMENT"].Contains("RemoveImagem"))
+                {
+                    int intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
+                    string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
+                    _dtImagens = (DataTable)Session["_dtImagens"];
+
+                    _dtImagens.Columns[caArquivos.CC_Controle].ReadOnly = false;
+                    _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
+
+                    Session["_dtImagens"] = _dtImagens;
+
+                    CarregarImagens();
+                }
+                return;
+            }
             ltMensagemArquivos.Text = "";
 
             ltMensagemDefault = ltMensagem;
@@ -466,6 +483,7 @@ namespace wappKaraoke.Cadastros
                 string strCaminho = "../" + wappKaraoke.Properties.Settings.Default.sCaminhoArqImagens.Replace("\\", "/");
                 string strCaminhoTemp = "../" + wappKaraoke.Properties.Settings.Default.sCaminhoTemp.Replace("\\", "/");
                 string strCaminhoImg = "";
+                string strScript = "";
 
                 _dtImagens = (DataTable)Session["_dtImagens"];
 
@@ -473,19 +491,34 @@ namespace wappKaraoke.Cadastros
 
                 foreach (DataRow dr in _dtImagens.Rows)
                 {
-                    if (seq!=0 && seq % 3 == 0)
+                    if (dr[caArquivos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpExcluido)
                     {
-                        ltImagens.Text += csDinamico.strFinalLista;
-                        ltImagens.Text += csDinamico.strInicioLista;
-                    }
-                    if (Convert.ToInt32(dr[caArquivos.cdArquivo].ToString()) != 0)
-                        strCaminhoImg = strCaminho;
-                    else
-                        strCaminhoImg = strCaminhoTemp;
+                        if (seq != 0 && seq % 3 == 0)
+                        {
+                            ltImagens.Text += csDinamico.strFinalLista;
+                            ltImagens.Text += csDinamico.strInicioLista;
+                        }
+                        if (Convert.ToInt32(dr[caArquivos.cdArquivo].ToString()) != 0)
+                            strCaminhoImg = strCaminho;
+                        else
+                            strCaminhoImg = strCaminhoTemp;
 
-                    ltImagens.Text += csDinamico.strDivImagem.Replace("[strCaminhoImagem]", strCaminhoImg + dr[caArquivos.nmArquivo].ToString()).Replace("[strDescImagem]",
-                            dr[caArquivos.deArquivo].ToString()).Replace("[strSeqImagem]", (seq++).ToString());
+                        ltImagens.Text += csDinamico.strDivImagem.Replace("[strCaminhoImagem]", strCaminhoImg + dr[caArquivos.nmArquivo].ToString()).Replace("[strDescImagem]",
+                                dr[caArquivos.deArquivo].ToString()).Replace("[strSeqImagem]", (seq).ToString());
+
+                        strScript += "function lnkEditar_" + seq.ToString() + "_Click() {" + "\n" +
+                            "  alert('teste');" + "\n" +
+                            "} \n";
+
+                        strScript += "function lnkRemover_" + seq.ToString() + "_Click() {" + "\n" +
+                            "  __doPostBack('lnkRemover_" + seq.ToString() + "', 'RemoveImagem;" + seq.ToString() + "');" + "\n" +
+                            "} \n";
+                    }
+
+                    seq++;
                 }
+
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "", strScript, true);
 
                 ltImagens.Text += csDinamico.strFinalLista;
             }
