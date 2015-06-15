@@ -732,32 +732,36 @@ namespace wappKaraoke.Cadastros
                 {
                     if (conConcursos.Inserir())
                     {
-                        ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroInserido, csMensagem.msgSucess);
+                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroInserido, csMensagem.msgSucess);
                     }
                     else
                     {
                         bErro = true;
-                        ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
+                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
                     }
                 }
                 else
                 {
                     if (conConcursos.Alterar())
                     {
-                        ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroAlterado, csMensagem.msgSucess);
+                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroAlterado, csMensagem.msgSucess);
                     }
                     else
                     {
                         bErro = true;
-                        ltMensagemDefault.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
+                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
                     }
                 }
 
-                Session["ltMensagemDefault"] = ltMensagemDefault;
+                Session["ltMensagemDefault"] = ltMensagem;
             }
 
             if (!bErro)
-                Response.Redirect(strPaginaConsulta.Replace("Cadastro", "Consulta"));
+            {
+                string strPagina = Session["_strPaginaConsulta"].ToString();
+                Session["_strPaginaConsulta"] = null;
+                Response.Redirect(strPagina.Replace("Cadastro", "Consulta"));
+            }
         }
     }
 }

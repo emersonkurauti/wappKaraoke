@@ -23,13 +23,6 @@ namespace wappKaraoke.Classes
         protected DataTable dtDados;
         protected ControlCollection ccControles;
 
-        private string _strPaginaConsulta;
-        protected string strPaginaConsulta
-        {
-            get { return _strPaginaConsulta; }
-            set { _strPaginaConsulta = value; }
-        }
-
         public override void Page_Load(object sender, EventArgs e)
         {
             if (ltMensagemDefault != null)
@@ -46,7 +39,9 @@ namespace wappKaraoke.Classes
                 Session["ltMensagemDefault"] = null;
             }
 
-            _strPaginaConsulta = Request.Path.Substring(Request.Path.LastIndexOf("/") + 1);
+            if (Session["_strPaginaConsulta"] == null)
+                Session["_strPaginaConsulta"] = Request.Path.Substring(Request.Path.LastIndexOf("/") + 1);
+
             base.Page_Load(sender, e);
         }
 
@@ -100,12 +95,18 @@ namespace wappKaraoke.Classes
             }
 
             if (!_bErro)
-                Response.Redirect(_strPaginaConsulta.Replace("Cadastro", "Consulta"));
+            {
+                string strPagina = Session["_strPaginaConsulta"].ToString();
+                Session["_strPaginaConsulta"] = null;
+                Response.Redirect(strPagina.Replace("Cadastro", "Consulta"));
+            }
         }
 
         protected virtual void btnCancelar_Click(object sender, EventArgs e)
         {
-            Response.Redirect(_strPaginaConsulta.Replace("Cadastro", "Consulta"));
+            string strPagina = Session["_strPaginaConsulta"].ToString();
+            Session["_strPaginaConsulta"] = null;
+            Response.Redirect(strPagina.Replace("Cadastro", "Consulta"));
         }
 
         protected virtual void CarregarDados(ControlCollection pControles)

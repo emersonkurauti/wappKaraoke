@@ -149,7 +149,32 @@ namespace wappKaraoke.Classes.Model.Concursos
                 {
                     cdConcurso = objBanco.cdChave;
 
-                    if (!InserirArquivos())
+                    if (!AtualizarArquivos())
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
+                }
+
+                objBanco.CommitTransaction();
+                return true;
+            }
+            catch
+            {
+                objBanco.RollbackTransaction();
+                return false;
+            }
+        }
+
+        public override bool Alterar()
+        {
+            objBanco.BeginTransaction();
+
+            try
+            {
+                if (base.Alterar())
+                {
+                    if (!AtualizarArquivos())
                     {
                         objBanco.RollbackTransaction();
                         return false;
@@ -170,7 +195,7 @@ namespace wappKaraoke.Classes.Model.Concursos
         /// Insere os arquivos 
         /// </summary>
         /// <returns></returns>
-        private bool InserirArquivos()
+        private bool AtualizarArquivos()
         {
             conArquivos objConArquivos = new conArquivos();
             try
@@ -189,14 +214,14 @@ namespace wappKaraoke.Classes.Model.Concursos
                         {
                             objConArquivos.objCoArquivos.cdArquivo = Convert.ToInt32(dr[caArquivos.cdArquivo].ToString());
 
-                            if (dr[caArquivos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpAlterado)
+                            if (dr[caArquivos.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpAlterado)
                             {
                                 if (!conArquivos.Alterar())
                                 {
                                     return false;
                                 }
                             }
-                            else if (dr[caArquivos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpExcluido)
+                            else if (dr[caArquivos.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpExcluido)
                             {
                                 if (!conArquivos.Excluir())
                                 {

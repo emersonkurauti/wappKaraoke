@@ -50,7 +50,7 @@ namespace wappKaraoke.Classes
             "   			    <div class=\"col-sm-6\">" + "\n" +
             "	    			    <a ID=\"lnkSalvar_[strSeqImagem]\" class=\"btn btn-primary btn-block btn-sucess\" " + "\n" +
             "                           onClick=\"lnkSalvar_[strSeqImagem]_Click();\">" + "\n" +
-            "	    				    <i class=\"glyphicon glyphicon-save\"></i>&nbsp;&nbsp;Salvar" + "\n" +
+            "	    				    <i class=\"glyphicon glyphicon-save\"></i>&nbsp;&nbsp;Confirmar" + "\n" +
             "	    			    </a>" + "\n" +
             "	    		    </div>" + "\n" +
             "	    		    <div class=\"col-sm-6\">" + "\n" +
