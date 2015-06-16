@@ -223,12 +223,19 @@ namespace wappKaraoke.Classes.Model.Concursos
                             }
                             else if (dr[caArquivos.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpExcluido)
                             {
-                                if (!conArquivos.Excluir())
+                                if (objConArquivos.objCoArquivos.cdArquivo != 0)
                                 {
-                                    return false;
-                                }
+                                    if (!conArquivos.Excluir())
+                                    {
+                                        return false;
+                                    }
 
-                                //Remover os arquivos
+                                    //Remover os arquivos gravados
+                                }
+                                else
+                                {
+                                    //remover da pasta temp 
+                                }
                             }
                         }
                         else

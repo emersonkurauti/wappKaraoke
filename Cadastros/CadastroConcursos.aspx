@@ -229,6 +229,8 @@
                                                                                 OnRowCommand="gvDocumentos_RowCommand" 
                                                                                 onrowdeleting="gvDocumentos_RowDeleting">
                                                                                 <Columns>
+                                                                                    <asp:BoundField HeaderText="" DataField="indice" Visible="False">
+                                                                                    </asp:BoundField>
                                                                                     <asp:BoundField HeaderText="Cód." DataField="cdArquivo">
                                                                                         <ItemStyle Width="5%" />
                                                                                     </asp:BoundField>
