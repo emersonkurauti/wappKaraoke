@@ -224,7 +224,10 @@
                                                                         <div class="col-sm-12">
                                                                             <asp:GridView ID="gvDocumentos" runat="server"
                                                                                 CssClass="footable table table-bordered table-hover footable" 
-                                                                                AutoGenerateColumns="False">
+                                                                                AutoGenerateColumns="False"
+                                                                                OnRowDataBound="gvDocumentos_RowDataBound" 
+                                                                                OnRowCommand="gvDocumentos_RowCommand" 
+                                                                                onrowdeleting="gvDocumentos_RowDeleting">
                                                                                 <Columns>
                                                                                     <asp:BoundField HeaderText="Cód." DataField="cdArquivo">
                                                                                         <ItemStyle Width="5%" />
@@ -247,7 +250,6 @@
 	                                                                                    <ItemTemplate>
 		                                                                                    <asp:LinkButton ID="lnkDelete" runat="server"
 			                                                                                    CssClass="btn btn-primary btn-block btn-danger" Text = "Excluir"
-			                                                                                    CommandArgument='<%# Eval("cdArquivo") + "$" + Eval("nmArquivo") %>'
 			                                                                                    CommandName='Delete'>
 			                                                                                    <i class="glyphicon glyphicon-trash"></i>
 		                                                                                    </asp:LinkButton>

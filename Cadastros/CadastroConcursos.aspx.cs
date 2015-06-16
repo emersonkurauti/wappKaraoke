@@ -53,41 +53,48 @@ namespace wappKaraoke.Cadastros
         {
             if (Request["__EVENTARGUMENT"] != null)
             {
-                if (Request["__EVENTARGUMENT"].Contains("RemoveImagem"))
+                if (Request["__EVENTARGUMENT"].Contains("RemoveImagem") ||
+                    Request["__EVENTARGUMENT"].Contains("EditarImagem") ||
+                    Request["__EVENTARGUMENT"].Contains("SalvarImagem"))
                 {
-                    int intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
-                    string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
-                    _dtImagens = (DataTable)Session["_dtImagens"];
+                    if (Request["__EVENTARGUMENT"].Contains("RemoveImagem"))
+                    {
+                        int intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
+                        string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
+                        _dtImagens = (DataTable)Session["_dtImagens"];
 
-                    _dtImagens.Columns[caArquivos.CC_Controle].ReadOnly = false;
-                    _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
+                        _dtImagens.Columns[caArquivos.CC_Controle].ReadOnly = false;
+                        _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
 
-                    Session["_dtImagens"] = _dtImagens;
+                        Session["_dtImagens"] = _dtImagens;
 
-                    CarregarImagens();
-                }
-                else if (Request["__EVENTARGUMENT"].Contains("EditarImagem"))
-                { 
-                    int intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
-                    string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
-                    CarregarImagens(Convert.ToInt32(strParametro));
-                }
-                else if (Request["__EVENTARGUMENT"].Contains("SalvarImagem"))
-                {
-                    int intPosIni = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
-                    int intPosFim = Request["__EVENTARGUMENT"].ToString().LastIndexOf(';');
+                        CarregarImagens();
+                    }
+                    else if (Request["__EVENTARGUMENT"].Contains("EditarImagem"))
+                    {
+                        int intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
+                        string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
+                        CarregarImagens(Convert.ToInt32(strParametro));
+                    }
+                    else if (Request["__EVENTARGUMENT"].Contains("SalvarImagem"))
+                    {
+                        int intPosIni = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
+                        int intPosFim = Request["__EVENTARGUMENT"].ToString().LastIndexOf(';');
 
-                    string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intPosIni, intPosFim - intPosIni);
-                    string strValor = Request["__EVENTARGUMENT"].ToString().Substring(intPosFim + 1, Request["__EVENTARGUMENT"].ToString().Length - (intPosFim + 1));
-                    _dtImagens = (DataTable)Session["_dtImagens"];
+                        string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intPosIni, intPosFim - intPosIni);
+                        string strValor = Request["__EVENTARGUMENT"].ToString().Substring(intPosFim + 1, Request["__EVENTARGUMENT"].ToString().Length - (intPosFim + 1));
+                        _dtImagens = (DataTable)Session["_dtImagens"];
 
-                    _dtImagens.Columns[caArquivos.CC_Controle].ReadOnly = false;
-                    _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpAlterado;
-                    _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.deArquivo] = strValor;
+                        _dtImagens.Columns[caArquivos.CC_Controle].ReadOnly = false;
+                        _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpAlterado;
+                        _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.deArquivo] = strValor;
 
-                    Session["_dtImagens"] = _dtImagens;
+                        Session["_dtImagens"] = _dtImagens;
 
-                    CarregarImagens();
+                        CarregarImagens();
+                    }
+
+                    ConfiguraGridDocumentos();
                 }
                 return;
             }
@@ -451,7 +458,7 @@ namespace wappKaraoke.Cadastros
                 _dtDocumentos = objConArquivos.dtDados;
             }
 
-            gvDocumentos.DataSource = _dtDocumentos;
+            gvDocumentos.DataSource = FiltraDicumentos();
             gvDocumentos.DataBind();
 
             Session["_dtDocumentos"] = _dtDocumentos;
@@ -762,6 +769,68 @@ namespace wappKaraoke.Cadastros
                 Session["_strPaginaConsulta"] = null;
                 Response.Redirect(strPagina.Replace("Cadastro", "Consulta"));
             }
+        }
+
+        protected void RemoveRegistro(int pintIndice)
+        {
+            _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+
+            _dtDocumentos.Columns[caArquivos.CC_Controle].ReadOnly = false;
+            _dtDocumentos.Rows[pintIndice][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
+
+            Session["_dtDocumentos"] = _dtDocumentos;
+
+            gvDocumentos.DataSource = FiltraDicumentos();
+            gvDocumentos.DataBind();
+
+            ConfiguraGridDocumentos();
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosDocumentos();", true);
+        }
+
+        protected void gvDocumentos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Delete")
+            {
+                RemoveRegistro(Convert.ToInt32(e.CommandArgument));
+            }
+            else
+                if (e.CommandName == "Edit")
+                {
+                    //Chamar a div passando os dados
+                }
+        }
+
+        protected void gvDocumentos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDelete");
+                lnkDelete.CommandArgument = e.Row.RowIndex.ToString();
+                lnkDelete.Attributes.Add("OnClick", "javascript:return " +
+                    "confirm('O registro será removido!')");
+                /*"confirm('O registro \"" + DataBinder.Eval(e.Row.DataItem, obj.dePrincipal) + "\" será removido!')");*/
+
+                LinkButton lnkEdit = (LinkButton)e.Row.FindControl("lnkEdit");
+                lnkEdit.CommandArgument = e.Row.RowIndex.ToString();
+            }
+        }
+
+        protected void gvDocumentos_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+        }
+
+        private DataTable FiltraDicumentos()
+        {
+            DataRow[] drLinhas = _dtDocumentos.Select(caArquivos.CC_Controle + " <> '" + KuraFrameWork.csConstantes.sTpExcluido + "'",
+                ""); 
+
+            DataTable _dtDocFiltrado = conArquivos.objCo.RetornaEstruturaDT();
+
+            if (drLinhas.Length > 0)
+                _dtDocFiltrado = drLinhas.CopyToDataTable();
+
+            return _dtDocFiltrado;
         }
     }
 }
