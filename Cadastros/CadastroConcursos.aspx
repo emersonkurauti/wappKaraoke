@@ -47,6 +47,18 @@
             document.getElementById('lnkArquivos').click();
             document.getElementById('lnkDocumentos').click();
         }
+
+        function AtivaEdicao(pbForcarPostBack) {
+            document.getElementById('divEdicao').setAttribute('style', 'display: block;');
+
+            if (pbForcarPostBack == true) {
+                __PostBack('divEdicao', 'AtivaEdicao');
+            }
+        }
+
+        function DesativaEdicao() {
+            document.getElementById('divEdicao').setAttribute('style', 'display: none;');
+        }
     </script>
     <asp:Literal ID="ltJavaScript" runat="server"></asp:Literal> <!--Caso precise de agrupamento nas tabelas-->
 </asp:Content>
@@ -553,4 +565,47 @@
 			</div>
 		</div>
 	</div>
+
+    <div id="divEdicao" class="blueimp-gallery blueimp-gallery-display blueimp-gallery-left" style="display: none;">
+        <div class="slides" style="width: 2732px;">
+            <div class="slide" data-index="0" style="width: 1366px; left: 0px; transition-duration: 0ms; 
+                transform: translate(0px, 0px) translateZ(0px);">
+                <div class="modal fade slide-content in" style="display: block;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    <asp:Literal ID="ltTituloEdicao" runat="server"></asp:Literal>
+                                </h4>
+                            </div>
+                            <div class="modal-body next">
+                                <asp:Literal ID="ltCorpoEdicao" runat="server"></asp:Literal>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row">
+                                    <div class="col-sm-2" align="left" style="float: left">
+                                         <button class="btn btn-primary btn-block" type="button">
+                                            <i class="glyphicon glyphicon-save"></i>
+                                            Confirmar
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-2" align="center" style="float: left">
+                                        <button class="btn btn-primary btn-block btn-danger" type="button">
+                                            <i class="glyphicon glyphicon-remove"></i>
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-8" align="right" style="float: right">
+                                        <asp:Label id="lblMensagemEdicao" runat="server" />
+                                    </div>                        
+                                </div>        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade"></div>
+        </div>
+    </div>
+
 </asp:Content>

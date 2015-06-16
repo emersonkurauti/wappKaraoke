@@ -829,6 +829,7 @@ namespace wappKaraoke.Cadastros
                 if (e.CommandName == "Edit")
                 {
                     //Chamar a div passando os dados
+                    //ltTituloEdicao.Text = ((DataTable)Session["_dtDocumentos"]).Rows[Convert.ToInt32(e.CommandArgument)][caArquivos.nmArquivo].ToString();
                 }
         }
 
@@ -844,6 +845,8 @@ namespace wappKaraoke.Cadastros
 
                 LinkButton lnkEdit = (LinkButton)e.Row.FindControl("lnkEdit");
                 lnkEdit.CommandArgument = e.Row.RowIndex.ToString();
+                lnkEdit.Attributes.Add("OnClick", "AtivaEdicao(true);");
+
             }
         }
 
