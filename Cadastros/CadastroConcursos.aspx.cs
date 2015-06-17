@@ -828,8 +828,11 @@ namespace wappKaraoke.Cadastros
             else
                 if (e.CommandName == "Edit")
                 {
-                    //Chamar a div passando os dados
-                    //ltTituloEdicao.Text = ((DataTable)Session["_dtDocumentos"]).Rows[Convert.ToInt32(e.CommandArgument)][caArquivos.nmArquivo].ToString();
+                    _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+
+                    ltTituloEdicao.Text = _dtDocumentos.Rows[Convert.ToInt32(e.CommandArgument.ToString())][caArquivos.nmArquivo].ToString();
+
+                    Page_Load(this, null);
                 }
         }
 
@@ -845,8 +848,7 @@ namespace wappKaraoke.Cadastros
 
                 LinkButton lnkEdit = (LinkButton)e.Row.FindControl("lnkEdit");
                 lnkEdit.CommandArgument = e.Row.RowIndex.ToString();
-                lnkEdit.Attributes.Add("OnClick", "AtivaEdicao(true);");
-
+                lnkEdit.Attributes.Add("OnClick", "javascript:return lnkEditarDoc_Click(" + e.Row.RowIndex.ToString() + ");");
             }
         }
 
@@ -867,5 +869,10 @@ namespace wappKaraoke.Cadastros
 
         //    return _dtDocFiltrado;
         //}
+
+        protected void lnkEdit_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicao(true);", true);
+        }        
     }
 }

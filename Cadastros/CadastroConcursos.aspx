@@ -48,16 +48,22 @@
             document.getElementById('lnkDocumentos').click();
         }
 
-        function AtivaEdicao(pbForcarPostBack) {
+        function AtivaEdicao(pcontrole, pbForcarPostBack, pnIdxDocumento) {
             document.getElementById('divEdicao').setAttribute('style', 'display: block;');
 
             if (pbForcarPostBack == true) {
-                __PostBack('divEdicao', 'AtivaEdicao');
+                __PostBack(pcontrole, 'AtivaEdicao;' + pnIdxDocumento);
             }
         }
 
         function DesativaEdicao() {
             document.getElementById('divEdicao').setAttribute('style', 'display: none;');
+        }
+
+        function lnkEditarDoc_Click(pnIndexDoc) {
+            AtivaEdicao();
+            __doPostBack('lnkEditarDoc', 'AtivaEdicao;' + pnIndexDoc);
+            return false;
         }
     </script>
     <asp:Literal ID="ltJavaScript" runat="server"></asp:Literal> <!--Caso precise de agrupamento nas tabelas-->
