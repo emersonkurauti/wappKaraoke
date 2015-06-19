@@ -187,9 +187,9 @@
                                                         <label class="radio-inline">
                                                             <input type="radio" name="cdTpArquivo" id="cdTpArquivoImagem" disabled="disabled">Imagem
                                                         </label>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
+                                                        <label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
                                                         </label> 
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
+                                                        <asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
                                                     </span>
                                                 </div>
                                             </div>
@@ -259,7 +259,7 @@
 		                                                                                    <asp:LinkButton ID="lnkEditDoc" runat="server"
 			                                                                                    CssClass="btn btn-primary btn-block" 
                                                                                                 Text = "Editar"
-                                                                                                OnClick="lnkEdit_Click">
+                                                                                                OnClick="lnkEditDoc_Click">
 			                                                                                    <i class="glyphicon glyphicon-edit"></i>
 		                                                                                    </asp:LinkButton>
 	                                                                                    </ItemTemplate>
@@ -296,8 +296,7 @@
                                                                                         <h4 class="modal-title">
                                                                                             <asp:Literal ID="ltTituloEdicao" runat="server"></asp:Literal>
                                                                                         </h4>
-                                                                                    </div>
-                                                                                    <div class="modal-body next">
+                                                                                        <br />
                                                                                         <asp:Literal ID="ltCorpoEdicao" runat="server"></asp:Literal>
                                                                                     </div>
                                                                                     <div class="modal-footer">

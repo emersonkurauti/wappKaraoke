@@ -901,12 +901,100 @@ namespace wappKaraoke.Cadastros
         //    return _dtDocFiltrado;
         //}
 
-        protected void lnkEdit_Click(object sender, EventArgs e)
+        protected void lnkEditDoc_Click(object sender, EventArgs e)
         {
             _dtDocumentos = (DataTable)Session["_dtDocumentos"];
             int indexDocumento = Convert.ToInt32(((LinkButton)sender).CommandArgument);
 
             ltTituloEdicao.Text = _dtDocumentos.Rows[indexDocumento][caArquivos.nmArquivo].ToString();
+            ltCorpoEdicao.Text = "<div class=\"panel panel-default\">" +
+                                 "  <div class=\"panel-body\">" +
+                                 "    <div class=\"row\">" +
+                                 "      <div class=\"col-sm-12\">" +
+                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
+                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
+                                 "      </div>" +
+                                 "    </div><br/>" +
+
+                                 "    <div class=\"row\">" +
+                                 "      <div class=\"col-sm-12\">" +
+                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
+                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
+                                 "      </div>" +
+                                 "    </div><br/>" +
+
+                                 "    <div class=\"row\">" +
+                                 "      <div class=\"col-sm-12\">" +
+                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
+                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
+                                 "      </div>" +
+                                 "    </div><br/>" +
+
+                                 "    <div class=\"row\">" +
+                                 "      <div class=\"col-sm-12\">" +
+                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
+                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
+                                 "      </div>" +
+                                 "    </div><br/>" +
+
+                                 "    <div class=\"row\">" +
+                                 "      <div class=\"col-sm-12\">" +
+                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
+                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
+                                 "      </div>" +
+                                 "    </div><br/>" +
+
+                                 "    <div class=\"row\">" +
+                                 "      <div class=\"col-sm-12\">" +
+                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
+                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
+                                 "      </div>" +
+                                 "    </div><br/>" +
+
+                                 "    <div class=\"row\">" +
+                                 "      <div class=\"col-sm-12\">" +
+                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
+                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
+                                 "      </div>" +
+                                 "    </div><br/>" +
+
+                                 "    <div class=\"row\">" +
+                                 "      <div class=\"col-sm-12\">" +
+                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
+                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
+                                 "      </div>" +
+                                 "    </div><br/>" +
+
+                                 "    <div class=\"row\">" +
+                                 "      <div class=\"col-sm-12\">" +
+                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
+                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
+                                 "      </div>" +
+                                 "    </div><br/>" +
+
+                                 "    <div class=\"row\">" +
+                                 "      <div class=\"col-sm-12\">" +
+                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
+                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
+                                 "      </div>" +
+                                 "    </div><br/>" +
+
+                                 "    <div class=\"row\">" +
+                                 "      <div class=\"col-sm-12\">" +
+                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
+                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
+                                 "      </div>" +
+                                 "    </div><br/>" +
+
+                                 "    <div class=\"row\">" +
+                                 "      <div class=\"col-sm-12\">" +
+                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
+                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
+                                 "      </div>" +
+                                 "    </div><br/>" +
+
+                                 "  </div>" +
+                                 "</div>";
 
             ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicao();", true);
         }
