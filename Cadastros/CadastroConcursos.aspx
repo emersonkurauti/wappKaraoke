@@ -289,7 +289,7 @@
                                                                 <div class="slides" style="width: 2732px;">
                                                                     <div class="slide" data-index="0" style="width: 1366px; left: 0px; transition-duration: 0ms; 
                                                                         transform: translate(0px, 0px) translateZ(0px);">
-                                                                        <div class="modal fade slide-content in" style="display: block;">
+                                                                        <div class="modal fade slide-content in" style="display: block; overflow-y: scroll;">
                                                                             <div class="modal-dialog">
                                                                                 <div class="modal-content">
                                                                                     <div class="modal-header">
