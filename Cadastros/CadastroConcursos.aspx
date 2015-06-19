@@ -48,12 +48,9 @@
             document.getElementById('lnkDocumentos').click();
         }
 
-        function AtivaEdicao(pcontrole, pbForcarPostBack, pnIdxDocumento) {
+        function AtivaEdicao() {
             document.getElementById('divEdicao').setAttribute('style', 'display: block;');
-
-            if (pbForcarPostBack == true) {
-                __PostBack(pcontrole, 'AtivaEdicao;' + pnIdxDocumento);
-            }
+            AtivaAbaArquivosDocumentos();
         }
 
         function DesativaEdicao() {
@@ -190,9 +187,9 @@
                                                         <label class="radio-inline">
                                                             <input type="radio" name="cdTpArquivo" id="cdTpArquivoImagem" disabled="disabled">Imagem
                                                         </label>
-                                                        <label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
                                                         </label> 
-                                                        <asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
                                                     </span>
                                                 </div>
                                             </div>
@@ -245,7 +242,8 @@
                                                                                 AutoGenerateColumns="False"
                                                                                 OnRowDataBound="gvDocumentos_RowDataBound" 
                                                                                 OnRowCommand="gvDocumentos_RowCommand" 
-                                                                                onrowdeleting="gvDocumentos_RowDeleting">
+                                                                                onrowdeleting="gvDocumentos_RowDeleting"
+                                                                                onrowEditing="gvDocumentos_RowEditing">
                                                                                 <Columns>
                                                                                     <asp:BoundField HeaderText="" DataField="indice" Visible="False">
                                                                                     </asp:BoundField>
@@ -258,9 +256,10 @@
                                                                                     </asp:BoundField>
                                                                                     <asp:TemplateField>
 	                                                                                    <ItemTemplate>
-		                                                                                    <asp:LinkButton ID="lnkEdit" runat="server"
-			                                                                                    CssClass="btn btn-primary btn-block" Text = "Editar"
-			                                                                                    CommandName='Edit'>
+		                                                                                    <asp:LinkButton ID="lnkEditDoc" runat="server"
+			                                                                                    CssClass="btn btn-primary btn-block" 
+                                                                                                Text = "Editar"
+                                                                                                OnClick="lnkEdit_Click">
 			                                                                                    <i class="glyphicon glyphicon-edit"></i>
 		                                                                                    </asp:LinkButton>
 	                                                                                    </ItemTemplate>
@@ -268,7 +267,7 @@
                                                                                     </asp:TemplateField>
                                                                                     <asp:TemplateField>
 	                                                                                    <ItemTemplate>
-		                                                                                    <asp:LinkButton ID="lnkDelete" runat="server"
+		                                                                                    <asp:LinkButton ID="lnkDeleteDoc" runat="server"
 			                                                                                    CssClass="btn btn-primary btn-block btn-danger" Text = "Excluir"
 			                                                                                    CommandName='Delete'>
 			                                                                                    <i class="glyphicon glyphicon-trash"></i>
@@ -283,6 +282,54 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+
+
+                                                            <div id="divEdicao" class="blueimp-gallery blueimp-gallery-display blueimp-gallery-left" style="display: none;">
+                                                                <div class="slides" style="width: 2732px;">
+                                                                    <div class="slide" data-index="0" style="width: 1366px; left: 0px; transition-duration: 0ms; 
+                                                                        transform: translate(0px, 0px) translateZ(0px);">
+                                                                        <div class="modal fade slide-content in" style="display: block;">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h4 class="modal-title">
+                                                                                            <asp:Literal ID="ltTituloEdicao" runat="server"></asp:Literal>
+                                                                                        </h4>
+                                                                                    </div>
+                                                                                    <div class="modal-body next">
+                                                                                        <asp:Literal ID="ltCorpoEdicao" runat="server"></asp:Literal>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <div class="row">
+                                                                                            <div class="col-sm-2" align="left" style="float: left">
+                                                                                                 <button class="btn btn-primary btn-block" type="button">
+                                                                                                    <i class="glyphicon glyphicon-save"></i>
+                                                                                                    Confirmar
+                                                                                                </button>
+                                                                                            </div>
+                                                                                            <div class="col-sm-2" align="center" style="float: left">
+                                                                                                <button class="btn btn-primary btn-block btn-danger" 
+                                                                                                    type="button"
+                                                                                                    onClick="javascript:DesativaEdicao(); return false;">
+                                                                                                    <i class="glyphicon glyphicon-remove"></i>
+                                                                                                    Cancelar
+                                                                                                </button>
+                                                                                            </div>
+                                                                                            <div class="col-sm-8" align="right" style="float: right">
+                                                                                                <asp:Label id="lblMensagemEdicao" runat="server" />
+                                                                                            </div>                        
+                                                                                        </div>        
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal fade"></div>
+                                                                </div>
+                                                            </div>
+
+
                                                         </div> <!--<div class="tab-pane active" id="Documentos">-->
                                                     </div>
                                                 </div>
@@ -571,47 +618,4 @@
 			</div>
 		</div>
 	</div>
-
-    <div id="divEdicao" class="blueimp-gallery blueimp-gallery-display blueimp-gallery-left" style="display: none;">
-        <div class="slides" style="width: 2732px;">
-            <div class="slide" data-index="0" style="width: 1366px; left: 0px; transition-duration: 0ms; 
-                transform: translate(0px, 0px) translateZ(0px);">
-                <div class="modal fade slide-content in" style="display: block;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">
-                                    <asp:Literal ID="ltTituloEdicao" runat="server"></asp:Literal>
-                                </h4>
-                            </div>
-                            <div class="modal-body next">
-                                <asp:Literal ID="ltCorpoEdicao" runat="server"></asp:Literal>
-                            </div>
-                            <div class="modal-footer">
-                                <div class="row">
-                                    <div class="col-sm-2" align="left" style="float: left">
-                                         <button class="btn btn-primary btn-block" type="button">
-                                            <i class="glyphicon glyphicon-save"></i>
-                                            Confirmar
-                                        </button>
-                                    </div>
-                                    <div class="col-sm-2" align="center" style="float: left">
-                                        <button class="btn btn-primary btn-block btn-danger" type="button">
-                                            <i class="glyphicon glyphicon-remove"></i>
-                                            Cancelar
-                                        </button>
-                                    </div>
-                                    <div class="col-sm-8" align="right" style="float: right">
-                                        <asp:Label id="lblMensagemEdicao" runat="server" />
-                                    </div>                        
-                                </div>        
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade"></div>
-        </div>
-    </div>
-
 </asp:Content>

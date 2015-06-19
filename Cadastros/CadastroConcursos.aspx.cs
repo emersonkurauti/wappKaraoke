@@ -33,7 +33,6 @@ namespace wappKaraoke.Cadastros
         private DataTable _dtAssociacoes;
         private DataTable _dtGruposJurados;
 
-        private string strScriptGridView = "";
         private string ScriptGridView = @"$(function () { $('[id*=[idGridView]').footable(); });";
 
         private string strInicio = "<div class=\"tabbable tabs-left\"> \n <ul class=\"nav nav-tabs\">\n";
@@ -52,6 +51,8 @@ namespace wappKaraoke.Cadastros
 
         public override void Page_Load(object sender, EventArgs e)
         {
+            //RegistrarScript();
+
             if (Request["__EVENTARGUMENT"] != null)
             {
                 if (Request["__EVENTARGUMENT"].Contains("RemoveImagem") ||
@@ -70,9 +71,18 @@ namespace wappKaraoke.Cadastros
                     {
                         SalvarImagem();
                     }
-
-                    ConfiguraGridDocumentos();
                 }
+
+                if (Session["_dtDocumentos"] != null && ((DataTable)Session["_dtDocumentos"]).Rows.Count > 0)
+                    ConfiguraGridDocumentos();
+
+                string strScriptGridView = Session["strScriptGridView"] != null ? Session["strScriptGridView"].ToString() : "";
+                string strScriptImagens = Session["strScriptImagens"] != null ? Session["strScriptImagens"].ToString() : "";
+
+                ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "", strScriptGridView + strScriptImagens, true);
+
+                //RegistrarScript();
+
                 return;
             }
             ltMensagemArquivos.Text = "";
@@ -268,7 +278,8 @@ namespace wappKaraoke.Cadastros
 
             PreencheLiteral(strCdCategoria, alCdCategoria, alDeCategoria, bEstaCarregando);
 
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "", strScriptGridView, true);
+            //RegistrarScript();
+            //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", Session["strScriptGridView"].ToString(), true);
 
             Session["alCdCategoria"] = alCdCategoria;
             Session["alDeCategoria"] = alDeCategoria;
@@ -296,6 +307,7 @@ namespace wappKaraoke.Cadastros
             DataTable dtDados;
             string strLista = "";
             string strDivs = "";
+            string strScriptGridView = "";
 
             for (int i = 0; i < palCdCategoria.Count; i++)
             {
@@ -381,6 +393,7 @@ namespace wappKaraoke.Cadastros
                 strDivs += strFechaPanel;
             }
 
+            Session["strScriptGridView"] = strScriptGridView;
             ltCategorias.Text = strInicio + strLista + strMeio + strDivs + strFim;
         }
 
@@ -485,7 +498,9 @@ namespace wappKaraoke.Cadastros
             gvDocumentos.DataBind();
 
             Session["_dtDocumentos"] = _dtDocumentos;
-            ConfiguraGridDocumentos();
+
+            if (_dtDocumentos.Rows.Count > 0)
+                ConfiguraGridDocumentos();
         }
 
         protected void btnAdicionarArquivo_Click(object sender, EventArgs e)
@@ -536,7 +551,7 @@ namespace wappKaraoke.Cadastros
                 string strCaminho = "../" + wappKaraoke.Properties.Settings.Default.sCaminhoArqImagens.Replace("\\", "/");
                 string strCaminhoTemp = "../" + wappKaraoke.Properties.Settings.Default.sCaminhoTemp.Replace("\\", "/");
                 string strCaminhoImg = "";
-                string strScript = "";
+                string strScriptImagens = "";
 
                 _dtImagens = (DataTable)Session["_dtImagens"];
 
@@ -563,18 +578,18 @@ namespace wappKaraoke.Cadastros
 
                         if (pnIndexImgEditar == seq)
                         {
-                            strScript += "function lnkSalvar_" + seq.ToString() + "_Click() {" + "\n" +
+                            strScriptImagens += "function lnkSalvar_" + seq.ToString() + "_Click() {" + "\n" +
                                 "  __doPostBack('lnkSalvar_" + seq.ToString() + "', 'SalvarImagem;" + seq.ToString() + ";'+ document.getElementById('deArquivoEdit').value);" + "\n" +
                                 "} \n";
                         }
                         else
                         {
-                            strScript += "function lnkEditar_" + seq.ToString() + "_Click() {" + "\n" +
+                            strScriptImagens += "function lnkEditar_" + seq.ToString() + "_Click() {" + "\n" +
                                 "  __doPostBack('lnkEditar_" + seq.ToString() + "', 'EditarImagem;" + seq.ToString() + "');" + "\n" +
                                 "} \n";
                         }
 
-                        strScript += "function lnkRemover_" + seq.ToString() + "_Click() {" + "\n" +
+                        strScriptImagens += "function lnkRemover_" + seq.ToString() + "_Click() {" + "\n" +
                             "  __doPostBack('lnkRemover_" + seq.ToString() + "', 'RemoveImagem;" + seq.ToString() + "');" + "\n" +
                             "} \n";
                     }
@@ -582,7 +597,9 @@ namespace wappKaraoke.Cadastros
                     seq++;
                 }
 
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "", strScript, true);
+                Session["strScriptImagens"] = strScriptImagens;
+                //RegistrarScript();
+                //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", strScriptImagens, true);
 
                 ltImagens.Text += csDinamico.strFinalLista;
             }
@@ -689,6 +706,12 @@ namespace wappKaraoke.Cadastros
         protected void upArquivos_PreRender(object sender, EventArgs e)
         {
             this.ScriptManager1.RegisterPostBackControl(btnAdicionarArquivo);
+
+            foreach (GridViewRow gvr in gvDocumentos.Rows)
+            {
+                LinkButton lnkEditDoc = gvr.FindControl("lnkEditDoc") as LinkButton;
+                ScriptManager.GetCurrent(this).RegisterPostBackControl(lnkEditDoc);
+            }
         }
 
         private void CarregarCantoresCategorias()
@@ -708,8 +731,8 @@ namespace wappKaraoke.Cadastros
                 AdicionaCantorCategoriaConcurso(dr[caCategorias.cdCategoria].ToString(), dr[caCategorias.deCategoria].ToString(), true);
             }
 
-
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "", strScriptGridView, true);
+            RegistrarScript();
+            //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", Session["strScriptGridView"].ToString(), true);
         }
 
         private DataTable UnionDataTable(DataTable dt1, DataTable dt2)
@@ -815,7 +838,9 @@ namespace wappKaraoke.Cadastros
             gvDocumentos.DataBind();
 
             Session["_dtDocumentos"] = _dtDocumentos;
-            ConfiguraGridDocumentos();
+
+            if (_dtDocumentos.Rows.Count > 0)
+                ConfiguraGridDocumentos();
             ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosDocumentos();", true);
         }
 
@@ -840,15 +865,16 @@ namespace wappKaraoke.Cadastros
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDelete");
+                LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDeleteDoc");
                 lnkDelete.CommandArgument = e.Row.RowIndex.ToString();
                 lnkDelete.Attributes.Add("OnClick", "javascript:return " +
                     "confirm('O registro será removido!')");
                 /*"confirm('O registro \"" + DataBinder.Eval(e.Row.DataItem, obj.dePrincipal) + "\" será removido!')");*/
 
-                LinkButton lnkEdit = (LinkButton)e.Row.FindControl("lnkEdit");
-                lnkEdit.CommandArgument = e.Row.RowIndex.ToString();
-                lnkEdit.Attributes.Add("OnClick", "javascript:return lnkEditarDoc_Click(" + e.Row.RowIndex.ToString() + ");");
+                LinkButton lnkEdit = (LinkButton)e.Row.FindControl("lnkEditDoc");
+                lnkEdit.CommandArgument = e.Row.RowIndex.ToString();                
+
+                this.ScriptManager1.RegisterPostBackControl(lnkEdit);
             }
         }
 
@@ -856,6 +882,11 @@ namespace wappKaraoke.Cadastros
         {
 
         }
+
+        protected void gvDocumentos_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+
+        }    
 
         //private DataTable FiltraDocumentos()
         //{
@@ -872,7 +903,22 @@ namespace wappKaraoke.Cadastros
 
         protected void lnkEdit_Click(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicao(true);", true);
-        }        
+            _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+            int indexDocumento = Convert.ToInt32(((LinkButton)sender).CommandArgument);
+
+            ltTituloEdicao.Text = _dtDocumentos.Rows[indexDocumento][caArquivos.nmArquivo].ToString();
+
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicao();", true);
+        }
+
+        private void RegistrarScript()
+        {
+            string strScriptGridView = Session["strScriptGridView"] != null ? Session["strScriptGridView"].ToString() : "";
+            string strScriptImagens = Session["strScriptImagens"] != null ? Session["strScriptImagens"].ToString() : "";
+
+            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", strScriptGridView + strScriptImagens, true);
+            //if (Session["strScriptImagens"] != null)
+            //    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", Session["strScriptImagens"].ToString(), true);
+        }
     }
 }
