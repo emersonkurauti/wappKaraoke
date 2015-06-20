@@ -30,6 +30,7 @@ namespace wappKaraoke.Cadastros
         private DataTable _dtDocumentos;
         private DataTable _dtDocumentosExc;
         private DataTable _dtImagens;
+        private DataTable _dtImagensExc;
         private DataTable _dtAssociacoes;
         private DataTable _dtGruposJurados;
 
@@ -51,8 +52,6 @@ namespace wappKaraoke.Cadastros
 
         public override void Page_Load(object sender, EventArgs e)
         {
-            //RegistrarScript();
-
             if (Request["__EVENTARGUMENT"] != null)
             {
                 if (Request["__EVENTARGUMENT"].Contains("RemoveImagem") ||
@@ -76,12 +75,10 @@ namespace wappKaraoke.Cadastros
                 if (Session["_dtDocumentos"] != null && ((DataTable)Session["_dtDocumentos"]).Rows.Count > 0)
                     ConfiguraGridDocumentos();
 
-                string strScriptGridView = Session["strScriptGridView"] != null ? Session["strScriptGridView"].ToString() : "";
-                string strScriptImagens = Session["strScriptImagens"] != null ? Session["strScriptImagens"].ToString() : "";
-
-                ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "", strScriptGridView + strScriptImagens, true);
-
-                //RegistrarScript();
+                if (Request["__EVENTTARGET"] != null && !Request["__EVENTTARGET"].ToString().Contains("btnAdicionarArquivo"))
+                {
+                    RegistrarScriptLoaded();
+                }
 
                 return;
             }
@@ -95,6 +92,7 @@ namespace wappKaraoke.Cadastros
             {
                 Session["_dtDocumentosExc"] = null;
                 Session["_dtDocumentos"] = null;
+                Session["_dtImagensExc"] = null;
                 Session["_dtImagens"] = null;
 
                 PegarChaveConcurso();
@@ -112,12 +110,20 @@ namespace wappKaraoke.Cadastros
 
         private void RemoverImagem()
         {
+            if (Session["_dtImagensExc"] != null)
+                _dtImagensExc = (DataTable)Session["_dtImagensExc"];
+            else
+                _dtImagensExc = conArquivos.objCo.RetornaEstruturaDT();
+
             int intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
             string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
+            
             _dtImagens = (DataTable)Session["_dtImagens"];
-
             _dtImagens.Columns[caArquivos.CC_Controle].ReadOnly = false;
             _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
+
+            _dtImagensExc.ImportRow(_dtImagens.Rows[Convert.ToInt32(strParametro)]);
+            _dtImagens.Rows.Remove(_dtImagens.Rows[Convert.ToInt32(strParametro)]);
 
             Session["_dtImagens"] = _dtImagens;
 
@@ -278,9 +284,6 @@ namespace wappKaraoke.Cadastros
 
             PreencheLiteral(strCdCategoria, alCdCategoria, alDeCategoria, bEstaCarregando);
 
-            //RegistrarScript();
-            //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", Session["strScriptGridView"].ToString(), true);
-
             Session["alCdCategoria"] = alCdCategoria;
             Session["alDeCategoria"] = alDeCategoria;
         }
@@ -368,7 +371,7 @@ namespace wappKaraoke.Cadastros
                                         dr[caMusicas.cdMusica] = cdMusica.SelectedValue;
                                         dr[caMusicas.nmMusica] = cdMusica.SelectedItem.Text;
                                         dr[caMusicas.nmMusicaKanji] = "";
-                                        
+                                        //Fase
                                         dr[caFases.cdFase] = cdFaseCantor.SelectedValue;
                                         dr[caCategorias.cdCategoria] = cdCategoria.SelectedValue;
                                         dr[caTipoStatus.cdTpStatus] = cdStatus.SelectedValue;
@@ -598,10 +601,9 @@ namespace wappKaraoke.Cadastros
                 }
 
                 Session["strScriptImagens"] = strScriptImagens;
-                //RegistrarScript();
-                //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", strScriptImagens, true);
-
                 ltImagens.Text += csDinamico.strFinalLista;
+
+                RegistrarScriptLoaded();
             }
         }
 
@@ -768,7 +770,8 @@ namespace wappKaraoke.Cadastros
 
             //Arquivos
             _dtDocumentos = UnionDataTable(((DataTable)Session["_dtDocumentos"]), ((DataTable)Session["_dtDocumentosExc"]));
-            objCoConcurso.dtArquivos = UnionDataTable(_dtDocumentos, (DataTable)Session["_dtImagens"]);
+            _dtImagens = UnionDataTable(((DataTable)Session["_dtImagens"]), ((DataTable)Session["_dtImagensExc"]));
+            objCoConcurso.dtArquivos = UnionDataTable(_dtDocumentos, _dtImagens);
         }
 
         protected override void btnSalvar_Click(object sender, EventArgs e)
@@ -818,7 +821,7 @@ namespace wappKaraoke.Cadastros
             }
         }
 
-        protected void RemoveRegistro(int pintIndice)
+        protected void RemoveDocumento(int pintIndice)
         {
             _dtDocumentos = (DataTable)Session["_dtDocumentos"];
             _dtDocumentos.Columns[caArquivos.CC_Controle].ReadOnly = false;
@@ -848,7 +851,7 @@ namespace wappKaraoke.Cadastros
         {
             if (e.CommandName == "Delete")
             {
-                RemoveRegistro(Convert.ToInt32(e.CommandArgument));
+                RemoveDocumento(Convert.ToInt32(e.CommandArgument));
             }
             else
                 if (e.CommandName == "Edit")
@@ -906,97 +909,26 @@ namespace wappKaraoke.Cadastros
             _dtDocumentos = (DataTable)Session["_dtDocumentos"];
             int indexDocumento = Convert.ToInt32(((LinkButton)sender).CommandArgument);
 
-            ltTituloEdicao.Text = _dtDocumentos.Rows[indexDocumento][caArquivos.nmArquivo].ToString();
-            ltCorpoEdicao.Text = "<div class=\"panel panel-default\">" +
-                                 "  <div class=\"panel-body\">" +
-                                 "    <div class=\"row\">" +
-                                 "      <div class=\"col-sm-12\">" +
-                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
-                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
-                                 "      </div>" +
-                                 "    </div><br/>" +
-
-                                 "    <div class=\"row\">" +
-                                 "      <div class=\"col-sm-12\">" +
-                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
-                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
-                                 "      </div>" +
-                                 "    </div><br/>" +
-
-                                 "    <div class=\"row\">" +
-                                 "      <div class=\"col-sm-12\">" +
-                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
-                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
-                                 "      </div>" +
-                                 "    </div><br/>" +
-
-                                 "    <div class=\"row\">" +
-                                 "      <div class=\"col-sm-12\">" +
-                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
-                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
-                                 "      </div>" +
-                                 "    </div><br/>" +
-
-                                 "    <div class=\"row\">" +
-                                 "      <div class=\"col-sm-12\">" +
-                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
-                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
-                                 "      </div>" +
-                                 "    </div><br/>" +
-
-                                 "    <div class=\"row\">" +
-                                 "      <div class=\"col-sm-12\">" +
-                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
-                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
-                                 "      </div>" +
-                                 "    </div><br/>" +
-
-                                 "    <div class=\"row\">" +
-                                 "      <div class=\"col-sm-12\">" +
-                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
-                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
-                                 "      </div>" +
-                                 "    </div><br/>" +
-
-                                 "    <div class=\"row\">" +
-                                 "      <div class=\"col-sm-12\">" +
-                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
-                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
-                                 "      </div>" +
-                                 "    </div><br/>" +
-
-                                 "    <div class=\"row\">" +
-                                 "      <div class=\"col-sm-12\">" +
-                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
-                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
-                                 "      </div>" +
-                                 "    </div><br/>" +
-
-                                 "    <div class=\"row\">" +
-                                 "      <div class=\"col-sm-12\">" +
-                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
-                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
-                                 "      </div>" +
-                                 "    </div><br/>" +
-
-                                 "    <div class=\"row\">" +
-                                 "      <div class=\"col-sm-12\">" +
-                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
-                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
-                                 "      </div>" +
-                                 "    </div><br/>" +
-
-                                 "    <div class=\"row\">" +
-                                 "      <div class=\"col-sm-12\">" +
-                                 "        <input type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"" +
-                                          _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString() + "\"/>" +
-                                 "      </div>" +
-                                 "    </div><br/>" +
-
-                                 "  </div>" +
-                                 "</div>";
+            Session["indexDocumento"] = indexDocumento;
+            ltTituloEdicao.Text = _dtDocumentos.Rows[indexDocumento][caArquivos.nmArquivo].ToString();            
+            deArquivoEdit.Text = _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString();
 
             ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicao();", true);
+        }
+
+        protected void btnConfirmarEdicao_Click(object sender, EventArgs e)
+        {
+            int indexDocumento = Convert.ToInt32(Session["indexDocumento"].ToString());
+            _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+            _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo] = deArquivoEdit.Text;
+            
+            gvDocumentos.DataSource = _dtDocumentos;
+            gvDocumentos.DataBind();
+
+            Session["_dtDocumentos"] = _dtDocumentos;
+
+            if (_dtDocumentos.Rows.Count > 0)
+                ConfiguraGridDocumentos();
         }
 
         private void RegistrarScript()
@@ -1007,6 +939,14 @@ namespace wappKaraoke.Cadastros
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", strScriptGridView + strScriptImagens, true);
             //if (Session["strScriptImagens"] != null)
             //    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", Session["strScriptImagens"].ToString(), true);
+        }
+
+        private void RegistrarScriptLoaded()
+        {
+            string strScriptGridView = Session["strScriptGridView"] != null ? Session["strScriptGridView"].ToString() : "";
+            string strScriptImagens = Session["strScriptImagens"] != null ? Session["strScriptImagens"].ToString() : "";
+
+            ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "", strScriptGridView + strScriptImagens, true);
         }
     }
 }

@@ -10,6 +10,17 @@ namespace wappKaraoke.Classes
         public static string strInicioLista = "\n" + "<div class=\"row-fluid\">";
         public static string strFinalLista = "\n" + "</div>";
 
+        public static string strEditarDocumento = "\n" +
+            "<div class=\"panel panel-default\">" +
+            "  <div class=\"panel-body\">" +
+            "    <div class=\"row\">" +
+            "      <div class=\"col-sm-12\">" +
+            "        <input ID=\"deArquivo\" type=\"text\" class=\"form-control\" placeholder=\"Descrição do arquivo...\" value = \"[strDeArquivo]\"/>" +
+            "      </div>" +
+            "    </div><br/>" +
+            "  </div>" +
+            "</div>";
+
         public static string strDivImagem = "\n" +
             "   <li class=\"span4\">" + "\n" +
             "        <div class=\"thumbnail\">" + "\n" +

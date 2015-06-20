@@ -296,16 +296,29 @@
                                                                                         <h4 class="modal-title">
                                                                                             <asp:Literal ID="ltTituloEdicao" runat="server"></asp:Literal>
                                                                                         </h4>
-                                                                                        <br />
+                                                                                        <br/>
+                                                                                        <div class="panel panel-default">
+                                                                                            <div class="panel-body">
+                                                                                                <div class="row">
+                                                                                                    <div class="col-sm-12">
+                                                                                                        <asp:TextBox ID="deArquivoEdit" class="form-control" runat="server" 
+                                                                                                            placeholder="Descrição do arquivo..." Visible="True">
+                                                                                                        </asp:TextBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                         <asp:Literal ID="ltCorpoEdicao" runat="server"></asp:Literal>
                                                                                     </div>
                                                                                     <div class="modal-footer">
                                                                                         <div class="row">
                                                                                             <div class="col-sm-2" align="left" style="float: left">
-                                                                                                 <button class="btn btn-primary btn-block" type="button">
+                                                                                                <asp:LinkButton ID="btnConfirmarEdicao" runat="server"
+                                                                                                    CssClass="btn btn-primary btn-block" 
+                                                                                                    OnClick="btnConfirmarEdicao_Click">
                                                                                                     <i class="glyphicon glyphicon-save"></i>
                                                                                                     Confirmar
-                                                                                                </button>
+                                                                                                </asp:LinkButton>
                                                                                             </div>
                                                                                             <div class="col-sm-2" align="center" style="float: left">
                                                                                                 <button class="btn btn-primary btn-block btn-danger" 
