@@ -34,6 +34,7 @@ namespace wappKaraoke.Cadastros
         private DataTable _dtAssociacoes;
         private DataTable _dtAssociacoesExc;
         private DataTable _dtGruposJurados;
+        private DataTable _dtGruposJuradosExc;
 
         private string ScriptGridView = @"$(function () { $('[id*=[idGridView]').footable(); });";
 
@@ -97,6 +98,14 @@ namespace wappKaraoke.Cadastros
                 Session["_dtImagens"] = null;
                 Session["_dtAssociacoesExc"] = null;
                 Session["_dtAssociacoes"] = null;
+                Session["_dtGruposJuradosExc"] = null;
+                Session["_dtGruposJurados"] = null;
+
+                ltMensagem.Text = "";
+                ltMensagemArquivos.Text = "";
+                ltMensagemAssociacoes.Text = "";
+                ltMensagemJurados.Text = "";
+                ltMensagensCategorias.Text = "";
 
                 PegarChaveConcurso();
 
@@ -333,8 +342,17 @@ namespace wappKaraoke.Cadastros
                     _dtAssociacoes = UnionDataTable(((DataTable)Session["_dtAssociacoes"]), ((DataTable)Session["_dtAssociacoesExc"]));
             }
 
+            //Grupo Jurados
+            if (Session["_dtGruposJurados"] != null)
+            {
+                _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
+                if (Session["_dtGruposJuradosExc"] != null)
+                    _dtGruposJurados = UnionDataTable(((DataTable)Session["_dtGruposJurados"]), ((DataTable)Session["_dtGruposJuradosExc"]));
+            }
+
             objCoConcurso.dtArquivos = UnionDataTable(_dtDocumentos, _dtImagens);
             objCoConcurso.dtAssociacoes = _dtAssociacoes;
+            objCoConcurso.dtGrupoJurados = _dtGruposJurados;
         }
 
         protected override void btnSalvar_Click(object sender, EventArgs e)
@@ -497,6 +515,8 @@ namespace wappKaraoke.Cadastros
 
         protected void btnAdicionarArquivo_Click(object sender, EventArgs e)
         {
+            ltMensagemArquivos.Text = "";
+
             if (hdfNmArquivo.Value.ToString() != "")
             {
                 if (Convert.ToInt32(hdfCdTpArquivo.Value.ToString()) == csConstantes.cCdTipoArquivoImagem)
@@ -883,37 +903,153 @@ namespace wappKaraoke.Cadastros
 
         protected void btnAdicionarGrupoJurado_Click(object sender, EventArgs e)
         {
+            ltMensagemJurados.Text = "";
+
             if (cdJurado.SelectedIndex > 0)
             {
-                conJurados objConJurados = new conJurados();
-                objConJurados.objCoJurados.LimparAtributos();
-                objConJurados.objCoJurados.cdJurado = Convert.ToInt32(cdJurado.SelectedValue);
-
-                if (!conJurados.Select())
+                if (deGrupo.Text.Trim() != "")
                 {
-                    ltMensagemJurados.Text = MostraMensagem("Falha", "Problemas ao carregar dados do Jurado.", csMensagem.msgDanger);
-                    return;
+                    conJurados objConJurados = new conJurados();
+                    objConJurados.objCoJurados.LimparAtributos();
+                    objConJurados.objCoJurados.cdJurado = Convert.ToInt32(cdJurado.SelectedValue);
+
+                    if (!conJurados.Select())
+                    {
+                        ltMensagemJurados.Text = MostraMensagem("Falha", "Problemas ao carregar dados do Jurado.", csMensagem.msgDanger);
+                        return;
+                    }
+
+                    _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
+                    DataRow dr = _dtGruposJurados.NewRow();
+
+                    dr[caGrupos.cdJurado] = cdJurado.SelectedValue;
+                    dr[caGrupos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
+                    dr[caGrupos.deGrupo] = deGrupo.Text;
+                    dr[caGrupos.CC_nmJurado] = objConJurados.dtDados.Rows[0][caJurados.nmJurado].ToString();
+                    dr[caGrupos.CC_nmNomeKanji] = objConJurados.dtDados.Rows[0][caJurados.nmNomeKanji].ToString();
+
+                    _dtGruposJurados.Rows.Add(dr);
+
+                    gvGrupoJuradoConcurso.DataSource = _dtGruposJurados;
+                    gvGrupoJuradoConcurso.DataBind();
+
+                    Session["_dtGruposJurados"] = _dtGruposJurados;
+                    ConfigurarGridView();
                 }
+                else
+                    ltMensagemJurados.Text = MostraMensagem("Validação!", "Deve ser informado o Grupo do Jurado.", csMensagem.msgWarning);
+            }
+            else
+                ltMensagemJurados.Text = MostraMensagem("Validação!", "Deve ser selecionado o Jurado.", csMensagem.msgWarning);
+        }
 
+        protected void RemoveJurados(int pintIndice)
+        {
+            _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
+            _dtGruposJurados.Rows[pintIndice][caGrupos.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
+
+            if (Session["_dtGruposJuradosExc"] != null)
+                _dtGruposJuradosExc = (DataTable)Session["_dtGruposJuradosExc"];
+            else
+                _dtGruposJuradosExc = conGrupos.objCo.RetornaEstruturaDT();
+
+            _dtGruposJuradosExc.ImportRow(_dtGruposJurados.Rows[pintIndice]);
+            _dtGruposJurados.Rows.Remove(_dtGruposJurados.Rows[pintIndice]);
+
+            Session["_dtGruposJuradosExc"] = _dtGruposJuradosExc;
+
+            gvGrupoJuradoConcurso.DataSource = _dtGruposJurados;
+            gvGrupoJuradoConcurso.DataBind();
+
+            Session["_dtGruposJurados"] = _dtGruposJurados;
+
+            if (_dtGruposJurados.Rows.Count > 0)
+                ConfigurarGridView();
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaJurados();", true);
+        }
+
+        protected void gvGrupoJuradoConcurso_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Delete")
+            {
+                RemoveJurados(Convert.ToInt32(e.CommandArgument));
+            }
+        }
+
+        protected void gvGrupoJuradoConcurso_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDeleteJur");
+                lnkDelete.CommandArgument = e.Row.RowIndex.ToString();
+                lnkDelete.Attributes.Add("OnClick", "javascript:return " +
+                    "confirm('O registro será removido!')");
+                /*"confirm('O registro \"" + DataBinder.Eval(e.Row.DataItem, obj.dePrincipal) + "\" será removido!')");*/
+
+                LinkButton lnkEdit = (LinkButton)e.Row.FindControl("lnkEditJur");
+                lnkEdit.CommandArgument = e.Row.RowIndex.ToString();
+
+                this.ScriptManager1.RegisterPostBackControl(lnkEdit);
+            }
+        }
+
+        protected void gvGrupoJuradoConcurso_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+        }
+
+        protected void gvGrupoJuradoConcurso_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+
+        }
+
+        protected void lnkEditJur_Click(object sender, EventArgs e)
+        {
+            _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
+            int indexJurado = Convert.ToInt32(((LinkButton)sender).CommandArgument);
+
+            Session["indexJurado"] = indexJurado;
+            ltTituloEdicaoJurado.Text = _dtGruposJurados.Rows[indexJurado][caGrupos.CC_nmNomeKanji].ToString();
+            deGrupoEdit.Text = _dtGruposJurados.Rows[indexJurado][caGrupos.deGrupo].ToString();
+
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoJur();", true);
+        }
+
+        protected void btnConfirmarEdicaoJur_Click(object sender, EventArgs e)
+        {
+            if (deGrupoEdit.Text.Trim() != "")
+            {
+                int indexJurado = Convert.ToInt32(Session["indexJurado"].ToString());
                 _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
-                DataRow dr = _dtGruposJurados.NewRow();
-
-                dr[caGrupos.cdJurado] = cdJurado.SelectedValue;
-                dr[caGrupos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
-                dr[caGrupos.deGrupo] = deGrupo.Text;
-                dr[caGrupos.CC_nmJurado] = objConJurados.dtDados.Rows[0][caJurados.nmJurado].ToString();
-                dr[caGrupos.CC_nmNomeKanji] = objConJurados.dtDados.Rows[0][caJurados.nmNomeKanji].ToString();
-
-                _dtGruposJurados.Rows.Add(dr);
+                _dtGruposJurados.Rows[indexJurado][caGrupos.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
+                _dtGruposJurados.Rows[indexJurado][caGrupos.deGrupo] = deGrupoEdit.Text;
 
                 gvGrupoJuradoConcurso.DataSource = _dtGruposJurados;
                 gvGrupoJuradoConcurso.DataBind();
 
                 Session["_dtGruposJurados"] = _dtGruposJurados;
-                ConfigurarGridView();
+
+                if (_dtGruposJurados.Rows.Count > 0)
+                    ConfigurarGridView();
+
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaJurados();", true);
             }
             else
-                ltMensagemJurados.Text = MostraMensagem("Validação!", "Deve ser selecionado o Jurado.", csMensagem.msgWarning);
+            {
+                ltMensagemEdicaoJur.Text = MostraMensagem("Validação!", "Preenha a descrição do Grupo do Jurado.", csMensagem.msgWarning);
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoJur();", true);
+            }
+        }
+
+        protected void upConcursoJurados_PreRender(object sender, EventArgs e)
+        {
+            //this.ScriptManager1.RegisterPostBackControl(btnAdicionarAssociacao);
+
+            foreach (GridViewRow gvr in gvGrupoJuradoConcurso.Rows)
+            {
+                LinkButton lnkEditJur = gvr.FindControl("lnkEditJur") as LinkButton;
+                ScriptManager.GetCurrent(this).RegisterPostBackControl(lnkEditJur);
+            }
         }
 
         /// <summary>
@@ -940,24 +1076,36 @@ namespace wappKaraoke.Cadastros
 
         protected void btnAdicionarAssociacao_Click(object sender, EventArgs e)
         {
+            ltMensagemAssociacoes.Text = "";
+
             if (cdAssociacao.SelectedIndex > 0)
             {
-                _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
-                DataRow dr = _dtAssociacoes.NewRow();
+                if (nmRepresentante.Text.Trim() != "")
+                {
+                    if (deEmail.Text.Trim() != "")
+                    {
+                        _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
+                        DataRow dr = _dtAssociacoes.NewRow();
 
-                dr[caConcursosAssociacoes.cdAssociacao] = cdAssociacao.SelectedValue;
-                dr[caConcursosAssociacoes.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
-                dr[caConcursosAssociacoes.deEmail] = deEmail.Text;
-                dr[caConcursosAssociacoes.nmRepresentante] = nmRepresentante.Text;
-                dr[caConcursosAssociacoes.CC_nmAssociacao] = cdAssociacao.SelectedItem.ToString();
+                        dr[caConcursosAssociacoes.cdAssociacao] = cdAssociacao.SelectedValue;
+                        dr[caConcursosAssociacoes.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
+                        dr[caConcursosAssociacoes.deEmail] = deEmail.Text;
+                        dr[caConcursosAssociacoes.nmRepresentante] = nmRepresentante.Text;
+                        dr[caConcursosAssociacoes.CC_nmAssociacao] = cdAssociacao.SelectedItem.ToString();
 
-                _dtAssociacoes.Rows.Add(dr);
+                        _dtAssociacoes.Rows.Add(dr);
 
-                gvAssociacoes.DataSource = _dtAssociacoes;
-                gvAssociacoes.DataBind();
+                        gvAssociacoes.DataSource = _dtAssociacoes;
+                        gvAssociacoes.DataBind();
 
-                Session["_dtAssociacoes"] = _dtAssociacoes;
-                ConfigurarGridView();
+                        Session["_dtAssociacoes"] = _dtAssociacoes;
+                        ConfigurarGridView();
+                    }
+                    else
+                        ltMensagemAssociacoes.Text = MostraMensagem("Validação!", "Informe o e-mail do Representante.", csMensagem.msgWarning);
+                }
+                else
+                    ltMensagemAssociacoes.Text = MostraMensagem("Validação!", "Informe o nome do Representante.", csMensagem.msgWarning);
             }
             else
                 ltMensagemAssociacoes.Text = MostraMensagem("Validação!", "Deve ser selecionada a Associação.", csMensagem.msgWarning);
@@ -1038,21 +1186,37 @@ namespace wappKaraoke.Cadastros
 
         protected void btnConfirmarEdicaoAss_Click(object sender, EventArgs e)
         {
-            int indexAssociacao = Convert.ToInt32(Session["indexAssociacao"].ToString());
-            _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
-            _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
-            _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.nmRepresentante] = nmRepresentanteEdit.Text;
-            _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.deEmail] = deEmailRepresentanteEdit.Text;
+            if (nmRepresentante.Text.Trim() != "")
+            {
+                if (deEmail.Text.Trim() != "")
+                {
+                    int indexAssociacao = Convert.ToInt32(Session["indexAssociacao"].ToString());
+                    _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
+                    _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
+                    _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.nmRepresentante] = nmRepresentanteEdit.Text;
+                    _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.deEmail] = deEmailRepresentanteEdit.Text;
 
-            gvAssociacoes.DataSource = _dtAssociacoes;
-            gvAssociacoes.DataBind();
+                    gvAssociacoes.DataSource = _dtAssociacoes;
+                    gvAssociacoes.DataBind();
 
-            Session["_dtAssociacoes"] = _dtAssociacoes;
+                    Session["_dtAssociacoes"] = _dtAssociacoes;
 
-            if (_dtAssociacoes.Rows.Count > 0)
-                ConfigurarGridView();
+                    if (_dtAssociacoes.Rows.Count > 0)
+                        ConfigurarGridView();
 
-            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
+                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
+                }
+                else
+                {
+                    ltMensagemEdicaoAss.Text = MostraMensagem("Validação!", "Informe o e-mail do Representante.", csMensagem.msgWarning);
+                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoAss();", true);
+                }
+            }
+            else
+            {
+                ltMensagemEdicaoAss.Text = MostraMensagem("Validação!", "Informe o nome do Representante.", csMensagem.msgWarning);
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoAss();", true);
+            }
         }
 
         protected void upConcursoAssociacoes_PreRender(object sender, EventArgs e)

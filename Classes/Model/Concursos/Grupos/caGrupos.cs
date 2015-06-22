@@ -65,7 +65,11 @@ namespace wappKaraoke.Classes.Model.Grupos
 
 		/// <summary>
 		/// Atributos
-	 	/// </summary>        
+	 	/// </summary>    
+        public static string CC_Controle
+        {
+            get { return "CC_Controle"; }
+        }
 		public static string cdConcurso
         {
             get { return "cdConcurso"; }
@@ -95,11 +99,11 @@ namespace wappKaraoke.Classes.Model.Grupos
         /// <param name="strNome"></param>
         public static void RetornarFields()
         {
-            _strFields = CC_cdRegistro  + "," + cdConcurso + "," + cdJurado + "," + deGrupo + "," + CC_nmJurado + "," + CC_nmNomeKanji;
+            _strFields = CC_Controle + "," + CC_cdRegistro  + "," + cdConcurso + "," + cdJurado + "," + deGrupo + "," + CC_nmJurado + "," + CC_nmNomeKanji;
 
-            _strNome = "Cd. Registro, cdConcurso, cdJurado, deGrupo, CC_nmJurado, CC_nmNomeKanji";
+            _strNome = "Controle, Cd. Registro, cdConcurso, cdJurado, deGrupo, CC_nmJurado, CC_nmNomeKanji";
 
-            _strVisivel = "0, 1, 1, 1, 1, 1";
+            _strVisivel = "0, 0, 1, 1, 1, 1, 1";
         }
     }
 }

@@ -7,6 +7,7 @@ using wappKaraoke.Classes.Controller;
 using wappKaraoke.Classes.Model.Cidades;
 using wappKaraoke.Classes.Model.Arquivos;
 using wappKaraoke.Classes.Model.ConcursosAssociacoes;
+using wappKaraoke.Classes.Model.Grupos;
 
 namespace wappKaraoke.Classes.Model.Concursos
 {
@@ -24,6 +25,13 @@ namespace wappKaraoke.Classes.Model.Concursos
         {
             get { return _dtAssociacoes; }
             set { _dtAssociacoes = value; }
+        }
+
+        private DataTable _dtGrupoJurados;
+        public DataTable dtGrupoJurados
+        {
+            get { return _dtGrupoJurados; }
+            set { _dtGrupoJurados = value; }
         }
 
         private static  int _CC_cdRegistro;
@@ -168,6 +176,12 @@ namespace wappKaraoke.Classes.Model.Concursos
                         objBanco.RollbackTransaction();
                         return false;
                     }
+
+                    if (!AtualizarGrupoJurado())
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
                 }
 
                 objBanco.CommitTransaction();
@@ -180,6 +194,10 @@ namespace wappKaraoke.Classes.Model.Concursos
             }
         }
 
+        /// <summary>
+        /// Sobrescrito para Aleterar as tabelas vinculadas
+        /// </summary>
+        /// <returns></returns>
         public override bool Alterar()
         {
             objBanco.BeginTransaction();
@@ -195,6 +213,12 @@ namespace wappKaraoke.Classes.Model.Concursos
                     }
 
                     if (!AtualizarAssociacoes())
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
+
+                    if (!AtualizarGrupoJurado())
                     {
                         objBanco.RollbackTransaction();
                         return false;
@@ -317,6 +341,59 @@ namespace wappKaraoke.Classes.Model.Concursos
                         else
                         {
                             if (!conConcursosAssociacoes.Inserir())
+                            {
+                                return false;
+                            }
+                        }
+                    }
+
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Atualiza os Grupos Jurados
+        /// </summary>
+        /// <returns></returns>
+        private bool AtualizarGrupoJurado()
+        {
+            conGrupos objConconGrupos = new conGrupos();
+            try
+            {
+                foreach (DataRow dr in _dtGrupoJurados.Rows)
+                {
+                    if (dr[caGrupos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpCarregado)
+                    {
+                        objConconGrupos.objCoGrupos.LimparAtributos();
+                        objConconGrupos.objCoGrupos.cdConcurso = Convert.ToInt32(dr[caGrupos.cdConcurso].ToString());
+                        objConconGrupos.objCoGrupos.cdJurado = Convert.ToInt32(dr[caGrupos.cdJurado].ToString());
+                        objConconGrupos.objCoGrupos.deGrupo = dr[caGrupos.deGrupo].ToString();
+
+                        if (dr[caGrupos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpInserido)
+                        {
+                            if (dr[caGrupos.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpAlterado)
+                            {
+                                if (!conGrupos.Alterar())
+                                {
+                                    return false;
+                                }
+                            }
+                            else if (dr[caGrupos.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpExcluido)
+                            {
+                                if (!conGrupos.Excluir())
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!conGrupos.Inserir())
                             {
                                 return false;
                             }

@@ -19,7 +19,13 @@ namespace wappKaraoke.Classes.Model.Grupos
 
 		/// <summary>
 		/// Atributos
-		/// </summary>        
+		/// </summary>    
+        private static string _CC_Controle = "";
+        public string CC_Controle
+        {
+            get { return _CC_Controle; }
+            set { _CC_Controle = value; }
+        }
 		private static int _cdConcurso;
         public int cdConcurso
         {
@@ -66,48 +72,50 @@ namespace wappKaraoke.Classes.Model.Grupos
             tobjCA = typeof(caGrupos);
         }
 
-       /// <summary>
-       /// Método sobrescrito por conta do campo calculado
-       /// </summary>
-       /// <param name="dtDados"></param>
-       /// <returns></returns>
-       public override bool Select(out DataTable dtDados)
-       {
-           if (base.Select(out dtDados))
-           {
-               conJurados objConJurados = new conJurados();
+        /// <summary>
+        /// Método sobrescrito por conta do campo calculado
+        /// </summary>
+        /// <param name="dtDados"></param>
+        /// <returns></returns>
+        public override bool Select(out DataTable dtDados)
+        {
+            if (base.Select(out dtDados))
+            {
+                conJurados objConJurados = new conJurados();
 
-               DataTable dtAux = dtDados;
+                DataTable dtAux = dtDados;
 
-               dtDados.Columns[caGrupos.CC_nmJurado].ReadOnly = false;
-               dtDados.Columns[caGrupos.CC_nmJurado].MaxLength = 100;
-               dtDados.Columns[caGrupos.CC_nmNomeKanji].ReadOnly = false;
-               dtDados.Columns[caGrupos.CC_nmNomeKanji].MaxLength = 100;
+                dtDados.Columns[caGrupos.CC_Controle].ReadOnly = false;
+                dtDados.Columns[caGrupos.CC_nmJurado].ReadOnly = false;
+                dtDados.Columns[caGrupos.CC_nmJurado].MaxLength = 100;
+                dtDados.Columns[caGrupos.CC_nmNomeKanji].ReadOnly = false;
+                dtDados.Columns[caGrupos.CC_nmNomeKanji].MaxLength = 100;
 
-               foreach (DataRow dr in dtAux.Rows)
-               {
-                   objConJurados.objCoJurados.LimparAtributos();
-                   objConJurados.objCoJurados.cdJurado = Convert.ToInt32(dr[caGrupos.cdJurado].ToString());
+                foreach (DataRow dr in dtAux.Rows)
+                {
+                    objConJurados.objCoJurados.LimparAtributos();
+                    objConJurados.objCoJurados.cdJurado = Convert.ToInt32(dr[caGrupos.cdJurado].ToString());
 
 
-                   if (conJurados.Select())
-                   {
-                       if (objConJurados.dtDados.Rows.Count > 0)
-                       {
-                           dr[caGrupos.CC_nmJurado] = objConJurados.dtDados.Rows[0][caJurados.nmJurado].ToString();
-                           dr[caGrupos.CC_nmNomeKanji] = objConJurados.dtDados.Rows[0][caJurados.nmNomeKanji].ToString();
+                    if (conJurados.Select())
+                    {
+                        if (objConJurados.dtDados.Rows.Count > 0)
+                        {
+                            dr[caGrupos.CC_nmJurado] = objConJurados.dtDados.Rows[0][caJurados.nmJurado].ToString();
+                            dr[caGrupos.CC_nmNomeKanji] = objConJurados.dtDados.Rows[0][caJurados.nmNomeKanji].ToString();
 
-                       }
-                   }
-               }
+                        }
+                    }
+                }
 
-               dtDados = dtAux;
-           }
-           else
-               return false;
+                dtDados = dtAux;
+            }
+            else
+                return false;
 
-           return true;
-       }
+            return true;
+        }
+
         /// <summary>
         /// Sobrescrito para retornar a chave
         /// </summary>

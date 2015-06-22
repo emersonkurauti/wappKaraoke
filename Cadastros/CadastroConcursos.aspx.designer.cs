@@ -220,6 +220,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.Literal ltTituloEdicao;
         
         /// <summary>
+        /// ltMensagemEdicaoDoc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ltMensagemEdicaoDoc;
+        
+        /// <summary>
         /// deArquivoEdit control.
         /// </summary>
         /// <remarks>
@@ -245,15 +254,6 @@ namespace wappKaraoke.Cadastros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnConfirmarEdicao;
-        
-        /// <summary>
-        /// lblMensagemEdicao control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensagemEdicao;
         
         /// <summary>
         /// upConcursoAssociacoes control.
@@ -328,6 +328,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.Literal ltTituloEdicaoAssociacao;
         
         /// <summary>
+        /// ltMensagemEdicaoAss control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltMensagemEdicaoAss;
+        
+        /// <summary>
         /// nmRepresentanteEdit control.
         /// </summary>
         /// <remarks>
@@ -346,31 +355,13 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox deEmailRepresentanteEdit;
         
         /// <summary>
-        /// Literal2 control.
+        /// btnConfirmarEdicaoAss control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal2;
-        
-        /// <summary>
-        /// LinkButton1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
-        
-        /// <summary>
-        /// lblMensagemEdicaoAss control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensagemEdicaoAss;
+        protected global::System.Web.UI.WebControls.LinkButton btnConfirmarEdicaoAss;
         
         /// <summary>
         /// upConcursoJurados control.
@@ -425,6 +416,42 @@ namespace wappKaraoke.Cadastros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvGrupoJuradoConcurso;
+        
+        /// <summary>
+        /// ltTituloEdicaoJurado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltTituloEdicaoJurado;
+        
+        /// <summary>
+        /// ltMensagemEdicaoJur control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltMensagemEdicaoJur;
+        
+        /// <summary>
+        /// deGrupoEdit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox deGrupoEdit;
+        
+        /// <summary>
+        /// btnConfirmarEdicaoJur control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnConfirmarEdicaoJur;
         
         /// <summary>
         /// upCantoresCategorias control.

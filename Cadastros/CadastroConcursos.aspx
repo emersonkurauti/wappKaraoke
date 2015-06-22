@@ -7,6 +7,8 @@
             $('[id*=gvDocumentos]').footable();
         });
 
+
+        /*Arquivos*/
         function PegaNomeArquivo() {
             var sNomeArquivo = document.getElementById('<%=fluArquivo.ClientID%>').value;
             document.getElementById('<%=nmArquivo.ClientID%>').setAttribute("value", sNomeArquivo);
@@ -57,12 +59,7 @@
             document.getElementById('divEdicao').setAttribute('style', 'display: none;');
         }
 
-        /*function lnkEditarDoc_Click(pnIndexDoc) {
-            AtivaEdicao();
-            __doPostBack('lnkEditarDoc', 'AtivaEdicao;' + pnIndexDoc);
-            return false;
-        }*/
-
+        /*Associações*/
         function AtivaAbaAssociacoes() {
             document.getElementById('lnkAssociacoes').click();
         }
@@ -74,6 +71,20 @@
 
         function DesativaEdicaoAss() {
             document.getElementById('divEdicaoAss').setAttribute('style', 'display: none;');
+        }
+
+        /*Jurados*/
+        function AtivaAbaJurados() {
+            document.getElementById('lnkJurados').click();
+        }
+
+        function AtivaEdicaoJur() {
+            document.getElementById('divEdicaoJur').setAttribute('style', 'display: block;');
+            AtivaAbaJurados();
+        }
+
+        function DesativaEdicaoJur() {
+            document.getElementById('divEdicaoJur').setAttribute('style', 'display: none;');
         }
     </script>
     <asp:Literal ID="ltJavaScript" runat="server"></asp:Literal> <!--Caso precise de agrupamento nas tabelas-->
@@ -310,6 +321,11 @@
                                                                                         <br/>
                                                                                         <div class="panel panel-default">
                                                                                             <div class="panel-body">
+                                                                                            <div class="row">
+                                                                                                <div class="col-sm-12">
+                                                                                                    <asp:Label id="ltMensagemEdicaoDoc" runat="server" />
+                                                                                                </div>
+                                                                                            </div>
                                                                                                 <div class="row">
                                                                                                     <div class="col-sm-12">
                                                                                                         <asp:TextBox ID="deArquivoEdit" class="form-control" runat="server" 
@@ -340,7 +356,6 @@
                                                                                                 </button>
                                                                                             </div>
                                                                                             <div class="col-sm-8" align="right" style="float: right">
-                                                                                                <asp:Label id="lblMensagemEdicao" runat="server" />
                                                                                             </div>                        
                                                                                         </div>        
                                                                                     </div>
@@ -459,6 +474,11 @@
                                                                     <div class="panel-body">
                                                                         <div class="row">
                                                                             <div class="col-sm-12">
+                                                                                <asp:Literal id="ltMensagemEdicaoAss" runat="server" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12">
                                                                                 <asp:TextBox ID="nmRepresentanteEdit" class="form-control" runat="server" 
                                                                                     placeholder="Nome do Representante..." Visible="True">
                                                                                 </asp:TextBox>
@@ -474,12 +494,11 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <asp:Literal ID="Literal2" runat="server"></asp:Literal>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <div class="row">
                                                                     <div class="col-sm-2" align="left" style="float: left">
-                                                                        <asp:LinkButton ID="LinkButton1" runat="server"
+                                                                        <asp:LinkButton ID="btnConfirmarEdicaoAss" runat="server"
                                                                             CssClass="btn btn-primary btn-block" 
                                                                             OnClick="btnConfirmarEdicaoAss_Click">
                                                                             <i class="glyphicon glyphicon-save"></i>
@@ -495,7 +514,6 @@
                                                                         </button>
                                                                     </div>
                                                                     <div class="col-sm-8" align="right" style="float: right">
-                                                                        <asp:Label id="lblMensagemEdicaoAss" runat="server" />
                                                                     </div>                        
                                                                 </div>        
                                                             </div>
@@ -511,7 +529,8 @@
                             </asp:UpdatePanel>
                         </div> <!--<div class="tab-pane" id="Associações">-->
                         <div class="tab-pane" id="Jurados">
-                            <asp:UpdatePanel ID="upConcursoJurados" runat="server" UpdateMode="Conditional">
+                            <asp:UpdatePanel ID="upConcursoJurados" runat="server" UpdateMode="Conditional"
+                                onprerender="upConcursoJurados_PreRender">
                                 <ContentTemplate>
                                     <div class="panel panel-default" style="border-top: 0px">
                                         <div class="panel-body">
@@ -540,7 +559,12 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <asp:GridView ID="gvGrupoJuradoConcurso" runat="server"
-                                                        CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
+                                                        CssClass="footable table table-bordered table-hover footable"
+                                                        AutoGenerateColumns="False"
+                                                        OnRowDataBound="gvGrupoJuradoConcurso_RowDataBound" 
+                                                        OnRowCommand="gvGrupoJuradoConcurso_RowCommand" 
+                                                        onrowdeleting="gvGrupoJuradoConcurso_RowDeleting"
+                                                        onrowEditing="gvGrupoJuradoConcurso_RowEditing">
                                                         <Columns>
                                                             <asp:BoundField HeaderText="Cód." DataField="cdJurado">
                                                                 <ItemStyle Width="5%" />
@@ -554,9 +578,10 @@
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
 	                                                            <ItemTemplate>
-		                                                            <asp:LinkButton ID="lnkEdit" runat="server"
-			                                                            CssClass="btn btn-primary btn-block" Text = "Editar"
-			                                                            CommandName='Edit'>
+		                                                            <asp:LinkButton ID="lnkEditJur" runat="server"
+			                                                            CssClass="btn btn-primary btn-block" 
+                                                                        Text = "Editar"
+                                                                        OnClick="lnkEditJur_Click">
 			                                                            <i class="glyphicon glyphicon-edit"></i>
 		                                                            </asp:LinkButton>
 	                                                            </ItemTemplate>
@@ -564,9 +589,9 @@
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
 	                                                            <ItemTemplate>
-		                                                            <asp:LinkButton ID="lnkDelete" runat="server"
-			                                                            CssClass="btn btn-primary btn-block btn-danger" Text = "Excluir"
-			                                                            CommandArgument='<%# Eval("cdJurado") %>'
+		                                                            <asp:LinkButton ID="lnkDeleteJur" runat="server"
+			                                                            CssClass="btn btn-primary btn-block btn-danger" 
+                                                                        Text = "Excluir"
 			                                                            CommandName='Delete'>
 			                                                            <i class="glyphicon glyphicon-trash"></i>
 		                                                            </asp:LinkButton>
@@ -580,6 +605,66 @@
                                             </div> <!--<div class="row">-->
                                         </div>
                                     </div>
+
+                                    <div id="divEdicaoJur" class="blueimp-gallery blueimp-gallery-display blueimp-gallery-left" style="display: none;">
+                                        <div class="slides" style="width: 2732px;">
+                                            <div class="slide" data-index="0" style="width: 1366px; left: 0px; transition-duration: 0ms; 
+                                                transform: translate(0px, 0px) translateZ(0px);">
+                                                <div class="modal fade slide-content in" style="display: block; overflow-y: scroll;">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">
+                                                                    <asp:Literal ID="ltTituloEdicaoJurado" runat="server"></asp:Literal>
+                                                                </h4>
+                                                                <br/>
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-body">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12">
+                                                                                <asp:Literal id="ltMensagemEdicaoJur" runat="server" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12">
+                                                                                <asp:TextBox ID="deGrupoEdit" class="form-control" runat="server" 
+                                                                                    placeholder="Grupo do Jurado..." Visible="True">
+                                                                                </asp:TextBox>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <div class="row">
+                                                                    <div class="col-sm-2" align="left" style="float: left">
+                                                                        <asp:LinkButton ID="btnConfirmarEdicaoJur" runat="server"
+                                                                            CssClass="btn btn-primary btn-block" 
+                                                                            OnClick="btnConfirmarEdicaoJur_Click">
+                                                                            <i class="glyphicon glyphicon-save"></i>
+                                                                            Confirmar
+                                                                        </asp:LinkButton>
+                                                                    </div>
+                                                                    <div class="col-sm-2" align="center" style="float: left">
+                                                                        <button class="btn btn-primary btn-block btn-danger" 
+                                                                            type="button"
+                                                                            onClick="javascript:DesativaEdicaoJur(); return false;">
+                                                                            <i class="glyphicon glyphicon-remove"></i>
+                                                                            Cancelar
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="col-sm-8" align="right" style="float: right">
+                                                                    </div>                        
+                                                                </div>        
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal fade"></div>
+                                        </div>
+                                    </div>
+
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div> <!--<div class="tab-pane" id="Jurados">-->
