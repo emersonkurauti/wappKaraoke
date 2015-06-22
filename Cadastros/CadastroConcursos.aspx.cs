@@ -200,8 +200,6 @@ namespace wappKaraoke.Cadastros
             gvAssociacoes.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
             gvAssociacoes.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
             gvAssociacoes.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-            gvAssociacoes.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
-            gvAssociacoes.HeaderRow.Cells[5].Attributes["data-hide"] = "phone";
 
             //Adds THEAD and TBODY to GridView.
             gvAssociacoes.HeaderRow.TableSection = TableRowSection.TableHeader;
@@ -769,8 +767,20 @@ namespace wappKaraoke.Cadastros
             objCoConcurso.dtFimConcurso = dtData;
 
             //Arquivos
-            _dtDocumentos = UnionDataTable(((DataTable)Session["_dtDocumentos"]), ((DataTable)Session["_dtDocumentosExc"]));
-            _dtImagens = UnionDataTable(((DataTable)Session["_dtImagens"]), ((DataTable)Session["_dtImagensExc"]));
+            if (Session["_dtDocumentos"] != null)
+            {
+                _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+                if (Session["_dtDocumentosExc"] != null)
+                    _dtDocumentos = UnionDataTable(((DataTable)Session["_dtDocumentos"]), ((DataTable)Session["_dtDocumentosExc"]));
+            }
+
+            if (Session["_dtImagens"] != null)
+            {
+                _dtImagens = (DataTable)Session["_dtImagens"];
+                if (Session["_dtImagensExc"] != null)
+                    _dtImagens = UnionDataTable(((DataTable)Session["_dtImagens"]), ((DataTable)Session["_dtImagensExc"]));
+            }
+
             objCoConcurso.dtArquivos = UnionDataTable(_dtDocumentos, _dtImagens);
         }
 
@@ -920,6 +930,8 @@ namespace wappKaraoke.Cadastros
         {
             int indexDocumento = Convert.ToInt32(Session["indexDocumento"].ToString());
             _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+            _dtDocumentos.Columns[caArquivos.CC_Controle].ReadOnly = false;
+            _dtDocumentos.Rows[indexDocumento][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
             _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo] = deArquivoEdit.Text;
             
             gvDocumentos.DataSource = _dtDocumentos;
@@ -929,6 +941,8 @@ namespace wappKaraoke.Cadastros
 
             if (_dtDocumentos.Rows.Count > 0)
                 ConfiguraGridDocumentos();
+
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosDocumentos();", true);
         }
 
         private void RegistrarScript()
