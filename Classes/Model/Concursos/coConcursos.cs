@@ -6,6 +6,7 @@ using System.Data;
 using wappKaraoke.Classes.Controller;
 using wappKaraoke.Classes.Model.Cidades;
 using wappKaraoke.Classes.Model.Arquivos;
+using wappKaraoke.Classes.Model.ConcursosAssociacoes;
 
 namespace wappKaraoke.Classes.Model.Concursos
 {
@@ -16,6 +17,13 @@ namespace wappKaraoke.Classes.Model.Concursos
         {
             get { return _dtArquivos; }
             set { _dtArquivos = value; }
+        }
+
+        private DataTable _dtAssociacoes;
+        public DataTable dtAssociacoes
+        {
+            get { return _dtAssociacoes; }
+            set { _dtAssociacoes = value; }
         }
 
         private static  int _CC_cdRegistro;
@@ -154,6 +162,12 @@ namespace wappKaraoke.Classes.Model.Concursos
                         objBanco.RollbackTransaction();
                         return false;
                     }
+
+                    if (!AtualizarAssociacoes())
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
                 }
 
                 objBanco.CommitTransaction();
@@ -179,6 +193,12 @@ namespace wappKaraoke.Classes.Model.Concursos
                         objBanco.RollbackTransaction();
                         return false;
                     }
+
+                    if (!AtualizarAssociacoes())
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
                 }
 
                 objBanco.CommitTransaction();
@@ -192,7 +212,7 @@ namespace wappKaraoke.Classes.Model.Concursos
         }
 
         /// <summary>
-        /// Insere os arquivos 
+        /// Atualiza os Arquivos 
         /// </summary>
         /// <returns></returns>
         private bool AtualizarArquivos()
@@ -246,6 +266,60 @@ namespace wappKaraoke.Classes.Model.Concursos
                             }
 
                             //Mover os arquivos da pasta temp para a oficial
+                        }
+                    }
+
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Atualiza as Associações
+        /// </summary>
+        /// <returns></returns>
+        private bool AtualizarAssociacoes()
+        {
+            conConcursosAssociacoes objConConcursosAssociacoes = new conConcursosAssociacoes();
+            try
+            {
+                foreach (DataRow dr in _dtAssociacoes.Rows)
+                {
+                    if (dr[caConcursosAssociacoes.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpCarregado)
+                    {
+                        objConConcursosAssociacoes.objCoConcursosAssociacoes.LimparAtributos();
+                        objConConcursosAssociacoes.objCoConcursosAssociacoes.cdConcurso = Convert.ToInt32(dr[caConcursosAssociacoes.cdConcurso].ToString());
+                        objConConcursosAssociacoes.objCoConcursosAssociacoes.cdAssociacao = Convert.ToInt32(dr[caConcursosAssociacoes.cdAssociacao].ToString());
+                        objConConcursosAssociacoes.objCoConcursosAssociacoes.deEmail = dr[caConcursosAssociacoes.deEmail].ToString();
+                        objConConcursosAssociacoes.objCoConcursosAssociacoes.nmRepresentante = dr[caConcursosAssociacoes.nmRepresentante].ToString();
+
+                        if (dr[caConcursosAssociacoes.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpInserido)
+                        {
+                            if (dr[caConcursosAssociacoes.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpAlterado)
+                            {
+                                if (!conConcursosAssociacoes.Alterar())
+                                {
+                                    return false;
+                                }
+                            }
+                            else if (dr[caConcursosAssociacoes.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpExcluido)
+                            {
+                                if (!conConcursosAssociacoes.Excluir())
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!conConcursosAssociacoes.Inserir())
+                            {
+                                return false;
+                            }
                         }
                     }
 

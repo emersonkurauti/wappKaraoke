@@ -74,7 +74,7 @@ namespace wappKaraoke.Cadastros
                 }
 
                 if (Session["_dtDocumentos"] != null && ((DataTable)Session["_dtDocumentos"]).Rows.Count > 0)
-                    ConfiguraGridDocumentos();
+                    ConfigurarGridView();
 
                 if (Request["__EVENTTARGET"] != null && !Request["__EVENTTARGET"].ToString().Contains("btnAdicionarArquivo"))
                 {
@@ -114,6 +114,16 @@ namespace wappKaraoke.Cadastros
         /// <summary>
         /// GERAL
         /// </summary>
+        protected override void InicializaSessions()
+        {
+            base.InicializaSessions();
+
+            Session["strLista"] = null;
+            Session["strDivs"] = null;
+            Session["alCdCategoria"] = null;
+            Session["alDeCategoria"] = null;
+        }
+
         protected override bool ConfigurarGridView()
         {
             if (!base.ConfigurarGridView())
@@ -146,32 +156,16 @@ namespace wappKaraoke.Cadastros
             }
         }
 
-        private void RegistrarScript()
-        {
-            string strScriptGridView = Session["strScriptGridView"] != null ? Session["strScriptGridView"].ToString() : "";
-            string strScriptImagens = Session["strScriptImagens"] != null ? Session["strScriptImagens"].ToString() : "";
-
-            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", strScriptGridView + strScriptImagens, true);
-        }
-
-        private void RegistrarScriptLoaded()
-        {
-            string strScriptGridView = Session["strScriptGridView"] != null ? Session["strScriptGridView"].ToString() : "";
-            string strScriptImagens = Session["strScriptImagens"] != null ? Session["strScriptImagens"].ToString() : "";
-
-            ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "", strScriptGridView + strScriptImagens, true);
-        }
-
         private void ConfiguraGridAssociacoes()
         {
             //Associações
             //Attribute to show the Plus Minus Button.
-            gvAssociacoes.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+            //gvAssociacoes.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
 
             //Attribute to hide column in Phone.
-            gvAssociacoes.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            gvAssociacoes.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-            gvAssociacoes.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+            //gvAssociacoes.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            //gvAssociacoes.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+            //gvAssociacoes.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
 
             //Adds THEAD and TBODY to GridView.
             gvAssociacoes.HeaderRow.TableSection = TableRowSection.TableHeader;
@@ -189,13 +183,13 @@ namespace wappKaraoke.Cadastros
             }
 
             //Attribute to show the Plus Minus Button.
-            gvGrupoJuradoConcurso.HeaderRow.Cells[2].Attributes["data-class"] = "expand";
+            //gvGrupoJuradoConcurso.HeaderRow.Cells[2].Attributes["data-class"] = "expand";
 
             //Attribute to hide column in Phone.
-            gvGrupoJuradoConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            gvGrupoJuradoConcurso.HeaderRow.Cells[1].Attributes["data-hide"] = "phone";
-            gvGrupoJuradoConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-            gvGrupoJuradoConcurso.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
+            //gvGrupoJuradoConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            //gvGrupoJuradoConcurso.HeaderRow.Cells[1].Attributes["data-hide"] = "phone";
+            //gvGrupoJuradoConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+            //gvGrupoJuradoConcurso.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
 
             //Adds THEAD and TBODY to GridView.
             gvGrupoJuradoConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
@@ -204,24 +198,30 @@ namespace wappKaraoke.Cadastros
         private void ConfiguraGridDocumentos()
         {
             //Attribute to show the Plus Minus Button.
-            gvDocumentos.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
+            //gvDocumentos.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
 
             //Attribute to hide column in Phone.
-            gvDocumentos.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            gvDocumentos.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
+            //gvDocumentos.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
+            //gvDocumentos.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
 
             //Adds THEAD and TBODY to GridView.
             gvDocumentos.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
 
-        protected override void InicializaSessions()
+        private void RegistrarScript()
         {
-            base.InicializaSessions();
+            string strScriptGridView = Session["strScriptGridView"] != null ? Session["strScriptGridView"].ToString() : "";
+            string strScriptImagens = Session["strScriptImagens"] != null ? Session["strScriptImagens"].ToString() : "";
 
-            Session["strLista"] = null;
-            Session["strDivs"] = null;
-            Session["alCdCategoria"] = null;
-            Session["alDeCategoria"] = null;
+            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", strScriptGridView + strScriptImagens, true);
+        }
+
+        private void RegistrarScriptLoaded()
+        {
+            string strScriptGridView = Session["strScriptGridView"] != null ? Session["strScriptGridView"].ToString() : "";
+            string strScriptImagens = Session["strScriptImagens"] != null ? Session["strScriptImagens"].ToString() : "";
+
+            ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "", strScriptGridView + strScriptImagens, true);
         }
 
         public void btnFechar_Click(Object sender, EventArgs e)
@@ -325,7 +325,16 @@ namespace wappKaraoke.Cadastros
                     _dtImagens = UnionDataTable(((DataTable)Session["_dtImagens"]), ((DataTable)Session["_dtImagensExc"]));
             }
 
+            //Associacoes
+            if (Session["_dtAssociacoes"] != null)
+            {
+                _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
+                if (Session["_dtAssociacoesExc"] != null)
+                    _dtAssociacoes = UnionDataTable(((DataTable)Session["_dtAssociacoes"]), ((DataTable)Session["_dtAssociacoesExc"]));
+            }
+
             objCoConcurso.dtArquivos = UnionDataTable(_dtDocumentos, _dtImagens);
+            objCoConcurso.dtAssociacoes = _dtAssociacoes;
         }
 
         protected override void btnSalvar_Click(object sender, EventArgs e)
@@ -483,7 +492,7 @@ namespace wappKaraoke.Cadastros
             Session["_dtDocumentos"] = _dtDocumentos;
 
             if (_dtDocumentos.Rows.Count > 0)
-                ConfiguraGridDocumentos();
+                ConfigurarGridView();
         }
 
         protected void btnAdicionarArquivo_Click(object sender, EventArgs e)
@@ -683,7 +692,7 @@ namespace wappKaraoke.Cadastros
             Session["_dtDocumentos"] = _dtDocumentos;
 
             if (_dtDocumentos.Rows.Count > 0)
-                ConfiguraGridDocumentos();
+                ConfigurarGridView();
 
             ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosDocumentos();", true);
         }
@@ -867,7 +876,9 @@ namespace wappKaraoke.Cadastros
             gvGrupoJuradoConcurso.DataBind();
 
             Session["_dtGruposJurados"] = objConGrupos.dtDados;
-            ConfiguraGridJurados();
+
+            if (objConGrupos.dtDados.Rows.Count > 0)
+                ConfigurarGridView();
         }
 
         protected void btnAdicionarGrupoJurado_Click(object sender, EventArgs e)
@@ -899,7 +910,7 @@ namespace wappKaraoke.Cadastros
                 gvGrupoJuradoConcurso.DataBind();
 
                 Session["_dtGruposJurados"] = _dtGruposJurados;
-                ConfiguraGridJurados();
+                ConfigurarGridView();
             }
             else
                 ltMensagemJurados.Text = MostraMensagem("Validação!", "Deve ser selecionado o Jurado.", csMensagem.msgWarning);
@@ -924,7 +935,7 @@ namespace wappKaraoke.Cadastros
             gvAssociacoes.DataBind();
 
             Session["_dtAssociacoes"] = objConConcursosAssociacoes.dtDados;
-            ConfiguraGridAssociacoes();
+            ConfigurarGridView();
         }
 
         protected void btnAdicionarAssociacao_Click(object sender, EventArgs e)
@@ -946,7 +957,7 @@ namespace wappKaraoke.Cadastros
                 gvAssociacoes.DataBind();
 
                 Session["_dtAssociacoes"] = _dtAssociacoes;
-                ConfiguraGridAssociacoes();
+                ConfigurarGridView();
             }
             else
                 ltMensagemAssociacoes.Text = MostraMensagem("Validação!", "Deve ser selecionada a Associação.", csMensagem.msgWarning);
@@ -1019,10 +1030,40 @@ namespace wappKaraoke.Cadastros
 
             Session["indexAssociacao"] = indexAssociacao;
             ltTituloEdicaoAssociacao.Text = _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.CC_nmAssociacao].ToString();
-            nmRepresentante.Text = _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.nmRepresentante].ToString();
+            nmRepresentanteEdit.Text = _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.nmRepresentante].ToString();
             deEmailRepresentanteEdit.Text = _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.deEmail].ToString();
 
             ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoAss();", true);
+        }
+
+        protected void btnConfirmarEdicaoAss_Click(object sender, EventArgs e)
+        {
+            int indexAssociacao = Convert.ToInt32(Session["indexAssociacao"].ToString());
+            _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
+            _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
+            _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.nmRepresentante] = nmRepresentanteEdit.Text;
+            _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.deEmail] = deEmailRepresentanteEdit.Text;
+
+            gvAssociacoes.DataSource = _dtAssociacoes;
+            gvAssociacoes.DataBind();
+
+            Session["_dtAssociacoes"] = _dtAssociacoes;
+
+            if (_dtAssociacoes.Rows.Count > 0)
+                ConfigurarGridView();
+
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
+        }
+
+        protected void upConcursoAssociacoes_PreRender(object sender, EventArgs e)
+        {
+            //this.ScriptManager1.RegisterPostBackControl(btnAdicionarAssociacao);
+
+            foreach (GridViewRow gvr in gvAssociacoes.Rows)
+            {
+                LinkButton lnkEditAss = gvr.FindControl("lnkEditAss") as LinkButton;
+                ScriptManager.GetCurrent(this).RegisterPostBackControl(lnkEditAss);
+            }
         }
     }
 }

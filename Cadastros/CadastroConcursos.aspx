@@ -69,7 +69,7 @@
 
         function AtivaEdicaoAss() {
             document.getElementById('divEdicaoAss').setAttribute('style', 'display: block;');
-            AtivaAbaArquivosDocumentos();
+            AtivaAbaAssociacoes();
         }
 
         function DesativaEdicaoAss() {
@@ -200,9 +200,9 @@
                                                         <label class="radio-inline">
                                                             <input type="radio" name="cdTpArquivo" id="cdTpArquivoImagem" disabled="disabled">Imagem
                                                         </label>
-                                                        <label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
+                                                        &nbsp;<label class="radio-inline"><input type="radio" name="cdTpArquivo" id="cdTpArquivoDocumento" disabled="disabled">Documento
                                                         </label> 
-                                                        <asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
+                                                        &nbsp;<asp:HiddenField ID="hdfCdTpArquivo" runat="server" />
                                                     </span>
                                                 </div>
                                             </div>
@@ -296,8 +296,6 @@
                                                                 </div>
                                                             </div>
 
-
-
                                                             <div id="divEdicao" class="blueimp-gallery blueimp-gallery-display blueimp-gallery-left" style="display: none;">
                                                                 <div class="slides" style="width: 2732px;">
                                                                     <div class="slide" data-index="0" style="width: 1366px; left: 0px; transition-duration: 0ms; 
@@ -353,8 +351,7 @@
                                                                     <div class="modal fade"></div>
                                                                 </div>
                                                             </div>
-
-
+                                                            
                                                         </div> <!--<div class="tab-pane active" id="Documentos">-->
                                                     </div>
                                                 </div>
@@ -365,7 +362,8 @@
                             </div>
                         </div> <!--<div class="tab-pane active" id="Arquivos">-->
                         <div class="tab-pane" id="Associacoes">
-                            <asp:UpdatePanel ID="upConcursoAssociacoes" runat="server" UpdateMode="Conditional">
+                            <asp:UpdatePanel ID="upConcursoAssociacoes" runat="server" UpdateMode="Conditional"
+                                onprerender="upConcursoAssociacoes_PreRender">
                                 <ContentTemplate>
                                     <div class="panel panel-default" style="border-top: 0px">
                                         <div class="panel-body">
@@ -466,6 +464,7 @@
                                                                                 </asp:TextBox>
                                                                             </div>
                                                                         </div>
+                                                                        <br />
                                                                         <div class="row">
                                                                             <div class="col-sm-12">
                                                                                 <asp:TextBox ID="deEmailRepresentanteEdit" class="form-control" runat="server" 
