@@ -32,6 +32,7 @@ namespace wappKaraoke.Cadastros
         private DataTable _dtImagens;
         private DataTable _dtImagensExc;
         private DataTable _dtAssociacoes;
+        private DataTable _dtAssociacoesExc;
         private DataTable _dtGruposJurados;
 
         private string ScriptGridView = @"$(function () { $('[id*=[idGridView]').footable(); });";
@@ -94,6 +95,8 @@ namespace wappKaraoke.Cadastros
                 Session["_dtDocumentos"] = null;
                 Session["_dtImagensExc"] = null;
                 Session["_dtImagens"] = null;
+                Session["_dtAssociacoesExc"] = null;
+                Session["_dtAssociacoes"] = null;
 
                 PegarChaveConcurso();
 
@@ -108,56 +111,9 @@ namespace wappKaraoke.Cadastros
             base.Page_Load(sender, e);
         }
 
-        private void RemoverImagem()
-        {
-            if (Session["_dtImagensExc"] != null)
-                _dtImagensExc = (DataTable)Session["_dtImagensExc"];
-            else
-                _dtImagensExc = conArquivos.objCo.RetornaEstruturaDT();
-
-            int intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
-            string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
-            
-            _dtImagens = (DataTable)Session["_dtImagens"];
-            _dtImagens.Columns[caArquivos.CC_Controle].ReadOnly = false;
-            _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
-
-            _dtImagensExc.ImportRow(_dtImagens.Rows[Convert.ToInt32(strParametro)]);
-            _dtImagens.Rows.Remove(_dtImagens.Rows[Convert.ToInt32(strParametro)]);
-
-            Session["_dtImagens"] = _dtImagens;
-
-            CarregarImagens();
-        }
-
-        private void EditarImagem()
-        {
-            int intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
-            string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
-            CarregarImagens(Convert.ToInt32(strParametro));
-        }
-
-        private void SalvarImagem()
-        {
-            int intPosIni = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
-            int intPosFim = Request["__EVENTARGUMENT"].ToString().LastIndexOf(';');
-
-            string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intPosIni, intPosFim - intPosIni);
-            string strValor = Request["__EVENTARGUMENT"].ToString().Substring(intPosFim + 1, Request["__EVENTARGUMENT"].ToString().Length - (intPosFim + 1));
-            _dtImagens = (DataTable)Session["_dtImagens"];
-
-            _dtImagens.Columns[caArquivos.CC_Controle].ReadOnly = false;
-
-            if (_dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpCarregado)
-                _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpAlterado;
-
-            _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.deArquivo] = strValor;
-
-            Session["_dtImagens"] = _dtImagens;
-
-            CarregarImagens();
-        }
-
+        /// <summary>
+        /// GERAL
+        /// </summary>
         protected override bool ConfigurarGridView()
         {
             if (!base.ConfigurarGridView())
@@ -188,6 +144,22 @@ namespace wappKaraoke.Cadastros
             {
                 return false;
             }
+        }
+
+        private void RegistrarScript()
+        {
+            string strScriptGridView = Session["strScriptGridView"] != null ? Session["strScriptGridView"].ToString() : "";
+            string strScriptImagens = Session["strScriptImagens"] != null ? Session["strScriptImagens"].ToString() : "";
+
+            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", strScriptGridView + strScriptImagens, true);
+        }
+
+        private void RegistrarScriptLoaded()
+        {
+            string strScriptGridView = Session["strScriptGridView"] != null ? Session["strScriptGridView"].ToString() : "";
+            string strScriptImagens = Session["strScriptImagens"] != null ? Session["strScriptImagens"].ToString() : "";
+
+            ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "", strScriptGridView + strScriptImagens, true);
         }
 
         private void ConfiguraGridAssociacoes()
@@ -228,7 +200,7 @@ namespace wappKaraoke.Cadastros
             //Adds THEAD and TBODY to GridView.
             gvGrupoJuradoConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
-        
+
         private void ConfiguraGridDocumentos()
         {
             //Attribute to show the Plus Minus Button.
@@ -249,7 +221,7 @@ namespace wappKaraoke.Cadastros
             Session["strLista"] = null;
             Session["strDivs"] = null;
             Session["alCdCategoria"] = null;
-            Session["alDeCategoria"] = null;            
+            Session["alDeCategoria"] = null;
         }
 
         public void btnFechar_Click(Object sender, EventArgs e)
@@ -260,6 +232,484 @@ namespace wappKaraoke.Cadastros
         public void btnReabrir_Click(Object sender, EventArgs e)
         {
             flFinalizado.Checked = false;
+        }
+
+        private void PegarChaveConcurso()
+        {
+            if (Session["IndexRowDados"] != null)
+            {
+                IndexRowDados = (int)Session["IndexRowDados"];
+                dtDados = (DataTable)Session["dtDados"];
+
+                Session["cdConcurso"] = dtDados.Rows[IndexRowDados][caConcursos.nmCampoChave.ToString()].ToString();
+            }
+            else
+                Session["cdConcurso"] = 0;
+        }
+
+        private void CarregarDDL()
+        {
+            csCidades vcsCidades = new csCidades();
+            cdCidade = vcsCidades.CarregaDDL(cdCidade);
+
+            csAssociacoes vcsAssociacoes = new csAssociacoes();
+            cdAssociacao = vcsAssociacoes.CarregaDDL(cdAssociacao);
+
+            csJurados vcsJurados = new csJurados();
+            cdJurado = vcsJurados.CarregaDDL(cdJurado);
+
+            csCategorias vcsCategorias = new csCategorias();
+            cdCategoria = vcsCategorias.CarregaDDL(cdCategoria);
+
+            csAssociacoes vcsAssociacoesCancores = new csAssociacoes();
+            vcsAssociacoesCancores.bFiltraConcurso = true;
+            vcsAssociacoesCancores.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+            cdAssociacaoCantor = vcsAssociacoesCancores.CarregaDDL(cdAssociacaoCantor);
+
+            csFases vcsFasesConcurso = new csFases();
+            cdFaseCantor = vcsFasesConcurso.CarregaDDL(cdFaseCantor);
+
+            csCantores vcsCancotres = new csCantores();
+            cdCantor = vcsCancotres.CarregaDDL(cdCantor);
+
+            csMusicas vcsMusicas = new csMusicas();
+            cdMusica = vcsMusicas.CarregaDDL(cdMusica);
+
+            csStatus vcsStatus = new csStatus();
+            cdStatus = vcsStatus.CarregaDDL(cdStatus);
+        }
+
+        private DataTable UnionDataTable(DataTable dt1, DataTable dt2)
+        {
+            DataTable dtResult = new DataTable();
+
+            dtResult = conArquivos.objCo.RetornaEstruturaDT();
+
+            foreach (DataRow dr in dt1.Rows)
+            {
+                dtResult.ImportRow(dr);
+            }
+            foreach (DataRow dr in dt2.Rows)
+            {
+                dtResult.ImportRow(dr);
+            }
+
+            return dtResult;
+        }
+
+        private void PreencheObjetos(coConcursos objCoConcurso)
+        {
+            DateTime dtData;
+            objCoConcurso.cdConcurso = Session["IndexRowDados"] == null ? 0 : Convert.ToInt32(Session["cdConcurso"].ToString());
+            objCoConcurso.nmConcurso = nmConcurso.Text;
+            objCoConcurso.nmConcursoKanji = nmConcursoKanji.Text;
+            objCoConcurso.cdCidade = Convert.ToInt32(cdCidade.SelectedValue.ToString());
+            objCoConcurso.flFinalizado = flFinalizado.Checked ? "S" : "N";
+            DateTime.TryParse(dtIniConcurso.Text, out dtData);
+            objCoConcurso.dtIniConcurso = dtData;
+            DateTime.TryParse(dtFimConcurso.Text, out dtData);
+            objCoConcurso.dtFimConcurso = dtData;
+
+            //Arquivos
+            if (Session["_dtDocumentos"] != null)
+            {
+                _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+                if (Session["_dtDocumentosExc"] != null)
+                    _dtDocumentos = UnionDataTable(((DataTable)Session["_dtDocumentos"]), ((DataTable)Session["_dtDocumentosExc"]));
+            }
+
+            if (Session["_dtImagens"] != null)
+            {
+                _dtImagens = (DataTable)Session["_dtImagens"];
+                if (Session["_dtImagensExc"] != null)
+                    _dtImagens = UnionDataTable(((DataTable)Session["_dtImagens"]), ((DataTable)Session["_dtImagensExc"]));
+            }
+
+            objCoConcurso.dtArquivos = UnionDataTable(_dtDocumentos, _dtImagens);
+        }
+
+        protected override void btnSalvar_Click(object sender, EventArgs e)
+        {
+            conConcursos objConConcursos = new conConcursos();
+            bool bInserindo = Session["IndexRowDados"] == null;
+
+            objConConcursos.objCoConcursos.LimparAtributos();
+
+            if (!bErro)
+            {
+                PreencheObjetos(objConConcursos.objCoConcursos);
+
+                if (bInserindo)
+                {
+                    if (conConcursos.Inserir())
+                    {
+                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroInserido, csMensagem.msgSucess);
+                    }
+                    else
+                    {
+                        bErro = true;
+                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
+                    }
+                }
+                else
+                {
+                    if (conConcursos.Alterar())
+                    {
+                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroAlterado, csMensagem.msgSucess);
+                    }
+                    else
+                    {
+                        bErro = true;
+                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
+                    }
+                }
+
+                Session["ltMensagemDefault"] = ltMensagem;
+            }
+
+            if (!bErro)
+            {
+                string strPagina = Session["_strPaginaConsulta"].ToString();
+                Session["_strPaginaConsulta"] = null;
+                Response.Redirect(strPagina.Replace("Cadastro", "Consulta"));
+            }
+        }
+
+        /// <summary>
+        /// Imagens/Documentos
+        /// </summary>
+        private void RemoverImagem()
+        {
+            if (Session["_dtImagensExc"] != null)
+                _dtImagensExc = (DataTable)Session["_dtImagensExc"];
+            else
+                _dtImagensExc = conArquivos.objCo.RetornaEstruturaDT();
+
+            int intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
+            string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
+            
+            _dtImagens = (DataTable)Session["_dtImagens"];
+            _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
+
+            _dtImagensExc.ImportRow(_dtImagens.Rows[Convert.ToInt32(strParametro)]);
+            _dtImagens.Rows.Remove(_dtImagens.Rows[Convert.ToInt32(strParametro)]);
+
+            Session["_dtImagens"] = _dtImagens;
+
+            CarregarImagens();
+        }
+
+        private void EditarImagem()
+        {
+            int intTamanhoParam = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
+            string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intTamanhoParam, Request["__EVENTARGUMENT"].Length - intTamanhoParam);
+            CarregarImagens(Convert.ToInt32(strParametro));
+        }
+
+        private void SalvarImagem()
+        {
+            int intPosIni = Request["__EVENTARGUMENT"].ToString().IndexOf(';') + 1;
+            int intPosFim = Request["__EVENTARGUMENT"].ToString().LastIndexOf(';');
+
+            string strParametro = Request["__EVENTARGUMENT"].ToString().Substring(intPosIni, intPosFim - intPosIni);
+            string strValor = Request["__EVENTARGUMENT"].ToString().Substring(intPosFim + 1, Request["__EVENTARGUMENT"].ToString().Length - (intPosFim + 1));
+            _dtImagens = (DataTable)Session["_dtImagens"];
+
+            if (_dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpCarregado)
+                _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpAlterado;
+
+            _dtImagens.Rows[Convert.ToInt32(strParametro)][caArquivos.deArquivo] = strValor;
+
+            Session["_dtImagens"] = _dtImagens;
+
+            CarregarImagens();
+        }
+
+        private void CopiarArquivoParaTemp()
+        {
+            string strCaminhoTemp = Request.PhysicalApplicationPath + wappKaraoke.Properties.Settings.Default.sCaminhoTemp;
+            fluArquivo.SaveAs(strCaminhoTemp + fluArquivo.FileName);
+        }
+
+        private void AddArquivo(ref DataTable pdtArquivo)
+        {
+            DataRow dr = pdtArquivo.NewRow();
+
+            dr[caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpInserido;
+            dr[caArquivos.cdArquivo] = 0;
+            dr[caArquivos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
+            dr[caArquivos.cdTipoArquivo] = Convert.ToInt32(hdfCdTpArquivo.Value.ToString());
+            dr[caArquivos.nmArquivo] = hdfNmArquivo.Value.ToString();
+            dr[caArquivos.deArquivo] = deArquivo.Text;
+
+            pdtArquivo.Rows.Add(dr);
+        }
+
+        private void CarregarArquivos()
+        {
+            conArquivos objConArquivos = new conArquivos();
+            objConArquivos.objCoArquivos.LimparAtributos();
+            objConArquivos.objCoArquivos.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+
+            if (Session["_dtImagens"] != null)
+                _dtImagens = (DataTable)Session["_dtImagens"];
+            else
+            {
+                objConArquivos.objCoArquivos.cdTipoArquivo = csConstantes.cCdTipoArquivoImagem;
+
+                if (!conArquivos.Select())
+                    ltMensagemArquivos.Text = MostraMensagem("Falha", "Problemas ao carregar imagens.", csMensagem.msgDanger);
+
+                Session["_dtImagens"] = objConArquivos.dtDados;
+            }
+
+            CarregarImagens();
+
+            if (Session["_dtDocumentos"] != null)
+                _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+            else
+            {
+                objConArquivos.objCoArquivos.cdTipoArquivo = csConstantes.cCdTipoArquivoDocumento;
+
+                if (!conArquivos.Select())
+                    ltMensagemArquivos.Text = MostraMensagem("Falha", "Problemas ao carregar documentos.", csMensagem.msgDanger);
+
+                _dtDocumentos = objConArquivos.dtDados;
+            }
+
+            gvDocumentos.DataSource = _dtDocumentos;
+            gvDocumentos.DataBind();
+
+            Session["_dtDocumentos"] = _dtDocumentos;
+
+            if (_dtDocumentos.Rows.Count > 0)
+                ConfiguraGridDocumentos();
+        }
+
+        protected void btnAdicionarArquivo_Click(object sender, EventArgs e)
+        {
+            if (hdfNmArquivo.Value.ToString() != "")
+            {
+                if (Convert.ToInt32(hdfCdTpArquivo.Value.ToString()) == csConstantes.cCdTipoArquivoImagem)
+                {
+                    if (Session["_dtImagens"] != null)
+                    {
+                        CopiarArquivoParaTemp();
+                        _dtImagens = (DataTable)Session["_dtImagens"];
+                        AddArquivo(ref _dtImagens);
+                    }
+
+                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosImagens();", true);
+                }
+                else if (Convert.ToInt32(hdfCdTpArquivo.Value.ToString()) == csConstantes.cCdTipoArquivoDocumento)
+                {
+                    if (Session["_dtDocumentos"] != null)
+                    {
+                        CopiarArquivoParaTemp();
+                        _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+                        AddArquivo(ref _dtDocumentos);
+                    }
+
+                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosDocumentos();", true);
+                }
+
+                deArquivo.Text = "";
+                CarregarArquivos();
+            }
+            else
+            {
+                ltMensagemArquivos.Text = MostraMensagem("Falha", "Selecione um arquivo para adicionar.", csMensagem.msgWarning);
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosImagens();", true);
+            }
+
+            hdfNmArquivo.Value = "";
+            hdfCdTpArquivo.Value = "";
+        }
+
+        private void CarregarImagens(int pnIndexImgEditar = -1)
+        {
+            if (Session["_dtImagens"] != null)
+            {
+                int seq = 0;
+                string strCaminho = "../" + wappKaraoke.Properties.Settings.Default.sCaminhoArqImagens.Replace("\\", "/");
+                string strCaminhoTemp = "../" + wappKaraoke.Properties.Settings.Default.sCaminhoTemp.Replace("\\", "/");
+                string strCaminhoImg = "";
+                string strScriptImagens = "";
+
+                _dtImagens = (DataTable)Session["_dtImagens"];
+
+                ltImagens.Text = csDinamico.strInicioLista;
+
+                foreach (DataRow dr in _dtImagens.Rows)
+                {
+                    if (dr[caArquivos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpExcluido)
+                    {
+                        string strDivImagem = pnIndexImgEditar == seq ? csDinamico.strDivImagemEdit : csDinamico.strDivImagem;
+
+                        if (seq != 0 && seq % 3 == 0)
+                        {
+                            ltImagens.Text += csDinamico.strFinalLista;
+                            ltImagens.Text += csDinamico.strInicioLista;
+                        }
+                        if (Convert.ToInt32(dr[caArquivos.cdArquivo].ToString()) != 0)
+                            strCaminhoImg = strCaminho;
+                        else
+                            strCaminhoImg = strCaminhoTemp;
+
+                        ltImagens.Text += strDivImagem.Replace("[strCaminhoImagem]", strCaminhoImg + dr[caArquivos.nmArquivo].ToString()).Replace("[strDescImagem]",
+                                dr[caArquivos.deArquivo].ToString()).Replace("[strSeqImagem]", (seq).ToString());
+
+                        if (pnIndexImgEditar == seq)
+                        {
+                            strScriptImagens += "function lnkSalvar_" + seq.ToString() + "_Click() {" + "\n" +
+                                "  __doPostBack('lnkSalvar_" + seq.ToString() + "', 'SalvarImagem;" + seq.ToString() + ";'+ document.getElementById('deArquivoEdit').value);" + "\n" +
+                                "} \n";
+                        }
+                        else
+                        {
+                            strScriptImagens += "function lnkEditar_" + seq.ToString() + "_Click() {" + "\n" +
+                                "  __doPostBack('lnkEditar_" + seq.ToString() + "', 'EditarImagem;" + seq.ToString() + "');" + "\n" +
+                                "} \n";
+                        }
+
+                        strScriptImagens += "function lnkRemover_" + seq.ToString() + "_Click() {" + "\n" +
+                            "  __doPostBack('lnkRemover_" + seq.ToString() + "', 'RemoveImagem;" + seq.ToString() + "');" + "\n" +
+                            "} \n";
+                    }
+
+                    seq++;
+                }
+
+                Session["strScriptImagens"] = strScriptImagens;
+                ltImagens.Text += csDinamico.strFinalLista;
+
+                RegistrarScriptLoaded();
+            }
+        }
+
+        protected void upArquivos_PreRender(object sender, EventArgs e)
+        {
+            this.ScriptManager1.RegisterPostBackControl(btnAdicionarArquivo);
+
+            foreach (GridViewRow gvr in gvDocumentos.Rows)
+            {
+                LinkButton lnkEditDoc = gvr.FindControl("lnkEditDoc") as LinkButton;
+                ScriptManager.GetCurrent(this).RegisterPostBackControl(lnkEditDoc);
+            }
+        }
+
+        protected void RemoveDocumento(int pintIndice)
+        {
+            _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+            _dtDocumentos.Rows[pintIndice][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
+
+            if (Session["_dtDocumentosExc"] != null)
+                _dtDocumentosExc = (DataTable)Session["_dtDocumentosExc"];
+            else
+                _dtDocumentosExc = conArquivos.objCo.RetornaEstruturaDT();
+
+            _dtDocumentosExc.ImportRow(_dtDocumentos.Rows[pintIndice]);
+            _dtDocumentos.Rows.Remove(_dtDocumentos.Rows[pintIndice]);
+
+            Session["_dtDocumentosExc"] = _dtDocumentosExc;
+
+            gvDocumentos.DataSource = _dtDocumentos;
+            gvDocumentos.DataBind();
+
+            Session["_dtDocumentos"] = _dtDocumentos;
+
+            if (_dtDocumentos.Rows.Count > 0)
+                ConfigurarGridView();
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosDocumentos();", true);
+        }
+
+        protected void gvDocumentos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Delete")
+            {
+                RemoveDocumento(Convert.ToInt32(e.CommandArgument));
+            }
+        }
+
+        protected void gvDocumentos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDeleteDoc");
+                lnkDelete.CommandArgument = e.Row.RowIndex.ToString();
+                lnkDelete.Attributes.Add("OnClick", "javascript:return " +
+                    "confirm('O registro será removido!')");
+                /*"confirm('O registro \"" + DataBinder.Eval(e.Row.DataItem, obj.dePrincipal) + "\" será removido!')");*/
+
+                LinkButton lnkEdit = (LinkButton)e.Row.FindControl("lnkEditDoc");
+                lnkEdit.CommandArgument = e.Row.RowIndex.ToString();
+
+                this.ScriptManager1.RegisterPostBackControl(lnkEdit);
+            }
+        }
+
+        protected void gvDocumentos_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+        }
+
+        protected void gvDocumentos_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+
+        }
+
+        protected void lnkEditDoc_Click(object sender, EventArgs e)
+        {
+            _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+            int indexDocumento = Convert.ToInt32(((LinkButton)sender).CommandArgument);
+
+            Session["indexDocumento"] = indexDocumento;
+            ltTituloEdicao.Text = _dtDocumentos.Rows[indexDocumento][caArquivos.nmArquivo].ToString();
+            deArquivoEdit.Text = _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString();
+
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicao();", true);
+        }
+
+        protected void btnConfirmarEdicao_Click(object sender, EventArgs e)
+        {
+            int indexDocumento = Convert.ToInt32(Session["indexDocumento"].ToString());
+            _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+            _dtDocumentos.Rows[indexDocumento][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
+            _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo] = deArquivoEdit.Text;
+
+            gvDocumentos.DataSource = _dtDocumentos;
+            gvDocumentos.DataBind();
+
+            Session["_dtDocumentos"] = _dtDocumentos;
+
+            if (_dtDocumentos.Rows.Count > 0)
+                ConfiguraGridDocumentos();
+
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosDocumentos();", true);
+        }
+
+        /// <summary>
+        /// Cantores Categorias
+        /// </summary>
+        private void CarregarCantoresCategorias()
+        {
+            conCantoresFases objConCantoresFases = new conCantoresFases();
+            objConCantoresFases.objCoCantoresFases.LimparAtributos();
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+
+            if (!conCantoresFases.SelectCategoriasConcurso())
+            {
+                ltMensagensCategorias.Text = MostraMensagem("Falha!", "Falha ao carregar as categorias do concurso.", csMensagem.msgDanger);
+                return;
+            }
+
+            foreach (DataRow dr in objConCantoresFases.dtDados.Rows)
+            {
+                AdicionaCantorCategoriaConcurso(dr[caCategorias.cdCategoria].ToString(), dr[caCategorias.deCategoria].ToString(), true);
+            }
+
+            RegistrarScript();
+            //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", Session["strScriptGridView"].ToString(), true);
         }
 
         public void btnAdicionarCategoria_OnClick(Object sender, EventArgs e)
@@ -398,257 +848,9 @@ namespace wappKaraoke.Cadastros
             ltCategorias.Text = strInicio + strLista + strMeio + strDivs + strFim;
         }
 
-        private void PegarChaveConcurso()
-        {
-            if (Session["IndexRowDados"] != null)
-            {
-                IndexRowDados = (int)Session["IndexRowDados"];
-                dtDados = (DataTable)Session["dtDados"];
-
-                Session["cdConcurso"] = dtDados.Rows[IndexRowDados][caConcursos.nmCampoChave.ToString()].ToString();
-            }
-            else
-                Session["cdConcurso"] = 0;
-        }
-
-        private void CarregarDDL()
-        {
-            csCidades vcsCidades = new csCidades();
-            cdCidade = vcsCidades.CarregaDDL(cdCidade);
-
-            csAssociacoes vcsAssociacoes = new csAssociacoes();
-            cdAssociacao = vcsAssociacoes.CarregaDDL(cdAssociacao);
-
-            csJurados vcsJurados = new csJurados();
-            cdJurado = vcsJurados.CarregaDDL(cdJurado);
-
-            csCategorias vcsCategorias = new csCategorias();
-            cdCategoria = vcsCategorias.CarregaDDL(cdCategoria);
-
-            csAssociacoes vcsAssociacoesCancores = new csAssociacoes();
-            vcsAssociacoesCancores.bFiltraConcurso = true;
-            vcsAssociacoesCancores.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
-            cdAssociacaoCantor = vcsAssociacoesCancores.CarregaDDL(cdAssociacaoCantor);
-
-            csFases vcsFasesConcurso = new csFases();
-            cdFaseCantor = vcsFasesConcurso.CarregaDDL(cdFaseCantor);
-
-            csCantores vcsCancotres = new csCantores();
-            cdCantor = vcsCancotres.CarregaDDL(cdCantor);
-
-            csMusicas vcsMusicas = new csMusicas();
-            cdMusica = vcsMusicas.CarregaDDL(cdMusica);
-
-            csStatus vcsStatus = new csStatus();
-            cdStatus = vcsStatus.CarregaDDL(cdStatus);
-        }
-
-        private void CopiarArquivoParaTemp()
-        {
-            string strCaminhoTemp = Request.PhysicalApplicationPath + wappKaraoke.Properties.Settings.Default.sCaminhoTemp;
-            fluArquivo.SaveAs(strCaminhoTemp + fluArquivo.FileName);
-        }
-
-        private void AddArquivo(ref DataTable pdtArquivo)
-        {
-            DataRow dr = pdtArquivo.NewRow();
-
-            dr[caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpInserido;
-            dr[caArquivos.cdArquivo] = 0;
-            dr[caArquivos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
-            dr[caArquivos.cdTipoArquivo] = Convert.ToInt32(hdfCdTpArquivo.Value.ToString());
-            dr[caArquivos.nmArquivo] = hdfNmArquivo.Value.ToString();
-            dr[caArquivos.deArquivo] = deArquivo.Text;
-
-            pdtArquivo.Rows.Add(dr);
-        }
-
-        private void CarregarArquivos()
-        {
-            conArquivos objConArquivos = new conArquivos();
-            objConArquivos.objCoArquivos.LimparAtributos();
-            objConArquivos.objCoArquivos.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
-
-            if (Session["_dtImagens"] != null)
-                _dtImagens = (DataTable)Session["_dtImagens"];
-            else
-            {
-                objConArquivos.objCoArquivos.cdTipoArquivo = csConstantes.cCdTipoArquivoImagem;
-
-                if (!conArquivos.Select())
-                    ltMensagemArquivos.Text = MostraMensagem("Falha", "Problemas ao carregar imagens.", csMensagem.msgDanger);
-
-                Session["_dtImagens"] = objConArquivos.dtDados;
-            }
-
-            CarregarImagens();
-
-            if (Session["_dtDocumentos"] != null)
-                _dtDocumentos = (DataTable)Session["_dtDocumentos"];
-            else
-            {
-                objConArquivos.objCoArquivos.cdTipoArquivo = csConstantes.cCdTipoArquivoDocumento;
-
-                if (!conArquivos.Select())
-                    ltMensagemArquivos.Text = MostraMensagem("Falha", "Problemas ao carregar documentos.", csMensagem.msgDanger);
-
-                _dtDocumentos = objConArquivos.dtDados;
-            }
-
-            gvDocumentos.DataSource = _dtDocumentos;
-            gvDocumentos.DataBind();
-
-            Session["_dtDocumentos"] = _dtDocumentos;
-
-            if (_dtDocumentos.Rows.Count > 0)
-                ConfiguraGridDocumentos();
-        }
-
-        protected void btnAdicionarArquivo_Click(object sender, EventArgs e)
-        {
-            if (hdfNmArquivo.Value.ToString() != "")
-            {
-                if (Convert.ToInt32(hdfCdTpArquivo.Value.ToString()) == csConstantes.cCdTipoArquivoImagem)
-                {
-                    if (Session["_dtImagens"] != null)
-                    {
-                        CopiarArquivoParaTemp();
-                        _dtImagens = (DataTable)Session["_dtImagens"];
-                        AddArquivo(ref _dtImagens);
-                    }
-
-                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosImagens();", true);
-                }
-                else if (Convert.ToInt32(hdfCdTpArquivo.Value.ToString()) == csConstantes.cCdTipoArquivoDocumento)
-                {
-                    if (Session["_dtDocumentos"] != null)
-                    {
-                        CopiarArquivoParaTemp();
-                        _dtDocumentos = (DataTable)Session["_dtDocumentos"];
-                        AddArquivo(ref _dtDocumentos);                        
-                    }
-
-                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosDocumentos();", true);
-                }
-
-                deArquivo.Text = "";
-                CarregarArquivos();
-            }
-            else
-            {
-                ltMensagemArquivos.Text = MostraMensagem("Falha", "Selecione um arquivo para adicionar.", csMensagem.msgWarning);
-                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosImagens();", true);
-            }
-
-            hdfNmArquivo.Value = "";
-            hdfCdTpArquivo.Value = "";
-        }
-
-        private void CarregarImagens(int pnIndexImgEditar = -1) 
-        {
-            if (Session["_dtImagens"] != null)
-            {
-                int seq = 0;
-                string strCaminho = "../" + wappKaraoke.Properties.Settings.Default.sCaminhoArqImagens.Replace("\\", "/");
-                string strCaminhoTemp = "../" + wappKaraoke.Properties.Settings.Default.sCaminhoTemp.Replace("\\", "/");
-                string strCaminhoImg = "";
-                string strScriptImagens = "";
-
-                _dtImagens = (DataTable)Session["_dtImagens"];
-
-                ltImagens.Text = csDinamico.strInicioLista;
-
-                foreach (DataRow dr in _dtImagens.Rows)
-                {
-                    if (dr[caArquivos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpExcluido)
-                    {
-                        string strDivImagem = pnIndexImgEditar == seq ? csDinamico.strDivImagemEdit : csDinamico.strDivImagem;
-
-                        if (seq != 0 && seq % 3 == 0)
-                        {
-                            ltImagens.Text += csDinamico.strFinalLista;
-                            ltImagens.Text += csDinamico.strInicioLista;
-                        }
-                        if (Convert.ToInt32(dr[caArquivos.cdArquivo].ToString()) != 0)
-                            strCaminhoImg = strCaminho;
-                        else
-                            strCaminhoImg = strCaminhoTemp;
-
-                        ltImagens.Text += strDivImagem.Replace("[strCaminhoImagem]", strCaminhoImg + dr[caArquivos.nmArquivo].ToString()).Replace("[strDescImagem]",
-                                dr[caArquivos.deArquivo].ToString()).Replace("[strSeqImagem]", (seq).ToString());
-
-                        if (pnIndexImgEditar == seq)
-                        {
-                            strScriptImagens += "function lnkSalvar_" + seq.ToString() + "_Click() {" + "\n" +
-                                "  __doPostBack('lnkSalvar_" + seq.ToString() + "', 'SalvarImagem;" + seq.ToString() + ";'+ document.getElementById('deArquivoEdit').value);" + "\n" +
-                                "} \n";
-                        }
-                        else
-                        {
-                            strScriptImagens += "function lnkEditar_" + seq.ToString() + "_Click() {" + "\n" +
-                                "  __doPostBack('lnkEditar_" + seq.ToString() + "', 'EditarImagem;" + seq.ToString() + "');" + "\n" +
-                                "} \n";
-                        }
-
-                        strScriptImagens += "function lnkRemover_" + seq.ToString() + "_Click() {" + "\n" +
-                            "  __doPostBack('lnkRemover_" + seq.ToString() + "', 'RemoveImagem;" + seq.ToString() + "');" + "\n" +
-                            "} \n";
-                    }
-
-                    seq++;
-                }
-
-                Session["strScriptImagens"] = strScriptImagens;
-                ltImagens.Text += csDinamico.strFinalLista;
-
-                RegistrarScriptLoaded();
-            }
-        }
-
-        private void CarregarAssociacoes()
-        {
-            conConcursosAssociacoes objConConcursosAssociacoes = new conConcursosAssociacoes();
-            objConConcursosAssociacoes.objCoConcursosAssociacoes.LimparAtributos();
-            objConConcursosAssociacoes.objCoConcursosAssociacoes.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
-
-            if (!conConcursosAssociacoes.Select())
-            {
-                ltMensagemAssociacoes.Text = MostraMensagem("Falha", "Problemas ao carregar Associações.", csMensagem.msgDanger);
-                return;
-            }
-
-            gvAssociacoes.DataSource = objConConcursosAssociacoes.dtDados;
-            gvAssociacoes.DataBind();
-
-            Session["_dtAssociacoes"] = objConConcursosAssociacoes.dtDados;
-            ConfiguraGridAssociacoes();
-        }
-
-        protected void btnAdicionarAssociacao_Click(object sender, EventArgs e)
-        {
-            if (cdAssociacao.SelectedIndex > 0)
-            {
-                _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
-                DataRow dr = _dtAssociacoes.NewRow();
-
-                dr[caConcursosAssociacoes.cdAssociacao] = cdAssociacao.SelectedValue;
-                dr[caConcursosAssociacoes.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
-                dr[caConcursosAssociacoes.deEmail] = deEmail.Text;
-                dr[caConcursosAssociacoes.nmRepresentante] = nmRepresentante.Text;
-                dr[caConcursosAssociacoes.CC_nmAssociacao] = cdAssociacao.SelectedItem.ToString();
-
-                _dtAssociacoes.Rows.Add(dr);
-
-                gvAssociacoes.DataSource = _dtAssociacoes;
-                gvAssociacoes.DataBind();
-
-                Session["_dtAssociacoes"] = _dtAssociacoes;
-                ConfiguraGridAssociacoes();
-            }
-            else
-                ltMensagemAssociacoes.Text = MostraMensagem("Validação!", "Deve ser selecionada a Associação.", csMensagem.msgWarning);
-        }
-
+        /// <summary>
+        /// Jurados
+        /// </summary>
         private void CarregarGruposJurados()
         {
             conGrupos objConGrupos = new conGrupos();
@@ -703,264 +905,124 @@ namespace wappKaraoke.Cadastros
                 ltMensagemJurados.Text = MostraMensagem("Validação!", "Deve ser selecionado o Jurado.", csMensagem.msgWarning);
         }
 
-        protected void upArquivos_PreRender(object sender, EventArgs e)
+        /// <summary>
+        /// Associacoes
+        /// </summary>
+        private void CarregarAssociacoes()
         {
-            this.ScriptManager1.RegisterPostBackControl(btnAdicionarArquivo);
+            conConcursosAssociacoes objConConcursosAssociacoes = new conConcursosAssociacoes();
+            objConConcursosAssociacoes.objCoConcursosAssociacoes.LimparAtributos();
+            objConConcursosAssociacoes.objCoConcursosAssociacoes.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
 
-            foreach (GridViewRow gvr in gvDocumentos.Rows)
+            if (!conConcursosAssociacoes.Select())
             {
-                LinkButton lnkEditDoc = gvr.FindControl("lnkEditDoc") as LinkButton;
-                ScriptManager.GetCurrent(this).RegisterPostBackControl(lnkEditDoc);
-            }
-        }
-
-        private void CarregarCantoresCategorias()
-        {
-            conCantoresFases objConCantoresFases = new conCantoresFases();
-            objConCantoresFases.objCoCantoresFases.LimparAtributos();
-            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
-
-            if (!conCantoresFases.SelectCategoriasConcurso())
-            {
-                ltMensagensCategorias.Text = MostraMensagem("Falha!", "Falha ao carregar as categorias do concurso.", csMensagem.msgDanger);
+                ltMensagemAssociacoes.Text = MostraMensagem("Falha", "Problemas ao carregar Associações.", csMensagem.msgDanger);
                 return;
             }
 
-            foreach (DataRow dr in objConCantoresFases.dtDados.Rows)
-            {
-                AdicionaCantorCategoriaConcurso(dr[caCategorias.cdCategoria].ToString(), dr[caCategorias.deCategoria].ToString(), true);
-            }
+            gvAssociacoes.DataSource = objConConcursosAssociacoes.dtDados;
+            gvAssociacoes.DataBind();
 
-            RegistrarScript();
-            //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", Session["strScriptGridView"].ToString(), true);
+            Session["_dtAssociacoes"] = objConConcursosAssociacoes.dtDados;
+            ConfiguraGridAssociacoes();
         }
 
-        private DataTable UnionDataTable(DataTable dt1, DataTable dt2)
+        protected void btnAdicionarAssociacao_Click(object sender, EventArgs e)
         {
-            DataTable dtResult = new DataTable();
-
-            dtResult = conArquivos.objCo.RetornaEstruturaDT();
-
-            foreach (DataRow dr in dt1.Rows)
+            if (cdAssociacao.SelectedIndex > 0)
             {
-                dtResult.ImportRow(dr);
+                _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
+                DataRow dr = _dtAssociacoes.NewRow();
+
+                dr[caConcursosAssociacoes.cdAssociacao] = cdAssociacao.SelectedValue;
+                dr[caConcursosAssociacoes.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
+                dr[caConcursosAssociacoes.deEmail] = deEmail.Text;
+                dr[caConcursosAssociacoes.nmRepresentante] = nmRepresentante.Text;
+                dr[caConcursosAssociacoes.CC_nmAssociacao] = cdAssociacao.SelectedItem.ToString();
+
+                _dtAssociacoes.Rows.Add(dr);
+
+                gvAssociacoes.DataSource = _dtAssociacoes;
+                gvAssociacoes.DataBind();
+
+                Session["_dtAssociacoes"] = _dtAssociacoes;
+                ConfiguraGridAssociacoes();
             }
-            foreach (DataRow dr in dt2.Rows)
-            {
-                dtResult.ImportRow(dr);
-            }
-
-            return dtResult;
-        }
-
-        private void PreencheObjetos(coConcursos objCoConcurso)
-        {
-            DateTime dtData;
-            objCoConcurso.cdConcurso = Session["IndexRowDados"] == null ? 0 : Convert.ToInt32(Session["cdConcurso"].ToString());
-            objCoConcurso.nmConcurso = nmConcurso.Text;
-            objCoConcurso.nmConcursoKanji = nmConcursoKanji.Text;
-            objCoConcurso.cdCidade = Convert.ToInt32(cdCidade.SelectedValue.ToString());
-            objCoConcurso.flFinalizado = flFinalizado.Checked ? "S" : "N";
-            DateTime.TryParse(dtIniConcurso.Text, out dtData);
-            objCoConcurso.dtIniConcurso = dtData;
-            DateTime.TryParse(dtFimConcurso.Text, out dtData);
-            objCoConcurso.dtFimConcurso = dtData;
-
-            //Arquivos
-            if (Session["_dtDocumentos"] != null)
-            {
-                _dtDocumentos = (DataTable)Session["_dtDocumentos"];
-                if (Session["_dtDocumentosExc"] != null)
-                    _dtDocumentos = UnionDataTable(((DataTable)Session["_dtDocumentos"]), ((DataTable)Session["_dtDocumentosExc"]));
-            }
-
-            if (Session["_dtImagens"] != null)
-            {
-                _dtImagens = (DataTable)Session["_dtImagens"];
-                if (Session["_dtImagensExc"] != null)
-                    _dtImagens = UnionDataTable(((DataTable)Session["_dtImagens"]), ((DataTable)Session["_dtImagensExc"]));
-            }
-
-            objCoConcurso.dtArquivos = UnionDataTable(_dtDocumentos, _dtImagens);
-        }
-
-        protected override void btnSalvar_Click(object sender, EventArgs e)
-        {
-            conConcursos objConConcursos = new conConcursos();
-            bool bInserindo = Session["IndexRowDados"] == null;
-
-            objConConcursos.objCoConcursos.LimparAtributos();
-
-            if (!bErro)
-            {
-                PreencheObjetos(objConConcursos.objCoConcursos);
-
-                if (bInserindo)
-                {
-                    if (conConcursos.Inserir())
-                    {
-                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroInserido, csMensagem.msgSucess);
-                    }
-                    else
-                    {
-                        bErro = true;
-                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
-                    }
-                }
-                else
-                {
-                    if (conConcursos.Alterar())
-                    {
-                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroAlterado, csMensagem.msgSucess);
-                    }
-                    else
-                    {
-                        bErro = true;
-                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
-                    }
-                }
-
-                Session["ltMensagemDefault"] = ltMensagem;
-            }
-
-            if (!bErro)
-            {
-                string strPagina = Session["_strPaginaConsulta"].ToString();
-                Session["_strPaginaConsulta"] = null;
-                Response.Redirect(strPagina.Replace("Cadastro", "Consulta"));
-            }
-        }
-
-        protected void RemoveDocumento(int pintIndice)
-        {
-            _dtDocumentos = (DataTable)Session["_dtDocumentos"];
-            _dtDocumentos.Columns[caArquivos.CC_Controle].ReadOnly = false;
-            _dtDocumentos.Rows[pintIndice][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
-
-            if (Session["_dtDocumentosExc"] != null)
-                _dtDocumentosExc = (DataTable)Session["_dtDocumentosExc"];
             else
-                _dtDocumentosExc = conArquivos.objCo.RetornaEstruturaDT();
-
-            _dtDocumentosExc.ImportRow(_dtDocumentos.Rows[pintIndice]);
-            _dtDocumentos.Rows.Remove(_dtDocumentos.Rows[pintIndice]);
-
-            Session["_dtDocumentosExc"] = _dtDocumentosExc;
-
-            gvDocumentos.DataSource = _dtDocumentos;
-            gvDocumentos.DataBind();
-
-            Session["_dtDocumentos"] = _dtDocumentos;
-
-            if (_dtDocumentos.Rows.Count > 0)
-                ConfiguraGridDocumentos();
-            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosDocumentos();", true);
+                ltMensagemAssociacoes.Text = MostraMensagem("Validação!", "Deve ser selecionada a Associação.", csMensagem.msgWarning);
         }
 
-        protected void gvDocumentos_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void RemoveAssociacao(int pintIndice)
+        {
+            _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
+            _dtAssociacoes.Rows[pintIndice][caConcursosAssociacoes.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
+
+            if (Session["_dtAssociacoesExc"] != null)
+                _dtAssociacoesExc = (DataTable)Session["_dtAssociacoesExc"];
+            else
+                _dtAssociacoesExc = conConcursosAssociacoes.objCo.RetornaEstruturaDT();
+
+            _dtAssociacoesExc.ImportRow(_dtAssociacoes.Rows[pintIndice]);
+            _dtAssociacoes.Rows.Remove(_dtAssociacoes.Rows[pintIndice]);
+
+            Session["_dtAssociacoesExc"] = _dtAssociacoesExc;
+
+            gvAssociacoes.DataSource = _dtAssociacoes;
+            gvAssociacoes.DataBind();
+
+            Session["_dtAssociacoes"] = _dtAssociacoes;
+
+            if (_dtAssociacoes.Rows.Count > 0)
+                ConfigurarGridView();
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
+        }
+
+        protected void gvAssociacoes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Delete")
             {
-                RemoveDocumento(Convert.ToInt32(e.CommandArgument));
+                RemoveAssociacao(Convert.ToInt32(e.CommandArgument));
             }
-            else
-                if (e.CommandName == "Edit")
-                {
-                    _dtDocumentos = (DataTable)Session["_dtDocumentos"];
-
-                    ltTituloEdicao.Text = _dtDocumentos.Rows[Convert.ToInt32(e.CommandArgument.ToString())][caArquivos.nmArquivo].ToString();
-
-                    Page_Load(this, null);
-                }
         }
 
-        protected void gvDocumentos_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void gvAssociacoes_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDeleteDoc");
+                LinkButton lnkDelete = (LinkButton)e.Row.FindControl("lnkDeleteAss");
                 lnkDelete.CommandArgument = e.Row.RowIndex.ToString();
                 lnkDelete.Attributes.Add("OnClick", "javascript:return " +
                     "confirm('O registro será removido!')");
                 /*"confirm('O registro \"" + DataBinder.Eval(e.Row.DataItem, obj.dePrincipal) + "\" será removido!')");*/
 
-                LinkButton lnkEdit = (LinkButton)e.Row.FindControl("lnkEditDoc");
-                lnkEdit.CommandArgument = e.Row.RowIndex.ToString();                
+                LinkButton lnkEdit = (LinkButton)e.Row.FindControl("lnkEditAss");
+                lnkEdit.CommandArgument = e.Row.RowIndex.ToString();
 
                 this.ScriptManager1.RegisterPostBackControl(lnkEdit);
             }
         }
 
-        protected void gvDocumentos_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        protected void gvAssociacoes_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
 
         }
 
-        protected void gvDocumentos_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void gvAssociacoes_RowEditing(object sender, GridViewEditEventArgs e)
         {
 
-        }    
-
-        //private DataTable FiltraDocumentos()
-        //{
-        //    DataRow[] drLinhas = _dtDocumentos.Select(caArquivos.CC_Controle + " <> '" + KuraFrameWork.csConstantes.sTpExcluido + "'",
-        //        ""); 
-
-        //    DataTable _dtDocFiltrado = conArquivos.objCo.RetornaEstruturaDT();
-
-        //    if (drLinhas.Length > 0)
-        //        _dtDocFiltrado = drLinhas.CopyToDataTable();
-
-        //    return _dtDocFiltrado;
-        //}
-
-        protected void lnkEditDoc_Click(object sender, EventArgs e)
-        {
-            _dtDocumentos = (DataTable)Session["_dtDocumentos"];
-            int indexDocumento = Convert.ToInt32(((LinkButton)sender).CommandArgument);
-
-            Session["indexDocumento"] = indexDocumento;
-            ltTituloEdicao.Text = _dtDocumentos.Rows[indexDocumento][caArquivos.nmArquivo].ToString();            
-            deArquivoEdit.Text = _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo].ToString();
-
-            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicao();", true);
         }
 
-        protected void btnConfirmarEdicao_Click(object sender, EventArgs e)
+        protected void lnkEditAss_Click(object sender, EventArgs e)
         {
-            int indexDocumento = Convert.ToInt32(Session["indexDocumento"].ToString());
-            _dtDocumentos = (DataTable)Session["_dtDocumentos"];
-            _dtDocumentos.Columns[caArquivos.CC_Controle].ReadOnly = false;
-            _dtDocumentos.Rows[indexDocumento][caArquivos.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
-            _dtDocumentos.Rows[indexDocumento][caArquivos.deArquivo] = deArquivoEdit.Text;
-            
-            gvDocumentos.DataSource = _dtDocumentos;
-            gvDocumentos.DataBind();
+            _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
+            int indexAssociacao = Convert.ToInt32(((LinkButton)sender).CommandArgument);
 
-            Session["_dtDocumentos"] = _dtDocumentos;
+            Session["indexAssociacao"] = indexAssociacao;
+            ltTituloEdicaoAssociacao.Text = _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.CC_nmAssociacao].ToString();
+            nmRepresentante.Text = _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.nmRepresentante].ToString();
+            deEmailRepresentanteEdit.Text = _dtAssociacoes.Rows[indexAssociacao][caConcursosAssociacoes.deEmail].ToString();
 
-            if (_dtDocumentos.Rows.Count > 0)
-                ConfiguraGridDocumentos();
-
-            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosDocumentos();", true);
-        }
-
-        private void RegistrarScript()
-        {
-            string strScriptGridView = Session["strScriptGridView"] != null ? Session["strScriptGridView"].ToString() : "";
-            string strScriptImagens = Session["strScriptImagens"] != null ? Session["strScriptImagens"].ToString() : "";
-
-            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", strScriptGridView + strScriptImagens, true);
-            //if (Session["strScriptImagens"] != null)
-            //    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "", Session["strScriptImagens"].ToString(), true);
-        }
-
-        private void RegistrarScriptLoaded()
-        {
-            string strScriptGridView = Session["strScriptGridView"] != null ? Session["strScriptGridView"].ToString() : "";
-            string strScriptImagens = Session["strScriptImagens"] != null ? Session["strScriptImagens"].ToString() : "";
-
-            ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "", strScriptGridView + strScriptImagens, true);
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoAss();", true);
         }
     }
 }

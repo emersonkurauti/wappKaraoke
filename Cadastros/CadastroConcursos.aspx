@@ -57,10 +57,23 @@
             document.getElementById('divEdicao').setAttribute('style', 'display: none;');
         }
 
-        function lnkEditarDoc_Click(pnIndexDoc) {
+        /*function lnkEditarDoc_Click(pnIndexDoc) {
             AtivaEdicao();
             __doPostBack('lnkEditarDoc', 'AtivaEdicao;' + pnIndexDoc);
             return false;
+        }*/
+
+        function AtivaAbaAssociacoes() {
+            document.getElementById('lnkAssociacoes').click();
+        }
+
+        function AtivaEdicaoAss() {
+            document.getElementById('divEdicaoAss').setAttribute('style', 'display: block;');
+            AtivaAbaArquivosDocumentos();
+        }
+
+        function DesativaEdicaoAss() {
+            document.getElementById('divEdicaoAss').setAttribute('style', 'display: none;');
         }
     </script>
     <asp:Literal ID="ltJavaScript" runat="server"></asp:Literal> <!--Caso precise de agrupamento nas tabelas-->
@@ -389,7 +402,12 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <asp:GridView ID="gvAssociacoes" runat="server"
-                                                        CssClass="footable table table-bordered table-hover" AutoGenerateColumns="False">
+                                                        CssClass="footable table table-bordered table-hover footable" 
+                                                        AutoGenerateColumns="False"
+                                                        OnRowDataBound="gvAssociacoes_RowDataBound" 
+                                                        OnRowCommand="gvAssociacoes_RowCommand" 
+                                                        onrowdeleting="gvAssociacoes_RowDeleting"
+                                                        onrowEditing="gvAssociacoes_RowEditing">
                                                         <Columns>
                                                             <asp:BoundField HeaderText="Cód." DataField="cdAssociacao">
                                                                 <ItemStyle Width="5%" />
@@ -399,9 +417,10 @@
                                                             <asp:BoundField DataField="deEmail" HeaderText="E-mail" />
                                                             <asp:TemplateField>
 	                                                            <ItemTemplate>
-		                                                            <asp:LinkButton ID="lnkEdit" runat="server"
-			                                                            CssClass="btn btn-primary btn-block" Text = "Editar"
-			                                                            CommandName='Edit'>
+		                                                            <asp:LinkButton ID="lnkEditAss" runat="server"
+			                                                            CssClass="btn btn-primary btn-block" 
+                                                                        Text = "Editar"
+                                                                        OnClick="lnkEditAss_Click">
 			                                                            <i class="glyphicon glyphicon-edit"></i>
 		                                                            </asp:LinkButton>
 	                                                            </ItemTemplate>
@@ -409,9 +428,9 @@
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
 	                                                            <ItemTemplate>
-		                                                            <asp:LinkButton ID="lnkDelete" runat="server"
-			                                                            CssClass="btn btn-primary btn-block btn-danger" Text = "Excluir"
-			                                                            CommandArgument='<%# Eval("cdAssociacao") + "$" + Eval("CC_nmAssociacao") %>'
+		                                                            <asp:LinkButton ID="lnkDeleteAss" runat="server"
+			                                                            CssClass="btn btn-primary btn-block btn-danger" 
+                                                                        Text = "Excluir"
 			                                                            CommandName='Delete'>
 			                                                            <i class="glyphicon glyphicon-trash"></i>
 		                                                            </asp:LinkButton>
@@ -425,6 +444,70 @@
                                             </div> <!--<div class="row">-->
                                         </div>
                                     </div>
+
+                                    <div id="divEdicaoAss" class="blueimp-gallery blueimp-gallery-display blueimp-gallery-left" style="display: none;">
+                                        <div class="slides" style="width: 2732px;">
+                                            <div class="slide" data-index="0" style="width: 1366px; left: 0px; transition-duration: 0ms; 
+                                                transform: translate(0px, 0px) translateZ(0px);">
+                                                <div class="modal fade slide-content in" style="display: block; overflow-y: scroll;">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">
+                                                                    <asp:Literal ID="ltTituloEdicaoAssociacao" runat="server"></asp:Literal>
+                                                                </h4>
+                                                                <br/>
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-body">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12">
+                                                                                <asp:TextBox ID="nmRepresentanteEdit" class="form-control" runat="server" 
+                                                                                    placeholder="Nome do Representante..." Visible="True">
+                                                                                </asp:TextBox>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12">
+                                                                                <asp:TextBox ID="deEmailRepresentanteEdit" class="form-control" runat="server" 
+                                                                                    placeholder="E-mail do Representante..." Visible="True">
+                                                                                </asp:TextBox>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <asp:Literal ID="Literal2" runat="server"></asp:Literal>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <div class="row">
+                                                                    <div class="col-sm-2" align="left" style="float: left">
+                                                                        <asp:LinkButton ID="LinkButton1" runat="server"
+                                                                            CssClass="btn btn-primary btn-block" 
+                                                                            OnClick="btnConfirmarEdicaoAss_Click">
+                                                                            <i class="glyphicon glyphicon-save"></i>
+                                                                            Confirmar
+                                                                        </asp:LinkButton>
+                                                                    </div>
+                                                                    <div class="col-sm-2" align="center" style="float: left">
+                                                                        <button class="btn btn-primary btn-block btn-danger" 
+                                                                            type="button"
+                                                                            onClick="javascript:DesativaEdicaoAss(); return false;">
+                                                                            <i class="glyphicon glyphicon-remove"></i>
+                                                                            Cancelar
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="col-sm-8" align="right" style="float: right">
+                                                                        <asp:Label id="lblMensagemEdicaoAss" runat="server" />
+                                                                    </div>                        
+                                                                </div>        
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal fade"></div>
+                                        </div>
+                                    </div>
+
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div> <!--<div class="tab-pane" id="Associações">-->

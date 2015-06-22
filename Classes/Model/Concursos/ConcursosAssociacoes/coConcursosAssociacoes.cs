@@ -20,6 +20,12 @@ namespace wappKaraoke.Classes.Model.ConcursosAssociacoes
 		/// <summary>
 		/// Atributos
 		/// </summary>        
+        private static string _CC_Controle = "";
+        public string CC_Controle
+        {
+            get { return _CC_Controle; }
+            set { _CC_Controle = value; }
+        }
 		private static int _cdConcurso;
         public int cdConcurso
         {
@@ -79,6 +85,7 @@ namespace wappKaraoke.Classes.Model.ConcursosAssociacoes
 
                 DataTable dtAux = dtDados;
 
+                dtDados.Columns[caConcursosAssociacoes.CC_Controle].ReadOnly = false;
                 dtDados.Columns[caConcursosAssociacoes.CC_nmAssociacao].ReadOnly = false;
                 dtDados.Columns[caConcursosAssociacoes.CC_nmAssociacao].MaxLength = 100;
 

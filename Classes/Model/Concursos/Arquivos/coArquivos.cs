@@ -100,6 +100,7 @@ namespace wappKaraoke.Classes.Model.Arquivos
 
                DataTable dtAux = dtDados;
 
+               dtDados.Columns[caArquivos.CC_Controle].ReadOnly = false;
                dtDados.Columns[caArquivos.CC_deTipoArquivo].ReadOnly = false;
                dtDados.Columns[caArquivos.CC_deTipoArquivo].MaxLength = 100;
 

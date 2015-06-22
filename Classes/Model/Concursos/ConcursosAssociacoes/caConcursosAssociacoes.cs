@@ -65,7 +65,11 @@ namespace wappKaraoke.Classes.Model.ConcursosAssociacoes
 
 		/// <summary>
 		/// Atributos
-	 	/// </summary>        
+	 	/// </summary>
+        public static string CC_Controle
+        {
+            get { return "CC_Controle"; }
+        }
 		public static string cdConcurso
         {
             get { return "cdConcurso"; }
@@ -95,11 +99,11 @@ namespace wappKaraoke.Classes.Model.ConcursosAssociacoes
         /// <param name="strNome"></param>
         public static void RetornarFields()
         {
-            _strFields = CC_cdRegistro  + "," + cdConcurso + "," + cdAssociacao + "," + deEmail + "," + nmRepresentante + "," + CC_nmAssociacao;
+            _strFields = CC_Controle + "," + CC_cdRegistro + "," + cdConcurso + "," + cdAssociacao + "," + deEmail + "," + nmRepresentante + "," + CC_nmAssociacao;
 
-            _strNome = "Cd. Registro, cdConcurso, cdAssociacao, deEmail, nmRepresentante, CC_nmAssociacao";
+            _strNome = "Controle, Cd. Registro, cdConcurso, cdAssociacao, deEmail, nmRepresentante, CC_nmAssociacao";
 
-            _strVisivel = "0, 1, 1, 1, 1, 1";
+            _strVisivel = "0, 0, 1, 1, 1, 1, 1";
         }
     }
 }
