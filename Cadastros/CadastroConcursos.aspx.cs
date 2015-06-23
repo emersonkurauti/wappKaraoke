@@ -109,12 +109,12 @@ namespace wappKaraoke.Cadastros
 
                 PegarChaveConcurso();
 
-                CarregarDDL();
-
                 CarregarArquivos();
                 CarregarAssociacoes();
                 CarregarGruposJurados();
                 CarregarCantoresCategorias();
+
+                CarregarDDL();
             }
 
             base.Page_Load(sender, e);
@@ -270,11 +270,6 @@ namespace wappKaraoke.Cadastros
             csCategorias vcsCategorias = new csCategorias();
             cdCategoria = vcsCategorias.CarregaDDL(cdCategoria);
 
-            csAssociacoes vcsAssociacoesCancores = new csAssociacoes();
-            vcsAssociacoesCancores.bFiltraConcurso = true;
-            vcsAssociacoesCancores.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
-            cdAssociacaoCantor = vcsAssociacoesCancores.CarregaDDL(cdAssociacaoCantor);
-
             csFases vcsFasesConcurso = new csFases();
             cdFaseCantor = vcsFasesConcurso.CarregaDDL(cdFaseCantor);
 
@@ -286,6 +281,8 @@ namespace wappKaraoke.Cadastros
 
             csStatus vcsStatus = new csStatus();
             cdStatus = vcsStatus.CarregaDDL(cdStatus);
+
+            CarregaDDLAssociacoesCantores();
         }
 
         private DataTable UnionDataTable(DataTable dt1, DataTable dt2)
@@ -355,6 +352,35 @@ namespace wappKaraoke.Cadastros
             objCoConcurso.dtGrupoJurados = _dtGruposJurados;
         }
 
+        private bool ValidarCamposPreenchidos()
+        {
+            if (nmConcurso.Text.Trim() == "")
+            {
+                ltMensagem.Text = MostraMensagem("Validação", "Informe o nome do Concurso.", csMensagem.msgWarning);
+                return false;
+            }
+
+            if (nmConcursoKanji.Text.Trim() == "")
+            {
+                ltMensagem.Text = MostraMensagem("Validação", "Informe o nome em Kanji do Concurso.", csMensagem.msgWarning);
+                return false;
+            }
+
+            if (cdCidade.SelectedIndex <= 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação", "Informe a cidade do Concurso.", csMensagem.msgWarning);
+                return false;
+            }
+
+            if (dtIniConcurso.Text.Trim() == "")
+            {
+                ltMensagem.Text = MostraMensagem("Validação", "Informe a data de início do Concurso.", csMensagem.msgWarning);
+                return false;
+            }
+
+            return true;
+        }
+
         protected override void btnSalvar_Click(object sender, EventArgs e)
         {
             conConcursos objConConcursos = new conConcursos();
@@ -364,30 +390,37 @@ namespace wappKaraoke.Cadastros
 
             if (!bErro)
             {
-                PreencheObjetos(objConConcursos.objCoConcursos);
-
-                if (bInserindo)
+                if (!ValidarCamposPreenchidos())
                 {
-                    if (conConcursos.Inserir())
-                    {
-                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroInserido, csMensagem.msgSucess);
-                    }
-                    else
-                    {
-                        bErro = true;
-                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
-                    }
+                    bErro = true;
                 }
                 else
                 {
-                    if (conConcursos.Alterar())
+                    PreencheObjetos(objConConcursos.objCoConcursos);
+
+                    if (bInserindo)
                     {
-                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroAlterado, csMensagem.msgSucess);
+                        if (conConcursos.Inserir())
+                        {
+                            ltMensagem.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroInserido, csMensagem.msgSucess);
+                        }
+                        else
+                        {
+                            bErro = true;
+                            ltMensagem.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
+                        }
                     }
                     else
                     {
-                        bErro = true;
-                        ltMensagem.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
+                        if (conConcursos.Alterar())
+                        {
+                            ltMensagem.Text = base.MostraMensagem(csMensagem.msgOperacaoComSucesso, csMensagem.msgRegistroAlterado, csMensagem.msgSucess);
+                        }
+                        else
+                        {
+                            bErro = true;
+                            ltMensagem.Text = base.MostraMensagem(csMensagem.msgTitFalhaGenerica, objConConcursos.strMensagemErro, csMensagem.msgWarning);
+                        }
                     }
                 }
 
@@ -400,6 +433,15 @@ namespace wappKaraoke.Cadastros
                 Session["_strPaginaConsulta"] = null;
                 Response.Redirect(strPagina.Replace("Cadastro", "Consulta"));
             }
+        }
+
+        private void CarregaDDLAssociacoesCantores()
+        {
+            csAssociacoes vcsAssociacoesCancores = new csAssociacoes();
+            vcsAssociacoesCancores.bUtilizaDadosExternos = true;
+            vcsAssociacoesCancores.dtDadosExternos = (DataTable)Session["_dtAssociacoes"] == null ?
+                conAssociacoes.objCo.RetornaEstruturaDT() : (DataTable)Session["_dtAssociacoes"];
+            cdAssociacaoCantor = vcsAssociacoesCancores.CarregaDDL(cdAssociacaoCantor);
         }
 
         /// <summary>
@@ -877,6 +919,16 @@ namespace wappKaraoke.Cadastros
             ltCategorias.Text = strInicio + strLista + strMeio + strDivs + strFim;
         }
 
+        protected void upCantoresCategorias_PreRender(object sender, EventArgs e)
+        {
+            this.ScriptManager1.RegisterPostBackControl(btnAdicionarAssociacao);
+            foreach (GridViewRow gvr in gvAssociacoes.Rows)
+            {
+                LinkButton lnkDeleteAss = gvr.FindControl("lnkDeleteAss") as LinkButton;
+                ScriptManager.GetCurrent(this).RegisterPostBackControl(lnkDeleteAss);
+            }
+        }
+
         /// <summary>
         /// Jurados
         /// </summary>
@@ -1044,8 +1096,6 @@ namespace wappKaraoke.Cadastros
 
         protected void upConcursoJurados_PreRender(object sender, EventArgs e)
         {
-            //this.ScriptManager1.RegisterPostBackControl(btnAdicionarAssociacao);
-
             foreach (GridViewRow gvr in gvGrupoJuradoConcurso.Rows)
             {
                 LinkButton lnkEditJur = gvr.FindControl("lnkEditJur") as LinkButton;
@@ -1101,6 +1151,10 @@ namespace wappKaraoke.Cadastros
 
                         Session["_dtAssociacoes"] = _dtAssociacoes;
                         ConfigurarGridView();
+
+                        CarregaDDLAssociacoesCantores();
+
+                        ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
                     }
                     else
                         ltMensagemAssociacoes.Text = MostraMensagem("Validação!", "Informe o e-mail do Representante.", csMensagem.msgWarning);
@@ -1114,6 +1168,11 @@ namespace wappKaraoke.Cadastros
 
         protected void RemoveAssociacao(int pintIndice)
         {
+            //
+            //Validar antes de remover
+            //
+
+
             _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
             _dtAssociacoes.Rows[pintIndice][caConcursosAssociacoes.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
 
@@ -1134,6 +1193,8 @@ namespace wappKaraoke.Cadastros
 
             if (_dtAssociacoes.Rows.Count > 0)
                 ConfigurarGridView();
+
+            CarregaDDLAssociacoesCantores();
             ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
         }
 
@@ -1222,8 +1283,6 @@ namespace wappKaraoke.Cadastros
 
         protected void upConcursoAssociacoes_PreRender(object sender, EventArgs e)
         {
-            //this.ScriptManager1.RegisterPostBackControl(btnAdicionarAssociacao);
-
             foreach (GridViewRow gvr in gvAssociacoes.Rows)
             {
                 LinkButton lnkEditAss = gvr.FindControl("lnkEditAss") as LinkButton;

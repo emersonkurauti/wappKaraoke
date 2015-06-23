@@ -669,7 +669,8 @@
                             </asp:UpdatePanel>
                         </div> <!--<div class="tab-pane" id="Jurados">-->
                         <div class="tab-pane" id="Categorias">
-                            <asp:UpdatePanel ID="upCantoresCategorias" runat="server" UpdateMode="Conditional">
+                            <asp:UpdatePanel ID="upCantoresCategorias" runat="server" UpdateMode="Conditional"
+                                onprerender="upCantoresCategorias_PreRender">
                                 <ContentTemplate>
                                     <div class="panel panel-default" style="border-top: 0px">
                                         <div class="panel-body">

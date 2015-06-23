@@ -13,18 +13,18 @@ namespace wappKaraoke.Classes
 {
     public class csAssociacoes : Paginas_Default.csMontaDDL
     {
-        private int _cdConcurso;
-        public int cdConcurso
+        private DataTable _dtDadosExternos;
+        public DataTable dtDadosExternos
         {
-            get { return _cdConcurso; }
-            set { _cdConcurso = value; }
+            get { return _dtDadosExternos; }
+            set { _dtDadosExternos = value; }
         }
 
-        private bool _bFiltraConcurso;
-        public bool bFiltraConcurso
+        private bool _bUtilizaDadosExternos;
+        public bool bUtilizaDadosExternos
         {
-            get { return _bFiltraConcurso; }
-            set { _bFiltraConcurso = value; }
+            get { return _bUtilizaDadosExternos; }
+            set { _bUtilizaDadosExternos = value; }
         }
 
         public csAssociacoes()
@@ -36,26 +36,33 @@ namespace wappKaraoke.Classes
 
         public override DataTable getDtDados()
         {
-            if (bFiltraConcurso)
+            if (bUtilizaDadosExternos)
             {
                 DataTable dt = new DataTable();
-                conConcursosAssociacoes objConConcursosAssociacoes = new conConcursosAssociacoes();
-                objConConcursosAssociacoes.objCoConcursosAssociacoes.cdConcurso = _cdConcurso;
-
-                if (!conConcursosAssociacoes.SelectAssociacoesConcurso())
-                    return null;
-
                 dt = conAssociacoes.objCo.RetornaEstruturaDT();
-
                 DataRow dr = dt.NewRow();
                 dr[caAssociacoes.nmCampoChave.ToString()] = 0;
                 dr[caAssociacoes.dePrincipal.ToString()] = "--Selecione " + strTextoCombo + " do Cantor--";
-
                 dt.Rows.Add(dr);
 
-                foreach (DataRow drCopy in objConConcursosAssociacoes.dtDados.Rows)
+                conAssociacoes objConAssociacoes = new conAssociacoes();
+                objConAssociacoes.objCoAssociacoes.LimparAtributos();
+
+                string strAssociacoes = " WHERE cdAssociacao IN (";
+
+                foreach (DataRow drext in _dtDadosExternos.Rows)
                 {
-                    dt.ImportRow(drCopy);
+                    strAssociacoes += drext[caAssociacoes.cdAssociacao].ToString() + ",";
+                }
+
+                strAssociacoes = strAssociacoes.Substring(0, strAssociacoes.Length - 1) + ")";
+
+                objConAssociacoes.objCoAssociacoes.strFiltro = strAssociacoes;
+
+                if (conAssociacoes.Select())
+                {
+                    foreach (DataRow drCopy in objConAssociacoes.dtDados.Rows)
+                        dt.ImportRow(drCopy);
                 }
 
                 return dt;
