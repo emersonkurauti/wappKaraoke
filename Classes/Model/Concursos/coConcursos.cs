@@ -8,11 +8,14 @@ using wappKaraoke.Classes.Model.Cidades;
 using wappKaraoke.Classes.Model.Arquivos;
 using wappKaraoke.Classes.Model.ConcursosAssociacoes;
 using wappKaraoke.Classes.Model.Grupos;
+using System.IO;
 
 namespace wappKaraoke.Classes.Model.Concursos
 {
     public class coConcursos : KuraFrameWork.ClasseBase.csModelBase
     {
+        private string strPastaRaiz = System.Web.Hosting.HostingEnvironment.MapPath("/");
+
         private DataTable _dtArquivos;
         public DataTable dtArquivos
         {
@@ -236,11 +239,55 @@ namespace wappKaraoke.Classes.Model.Concursos
         }
 
         /// <summary>
+        /// Move arquivo entre pastas
+        /// </summary>
+        /// <param name="strOrigem"></param>
+        /// <param name="strDestino"></param>
+        /// <returns></returns>
+        private bool MoveArquivo(string strOrigem, string strDestino)
+        {
+            try
+            {
+                string strCaminhoOrigem = strPastaRaiz + strOrigem;
+                string strCaminhoDestino = strPastaRaiz + strDestino;
+
+                File.Copy(strCaminhoOrigem, strCaminhoDestino, true);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Remove o arquivo
+        /// </summary>
+        /// <param name="strArquivo"></param>
+        /// <returns></returns>
+        private bool RemoveArquivo(string strArquivo)
+        {
+            try
+            {
+                File.Delete(strPastaRaiz + strArquivo);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Atualiza os Arquivos 
         /// </summary>
         /// <returns></returns>
         private bool AtualizarArquivos()
         {
+            string strArquivoTemp = "";
+
             conArquivos objConArquivos = new conArquivos();
             try
             {
@@ -274,11 +321,21 @@ namespace wappKaraoke.Classes.Model.Concursos
                                         return false;
                                     }
 
-                                    //Remover os arquivos gravados
+                                    if (objConArquivos.objCoArquivos.cdTipoArquivo == csConstantes.cCdTipoArquivoDocumento)
+                                    {
+                                        RemoveArquivo(wappKaraoke.Properties.Settings.Default.sCaminhoArqDocumentos +
+                                            objConArquivos.objCoArquivos.nmArquivo);
+                                    }
+                                    else if (objConArquivos.objCoArquivos.cdTipoArquivo == csConstantes.cCdTipoArquivoImagem)
+                                    {
+                                        RemoveArquivo(wappKaraoke.Properties.Settings.Default.sCaminhoArqImagens +
+                                                                                   objConArquivos.objCoArquivos.nmArquivo);
+                                    }
                                 }
                                 else
                                 {
-                                    //remover da pasta temp 
+                                    RemoveArquivo(wappKaraoke.Properties.Settings.Default.sCaminhoTemp +
+                                            objConArquivos.objCoArquivos.nmArquivo);
                                 }
                             }
                         }
@@ -289,7 +346,19 @@ namespace wappKaraoke.Classes.Model.Concursos
                                 return false;
                             }
 
-                            //Mover os arquivos da pasta temp para a oficial
+                            strArquivoTemp = wappKaraoke.Properties.Settings.Default.sCaminhoTemp +
+                                    objConArquivos.objCoArquivos.nmArquivo;
+
+                            if (objConArquivos.objCoArquivos.cdTipoArquivo == csConstantes.cCdTipoArquivoDocumento)
+                            {
+                                MoveArquivo(strArquivoTemp, wappKaraoke.Properties.Settings.Default.sCaminhoArqDocumentos +
+                                    objConArquivos.objCoArquivos.nmArquivo);
+                            }
+                            else if (objConArquivos.objCoArquivos.cdTipoArquivo == csConstantes.cCdTipoArquivoImagem)
+                            {
+                                MoveArquivo(strArquivoTemp, wappKaraoke.Properties.Settings.Default.sCaminhoArqImagens +
+                                    objConArquivos.objCoArquivos.nmArquivo);
+                            }
                         }
                     }
 

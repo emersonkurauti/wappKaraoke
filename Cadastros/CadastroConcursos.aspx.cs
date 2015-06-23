@@ -1009,7 +1009,8 @@ namespace wappKaraoke.Cadastros
             int indexJurado = Convert.ToInt32(((LinkButton)sender).CommandArgument);
 
             Session["indexJurado"] = indexJurado;
-            ltTituloEdicaoJurado.Text = _dtGruposJurados.Rows[indexJurado][caGrupos.CC_nmNomeKanji].ToString();
+            ltTituloEdicaoJurado.Text = _dtGruposJurados.Rows[indexJurado][caGrupos.CC_nmJurado].ToString() + "<br/>"
+                + _dtGruposJurados.Rows[indexJurado][caGrupos.CC_nmNomeKanji].ToString();
             deGrupoEdit.Text = _dtGruposJurados.Rows[indexJurado][caGrupos.deGrupo].ToString();
 
             ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoJur();", true);
