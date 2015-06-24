@@ -444,6 +444,17 @@ namespace wappKaraoke.Cadastros
             cdAssociacaoCantor = vcsAssociacoesCancores.CarregaDDL(cdAssociacaoCantor);
         }
 
+        private bool VaidaRegistroExistente(DataTable pdtDados, string psChaveBusca, string psColunaBusca)
+        {
+            foreach (DataRow dr in pdtDados.Rows)
+            {
+                if (dr[psColunaBusca].ToString() == psChaveBusca)
+                    return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Imagens/Documentos
         /// </summary>
@@ -561,6 +572,26 @@ namespace wappKaraoke.Cadastros
 
             if (hdfNmArquivo.Value.ToString() != "")
             {
+                _dtDocumentos = conArquivos.objCo.RetornaEstruturaDT();
+                _dtImagens = conArquivos.objCo.RetornaEstruturaDT();
+
+                if (Session["_dtDocumentos"] != null)
+                {
+                    _dtDocumentos = (DataTable)Session["_dtDocumentos"];
+                }
+                if (Session["_dtImagens"] != null)
+                {
+                    _dtImagens = (DataTable)Session["_dtImagens"];
+                }
+                DataTable dtArquivos = UnionDataTable(_dtDocumentos, _dtImagens);
+
+                if (VaidaRegistroExistente(dtArquivos, hdfNmArquivo.Value.ToString(), caArquivos.nmArquivo))
+                {
+                    ltMensagemArquivos.Text = MostraMensagem("Validação!", "Arquivo com mesmo nome já inserido.", csMensagem.msgWarning);
+                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosImagens();", true);
+                    return;
+                }
+
                 if (Convert.ToInt32(hdfCdTpArquivo.Value.ToString()) == csConstantes.cCdTipoArquivoImagem)
                 {
                     if (Session["_dtImagens"] != null)
@@ -589,7 +620,7 @@ namespace wappKaraoke.Cadastros
             }
             else
             {
-                ltMensagemArquivos.Text = MostraMensagem("Falha", "Selecione um arquivo para adicionar.", csMensagem.msgWarning);
+                ltMensagemArquivos.Text = MostraMensagem("Validação!", "Selecione um arquivo para adicionar.", csMensagem.msgWarning);
                 ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaArquivosImagens();", true);
             }
 
@@ -961,6 +992,18 @@ namespace wappKaraoke.Cadastros
             {
                 if (deGrupo.Text.Trim() != "")
                 {
+                    if (Session["_dtGruposJurados"] != null)
+                    {
+                        _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
+                    }
+
+                    if (VaidaRegistroExistente(_dtGruposJurados, cdJurado.SelectedValue, caGrupos.cdJurado))
+                    {
+                        ltMensagemJurados.Text = MostraMensagem("Validação!", "Jurado selecionado já inserido.", csMensagem.msgWarning);
+                        ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaJurados();", true);
+                        return;
+                    }
+
                     conJurados objConJurados = new conJurados();
                     objConJurados.objCoJurados.LimparAtributos();
                     objConJurados.objCoJurados.cdJurado = Convert.ToInt32(cdJurado.SelectedValue);
@@ -1135,6 +1178,18 @@ namespace wappKaraoke.Cadastros
                 {
                     if (deEmail.Text.Trim() != "")
                     {
+                        if (Session["_dtAssociacoes"] != null)
+                        {
+                            _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
+                        }
+
+                        if (VaidaRegistroExistente(_dtAssociacoes, cdAssociacao.SelectedValue, caAssociacoes.cdAssociacao))
+                        {
+                            ltMensagemAssociacoes.Text = MostraMensagem("Validação!", "Associação selecionada já inserida.", csMensagem.msgWarning);
+                            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
+                            return;
+                        }
+
                         _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
                         DataRow dr = _dtAssociacoes.NewRow();
 
@@ -1153,8 +1208,6 @@ namespace wappKaraoke.Cadastros
                         ConfigurarGridView();
 
                         CarregaDDLAssociacoesCantores();
-
-                        ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
                     }
                     else
                         ltMensagemAssociacoes.Text = MostraMensagem("Validação!", "Informe o e-mail do Representante.", csMensagem.msgWarning);
@@ -1164,6 +1217,8 @@ namespace wappKaraoke.Cadastros
             }
             else
                 ltMensagemAssociacoes.Text = MostraMensagem("Validação!", "Deve ser selecionada a Associação.", csMensagem.msgWarning);
+
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
         }
 
         protected void RemoveAssociacao(int pintIndice)
