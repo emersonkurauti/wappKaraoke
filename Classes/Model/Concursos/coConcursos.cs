@@ -37,6 +37,20 @@ namespace wappKaraoke.Classes.Model.Concursos
             set { _dtGrupoJurados = value; }
         }
 
+        private DataTable _dtConcursoCantores;
+        public DataTable dtConcursoCantores
+        {
+            get { return _dtConcursoCantores; }
+            set { _dtConcursoCantores = value; }
+        }
+
+        private DataTable _dtConcursoFases;
+        public DataTable dtConcursoFases
+        {
+            get { return _dtConcursoFases; }
+            set { _dtConcursoFases = value; }
+        }
+
         private static  int _CC_cdRegistro;
         public static int CC_cdRegistro
         {

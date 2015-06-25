@@ -472,6 +472,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.Literal ltMensagensCategorias;
         
         /// <summary>
+        /// cdAssociacaoCantor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cdAssociacaoCantor;
+        
+        /// <summary>
         /// cdCategoria control.
         /// </summary>
         /// <remarks>
@@ -497,15 +506,6 @@ namespace wappKaraoke.Cadastros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cdMusica;
-        
-        /// <summary>
-        /// cdAssociacaoCantor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cdAssociacaoCantor;
         
         /// <summary>
         /// cdFaseCantor control.
