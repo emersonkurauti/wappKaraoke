@@ -65,7 +65,11 @@ namespace wappKaraoke.Classes.Model.CantoresFases
 
 		/// <summary>
 		/// Atributos
-	 	/// </summary>        
+	 	/// </summary>       
+        public static string CC_Controle
+        {
+            get { return "CC_Controle"; }
+        }
 		public static string cdConcurso
         {
             get { return "cdConcurso"; }
@@ -147,11 +151,11 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         /// <param name="strNome"></param>
         public static void RetornarFields()
         {
-            _strFields = CC_cdRegistro  + "," + cdConcurso + "," + cdCantor + "," + cdMusica + "," + cdTpStatus + "," + cdCategoria + "," + cdFase + "," + nuCantor + "," + deCaminhoMusica + "," + nuOrdemApresentacao + "," + nuNotafinal + "," + pcDesconto + "," + CC_nmCantor + "," + CC_nmMusica + "," + CC_deTpStatus + "," + CC_deFase + "," + CC_deCategoria + "," + CC_nmNomeKanji + "," + CC_nmMusicaKanji;
+            _strFields = CC_Controle + "," + CC_cdRegistro + "," + cdConcurso + "," + cdCantor + "," + cdMusica + "," + cdTpStatus + "," + cdCategoria + "," + cdFase + "," + nuCantor + "," + deCaminhoMusica + "," + nuOrdemApresentacao + "," + nuNotafinal + "," + pcDesconto + "," + CC_nmCantor + "," + CC_nmMusica + "," + CC_deTpStatus + "," + CC_deFase + "," + CC_deCategoria + "," + CC_nmNomeKanji + "," + CC_nmMusicaKanji;
 
-            _strNome = "Cd. Registro, cdConcurso, cdCantor, cdMusica, cdTpStatus, cdCategoria, cdFase, nuCantor, deCaminhoMusica, nuOrdemApresentacao, nuNotafinal, pcDesconto, CC_nmCantor, CC_nmMusica, CC_deTpStatus, CC_deFase, CC_deCategoria, CC_nmNomeKanji, CC_nmMusicaKanji";
+            _strNome = "Controle, Cd. Registro, cdConcurso, cdCantor, cdMusica, cdTpStatus, cdCategoria, cdFase, nuCantor, deCaminhoMusica, nuOrdemApresentacao, nuNotafinal, pcDesconto, CC_nmCantor, CC_nmMusica, CC_deTpStatus, CC_deFase, CC_deCategoria, CC_nmNomeKanji, CC_nmMusicaKanji";
 
-            _strVisivel = "0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1";
+            _strVisivel = "0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1";
         }
     }
 }

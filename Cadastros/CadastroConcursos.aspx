@@ -86,6 +86,12 @@
         function DesativaEdicaoJur() {
             document.getElementById('divEdicaoJur').setAttribute('style', 'display: none;');
         }
+
+        /*Cantores/Categorias*/
+        function AtivaAbaCantores(strIdCategoria) {
+            document.getElementById('lnkCategorias').click();
+            document.getElementById('lnkDivCantores_' + strIdCategoria).click();
+        }
     </script>
     <asp:Literal ID="ltJavaScript" runat="server"></asp:Literal> <!--Caso precise de agrupamento nas tabelas-->
 </asp:Content>

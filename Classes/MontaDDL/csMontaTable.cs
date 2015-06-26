@@ -37,12 +37,12 @@ namespace wappKaraoke.Classes
                  + "    </tr>"
                  + "  </thead>"
                  + "  <tbody>"
-                 + MontaLinhasGridView("gvCantores_" + strIdGV)
+                 + MontaLinhasGridView("gvCantores_" + strIdGV, strIdGV)
                  + "  </tbody>"
                  + "</table>";
         }
 
-        public string MontaLinhasGridView(string strIdGV)
+        public string MontaLinhasGridView(string strIdGV, string strIDCategoria)
         {
             string strLinhas = "";
 
@@ -64,14 +64,16 @@ namespace wappKaraoke.Classes
                 //Buttons
                 strLinhas += "<td style=\"width: 5%;\">" +
                              "  <a id=\"gvCantores_lnkEdit_" + strIdGV + "\" class=\"btn btn-primary btn-block phone footable-loaded\"" +
-                             "    href=\"javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvDados$ctl02$lnkEdit','')\">" +
+                             "    href=\"javascript:__doPostBack('lnkEditCantor','" +
+                                            dr[caCantores.cdCantor].ToString() + ";" + strIDCategoria + ";" + strIdGV + "')\">" +
                              "    <i class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\">" +
                              "    </i>" +
                              "  </a>" +
                              "</td>";
                 strLinhas += "<td style=\"width: 5%; display: table-cell;\">" +
                              "  <a id=\"gvCantores_lnkDelete_" + strIdGV + "\" class=\"btn btn-primary btn-block btn-danger footable-loaded phone\"" +
-                             "    href=\"javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvGrupoJuradoConcurso$ctl02$lnkDelete','')\">" +
+                             "    href=\"javascript:if(confirm('O registro será removido!')) __doPostBack('lnkDeleteCantor','" +
+                                            dr[caCantores.cdCantor].ToString() + ";" + strIDCategoria + ";" + strIdGV + "');\"> " +
                              "    <i class=\"glyphicon glyphicon-trash\"></i>" +
                              "  </a>" +
                              "</td>";

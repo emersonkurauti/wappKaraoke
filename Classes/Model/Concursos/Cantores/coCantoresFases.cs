@@ -24,6 +24,13 @@ namespace wappKaraoke.Classes.Model.CantoresFases
 		/// <summary>
 		/// Atributos
 		/// </summary>        
+        private static string _CC_Controle = "";
+        public string CC_Controle
+        {
+            get { return _CC_Controle; }
+            set { _CC_Controle = value; }
+        }
+
 		private static int _cdConcurso;
         public int cdConcurso
         {
@@ -178,6 +185,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
 
                 DataTable dtAux = dtDados;
 
+                dtDados.Columns[caCantoresFases.CC_Controle].ReadOnly = false;
                 dtDados.Columns[caCantoresFases.CC_nmCantor].ReadOnly = false;
                 dtDados.Columns[caCantoresFases.CC_nmCantor].MaxLength = 100;
                 dtDados.Columns[caCantoresFases.CC_nmMusica].ReadOnly = false;

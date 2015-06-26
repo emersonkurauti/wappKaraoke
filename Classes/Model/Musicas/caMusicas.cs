@@ -55,7 +55,7 @@ namespace wappKaraoke.Classes.Model.Musicas
 
         public static string dePrincipal
         {
-            get { return "nmCantor"; }
+            get { return "nmMusica"; }
         }
 
         public static string deChaveComposta

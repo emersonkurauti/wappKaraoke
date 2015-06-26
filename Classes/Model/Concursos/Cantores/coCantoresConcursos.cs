@@ -20,7 +20,14 @@ namespace wappKaraoke.Classes.Model.CantoresConcursos
 
 		/// <summary>
 		/// Atributos
-		/// </summary>        
+		/// </summary>       
+        private static string _CC_Controle = "";
+        public string CC_Controle
+        {
+            get { return _CC_Controle; }
+            set { _CC_Controle = value; }
+        }
+
 		private static int _cdCantor;
         public int cdCantor
         {
@@ -81,6 +88,7 @@ namespace wappKaraoke.Classes.Model.CantoresConcursos
 
                 DataTable dtAux = dtDados;
 
+                dtDados.Columns[caCantoresConcursos.CC_Controle].ReadOnly = false;
                 dtDados.Columns[caCantoresConcursos.CC_nmCantor].ReadOnly = false;
                 dtDados.Columns[caCantoresConcursos.CC_nmCantor].MaxLength = 100;
                 dtDados.Columns[caCantoresConcursos.CC_nmAssociacao].ReadOnly = false;
@@ -93,9 +101,9 @@ namespace wappKaraoke.Classes.Model.CantoresConcursos
                     objConAssociacoes.objCoAssociacoes.LimparAtributos();
                     objConAssociacoes.objCoAssociacoes.cdAssociacao = Convert.ToInt32(dr[caCantoresConcursos.cdAssociacao].ToString());
 
-                    if (conAssociacoes.Select())
+                    if (conCantores.Select())
                     {
-                        if (objConAssociacoes.dtDados.Rows.Count > 0)
+                        if (objConCantores.dtDados.Rows.Count > 0)
                         {
                             dr[caCantoresConcursos.CC_nmCantor] = objConCantores.dtDados.Rows[0][caCantores.nmCantor].ToString();
                         }
