@@ -92,6 +92,15 @@
             document.getElementById('lnkCategorias').click();
             document.getElementById('lnkDivCantores_' + strIdCategoria).click();
         }
+
+        function AtivaEdicaoCantor() {
+            document.getElementById('divEdicaoCantor').setAttribute('style', 'display: block;');
+            AtivaAbaCantores();
+        }
+
+        function DesativaEdicaoCantor() {
+            document.getElementById('divEdicaoCantor').setAttribute('style', 'display: none;');
+        }
     </script>
     <asp:Literal ID="ltJavaScript" runat="server"></asp:Literal> <!--Caso precise de agrupamento nas tabelas-->
 </asp:Content>
@@ -740,6 +749,64 @@
                                             </div> <!--<div class="row">-->
                                         </div>
                                     </div>
+
+                                    <div id="divEdicaoCantor" class="blueimp-gallery blueimp-gallery-display blueimp-gallery-left" style="display: none;">
+                                        <div class="slides" style="width: 2732px;">
+                                            <div class="slide" data-index="0" style="width: 1366px; left: 0px; transition-duration: 0ms; 
+                                                transform: translate(0px, 0px) translateZ(0px);">
+                                                <div class="modal fade slide-content in" style="display: block; overflow-y: scroll;">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">
+                                                                    <asp:Literal ID="ltTituloEdicaoCantor" runat="server"></asp:Literal>
+                                                                </h4>
+                                                                <br/>
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-body">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12">
+                                                                                <asp:Literal id="ltMensagemEdicaoCantor" runat="server" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12">
+                                                                               
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <div class="row">
+                                                                    <div class="col-sm-2" align="left" style="float: left">
+                                                                        <asp:LinkButton ID="btnConfirmarEdicaoCantor" runat="server"
+                                                                            CssClass="btn btn-primary btn-block" 
+                                                                            OnClick="btnConfirmarEdicaoCantor_Click">
+                                                                            <i class="glyphicon glyphicon-save"></i>
+                                                                            Confirmar
+                                                                        </asp:LinkButton>
+                                                                    </div>
+                                                                    <div class="col-sm-2" align="center" style="float: left">
+                                                                        <button class="btn btn-primary btn-block btn-danger" 
+                                                                            type="button"
+                                                                            onClick="javascript:DesativaEdicaoCantor(); return false;">
+                                                                            <i class="glyphicon glyphicon-remove"></i>
+                                                                            Cancelar
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="col-sm-8" align="right" style="float: right">
+                                                                    </div>                        
+                                                                </div>        
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal fade"></div>
+                                        </div>
+                                    </div>
+
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div> <!--<div class="tab-pane" id="Cantores">-->

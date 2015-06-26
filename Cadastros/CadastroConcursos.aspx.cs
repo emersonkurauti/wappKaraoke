@@ -841,6 +841,42 @@ namespace wappKaraoke.Cadastros
         private void EditarCantor()
         {
             string[] strParam = Request["__EVENTARGUMENT"].Split(';');
+
+            _dtCantoresConcurso = (DataTable)Session["_dtCantoresConcurso"];
+            int cdCantorEdit = Convert.ToInt32(strParam[0]);
+
+            Session["cdCantorEdit"] = cdCantorEdit;
+            //ltTituloEdicaoJurado.Text = _dtGruposJurados.Rows[cdCantorEdit][caGrupos.CC_nmJurado].ToString() + "<br/>"
+            //    + _dtGruposJurados.Rows[cdCantorEdit][caGrupos.CC_nmNomeKanji].ToString();
+            //deGrupoEdit.Text = _dtGruposJurados.Rows[cdCantorEdit][caGrupos.deGrupo].ToString();
+
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoCantor();", true);
+        }
+
+        protected void btnConfirmarEdicaoCantor_Click(object sender, EventArgs e)
+        {
+            //if (deGrupoEdit.Text.Trim() != "")
+            //{
+            //    int indexJurado = Convert.ToInt32(Session["indexJurado"].ToString());
+            //    _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
+            //    _dtGruposJurados.Rows[indexJurado][caGrupos.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
+            //    _dtGruposJurados.Rows[indexJurado][caGrupos.deGrupo] = deGrupoEdit.Text;
+
+            //    gvGrupoJuradoConcurso.DataSource = _dtGruposJurados;
+            //    gvGrupoJuradoConcurso.DataBind();
+
+            //    Session["_dtGruposJurados"] = _dtGruposJurados;
+
+            //    if (_dtGruposJurados.Rows.Count > 0)
+            //        ConfigurarGridView();
+
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaCantores('');", true);
+            //}
+            //else
+            //{
+            //    ltMensagemEdicaoJur.Text = MostraMensagem("Validação!", "Preenha a descrição do Grupo do Jurado.", csMensagem.msgWarning);
+            //    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoJur();", true);
+            //}
         }
 
         private void RemoverCantor()

@@ -544,6 +544,33 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.Literal ltCategorias;
         
         /// <summary>
+        /// ltTituloEdicaoCantor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltTituloEdicaoCantor;
+        
+        /// <summary>
+        /// ltMensagemEdicaoCantor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltMensagemEdicaoCantor;
+        
+        /// <summary>
+        /// btnConfirmarEdicaoCantor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnConfirmarEdicaoCantor;
+        
+        /// <summary>
         /// btnSalvar control.
         /// </summary>
         /// <remarks>
