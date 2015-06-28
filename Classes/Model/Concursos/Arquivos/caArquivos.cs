@@ -60,7 +60,7 @@ namespace wappKaraoke.Classes.Model.Arquivos
 
         public static string deChaveComposta
         {
-            get { return "cdArquivo;cdConcurso;cdTipoArquivo"; }
+            get { return "cdConcurso;cdTipoArquivo"; }
         }
 
 		/// <summary>

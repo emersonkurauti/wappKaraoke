@@ -520,6 +520,7 @@ namespace wappKaraoke.Cadastros
             _dtImagens.Rows.Remove(_dtImagens.Rows[Convert.ToInt32(strParametro)]);
 
             Session["_dtImagens"] = _dtImagens;
+            Session["_dtImagensExc"] = _dtImagensExc;
 
             CarregarImagens();
         }
@@ -843,40 +844,109 @@ namespace wappKaraoke.Cadastros
             string[] strParam = Request["__EVENTARGUMENT"].Split(';');
 
             _dtCantoresConcurso = (DataTable)Session["_dtCantoresConcurso"];
+            _dtCantoresFases = (DataTable)Session["_dtCantoresFases"];
             int cdCantorEdit = Convert.ToInt32(strParam[0]);
+            int cdCategoriaEdit = Convert.ToInt32(strParam[1]);
 
             Session["cdCantorEdit"] = cdCantorEdit;
-            //ltTituloEdicaoJurado.Text = _dtGruposJurados.Rows[cdCantorEdit][caGrupos.CC_nmJurado].ToString() + "<br/>"
-            //    + _dtGruposJurados.Rows[cdCantorEdit][caGrupos.CC_nmNomeKanji].ToString();
-            //deGrupoEdit.Text = _dtGruposJurados.Rows[cdCantorEdit][caGrupos.deGrupo].ToString();
+            Session["cdCategoriaEdit"] = cdCategoriaEdit;
 
-            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoCantor();", true);
+            csAssociacoes vcsAssociacoesCancores = new csAssociacoes();
+            vcsAssociacoesCancores.bUtilizaDadosExternos = true;
+            vcsAssociacoesCancores.dtDadosExternos = (DataTable)Session["_dtAssociacoes"] == null ?
+                conAssociacoes.objCo.RetornaEstruturaDT() : (DataTable)Session["_dtAssociacoes"];
+            cdAssociacaoEdit = vcsAssociacoesCancores.CarregaDDL(cdAssociacaoEdit);
+
+            csMusicas vcsMusicas = new csMusicas();
+            cdMusicaEdit = vcsMusicas.CarregaDDL(cdMusicaEdit);
+
+            for (int i = 0; i < _dtCantoresFases.Rows.Count; i++)
+            {
+                if ((Convert.ToInt32(_dtCantoresFases.Rows[i][caCantoresFases.cdCantor].ToString()) == cdCantorEdit) &&
+                    (Convert.ToInt32(_dtCantoresFases.Rows[i][caCantoresFases.cdCategoria].ToString()) == cdCategoriaEdit))
+                {
+                    Session["indexCantorFase"] = i;
+
+                    ltTituloEdicaoCantor.Text = _dtCantoresFases.Rows[i][caCantoresFases.CC_deCategoria].ToString() + "<br/><br/>"
+                        + _dtCantoresFases.Rows[i][caCantoresFases.CC_nmCantor].ToString() + "<br/>"
+                        + _dtCantoresFases.Rows[i][caCantoresFases.CC_nmNomeKanji].ToString();
+
+                    cdMusicaEdit.SelectedValue = _dtCantoresFases.Rows[i][caCantoresFases.cdMusica].ToString();
+
+                    for (int k = 0; k < _dtCantoresConcurso.Rows.Count; k++)
+                    {
+                        if (Convert.ToInt32(_dtCantoresConcurso.Rows[k][caCantoresConcursos.cdCantor].ToString()) == cdCantorEdit)
+                        {
+                            Session["cdAssociacaoEdit"] = Convert.ToInt32(_dtCantoresConcurso.Rows[k][caCantoresConcursos.cdAssociacao].ToString());
+                            Session["indexCantorConcurso"] = k;
+
+                            cdAssociacaoEdit.SelectedValue = _dtCantoresConcurso.Rows[i][caCantoresConcursos.cdAssociacao].ToString();
+                        }
+                    }
+
+                    ltMensagemInfoCantor.Text = MostraMensagem("**IMPORTANTE", "Ao alterar a Associação do cantor a mesma será alterada " +
+                        "para as demais categorias que o mesmo estiver inscrito.", csMensagem.msgInfo);
+                }
+            }
+
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoCantor('" + cdCategoriaEdit + "');", true);
         }
 
         protected void btnConfirmarEdicaoCantor_Click(object sender, EventArgs e)
         {
-            //if (deGrupoEdit.Text.Trim() != "")
-            //{
-            //    int indexJurado = Convert.ToInt32(Session["indexJurado"].ToString());
-            //    _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
-            //    _dtGruposJurados.Rows[indexJurado][caGrupos.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
-            //    _dtGruposJurados.Rows[indexJurado][caGrupos.deGrupo] = deGrupoEdit.Text;
+            if (cdAssociacaoEdit.SelectedIndex > 0 && cdMusicaEdit.SelectedIndex > 0)
+            {
+                int indexCantorFase = Convert.ToInt32(Session["indexCantorFase"].ToString());
+                int indexCantorConcurso = Convert.ToInt32(Session["indexCantorConcurso"].ToString());
 
-            //    gvGrupoJuradoConcurso.DataSource = _dtGruposJurados;
-            //    gvGrupoJuradoConcurso.DataBind();
+                _dtCantoresFases = (DataTable)Session["_dtCantoresFases"];
+                _dtCantoresFases.Rows[indexCantorFase][caCantoresFases.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
+                _dtCantoresFases.Rows[indexCantorFase][caCantoresFases.cdMusica] = cdMusicaEdit.SelectedValue;
 
-            //    Session["_dtGruposJurados"] = _dtGruposJurados;
+                _dtCantoresConcurso = (DataTable)Session["_dtCantoresConcurso"];
+                _dtCantoresConcurso.Rows[indexCantorConcurso][caCantoresConcursos.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
+                _dtCantoresConcurso.Rows[indexCantorConcurso][caCantoresConcursos.cdAssociacao] = cdAssociacaoEdit.SelectedValue;
 
-            //    if (_dtGruposJurados.Rows.Count > 0)
-            //        ConfigurarGridView();
+                //Remover do DataTable específico
+                DataTable dt = (DataTable)Session["dvCantores_" + Session["cdCategoriaEdit"].ToString()];
+                dt.Columns[caAssociacoes.cdAssociacao].ReadOnly = false;
+                dt.Columns[caAssociacoes.nmAssociacao].ReadOnly = false;
+                dt.Columns[caMusicas.cdMusica].ReadOnly = false;
+                dt.Columns[caMusicas.nmMusica].ReadOnly = false;
+                dt.Columns[caMusicas.nmMusicaKanji].ReadOnly = false;
 
-            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaCantores('');", true);
-            //}
-            //else
-            //{
-            //    ltMensagemEdicaoJur.Text = MostraMensagem("Validação!", "Preenha a descrição do Grupo do Jurado.", csMensagem.msgWarning);
-            //    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoJur();", true);
-            //}
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (dr[caCantores.cdCantor].ToString() == Session["cdCantorEdit"].ToString())
+                    {
+                        dr[caAssociacoes.cdAssociacao] = cdAssociacaoEdit.SelectedValue;
+                        dr[caAssociacoes.nmAssociacao] = cdAssociacaoEdit.SelectedItem;
+
+
+                        conMusicas objConMusicas = new conMusicas();
+                        objConMusicas.objCoMusicas.LimparAtributos();
+                        objConMusicas.objCoMusicas.cdMusica = Convert.ToInt32(cdMusicaEdit.SelectedValue);
+                        conMusicas.Select();
+
+                        dr[caMusicas.cdMusica] = cdMusicaEdit.SelectedValue;
+                        dr[caMusicas.nmMusica] = cdMusicaEdit.SelectedItem;
+                        dr[caMusicas.nmMusicaKanji] = objConMusicas.dtDados.Rows[0][caMusicas.nmMusicaKanji].ToString();
+                    }
+                }
+
+                Session["dvCantores_" + Session["cdCategoriaEdit"].ToString()] = dt;
+                Session["_dtCantoresFases"] = _dtCantoresFases;
+                Session["_dtCantoresConcurso"] = _dtCantoresConcurso;
+
+                AtualizaCantoresCategorias();
+
+                AtivaAbaCategoria(Session["cdCategoriaEdit"].ToString());
+            }
+            else
+            {
+                ltMensagemEdicaoCantor.Text = MostraMensagem("Validação!", "Selecione uma Associação e uma Música.", csMensagem.msgWarning);
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoCantor('" + Session["cdCategoriaEdit"].ToString() + "');", true);
+            }
         }
 
         private void RemoverCantor()

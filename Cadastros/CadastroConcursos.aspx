@@ -93,9 +93,9 @@
             document.getElementById('lnkDivCantores_' + strIdCategoria).click();
         }
 
-        function AtivaEdicaoCantor() {
+        function AtivaEdicaoCantor(strIdCategoria) {
             document.getElementById('divEdicaoCantor').setAttribute('style', 'display: block;');
-            AtivaAbaCantores();
+            AtivaAbaCantores(strIdCategoria);
         }
 
         function DesativaEdicaoCantor() {
@@ -771,8 +771,18 @@
                                                                         </div>
                                                                         <div class="row">
                                                                             <div class="col-sm-12">
-                                                                               
+                                                                                <asp:DropDownList ID="cdAssociacaoEdit" class="form-control selectpicker" style="text-align:left" 
+                                                                                    runat="server" Width="100%" AutoPostBack="False">
+                                                                                </asp:DropDownList>
                                                                             </div>
+                                                                        </div>
+                                                                        <br />
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12">
+                                                                                <asp:DropDownList ID="cdMusicaEdit" class="form-control selectpicker" style="text-align:left" 
+                                                                                    runat="server" Width="100%" AutoPostBack="False">
+                                                                                </asp:DropDownList>
+                                                                            </div>        
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -795,9 +805,14 @@
                                                                             Cancelar
                                                                         </button>
                                                                     </div>
-                                                                    <div class="col-sm-8" align="right" style="float: right">
+                                                                    <div class="col-sm-8" align="left" style="float: right">
                                                                     </div>                        
                                                                 </div>        
+                                                                <div class="row">
+                                                                    <div class="col-sm-12" align="left">
+                                                                        <asp:Literal ID="ltMensagemInfoCantor" runat="server"></asp:Literal>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -309,84 +309,98 @@ namespace wappKaraoke.Classes.Model.CantoresFases
             dc = new DataColumn();
             dc.DataType = typeof(int);
             dc.ColumnName = "cdConcurso";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(int);
             dc.ColumnName = "cdCantor";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(string);
             dc.ColumnName = "nmCantor";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(string);
             dc.ColumnName = "nmNomeKanji";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(int);
             dc.ColumnName = "cdMusica";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(string);
             dc.ColumnName = "nmMusica";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(string);
             dc.ColumnName = "nmMusicaKanji";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(int);
             dc.ColumnName = "cdAssociacao";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(string);
             dc.ColumnName = "nmAssociacao";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(int);
             dc.ColumnName = "cdFase";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(int);
             dc.ColumnName = "cdCategoria";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(int);
             dc.ColumnName = "cdTpStatus";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(string);
             dc.ColumnName = "nuCantor";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 
             dc = new DataColumn();
             dc.DataType = typeof(int);
             dc.ColumnName = "nuOrdemApresentacao";
+            dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
 

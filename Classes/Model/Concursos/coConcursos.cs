@@ -266,6 +266,7 @@ namespace wappKaraoke.Classes.Model.Concursos
                 string strCaminhoDestino = strPastaRaiz + strDestino;
 
                 File.Copy(strCaminhoOrigem, strCaminhoDestino, true);
+                File.Delete(strCaminhoOrigem);
 
                 return true;
             }
@@ -335,6 +336,13 @@ namespace wappKaraoke.Classes.Model.Concursos
                                         return false;
                                     }
 
+                                    objConArquivos.objCoArquivos.LimparAtributos();
+                                    objConArquivos.objCoArquivos.nmArquivo = dr[caArquivos.nmArquivo].ToString();
+                                    objConArquivos.objCoArquivos.deArquivo = dr[caArquivos.deArquivo].ToString();
+                                    objConArquivos.objCoArquivos.cdConcurso = Convert.ToInt32(dr[caArquivos.cdConcurso].ToString());
+                                    objConArquivos.objCoArquivos.cdTipoArquivo = Convert.ToInt32(dr[caArquivos.cdTipoArquivo].ToString());
+                                    objConArquivos.objCoArquivos.cdArquivo = Convert.ToInt32(dr[caArquivos.cdArquivo].ToString());
+
                                     if (objConArquivos.objCoArquivos.cdTipoArquivo == csConstantes.cCdTipoArquivoDocumento)
                                     {
                                         RemoveArquivo(wappKaraoke.Properties.Settings.Default.sCaminhoArqDocumentos +
@@ -359,6 +367,12 @@ namespace wappKaraoke.Classes.Model.Concursos
                             {
                                 return false;
                             }
+
+                            objConArquivos.objCoArquivos.LimparAtributos();
+                            objConArquivos.objCoArquivos.nmArquivo = dr[caArquivos.nmArquivo].ToString();
+                            objConArquivos.objCoArquivos.deArquivo = dr[caArquivos.deArquivo].ToString();
+                            objConArquivos.objCoArquivos.cdConcurso = Convert.ToInt32(dr[caArquivos.cdConcurso].ToString());
+                            objConArquivos.objCoArquivos.cdTipoArquivo = Convert.ToInt32(dr[caArquivos.cdTipoArquivo].ToString());
 
                             strArquivoTemp = wappKaraoke.Properties.Settings.Default.sCaminhoTemp +
                                     objConArquivos.objCoArquivos.nmArquivo;
