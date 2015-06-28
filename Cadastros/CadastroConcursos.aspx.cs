@@ -312,12 +312,8 @@ namespace wappKaraoke.Cadastros
             CarregaDDLAssociacoesCantores();
         }
 
-        private DataTable UnionDataTable(DataTable dt1, DataTable dt2)
+        private DataTable UnionDataTable(DataTable dt1, DataTable dt2, DataTable dtResult)
         {
-            DataTable dtResult = new DataTable();
-
-            dtResult = conArquivos.objCo.RetornaEstruturaDT();
-
             foreach (DataRow dr in dt1.Rows)
             {
                 dtResult.ImportRow(dr);
@@ -343,19 +339,26 @@ namespace wappKaraoke.Cadastros
             DateTime.TryParse(dtFimConcurso.Text, out dtData);
             objCoConcurso.dtFimConcurso = dtData;
 
+            DataTable dtResult;
             //Arquivos
             if (Session["_dtDocumentos"] != null)
             {
                 _dtDocumentos = (DataTable)Session["_dtDocumentos"];
                 if (Session["_dtDocumentosExc"] != null)
-                    _dtDocumentos = UnionDataTable(((DataTable)Session["_dtDocumentos"]), ((DataTable)Session["_dtDocumentosExc"]));
+                {
+                    dtResult = conArquivos.objCo.RetornaEstruturaDT();
+                    _dtDocumentos = UnionDataTable(((DataTable)Session["_dtDocumentos"]), ((DataTable)Session["_dtDocumentosExc"]), dtResult);
+                }
             }
 
             if (Session["_dtImagens"] != null)
             {
                 _dtImagens = (DataTable)Session["_dtImagens"];
                 if (Session["_dtImagensExc"] != null)
-                    _dtImagens = UnionDataTable(((DataTable)Session["_dtImagens"]), ((DataTable)Session["_dtImagensExc"]));
+                {
+                    dtResult = conArquivos.objCo.RetornaEstruturaDT();
+                    _dtImagens = UnionDataTable(((DataTable)Session["_dtImagens"]), ((DataTable)Session["_dtImagensExc"]), dtResult);
+                }
             }
 
             //Associacoes
@@ -363,7 +366,10 @@ namespace wappKaraoke.Cadastros
             {
                 _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
                 if (Session["_dtAssociacoesExc"] != null)
-                    _dtAssociacoes = UnionDataTable(((DataTable)Session["_dtAssociacoes"]), ((DataTable)Session["_dtAssociacoesExc"]));
+                {
+                    dtResult = conConcursosAssociacoes.objCo.RetornaEstruturaDT();
+                    _dtAssociacoes = UnionDataTable(((DataTable)Session["_dtAssociacoes"]), ((DataTable)Session["_dtAssociacoesExc"]), dtResult);
+                }
             }
 
             //Grupo Jurados
@@ -371,7 +377,10 @@ namespace wappKaraoke.Cadastros
             {
                 _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
                 if (Session["_dtGruposJuradosExc"] != null)
-                    _dtGruposJurados = UnionDataTable(((DataTable)Session["_dtGruposJurados"]), ((DataTable)Session["_dtGruposJuradosExc"]));
+                {
+                    dtResult = conGrupos.objCo.RetornaEstruturaDT();
+                    _dtGruposJurados = UnionDataTable(((DataTable)Session["_dtGruposJurados"]), ((DataTable)Session["_dtGruposJuradosExc"]), dtResult);
+                }
             }
 
             //Cantores Concursos
@@ -379,7 +388,10 @@ namespace wappKaraoke.Cadastros
             {
                 _dtCantoresConcurso = (DataTable)Session["_dtCantoresConcurso"];
                 if (Session["_dtCantoresConcursoExc"] != null)
-                    _dtCantoresConcurso = UnionDataTable(((DataTable)Session["_dtCantoresConcurso"]), ((DataTable)Session["_dtCantoresConcursoExc"]));
+                {
+                    dtResult = conCantoresConcursos.objCo.RetornaEstruturaDT();
+                    _dtCantoresConcurso = UnionDataTable(((DataTable)Session["_dtCantoresConcurso"]), ((DataTable)Session["_dtCantoresConcursoExc"]), dtResult);
+                }
             }
 
             //Cantores Fases
@@ -387,10 +399,14 @@ namespace wappKaraoke.Cadastros
             {
                 _dtCantoresFases = (DataTable)Session["_dtCantoresFases"];
                 if (Session["_dtCantoresFasesExc"] != null)
-                    _dtCantoresFases = UnionDataTable(((DataTable)Session["_dtCantoresFases"]), ((DataTable)Session["_dtCantoresFasesExc"]));
+                {
+                    dtResult = conCantoresFases.objCo.RetornaEstruturaDT();
+                    _dtCantoresFases = UnionDataTable(((DataTable)Session["_dtCantoresFases"]), ((DataTable)Session["_dtCantoresFasesExc"]), dtResult);
+                }
             }
 
-            objCoConcurso.dtArquivos = UnionDataTable(_dtDocumentos, _dtImagens);
+            dtResult = conArquivos.objCo.RetornaEstruturaDT();
+            objCoConcurso.dtArquivos = UnionDataTable(_dtDocumentos, _dtImagens, dtResult);
             objCoConcurso.dtAssociacoes = _dtAssociacoes;
             objCoConcurso.dtGrupoJurados = _dtGruposJurados;
             objCoConcurso.dtConcursoCantores = _dtCantoresConcurso;
@@ -629,7 +645,8 @@ namespace wappKaraoke.Cadastros
                 {
                     _dtImagens = (DataTable)Session["_dtImagens"];
                 }
-                DataTable dtArquivos = UnionDataTable(_dtDocumentos, _dtImagens);
+
+                DataTable dtArquivos = UnionDataTable(_dtDocumentos, _dtImagens, conArquivos.objCo.RetornaEstruturaDT());
 
                 if (VaidaRegistroExistente(dtArquivos, hdfNmArquivo.Value.ToString(), caArquivos.nmArquivo))
                 {
@@ -1547,6 +1564,7 @@ namespace wappKaraoke.Cadastros
                     _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
                     DataRow dr = _dtGruposJurados.NewRow();
 
+                    dr[caGrupos.CC_Controle] = KuraFrameWork.csConstantes.sInserindo;
                     dr[caGrupos.cdJurado] = cdJurado.SelectedValue;
                     dr[caGrupos.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
                     dr[caGrupos.deGrupo] = deGrupo.Text;
@@ -1681,6 +1699,9 @@ namespace wappKaraoke.Cadastros
         /// </summary>
         private void CarregarAssociacoes()
         {
+            if (Session["_dtAssociacoes"] != null)
+                _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
+
             conConcursosAssociacoes objConConcursosAssociacoes = new conConcursosAssociacoes();
             objConConcursosAssociacoes.objCoConcursosAssociacoes.LimparAtributos();
             objConConcursosAssociacoes.objCoConcursosAssociacoes.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
@@ -1691,10 +1712,12 @@ namespace wappKaraoke.Cadastros
                 return;
             }
 
-            gvAssociacoes.DataSource = objConConcursosAssociacoes.dtDados;
+            _dtAssociacoes = objConConcursosAssociacoes.dtDados;
+
+            gvAssociacoes.DataSource = _dtAssociacoes;
             gvAssociacoes.DataBind();
 
-            Session["_dtAssociacoes"] = objConConcursosAssociacoes.dtDados;
+            Session["_dtAssociacoes"] = _dtAssociacoes;
             ConfigurarGridView();
         }
 
@@ -1709,9 +1732,9 @@ namespace wappKaraoke.Cadastros
                     if (deEmail.Text.Trim() != "")
                     {
                         if (Session["_dtAssociacoes"] != null)
-                        {
                             _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
-                        }
+                        else
+                            _dtAssociacoes = conConcursosAssociacoes.objCo.RetornaEstruturaDT();
 
                         if (VaidaRegistroExistente(_dtAssociacoes, cdAssociacao.SelectedValue, caAssociacoes.cdAssociacao))
                         {
@@ -1720,9 +1743,9 @@ namespace wappKaraoke.Cadastros
                             return;
                         }
 
-                        _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
                         DataRow dr = _dtAssociacoes.NewRow();
 
+                        dr[caConcursosAssociacoes.CC_Controle] = KuraFrameWork.csConstantes.sInserindo;
                         dr[caConcursosAssociacoes.cdAssociacao] = cdAssociacao.SelectedValue;
                         dr[caConcursosAssociacoes.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
                         dr[caConcursosAssociacoes.deEmail] = deEmail.Text;
@@ -1751,15 +1774,34 @@ namespace wappKaraoke.Cadastros
             ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
         }
 
+        private bool ExisteCantorAssociacao(string pscdAssociacao)
+        {
+            if (Session["_dtCantoresConcurso"] != null)
+            {
+                _dtCantoresConcurso = (DataTable)Session["_dtCantoresConcurso"];
+                foreach (DataRow dr in _dtCantoresConcurso.Rows)
+                {
+                    if (dr[caCantoresConcursos.cdAssociacao].ToString() == pscdAssociacao)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         protected void RemoveAssociacao(int pintIndice)
         {
-            //
-            //Validar antes de remover
-            //Não pode haver cantores neste concurso associados a uma associação
-            //
-
+            ltMensagemAssociacoes.Text = "";
 
             _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
+
+            if (ExisteCantorAssociacao(_dtAssociacoes.Rows[pintIndice][caConcursosAssociacoes.cdAssociacao].ToString()))
+            {
+                ltMensagemAssociacoes.Text = MostraMensagem("Validação!", "Existe(m) cantor(es) representando esta associação. " +
+                    "Altere a associação dos cantores ou os remova.", csMensagem.msgWarning);
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
+                return;
+            }
+
             _dtAssociacoes.Rows[pintIndice][caConcursosAssociacoes.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
 
             if (Session["_dtAssociacoesExc"] != null)
@@ -1834,9 +1876,9 @@ namespace wappKaraoke.Cadastros
 
         protected void btnConfirmarEdicaoAss_Click(object sender, EventArgs e)
         {
-            if (nmRepresentante.Text.Trim() != "")
+            if (nmRepresentanteEdit.Text.Trim() != "")
             {
-                if (deEmail.Text.Trim() != "")
+                if (deEmailRepresentanteEdit.Text.Trim() != "")
                 {
                     int indexAssociacao = Convert.ToInt32(Session["indexAssociacao"].ToString());
                     _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
