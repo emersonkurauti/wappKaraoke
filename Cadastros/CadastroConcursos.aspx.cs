@@ -143,19 +143,7 @@ namespace wappKaraoke.Cadastros
                 ConfiguraGridAssociacoes();
                 ConfiguraGridJurados();
                 ConfiguraGridDocumentos();
-
-                //Cantores
-                //Attribute to show the Plus Minus Button.
-                //gvCantoresConcurso.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
-
-                //Attribute to hide column in Phone.
-                //gvCantoresConcurso.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-                //gvCantoresConcurso.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-                //gvCantoresConcurso.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-                //gvCantoresConcurso.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
-
-                //Adds THEAD and TBODY to GridView.
-                //gvCantoresConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
+                ConfiguraGridOrdemApres();
 
                 return true;
             }
@@ -262,6 +250,11 @@ namespace wappKaraoke.Cadastros
 
             //Adds THEAD and TBODY to GridView.
             gvDocumentos.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
+        private void ConfiguraGridOrdemApres()
+        {
+            gvOrdemApres.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
 
         private void RegistrarScript()
@@ -941,6 +934,8 @@ namespace wappKaraoke.Cadastros
                         + _dtCantoresFases.Rows[i][caCantoresFases.CC_nmNomeKanji].ToString();
 
                     cdMusicaEdit.SelectedValue = _dtCantoresFases.Rows[i][caCantoresFases.cdMusica].ToString();
+                    nuCantorEdit.Text = _dtCantoresFases.Rows[i][caCantoresFases.nuCantor].ToString();
+                    nuOrdemApresentacaoEdit.Text = _dtCantoresFases.Rows[i][caCantoresFases.nuOrdemApresentacao].ToString();
 
                     for (int k = 0; k < _dtCantoresConcurso.Rows.Count; k++)
                     {
@@ -1152,6 +1147,9 @@ namespace wappKaraoke.Cadastros
                         Session["_dtOrdemCategoria"] = _dtOrdemCategoria;
                         Session["_dtOrdemCategoriaExc"] = _dtOrdemCategoriaExc;
 
+                        gvOrdemApres.DataSource = _dtOrdemCategoria;
+                        gvOrdemApres.DataBind();
+
                         return;
                     }
                 }
@@ -1234,6 +1232,13 @@ namespace wappKaraoke.Cadastros
             _dtCantoresFases = objConCantoresFases.dtDados;
             Session["_dtCantoresFases"] = _dtCantoresFases;
 
+            CarregarCategorias();
+
+            RegistrarScript();
+        }
+
+        private void CarregarCategorias()
+        {
             conConcursosOrdemCategorias objConOrdemCategorias = new conConcursosOrdemCategorias();
             objConOrdemCategorias.objCoConcursosOrdemCategorias.LimparAtributos();
             objConOrdemCategorias.objCoConcursosOrdemCategorias.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
@@ -1258,7 +1263,8 @@ namespace wappKaraoke.Cadastros
                 PreencheLiteral(_dtOrdemCategoria.Rows[0][caConcursosOrdemCategorias.cdCategoria].ToString(), true, false);
             }
 
-            RegistrarScript();
+            gvOrdemApres.DataSource = _dtOrdemCategoria;
+            gvOrdemApres.DataBind();
         }
 
         public void btnAdicionarCategoria_OnClick(Object sender, EventArgs e)
@@ -1300,6 +1306,7 @@ namespace wappKaraoke.Cadastros
                 cdStatus.SelectedIndex = 1;
                 cdFaseCantor.SelectedIndex = 1;
                 AdicionaCantorCategoriaConcurso(cdCategoria.SelectedValue.ToString(), cdCategoria.SelectedItem.ToString());
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaCantores(" + cdCategoria.SelectedValue.ToString() + ");", true);
             }
         }
 
@@ -1340,6 +1347,9 @@ namespace wappKaraoke.Cadastros
                 _dtOrdemCategoria.Rows.Add(dr);
                 OrdenaDataTable(ref _dtOrdemCategoria, caConcursosOrdemCategorias.nuOrdem + KuraFrameWork.csConstantes.sCrescente);
                 Session["_dtOrdemCategoria"] = _dtOrdemCategoria;
+
+                gvOrdemApres.DataSource = _dtOrdemCategoria;
+                gvOrdemApres.DataBind();
             }
         }
 
@@ -1582,11 +1592,17 @@ namespace wappKaraoke.Cadastros
         protected void upCantoresCategorias_PreRender(object sender, EventArgs e)
         {
             this.ScriptManager1.RegisterPostBackControl(btnAdicionarAssociacao);
+
             foreach (GridViewRow gvr in gvAssociacoes.Rows)
             {
                 LinkButton lnkDeleteAss = gvr.FindControl("lnkDeleteAss") as LinkButton;
                 ScriptManager.GetCurrent(this).RegisterPostBackControl(lnkDeleteAss);
             }
+        }
+
+        protected void upOrdemApres_PreRender(object sender, EventArgs e)
+        {
+            this.ScriptManager1.RegisterPostBackControl(btnAdicionarCategoria);
         }
 
         /// <summary>
