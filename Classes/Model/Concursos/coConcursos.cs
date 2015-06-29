@@ -676,6 +676,8 @@ namespace wappKaraoke.Classes.Model.Concursos
                             Convert.ToInt32(dr[caConcursosOrdemCategorias.cdConcurso].ToString());
                         objConConcursosOrdemCategorias.objCoConcursosOrdemCategorias.cdCategoria = 
                             Convert.ToInt32(dr[caConcursosOrdemCategorias.cdCategoria].ToString());
+                        objConConcursosOrdemCategorias.objCoConcursosOrdemCategorias.nuOrdem =
+                            Convert.ToInt32(dr[caConcursosOrdemCategorias.nuOrdem].ToString());
 
                         if (dr[caConcursosOrdemCategorias.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpInserido)
                         {

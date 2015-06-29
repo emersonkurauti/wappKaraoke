@@ -1127,6 +1127,14 @@ namespace wappKaraoke.Cadastros
             }
         }
 
+        private void RemanejaOrdemApresentacao()
+        {
+            foreach (DataRow dr in _dtOrdemCategoria.Rows)
+            {
+                dr[caConcursosOrdemCategorias.nuOrdem] = _dtOrdemCategoria.Rows.IndexOf(dr) + 1;
+            }
+        }
+
         private void RemoveCategoria(string pcdCategoria, string psNomeGridView)
         {
             if (!ExisteCategoria(pcdCategoria))
@@ -1144,6 +1152,9 @@ namespace wappKaraoke.Cadastros
 
                         Session[psNomeGridView] = null;
                         OrdenaDataTable(ref _dtOrdemCategoria, caConcursosOrdemCategorias.nuOrdem + KuraFrameWork.csConstantes.sCrescente);
+
+                        RemanejaOrdemApresentacao();
+
                         Session["_dtOrdemCategoria"] = _dtOrdemCategoria;
                         Session["_dtOrdemCategoriaExc"] = _dtOrdemCategoriaExc;
 
