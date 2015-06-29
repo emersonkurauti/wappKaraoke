@@ -10,6 +10,7 @@ using wappKaraoke.Classes.Model.ConcursosAssociacoes;
 using wappKaraoke.Classes.Model.Grupos;
 using wappKaraoke.Classes.Model.CantoresConcursos;
 using wappKaraoke.Classes.Model.CantoresFases;
+using wappKaraoke.Classes.Model.ConcursosOrdemCategorias;
 using System.IO;
 
 namespace wappKaraoke.Classes.Model.Concursos
@@ -51,6 +52,13 @@ namespace wappKaraoke.Classes.Model.Concursos
         {
             get { return _dtConcursoFases; }
             set { _dtConcursoFases = value; }
+        }
+
+        private DataTable _dtOrdemCategoria;
+        public DataTable dtOrdemCategoria
+        {
+            get { return _dtOrdemCategoria; }
+            set { _dtOrdemCategoria = value; }
         }
 
         private static  int _CC_cdRegistro;
@@ -213,6 +221,12 @@ namespace wappKaraoke.Classes.Model.Concursos
                         objBanco.RollbackTransaction();
                         return false;
                     }
+
+                    if (!AtualizarOrdemCategorias())
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
                 }
 
                 objBanco.CommitTransaction();
@@ -262,6 +276,12 @@ namespace wappKaraoke.Classes.Model.Concursos
                     }
 
                     if (!AtualizarCantoresFases())
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
+
+                    if (!AtualizarOrdemCategorias())
                     {
                         objBanco.RollbackTransaction();
                         return false;
@@ -624,6 +644,59 @@ namespace wappKaraoke.Classes.Model.Concursos
                         else
                         {
                             if (!conCantoresFases.Inserir())
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Atualiza a ordem das categorias
+        /// </summary>
+        /// <returns></returns>
+        private bool AtualizarOrdemCategorias()
+        {
+            conConcursosOrdemCategorias objConConcursosOrdemCategorias = new conConcursosOrdemCategorias();
+            try
+            {
+                foreach (DataRow dr in _dtOrdemCategoria.Rows)
+                {
+                    if (dr[caConcursosOrdemCategorias.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpCarregado)
+                    {
+                        objConConcursosOrdemCategorias.objCoConcursosOrdemCategorias.LimparAtributos();
+                        objConConcursosOrdemCategorias.objCoConcursosOrdemCategorias.cdConcurso = 
+                            Convert.ToInt32(dr[caConcursosOrdemCategorias.cdConcurso].ToString());
+                        objConConcursosOrdemCategorias.objCoConcursosOrdemCategorias.cdCategoria = 
+                            Convert.ToInt32(dr[caConcursosOrdemCategorias.cdCategoria].ToString());
+
+                        if (dr[caConcursosOrdemCategorias.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpInserido)
+                        {
+                            if (dr[caConcursosOrdemCategorias.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpAlterado)
+                            {
+                                if (!conConcursosOrdemCategorias.Alterar())
+                                {
+                                    return false;
+                                }
+                            }
+                            else if (dr[caConcursosOrdemCategorias.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpExcluido)
+                            {
+                                if (!conConcursosOrdemCategorias.Excluir())
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!conConcursosOrdemCategorias.Inserir())
                             {
                                 return false;
                             }

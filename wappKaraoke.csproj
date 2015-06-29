@@ -309,6 +309,7 @@
     <Compile Include="Classes\Constantes\csConstantes.cs" />
     <Compile Include="Classes\Controller\conArquivos.cs" />
     <Compile Include="Classes\Controller\conConcursos.cs" />
+    <Compile Include="Classes\Controller\conConcursosOrdemCategorias.cs" />
     <Compile Include="Classes\Controller\conGrupos.cs" />
     <Compile Include="Classes\Controller\conTipoArquivo.cs" />
     <Compile Include="Classes\Dinamico\csDinamico.cs" />
@@ -324,6 +325,8 @@
     <Compile Include="Classes\Model\Concursos\ConcursosAssociacoes\coConcursosAssociacoes.cs" />
     <Compile Include="Classes\Model\Concursos\Grupos\caGrupos.cs" />
     <Compile Include="Classes\Model\Concursos\Grupos\coGrupos.cs" />
+    <Compile Include="Classes\Model\Concursos\OdemCategoria\caConcursosOrdemCategorias.cs" />
+    <Compile Include="Classes\Model\Concursos\OdemCategoria\coConcursosOrdemCategorias.cs" />
     <Compile Include="Classes\Model\TipoArquivo\caTipoArquivo.cs" />
     <Compile Include="Classes\Model\TipoArquivo\coTipoArquivo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

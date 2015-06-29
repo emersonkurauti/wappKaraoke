@@ -827,7 +827,7 @@
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div> <!--<div class="tab-pane" id="Cantores">-->
-                        <div class="tab-pane active" id="OrdemApres">
+                        <div class="tab-pane" id="OrdemApres">
                             <div class="panel panel-default" style="border-top: 0px">
                                 <div class="panel-body">
                                     <asp:GridView ID="gvOrdemApres" runat="server"

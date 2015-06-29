@@ -26,6 +26,8 @@ namespace wappKaraoke.Classes
             return "<table class=\"footable table table-bordered table-hover default footable-loaded\" cellspacing=\"0\" rules=\"all\" border=\"1\" id=\"gvCantores_" + strIdGV + "\" style=\"border-collapse:collapse;\">"
                  + "  <thead>"
                  + "    <tr class=\"info\">"
+                 + "      <th data-hide=\"all\" scope=\"col\" visible=\"false\">Seq.</th>" //Seq.
+                 + "      <th data-hide=\"all\" scope=\"col\" visible=\"false\">Nº Cantor</th>" //nuCantor
                  + "      <th data-hide=\"all\" scope=\"col\" visible=\"false\">Cód. Cantor</th>" //Cód. Cantor
                  + "      <th data-class=\"expand\" scope=\"col\">Cantor</th>" //Nome Cantor com Kanji
                  + "      <th data-hide=\"all\" scope=\"col\">Cód. Associação</th>"//Cód. Associação
@@ -49,6 +51,12 @@ namespace wappKaraoke.Classes
             foreach (DataRow dr in _dtDados.Rows)
             {
                 strLinhas += "<tr>";
+                //Seq
+                strLinhas += "<td style=\"width:5%;\">" + dr[caCantoresFases.nuOrdemApresentacao] + "</td>";
+
+                //nuCantor
+                strLinhas += "<td style=\"width:5%;\">" + dr[caCantoresFases.nuCantor] + "</td>";
+
                 //Cantor
                 strLinhas += "<td style=\"width:5%;\">" + dr[caCantores.cdCantor] + "</td>";
                 strLinhas += "<td class=\"expand\">" + dr[caCantores.nmCantor] + "<br/>" + dr[caCantores.nmNomeKanji] + "</td>";

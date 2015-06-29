@@ -283,8 +283,8 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         /// <returns></returns>
         public bool SelectCantoresFasesConcurso(out DataTable dtDados)
         {
-            string strComando = @"SELECT CF.cdConcurso, CAN.cdCantor, CAN.nmCantor, CAN.nmNomeKanji, " +
-                                 "       MUS.cdMusica, MUS.nmMusica, MUS.nmMusicaKanji, " +
+            string strComando = @"SELECT CF.cdConcurso, CF.nuOrdemApresentacao, CF.nuCantor, CAN.cdCantor, CAN.nmCantor, " +
+                                 "       CAN.nmNomeKanji, MUS.cdMusica, MUS.nmMusica, MUS.nmMusicaKanji, " +
                                  "       ASS.cdAssociacao, ASS.nmAssociacao, CF.cdFase, " +
                                  "       CF.cdCategoria, CF.cdTpStatus, CF.nuCantor, CF.nuOrdemApresentacao " +
                                  "  FROM CANTORESFASES CF " +
@@ -310,6 +310,20 @@ namespace wappKaraoke.Classes.Model.CantoresFases
             dc = new DataColumn();
             dc.DataType = typeof(int);
             dc.ColumnName = "cdConcurso";
+            dc.ReadOnly = false;
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(int);
+            dc.ColumnName = "nuOrdemApresentacao";
+            dc.ReadOnly = false;
+
+            dt.Columns.Add(dc);
+
+            dc = new DataColumn();
+            dc.DataType = typeof(string);
+            dc.ColumnName = "nuCantor";
             dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
@@ -387,20 +401,6 @@ namespace wappKaraoke.Classes.Model.CantoresFases
             dc = new DataColumn();
             dc.DataType = typeof(int);
             dc.ColumnName = "cdTpStatus";
-            dc.ReadOnly = false;
-
-            dt.Columns.Add(dc);
-
-            dc = new DataColumn();
-            dc.DataType = typeof(string);
-            dc.ColumnName = "nuCantor";
-            dc.ReadOnly = false;
-
-            dt.Columns.Add(dc);
-
-            dc = new DataColumn();
-            dc.DataType = typeof(int);
-            dc.ColumnName = "nuOrdemApresentacao";
             dc.ReadOnly = false;
 
             dt.Columns.Add(dc);
