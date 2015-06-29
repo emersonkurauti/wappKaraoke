@@ -290,9 +290,10 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  "  FROM CANTORESFASES CF " +
                                  " INNER JOIN CANTORES CAN on CAN.cdCantor = CF.cdCantor " +
                                  " INNER JOIN MUSICAS MUS on MUS.cdMusica = CF.cdMusica " +
-                                 " INNER JOIN CONCURSOSASSOCIACOES CA on CA.cdConcurso = CF.cdConcurso" +
-                                 " INNER JOIN ASSOCIACOES ASS on ASS.cdAssociacao = CA.cdAssociacao" +
-                                 " WHERE CF.cdConcurso = " + _cdConcurso;
+                                 " INNER JOIN CANTORESCONCURSOS CC on CC.cdConcurso = CF.cdConcurso AND CC.cdCantor = CF.cdCantor" +
+                                 " INNER JOIN ASSOCIACOES ASS on ASS.cdAssociacao = CC.cdAssociacao" +
+                                 " WHERE CF.cdConcurso = " + _cdConcurso +
+                                 "   AND CF.cdCategoria = " + _cdCategoria;
 
             return objBanco.SelectPersonalizado(out dtDados, strComando);
         }

@@ -202,13 +202,13 @@ namespace wappKaraoke.Classes.Model.Concursos
                         return false;
                     }
 
-                    if (!AtualizarCantoresFases())
+                    if (!AtualizarCantoresConcurso())
                     {
                         objBanco.RollbackTransaction();
                         return false;
                     }
 
-                    if (!AtualizarCantoresConcurso())
+                    if (!AtualizarCantoresFases())
                     {
                         objBanco.RollbackTransaction();
                         return false;
@@ -255,13 +255,13 @@ namespace wappKaraoke.Classes.Model.Concursos
                         return false;
                     }
 
-                    if (!AtualizarCantoresFases())
+                    if (!AtualizarCantoresConcurso())
                     {
                         objBanco.RollbackTransaction();
                         return false;
                     }
 
-                    if (!AtualizarCantoresConcurso())
+                    if (!AtualizarCantoresFases())
                     {
                         objBanco.RollbackTransaction();
                         return false;

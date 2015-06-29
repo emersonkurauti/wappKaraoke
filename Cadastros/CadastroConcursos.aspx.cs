@@ -162,8 +162,23 @@ namespace wappKaraoke.Cadastros
             }
         }
 
+        private void LimpaSessionCantoresCategorias()
+        {
+            if (Session["alCdCategoria"] != null)
+            {
+                ArrayList alCategorias = (ArrayList)Session["alCdCategoria"];
+
+                foreach (string cdCategoria in alCategorias)
+                {
+                    Session["dvCantores_" + cdCategoria] = null;
+                }
+            }
+        }
+
         private void LimpaSessions()
         {
+            LimpaSessionCantoresCategorias();
+
             Session["strLista"] = null;
             Session["strDivs"] = null;
             Session["alCdCategoria"] = null;
@@ -993,6 +1008,9 @@ namespace wappKaraoke.Cadastros
                 }
             }
 
+            Session["_dtCantoresFases"] = _dtCantoresFases;
+            Session["_dtCantoresFasesExc"] = _dtCantoresFasesExc;
+
             RemoveCantorGvEspecifico(strParam[0], "dvCantores_" + strParam[1]);
 
             RemoveCategoriaArrayList(strParam[1], "dvCantores_" + strParam[1]);
@@ -1064,6 +1082,9 @@ namespace wappKaraoke.Cadastros
 
                         _dtCantoresConcursoExc.ImportRow(dr);
                         _dtCantoresConcurso.Rows.Remove(dr);
+
+                        Session["_dtCantoresConcurso"] = _dtCantoresConcurso;
+                        Session["_dtCantoresConcursoExc"] = _dtCantoresConcursoExc;
                         return;
                     }
                 }

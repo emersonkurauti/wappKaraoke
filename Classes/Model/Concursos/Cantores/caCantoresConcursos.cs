@@ -60,7 +60,7 @@ namespace wappKaraoke.Classes.Model.CantoresConcursos
 
         public static string deChaveComposta
         {
-            get { return "[ChComposta]"; }
+            get { return "cdConcurso"; }
         }
 
 		/// <summary>
