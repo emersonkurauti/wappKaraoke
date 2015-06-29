@@ -912,7 +912,7 @@ namespace wappKaraoke.Cadastros
                             Session["cdAssociacaoEdit"] = Convert.ToInt32(_dtCantoresConcurso.Rows[k][caCantoresConcursos.cdAssociacao].ToString());
                             Session["indexCantorConcurso"] = k;
 
-                            cdAssociacaoEdit.SelectedValue = _dtCantoresConcurso.Rows[i][caCantoresConcursos.cdAssociacao].ToString();
+                            cdAssociacaoEdit.SelectedValue = _dtCantoresConcurso.Rows[k][caCantoresConcursos.cdAssociacao].ToString();
                         }
                     }
 
@@ -939,36 +939,52 @@ namespace wappKaraoke.Cadastros
                 _dtCantoresConcurso.Rows[indexCantorConcurso][caCantoresConcursos.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
                 _dtCantoresConcurso.Rows[indexCantorConcurso][caCantoresConcursos.cdAssociacao] = cdAssociacaoEdit.SelectedValue;
 
-                //Remover do DataTable específico
-                DataTable dt = (DataTable)Session["dvCantores_" + Session["cdCategoriaEdit"].ToString()];
-                dt.Columns[caAssociacoes.cdAssociacao].ReadOnly = false;
-                dt.Columns[caAssociacoes.nmAssociacao].ReadOnly = false;
-                dt.Columns[caMusicas.cdMusica].ReadOnly = false;
-                dt.Columns[caMusicas.nmMusica].ReadOnly = false;
-                dt.Columns[caMusicas.nmMusicaKanji].ReadOnly = false;
+                DataTable dt;
+                ArrayList alCdCategoria = new ArrayList();
+                ArrayList alDeCategoria = new ArrayList();
 
-                foreach (DataRow dr in dt.Rows)
+                if (Session["alCdCategoria"] != null)
+                    alCdCategoria = (ArrayList)Session["alCdCategoria"];
+
+                if (Session["alDeCategoria"] != null)
+                    alDeCategoria = (ArrayList)Session["alDeCategoria"];
+
+
+                foreach (string scdCategoria in alCdCategoria)
                 {
-                    if (dr[caCantores.cdCantor].ToString() == Session["cdCantorEdit"].ToString())
+                    dt = (DataTable)Session["dvCantores_" + scdCategoria];
+                    dt.Columns[caAssociacoes.cdAssociacao].ReadOnly = false;
+                    dt.Columns[caAssociacoes.nmAssociacao].ReadOnly = false;
+                    dt.Columns[caMusicas.cdMusica].ReadOnly = false;
+                    dt.Columns[caMusicas.nmMusica].ReadOnly = false;
+                    dt.Columns[caMusicas.nmMusicaKanji].ReadOnly = false;
+
+                    foreach (DataRow dr in dt.Rows)
                     {
-                        dr[caAssociacoes.cdAssociacao] = cdAssociacaoEdit.SelectedValue;
-                        dr[caAssociacoes.nmAssociacao] = cdAssociacaoEdit.SelectedItem;
+                        if (dr[caCantores.cdCantor].ToString() == Session["cdCantorEdit"].ToString())
+                        {
+                            dr[caAssociacoes.cdAssociacao] = cdAssociacaoEdit.SelectedValue;
+                            dr[caAssociacoes.nmAssociacao] = cdAssociacaoEdit.SelectedItem;
 
 
-                        conMusicas objConMusicas = new conMusicas();
-                        objConMusicas.objCoMusicas.LimparAtributos();
-                        objConMusicas.objCoMusicas.cdMusica = Convert.ToInt32(cdMusicaEdit.SelectedValue);
-                        conMusicas.Select();
+                            conMusicas objConMusicas = new conMusicas();
+                            objConMusicas.objCoMusicas.LimparAtributos();
+                            objConMusicas.objCoMusicas.cdMusica = Convert.ToInt32(cdMusicaEdit.SelectedValue);
+                            conMusicas.Select();
 
-                        dr[caMusicas.cdMusica] = cdMusicaEdit.SelectedValue;
-                        dr[caMusicas.nmMusica] = cdMusicaEdit.SelectedItem;
-                        dr[caMusicas.nmMusicaKanji] = objConMusicas.dtDados.Rows[0][caMusicas.nmMusicaKanji].ToString();
+                            dr[caMusicas.cdMusica] = cdMusicaEdit.SelectedValue;
+                            dr[caMusicas.nmMusica] = cdMusicaEdit.SelectedItem;
+                            dr[caMusicas.nmMusicaKanji] = objConMusicas.dtDados.Rows[0][caMusicas.nmMusicaKanji].ToString();
+                        }
                     }
+
+                    Session["dvCantores_" + scdCategoria] = dt;
                 }
 
-                Session["dvCantores_" + Session["cdCategoriaEdit"].ToString()] = dt;
                 Session["_dtCantoresFases"] = _dtCantoresFases;
                 Session["_dtCantoresConcurso"] = _dtCantoresConcurso;
+
+                PreencheLiteral(Session["cdCategoriaEdit"].ToString().ToString(), alCdCategoria, alDeCategoria, false, false);
 
                 AtualizaCantoresCategorias();
 
@@ -1204,10 +1220,26 @@ namespace wappKaraoke.Cadastros
                 return;
             }
 
+            ArrayList alCdCategoria = new ArrayList();
+            ArrayList alDeCategoria = new ArrayList();
+
+            if (Session["alCdCategoria"] != null)
+                alCdCategoria = (ArrayList)Session["alCdCategoria"];
+
+            if (Session["alDeCategoria"] != null)
+                alDeCategoria = (ArrayList)Session["alDeCategoria"];
+
             foreach (DataRow dr in objConCantoresFases.dtDados.Rows)
             {
-                AdicionaCantorCategoriaConcurso(dr[caCategorias.cdCategoria].ToString(), dr[caCategorias.deCategoria].ToString(), true, false);
+                InsereCategoria(dr[caCategorias.cdCategoria].ToString(), dr[caCategorias.deCategoria].ToString(), ref alCdCategoria, ref alDeCategoria);
             }
+
+            if (alCdCategoria.Count > 0)
+            {
+                PreencheLiteral(alCdCategoria[0].ToString(), alCdCategoria, alDeCategoria, true, false);
+            }
+            Session["alCdCategoria"] = alCdCategoria;
+            Session["alDeCategoria"] = alDeCategoria;
 
             RegistrarScript();
         }
@@ -1445,7 +1477,7 @@ namespace wappKaraoke.Cadastros
                                     conCantoresFases objConCantoresFases = new conCantoresFases();
                                     objConCantoresFases.objCoCantoresFases.LimparAtributos();
                                     objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
-                                    objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(strCdCategoria);
+                                    objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(palCdCategoria[i].ToString());
 
                                     if (!conCantoresFases.SelectCantoresFasesConcurso())
                                     {
