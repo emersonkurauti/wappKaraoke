@@ -8,6 +8,8 @@ using wappKaraoke.Classes.Model.Cidades;
 using wappKaraoke.Classes.Model.Arquivos;
 using wappKaraoke.Classes.Model.ConcursosAssociacoes;
 using wappKaraoke.Classes.Model.Grupos;
+using wappKaraoke.Classes.Model.CantoresConcursos;
+using wappKaraoke.Classes.Model.CantoresFases;
 using System.IO;
 
 namespace wappKaraoke.Classes.Model.Concursos
@@ -199,6 +201,18 @@ namespace wappKaraoke.Classes.Model.Concursos
                         objBanco.RollbackTransaction();
                         return false;
                     }
+
+                    if (!AtualizarCantoresFases())
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
+
+                    if (!AtualizarCantoresConcurso())
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
                 }
 
                 objBanco.CommitTransaction();
@@ -236,6 +250,18 @@ namespace wappKaraoke.Classes.Model.Concursos
                     }
 
                     if (!AtualizarGrupoJurado())
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
+
+                    if (!AtualizarCantoresFases())
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
+
+                    if (!AtualizarCantoresConcurso())
                     {
                         objBanco.RollbackTransaction();
                         return false;
@@ -496,7 +522,113 @@ namespace wappKaraoke.Classes.Model.Concursos
                             }
                         }
                     }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
+        /// <summary>
+        /// Atualiza os cantores concursos
+        /// </summary>
+        /// <returns></returns>
+        private bool AtualizarCantoresConcurso()
+        {
+            conCantoresConcursos objConCantoresConcursos = new conCantoresConcursos();
+            try
+            {
+                foreach (DataRow dr in _dtConcursoCantores.Rows)
+                {
+                    if (dr[caCantoresConcursos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpCarregado)
+                    {
+                        objConCantoresConcursos.objCoCantoresConcursos.LimparAtributos();
+                        objConCantoresConcursos.objCoCantoresConcursos.cdConcurso = Convert.ToInt32(dr[caCantoresConcursos.cdConcurso].ToString());
+                        objConCantoresConcursos.objCoCantoresConcursos.cdCantor = Convert.ToInt32(dr[caCantoresConcursos.cdCantor].ToString());
+                        objConCantoresConcursos.objCoCantoresConcursos.cdAssociacao = Convert.ToInt32(dr[caCantoresConcursos.cdAssociacao].ToString());
+
+                        if (dr[caCantoresConcursos.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpInserido)
+                        {
+                            if (dr[caCantoresConcursos.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpAlterado)
+                            {
+                                if (!conCantoresConcursos.Alterar())
+                                {
+                                    return false;
+                                }
+                            }
+                            else if (dr[caCantoresConcursos.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpExcluido)
+                            {
+                                if (!conCantoresConcursos.Excluir())
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!conCantoresConcursos.Inserir())
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Atualiza os cantores fases
+        /// </summary>
+        /// <returns></returns>
+        private bool AtualizarCantoresFases()
+        {
+            conCantoresFases objConCantoresFases = new conCantoresFases();
+            try
+            {
+                foreach (DataRow dr in _dtConcursoFases.Rows)
+                {
+                    if (dr[caCantoresFases.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpCarregado)
+                    {
+                        objConCantoresFases.objCoCantoresFases.LimparAtributos();
+                        objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(dr[caCantoresFases.cdConcurso].ToString());
+                        objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(dr[caCantoresFases.cdCantor].ToString());
+                        objConCantoresFases.objCoCantoresFases.cdMusica = Convert.ToInt32(dr[caCantoresFases.cdMusica].ToString());
+                        objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(dr[caCantoresFases.cdCategoria].ToString());
+                        objConCantoresFases.objCoCantoresFases.cdTpStatus = Convert.ToInt32(dr[caCantoresFases.cdTpStatus].ToString());
+                        objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(dr[caCantoresFases.cdFase].ToString());
+
+                        if (dr[caCantoresFases.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpInserido)
+                        {
+                            if (dr[caCantoresFases.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpAlterado)
+                            {
+                                if (!conCantoresFases.Alterar())
+                                {
+                                    return false;
+                                }
+                            }
+                            else if (dr[caCantoresFases.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpExcluido)
+                            {
+                                if (!conCantoresFases.Excluir())
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!conCantoresFases.Inserir())
+                            {
+                                return false;
+                            }
+                        }
+                    }
                 }
                 return true;
             }

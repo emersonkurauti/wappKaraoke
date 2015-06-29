@@ -347,7 +347,7 @@ namespace wappKaraoke.Cadastros
                 if (Session["_dtDocumentosExc"] != null)
                 {
                     dtResult = conArquivos.objCo.RetornaEstruturaDT();
-                    _dtDocumentos = UnionDataTable(((DataTable)Session["_dtDocumentos"]), ((DataTable)Session["_dtDocumentosExc"]), dtResult);
+                    _dtDocumentos = UnionDataTable(((DataTable)Session["_dtDocumentosExc"]), ((DataTable)Session["_dtDocumentos"]), dtResult);
                 }
             }
 
@@ -357,7 +357,7 @@ namespace wappKaraoke.Cadastros
                 if (Session["_dtImagensExc"] != null)
                 {
                     dtResult = conArquivos.objCo.RetornaEstruturaDT();
-                    _dtImagens = UnionDataTable(((DataTable)Session["_dtImagens"]), ((DataTable)Session["_dtImagensExc"]), dtResult);
+                    _dtImagens = UnionDataTable(((DataTable)Session["_dtImagensExc"]), ((DataTable)Session["_dtImagens"]), dtResult);
                 }
             }
 
@@ -368,7 +368,7 @@ namespace wappKaraoke.Cadastros
                 if (Session["_dtAssociacoesExc"] != null)
                 {
                     dtResult = conConcursosAssociacoes.objCo.RetornaEstruturaDT();
-                    _dtAssociacoes = UnionDataTable(((DataTable)Session["_dtAssociacoes"]), ((DataTable)Session["_dtAssociacoesExc"]), dtResult);
+                    _dtAssociacoes = UnionDataTable(((DataTable)Session["_dtAssociacoesExc"]), ((DataTable)Session["_dtAssociacoes"]), dtResult);
                 }
             }
 
@@ -379,7 +379,7 @@ namespace wappKaraoke.Cadastros
                 if (Session["_dtGruposJuradosExc"] != null)
                 {
                     dtResult = conGrupos.objCo.RetornaEstruturaDT();
-                    _dtGruposJurados = UnionDataTable(((DataTable)Session["_dtGruposJurados"]), ((DataTable)Session["_dtGruposJuradosExc"]), dtResult);
+                    _dtGruposJurados = UnionDataTable(((DataTable)Session["_dtGruposJuradosExc"]), ((DataTable)Session["_dtGruposJurados"]), dtResult);
                 }
             }
 
@@ -390,7 +390,7 @@ namespace wappKaraoke.Cadastros
                 if (Session["_dtCantoresConcursoExc"] != null)
                 {
                     dtResult = conCantoresConcursos.objCo.RetornaEstruturaDT();
-                    _dtCantoresConcurso = UnionDataTable(((DataTable)Session["_dtCantoresConcurso"]), ((DataTable)Session["_dtCantoresConcursoExc"]), dtResult);
+                    _dtCantoresConcurso = UnionDataTable(((DataTable)Session["_dtCantoresConcursoExc"]), ((DataTable)Session["_dtCantoresConcurso"]), dtResult);
                 }
             }
 
@@ -401,7 +401,7 @@ namespace wappKaraoke.Cadastros
                 if (Session["_dtCantoresFasesExc"] != null)
                 {
                     dtResult = conCantoresFases.objCo.RetornaEstruturaDT();
-                    _dtCantoresFases = UnionDataTable(((DataTable)Session["_dtCantoresFases"]), ((DataTable)Session["_dtCantoresFasesExc"]), dtResult);
+                    _dtCantoresFases = UnionDataTable(((DataTable)Session["_dtCantoresFasesExc"]), ((DataTable)Session["_dtCantoresFases"]), dtResult);
                 }
             }
 
