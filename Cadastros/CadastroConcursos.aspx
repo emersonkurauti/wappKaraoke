@@ -5,6 +5,7 @@
             $('[id*=gvAssociacoes]').footable();
             $('[id*=gvGrupoJuradoConcurso]').footable();
             $('[id*=gvDocumentos]').footable();
+            $('[id*=gvOrdemApres]').footable();
         });
 
 
@@ -121,6 +122,7 @@
                         <li id="MenuAssociacoes"><a id="lnkAssociacoes" href="#Associacoes" data-toggle="tab">Associações</a></li>
                         <li id="MenuJurados"><a id="lnkJurados" href="#Jurados" data-toggle="tab">Jurados</a></li>
                         <li id="MenuCategorias"><a id="lnkCategorias" href="#Categorias" data-toggle="tab">Categorias</a></li>
+                        <li id="MenuOrdemApres"><a id="lnkOrdemApres" href="#OrdemApres" data-toggle="tab">Ordem Apresentação</a></li>
                     </ul>
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="Concurso">
@@ -825,6 +827,48 @@
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div> <!--<div class="tab-pane" id="Cantores">-->
+                        <div class="tab-pane active" id="OrdemApres">
+                            <div class="panel panel-default" style="border-top: 0px">
+                                <div class="panel-body">
+                                    <asp:GridView ID="gvOrdemApres" runat="server"
+                                        CssClass="footable table table-bordered table-hover footable"
+                                        AutoGenerateColumns="False"
+                                        OnRowDataBound="gvOrdemApres_RowDataBound" 
+                                        OnRowCommand="gvOrdemApres_RowCommand" 
+                                        onrowEditing="gvOrdemApres_RowEditing">
+                                        <Columns>
+                                            <asp:BoundField HeaderText="Ordem" DataField="nuOrdem">
+                                                <ItemStyle Width="5%" />
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="CC_deCategoria" HeaderText="Categoria" />
+                                            <asp:TemplateField>
+	                                            <ItemTemplate>
+		                                            <asp:LinkButton ID="lnkUpCategoria" runat="server"
+			                                            CssClass="btn btn-primary btn-block" 
+                                                        Text = "Subir"
+                                                        OnClick="lnkUpCategoria_Click">
+			                                            <i class="glyphicon glyphicon-arrow-up"></i>
+		                                            </asp:LinkButton>
+	                                            </ItemTemplate>
+	                                            <ItemStyle Width="5%" />
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+	                                            <ItemTemplate>
+		                                            <asp:LinkButton ID="lnkDownCategoria" runat="server"
+			                                            CssClass="btn btn-primary btn-block" 
+                                                        Text = "Descer"
+                                                        OnClick="lnkDownCategoria_Click">
+			                                            <i class="glyphicon glyphicon-arrow-down"></i>
+		                                            </asp:LinkButton>
+	                                            </ItemTemplate>
+	                                            <ItemStyle Width="5%" />
+                                            </asp:TemplateField>
+                                        </Columns>
+                                        <HeaderStyle CssClass="info" />
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </div> <!--<div class="tab-pane" id="OrdemApres">-->
                     </div> <!--<div id="my-tab-content" class="tab-content">-->
                     <div class="row">
                         <div class="col-sm-2" align="left" style="float: left">

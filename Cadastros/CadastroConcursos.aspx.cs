@@ -1970,5 +1970,28 @@ namespace wappKaraoke.Cadastros
                 ScriptManager.GetCurrent(this).RegisterPostBackControl(lnkEditAss);
             }
         }
+
+        /// <summary>
+        /// Ordem de apresentação
+        /// </summary>
+        protected void gvOrdemApres_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            
+        }
+
+        protected void gvOrdemApres_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            
+        }
+
+        protected void gvOrdemApres_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+        }
+
+        protected void gvOrdemApres_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+
+        }
     }
 }
