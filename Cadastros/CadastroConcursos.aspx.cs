@@ -1264,6 +1264,14 @@ namespace wappKaraoke.Cadastros
             OrdenaDataTable(ref _dtOrdemCategoria, caConcursosOrdemCategorias.nuOrdem + KuraFrameWork.csConstantes.sCrescente);
             Session["_dtOrdemCategoria"] = _dtOrdemCategoria;
 
+            MontaCantoresCategorias(true, false);
+
+            gvOrdemApres.DataSource = _dtOrdemCategoria;
+            gvOrdemApres.DataBind();
+        }
+
+        private void MontaCantoresCategorias(bool bEstacarregando, bool bEstaInserindo)
+        {
             foreach (DataRow dr in _dtOrdemCategoria.Rows)
             {
                 InsereCategoria(dr[caConcursosOrdemCategorias.cdCategoria].ToString(), dr[caConcursosOrdemCategorias.CC_deCategoria].ToString());
@@ -1271,11 +1279,8 @@ namespace wappKaraoke.Cadastros
 
             if (_dtOrdemCategoria.Rows.Count > 0)
             {
-                PreencheLiteral(_dtOrdemCategoria.Rows[0][caConcursosOrdemCategorias.cdCategoria].ToString(), true, false);
+                PreencheLiteral(_dtOrdemCategoria.Rows[0][caConcursosOrdemCategorias.cdCategoria].ToString(), bEstacarregando, bEstaInserindo);
             }
-
-            gvOrdemApres.DataSource = _dtOrdemCategoria;
-            gvOrdemApres.DataBind();
         }
 
         public void btnAdicionarCategoria_OnClick(Object sender, EventArgs e)
@@ -1318,6 +1323,7 @@ namespace wappKaraoke.Cadastros
                 cdFaseCantor.SelectedIndex = 1;
                 AdicionaCantorCategoriaConcurso(cdCategoria.SelectedValue.ToString(), cdCategoria.SelectedItem.ToString());
                 ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaCantores(" + cdCategoria.SelectedValue.ToString() + ");", true);
+                ConfigurarGridView();
             }
         }
 
@@ -2037,7 +2043,17 @@ namespace wappKaraoke.Cadastros
 
         protected void gvOrdemApres_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                LinkButton lnkUpCategoria = (LinkButton)e.Row.FindControl("lnkUpCategoria");
+                lnkUpCategoria.CommandArgument = e.Row.RowIndex.ToString();
+
+                LinkButton lnkDownCategoria = (LinkButton)e.Row.FindControl("lnkDownCategoria");
+                lnkDownCategoria.CommandArgument = e.Row.RowIndex.ToString();
+
+                this.ScriptManager1.RegisterPostBackControl(lnkUpCategoria);
+                this.ScriptManager1.RegisterPostBackControl(lnkDownCategoria);
+            }
         }
 
         protected void gvOrdemApres_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -2052,12 +2068,54 @@ namespace wappKaraoke.Cadastros
 
         protected void lnkUpCategoria_Click(object sender, EventArgs e)
         {
-            
+            _dtOrdemCategoria = (DataTable)Session["_dtOrdemCategoria"];
+            int indexCategoria = Convert.ToInt32(((LinkButton)sender).CommandArgument);
+
+            if (indexCategoria > 0)
+            {
+                _dtOrdemCategoria.Rows[indexCategoria][caConcursosOrdemCategorias.nuOrdem] =
+                    Convert.ToInt32(_dtOrdemCategoria.Rows[indexCategoria][caConcursosOrdemCategorias.nuOrdem].ToString()) - 1;
+
+                _dtOrdemCategoria.Rows[indexCategoria - 1][caConcursosOrdemCategorias.nuOrdem] =
+                    Convert.ToInt32(_dtOrdemCategoria.Rows[indexCategoria][caConcursosOrdemCategorias.nuOrdem].ToString()) + 1;
+
+                OrdenaDataTable(ref _dtOrdemCategoria, caConcursosOrdemCategorias.nuOrdem + KuraFrameWork.csConstantes.sCrescente);
+                Session["_dtOrdemCategoria"] = _dtOrdemCategoria;
+
+                gvOrdemApres.DataSource = _dtOrdemCategoria;
+                gvOrdemApres.DataBind();
+
+                MontaCantoresCategorias(false, false);
+                ConfigurarGridView();
+            }
+
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaOrdemApres();", true);
         }
 
         protected void lnkDownCategoria_Click(object sender, EventArgs e)
         {
+            _dtOrdemCategoria = (DataTable)Session["_dtOrdemCategoria"];
+            int indexCategoria = Convert.ToInt32(((LinkButton)sender).CommandArgument);
 
+            if (indexCategoria < _dtOrdemCategoria.Rows.Count - 1)
+            {
+                _dtOrdemCategoria.Rows[indexCategoria][caConcursosOrdemCategorias.nuOrdem] =
+                    Convert.ToInt32(_dtOrdemCategoria.Rows[indexCategoria][caConcursosOrdemCategorias.nuOrdem].ToString()) + 1;
+
+                _dtOrdemCategoria.Rows[indexCategoria + 1][caConcursosOrdemCategorias.nuOrdem] =
+                    Convert.ToInt32(_dtOrdemCategoria.Rows[indexCategoria][caConcursosOrdemCategorias.nuOrdem].ToString()) - 1;
+
+                OrdenaDataTable(ref _dtOrdemCategoria, caConcursosOrdemCategorias.nuOrdem + KuraFrameWork.csConstantes.sCrescente);
+                Session["_dtOrdemCategoria"] = _dtOrdemCategoria;
+
+                gvOrdemApres.DataSource = _dtOrdemCategoria;
+                gvOrdemApres.DataBind();
+
+                MontaCantoresCategorias(false, false);
+                ConfigurarGridView();
+            }
+
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaOrdemApres();", true);
         }
     }
 }

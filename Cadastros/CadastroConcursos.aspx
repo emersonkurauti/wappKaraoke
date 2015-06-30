@@ -102,6 +102,10 @@
         function DesativaEdicaoCantor() {
             document.getElementById('divEdicaoCantor').setAttribute('style', 'display: none;');
         }
+        /*Ordem Apresentação*/
+        function AtivaAbaOrdemApres() {
+            document.getElementById('lnkOrdemApres').click();
+        }
     </script>
     <asp:Literal ID="ltJavaScript" runat="server"></asp:Literal> <!--Caso precise de agrupamento nas tabelas-->
 </asp:Content>
