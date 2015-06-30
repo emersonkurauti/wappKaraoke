@@ -13,6 +13,24 @@ namespace wappKaraoke.Movimentacoes {
     public partial class AlterarStatusCantor {
         
         /// <summary>
+        /// ltMensagem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltMensagem;
+        
+        /// <summary>
+        /// cdConcurso control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cdConcurso;
+        
+        /// <summary>
         /// cdFase control.
         /// </summary>
         /// <remarks>
@@ -20,6 +38,15 @@ namespace wappKaraoke.Movimentacoes {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cdFase;
+        
+        /// <summary>
+        /// cdCategoria control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cdCategoria;
         
         /// <summary>
         /// nuCantor control.

@@ -1581,7 +1581,7 @@ namespace wappKaraoke.Cadastros
                                     objConCantoresFases.objCoCantoresFases.cdCategoria = 
                                         Convert.ToInt32(_dtOrdemCategoria.Rows[i][caConcursosOrdemCategorias.cdCategoria].ToString());
 
-                                    if (!conCantoresFases.SelectCantoresFasesConcurso())
+                                    if (!conCantoresFases.SelectCantoresCategoriasConcurso())
                                     {
                                         ltMensagensCategorias.Text = MostraMensagem("Falha!", "Falha ao carregar os cantores do concurso.", csMensagem.msgDanger);
                                         return;

@@ -13,20 +13,6 @@ namespace wappKaraoke.Classes
 {
     public class csAssociacoes : Paginas_Default.csMontaDDL
     {
-        private DataTable _dtDadosExternos;
-        public DataTable dtDadosExternos
-        {
-            get { return _dtDadosExternos; }
-            set { _dtDadosExternos = value; }
-        }
-
-        private bool _bUtilizaDadosExternos;
-        public bool bUtilizaDadosExternos
-        {
-            get { return _bUtilizaDadosExternos; }
-            set { _bUtilizaDadosExternos = value; }
-        }
-
         public csAssociacoes()
         {
             strTextoCombo = "a Associação";
@@ -50,7 +36,7 @@ namespace wappKaraoke.Classes
 
                 string strAssociacoes = " WHERE cdAssociacao IN (";
 
-                foreach (DataRow drext in _dtDadosExternos.Rows)
+                foreach (DataRow drext in dtDadosExternos.Rows)
                 {
                     strAssociacoes += drext[caAssociacoes.cdAssociacao].ToString() + ",";
                 }

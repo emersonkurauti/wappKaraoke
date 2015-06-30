@@ -281,7 +281,24 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         /// </summary>
         /// <param name="dtDados"></param>
         /// <returns></returns>
-        public bool SelectCantoresFasesConcurso(out DataTable dtDados)
+        public bool SelectCantoresCategoriasFasesConcurso(out DataTable dtDados)
+        {
+            string strComando = @"SELECT C.cdCategoria, C.deCategoria" +
+                                 "  FROM CANTORESFASES CF " +
+                                 " INNER JOIN CATEGORIAS C on C.cdCategoria = CF.cdCategoria" +
+                                 " WHERE CF.cdConcurso = " + _cdConcurso +
+                                 "   AND CF.cdFase = " + _cdFase +
+                                 " GROUP BY C.cdCategoria, C.deCategoria";
+
+            return objBanco.SelectPersonalizado(out dtDados, strComando);
+        }
+
+        /// <summary>
+        /// Retorna somete as categorias existentes no concurso
+        /// </summary>
+        /// <param name="dtDados"></param>
+        /// <returns></returns>
+        public bool SelectCantoresCategoriasConcurso(out DataTable dtDados)
         {
             string strComando = @"SELECT CF.cdConcurso, CF.nuOrdemApresentacao, CF.nuCantor, CAN.cdCantor, CAN.nmCantor, " +
                                  "       CAN.nmNomeKanji, MUS.cdMusica, MUS.nmMusica, MUS.nmMusicaKanji, " +
@@ -294,6 +311,21 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  " INNER JOIN ASSOCIACOES ASS on ASS.cdAssociacao = CC.cdAssociacao" +
                                  " WHERE CF.cdConcurso = " + _cdConcurso +
                                  "   AND CF.cdCategoria = " + _cdCategoria;
+
+            return objBanco.SelectPersonalizado(out dtDados, strComando);
+        }
+
+        /// <summary>
+        /// Retorna somete as fases existentes no concurso
+        /// </summary>
+        /// <param name="dtDados"></param>
+        /// <returns></returns>
+        public bool SelectFasesConcurso(out DataTable dtDados)
+        {
+            string strComando = @"SELECT F.cdFase, F.deFase" +
+                                 "  FROM CANTORESFASES CF " +
+                                 " INNER JOIN FASES F ON F.CDFASE = CF.CDFASE" +
+                                 " WHERE CF.cdConcurso = " + _cdConcurso;
 
             return objBanco.SelectPersonalizado(out dtDados, strComando);
         }

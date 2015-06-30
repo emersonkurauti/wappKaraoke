@@ -10,6 +10,20 @@ namespace wappKaraoke.Classes.Paginas_Default
 {
     public class csMontaDDL
     {
+        private DataTable _dtDadosExternos;
+        public DataTable dtDadosExternos
+        {
+            get { return _dtDadosExternos; }
+            set { _dtDadosExternos = value; }
+        }
+
+        private bool _bUtilizaDadosExternos;
+        public bool bUtilizaDadosExternos
+        {
+            get { return _bUtilizaDadosExternos; }
+            set { _bUtilizaDadosExternos = value; }
+        }
+
         private string _strTextoCombo;
         public string strTextoCombo
         {

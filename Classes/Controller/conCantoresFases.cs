@@ -50,6 +50,19 @@ namespace wappKaraoke.Classes.Controller
             return true;
         }
 
+        public static bool SelectCantoresCategoriasFasesConcurso()
+        {
+            _strMensagemErro = "";
+
+            if (!_objCoCantoresFases.SelectCantoresCategoriasFasesConcurso(out _dtDados))
+            {
+                _strMensagemErro = csMensagem.msgConsultar;
+                return false;
+            }
+
+            return true;
+        }
+
         public static bool SelectCategoriasConcurso()
         {
             _strMensagemErro = "";
@@ -63,11 +76,24 @@ namespace wappKaraoke.Classes.Controller
             return true;
         }
 
-        public static bool SelectCantoresFasesConcurso()
+        public static bool SelectCantoresCategoriasConcurso()
         {
             _strMensagemErro = "";
 
-            if (!_objCoCantoresFases.SelectCantoresFasesConcurso(out _dtDados))
+            if (!_objCoCantoresFases.SelectCantoresCategoriasConcurso(out _dtDados))
+            {
+                _strMensagemErro = csMensagem.msgConsultar;
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool SelectFasesConcurso()
+        {
+            _strMensagemErro = "";
+
+            if (!_objCoCantoresFases.SelectFasesConcurso(out _dtDados))
             {
                 _strMensagemErro = csMensagem.msgConsultar;
                 return false;
