@@ -273,9 +273,55 @@ namespace wappKaraoke.Cadastros
             ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "", strScriptGridView + strScriptImagens, true);
         }
 
+        private void GerarSeqNuCantor()
+        {
+            if (Session["_dtOrdemCategoria"] != null)
+            {
+                int nuCantor = 1;
+                int nuSeq;
+                _dtCantoresFases = (DataTable)Session["_dtCantoresFases"];
+                _dtOrdemCategoria = (DataTable)Session["_dtOrdemCategoria"];
+                foreach (DataRow drCategoria in _dtOrdemCategoria.Rows)
+                {
+                    nuSeq = 1;
+                    if (Session["dvCantores_" + drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString()] != null)
+                    {
+                        DataTable dt = (DataTable)Session["dvCantores_" + drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString()];
+                        dt.Columns[caCantoresFases.nuOrdemApresentacao].ReadOnly = false;
+                        dt.Columns[caCantoresFases.nuCantor].ReadOnly = false;
+
+                        foreach (DataRow drCantor in _dtCantoresFases.Rows)
+                        {
+                            if (drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString() == drCantor[caCantoresFases.cdCategoria].ToString())
+                            {
+                                foreach (DataRow drCantCat in dt.Rows)
+                                {
+                                    if (drCantor[caCantoresFases.cdCantor].ToString() == drCantCat[caCantoresFases.cdCantor].ToString())
+                                    {
+                                        drCantCat[caCantoresFases.nuOrdemApresentacao] = nuSeq;
+                                        drCantCat[caCantoresFases.nuCantor] = (nuCantor).ToString().PadLeft(3, '0'); ;
+                                    }
+                                }
+
+                                drCantor[caCantoresFases.nuOrdemApresentacao] = nuSeq++;
+                                drCantor[caCantoresFases.nuCantor] = (nuCantor++).ToString().PadLeft(3, '0');
+                            }
+                        }
+
+                        Session["dvCantores_" + drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString()] = dt;
+                    }
+                }
+
+                Session["_dtCantoresFases"] = _dtCantoresFases;
+                MontaCantoresCategorias(false, false);
+            }
+        }
+
         public void btnFechar_Click(Object sender, EventArgs e)
         {
             flFinalizado.Checked = true;
+
+            GerarSeqNuCantor();
         }
 
         public void btnReabrir_Click(Object sender, EventArgs e)
