@@ -303,6 +303,7 @@ namespace wappKaraoke.Cadastros
                                     }
                                 }
 
+                                drCantor[caCantoresFases.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
                                 drCantor[caCantoresFases.nuOrdemApresentacao] = nuSeq++;
                                 drCantor[caCantoresFases.nuCantor] = (nuCantor++).ToString().PadLeft(3, '0');
                             }

@@ -623,6 +623,8 @@ namespace wappKaraoke.Classes.Model.Concursos
                         objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(dr[caCantoresFases.cdCategoria].ToString());
                         objConCantoresFases.objCoCantoresFases.cdTpStatus = Convert.ToInt32(dr[caCantoresFases.cdTpStatus].ToString());
                         objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(dr[caCantoresFases.cdFase].ToString());
+                        objConCantoresFases.objCoCantoresFases.nuCantor = dr[caCantoresFases.nuCantor].ToString();
+                        objConCantoresFases.objCoCantoresFases.nuOrdemApresentacao = Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString());
 
                         if (dr[caCantoresFases.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpInserido)
                         {
