@@ -289,6 +289,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  " WHERE CF.cdConcurso = " + _cdConcurso +
                                  "   AND CF.cdFase = " + _cdFase +
                                  "   AND CF.cdCantor = " + _cdCantor +
+                                 "   AND CF.nuCantor = '" + _nuCantor + "'" +
                                  " GROUP BY C.cdCategoria, C.deCategoria";
 
             return objBanco.SelectPersonalizado(out dtDados, strComando);

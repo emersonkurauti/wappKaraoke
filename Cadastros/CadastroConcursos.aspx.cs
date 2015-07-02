@@ -1636,6 +1636,8 @@ namespace wappKaraoke.Cadastros
 
                                 Session["dvCantores_" + _dtOrdemCategoria.Rows[i][caConcursosOrdemCategorias.cdCategoria].ToString()] = dtDados;
 
+                                OrdenaDataTable(ref dtDados, "nuOrdemApresentacao");
+
                                 ocsMontaTable.dtDados = dtDados;
                                 strDivs += ocsMontaTable.MontaDataGridView(_dtOrdemCategoria.Rows[i][caConcursosOrdemCategorias.cdCategoria].ToString());
                             }

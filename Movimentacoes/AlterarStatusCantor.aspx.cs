@@ -69,7 +69,7 @@ namespace wappKaraoke.Movimentacoes
             objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(cdCategoria.SelectedValue.ToString());
             objConCantoresFases.objCoCantoresFases.cdTpStatus = Convert.ToInt32(cdStatus.SelectedValue.ToString());
             objConCantoresFases.objCoCantoresFases.cdMusica = Convert.ToInt32(Session["cdMusica"].ToString());
-            objConCantoresFases.objCoCantoresFases.nuCantor = Session["nuCantor"].ToString();
+            objConCantoresFases.objCoCantoresFases.nuCantor = nuCantor.Text;
             objConCantoresFases.objCoCantoresFases.nuOrdemApresentacao = Convert.ToInt32(Session["nuOrdemApresentacao"].ToString());
             objConCantoresFases.objCoCantoresFases.nuNotafinal = Convert.ToDecimal(Session["nuNotafinal"].ToString());
             objConCantoresFases.objCoCantoresFases.pcDesconto = Convert.ToDecimal(Session["pcDesconto"].ToString());
@@ -134,6 +134,7 @@ namespace wappKaraoke.Movimentacoes
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
             objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(cdConcurso.SelectedValue.ToString());
             objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
+            objConCantoresFases.objCoCantoresFases.nuCantor = nuCantor.Text;
 
             if (!conCantoresFases.SelectFasesConcurso())
             {
@@ -161,6 +162,7 @@ namespace wappKaraoke.Movimentacoes
             objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(cdConcurso.SelectedValue.ToString());
             objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
             objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(cdFase.SelectedValue.ToString());
+            objConCantoresFases.objCoCantoresFases.nuCantor = nuCantor.Text;
 
             if (!conCantoresFases.SelectCantoresCategoriasFasesConcurso())
             {

@@ -60,7 +60,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
 
         public static string deChaveComposta
         {
-            get { return "cdCantor;cdFase;cdCategoria"; }
+            get { return "cdCantor;cdFase;cdCategoria;nuCantor"; }
         }
 
 		/// <summary>
