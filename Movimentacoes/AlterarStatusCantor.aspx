@@ -27,6 +27,12 @@
                                 onselectedindexchanged="cdConcurso_SelectedIndexChanged">
                             </asp:DropDownList>
                             <br/>
+                            <asp:TextBox ID="nuCantor" class="form-control" runat="server" 
+                                placeholder="Número do Cantor..." Visible="True" 
+                                ontextchanged="nuCantor_TextChanged" AutoPostBack="True"></asp:TextBox>
+                            <br/>
+                            <asp:Literal ID="ltInfoCantor" runat="server"></asp:Literal>
+                            <br/>
                             <asp:DropDownList ID="cdFase" class="form-control selectpicker" style="text-align:left" 
                                 runat="server" Width="100%" AutoPostBack="True" 
                                 onselectedindexchanged="cdFase_SelectedIndexChanged">
@@ -35,11 +41,7 @@
                             <asp:DropDownList ID="cdCategoria" class="form-control selectpicker" style="text-align:left" 
                                 runat="server" Width="100%" AutoPostBack="false">
                             </asp:DropDownList>
-                            <br/>
-                            <asp:TextBox ID="nuCantor" class="form-control" runat="server" 
-                                placeholder="Número do Cantor..." Visible="True" 
-                                ontextchanged="nuCantor_TextChanged" AutoPostBack="True"></asp:TextBox>
-                            <br/>
+                            <br/>                            
                             <asp:DropDownList ID="cdStatus" class="form-control selectpicker" style="text-align:left" 
                                 runat="server" Width="100%" AutoPostBack="false">
                             </asp:DropDownList>

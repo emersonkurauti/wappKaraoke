@@ -288,6 +288,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  " INNER JOIN CATEGORIAS C on C.cdCategoria = CF.cdCategoria" +
                                  " WHERE CF.cdConcurso = " + _cdConcurso +
                                  "   AND CF.cdFase = " + _cdFase +
+                                 "   AND CF.cdCantor = " + _cdCantor +
                                  " GROUP BY C.cdCategoria, C.deCategoria";
 
             return objBanco.SelectPersonalizado(out dtDados, strComando);
