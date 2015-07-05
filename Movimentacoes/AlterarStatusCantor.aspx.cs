@@ -10,6 +10,7 @@ using wappKaraoke.Classes.Mensagem;
 using wappKaraoke.Classes.Controller;
 using wappKaraoke.Classes.Model.CantoresFases;
 using wappKaraoke.Classes.Model.Cantores;
+using wappKaraoke.Classes.Model.Concursos;
 
 namespace wappKaraoke.Movimentacoes
 {
@@ -21,23 +22,33 @@ namespace wappKaraoke.Movimentacoes
             {
                 ltMensagem.Text = "";
 
-                csConcursos vcsConcursos = new csConcursos();
-                cdConcurso = vcsConcursos.CarregaDDL(cdConcurso);
-
                 csStatus vcsStatus = new csStatus();
                 cdStatus = vcsStatus.CarregaDDL(cdStatus);
+
+                conConcursos objConConcursos = new conConcursos();
+                objConConcursos.objCoConcursos.LimparAtributos();
+                objConConcursos.objCoConcursos.strFiltro = " WHERE flConcursoCorrente = 'S'";
+
+                Session["cdConcursoCorrente"] = null;
+
+                if (conConcursos.Select())
+                {
+                    if (objConConcursos.dtDados != null && objConConcursos.dtDados.Rows.Count > 0)
+                    {
+                        Session["cdConcursoCorrente"] = objConConcursos.dtDados.Rows[0][caConcursos.cdConcurso].ToString();
+                    }
+                }
+
+                if (Session["cdConcursoCorrente"] == null)
+                {
+                    ltMensagem.Text = MostraMensagem("Falha!", "Atenção, não existe concurso corrende definido!", csMensagem.msgDanger);
+                }
             }
         }
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
             ltMensagem.Text = "";
-
-            if (cdConcurso.SelectedIndex <= 0)
-            {
-                ltMensagem.Text = MostraMensagem("Validação", "Selecione o concurso.", csMensagem.msgWarning);
-                return;
-            }
 
             if (cdFase.SelectedIndex <= 0)
             {
@@ -64,7 +75,7 @@ namespace wappKaraoke.Movimentacoes
             }
 
             conCantoresFases objConCantoresFases = new conCantoresFases();
-            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(cdConcurso.SelectedValue.ToString());
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoCorrente"].ToString());
             objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
             objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(cdFase.SelectedValue.ToString());
             objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(cdCategoria.SelectedValue.ToString());
@@ -99,7 +110,7 @@ namespace wappKaraoke.Movimentacoes
         {
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
-            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(cdConcurso.SelectedValue.ToString());
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoCorrente"].ToString());
             objConCantoresFases.objCoCantoresFases.nuCantor = nuCantor.Text;
 
             if (!conCantoresFases.Select())
@@ -142,7 +153,7 @@ namespace wappKaraoke.Movimentacoes
         {
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
-            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(cdConcurso.SelectedValue.ToString());
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoCorrente"].ToString());
             objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
             objConCantoresFases.objCoCantoresFases.nuCantor = nuCantor.Text;
 
@@ -156,11 +167,12 @@ namespace wappKaraoke.Movimentacoes
             vcsFases.bUtilizaDadosExternos = true;
             vcsFases.dtDadosExternos = objConCantoresFases.dtDados;
             cdFase = vcsFases.CarregaDDL(cdFase);
-        }
 
-        protected void cdConcurso_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ltMensagem.Text = "";
+            if (objConCantoresFases.dtDados.Rows.Count == 1)
+            {
+                cdFase.SelectedValue = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdFase].ToString();
+                cdFase_SelectedIndexChanged(cdFase, null);
+            }
         }
 
         protected void cdFase_SelectedIndexChanged(object sender, EventArgs e)
@@ -169,7 +181,7 @@ namespace wappKaraoke.Movimentacoes
 
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
-            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(cdConcurso.SelectedValue.ToString());
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoCorrente"].ToString());
             objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
             objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(cdFase.SelectedValue.ToString());
             objConCantoresFases.objCoCantoresFases.nuCantor = nuCantor.Text;
@@ -184,6 +196,11 @@ namespace wappKaraoke.Movimentacoes
             vcsCategorias.bUtilizaDadosExternos = true;
             vcsCategorias.dtDadosExternos = objConCantoresFases.dtDados;
             cdCategoria = vcsCategorias.CarregaDDL(cdCategoria);
+
+            if (objConCantoresFases.dtDados.Rows.Count == 1)
+            {
+                cdCategoria.SelectedValue = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCategoria].ToString();
+            }
         }
     }
 }

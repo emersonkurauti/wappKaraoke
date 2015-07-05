@@ -401,6 +401,7 @@ namespace wappKaraoke.Cadastros
             objCoConcurso.dtFimConcurso = dtData;
 
             DataTable dtResult;
+
             //Arquivos
             if (Session["_dtDocumentos"] != null)
             {

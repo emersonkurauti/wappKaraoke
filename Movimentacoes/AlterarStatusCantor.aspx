@@ -22,15 +22,9 @@
                         <div class="col-sm-3">
                         </div>
                         <div class="col-sm-6">
-                            <asp:DropDownList ID="cdConcurso" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True" 
-                                onselectedindexchanged="cdConcurso_SelectedIndexChanged">
-                            </asp:DropDownList>
-                            <br/>
                             <asp:TextBox ID="nuCantor" class="form-control" runat="server" 
                                 placeholder="Número do Cantor..." Visible="True" 
                                 ontextchanged="nuCantor_TextChanged" AutoPostBack="True"></asp:TextBox>
-                            <br/>
                             <asp:Literal ID="ltInfoCantor" runat="server"></asp:Literal>
                             <br/>
                             <asp:DropDownList ID="cdFase" class="form-control selectpicker" style="text-align:left" 

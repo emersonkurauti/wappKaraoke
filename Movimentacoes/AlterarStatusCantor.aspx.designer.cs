@@ -22,15 +22,6 @@ namespace wappKaraoke.Movimentacoes {
         protected global::System.Web.UI.WebControls.Literal ltMensagem;
         
         /// <summary>
-        /// cdConcurso control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cdConcurso;
-        
-        /// <summary>
         /// nuCantor control.
         /// </summary>
         /// <remarks>
