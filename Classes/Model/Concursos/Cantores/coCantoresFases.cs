@@ -331,6 +331,23 @@ namespace wappKaraoke.Classes.Model.CantoresFases
 
             return objBanco.SelectPersonalizado(out dtDados, strComando);
         }
+        
+        /// <summary>
+        /// Retorna somente o proximo cantor a cantar
+        /// </summary>
+        /// <param name="dtDados"></param>
+        /// <returns></returns>
+        public bool SelectProximoCantor(out DataTable dtDados)
+        {
+            string strComando = @"select cf.nuCantor, cf.cdCantor " +
+                                 "  from cantoresfases cf " +
+                                 " where cf.cdConcurso = " + _cdConcurso +
+                                 "   and cf.cdTpStatus = " + _cdTpStatus +
+                                 "   and rownum = 1 " +
+                                 " order by cf.nuCanto ";
+
+            return objBanco.SelectPersonalizado(out dtDados, strComando);
+        }
 
         /// <summary>
         /// Retorna a estrtura para a tabela de Cantores Fases Concursos

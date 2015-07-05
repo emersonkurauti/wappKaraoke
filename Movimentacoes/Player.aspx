@@ -10,37 +10,42 @@
                 </div><!--Panel Header-->
                 <div class="panel-body">
                     <div class="row" style="text-align:center">
+                        <div class="col-sm-12">
+                            <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
+                        </div>
                         <audio id="Audio"src="" controls="true" autoplay="true"/>
                     </div>
                     <br/>
                     <div class="row">
                         <div class="col-sm-2">
                             <asp:LinkButton ID="btnVoltar" 
-                                        runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-warning ">
+                                runat="server" 
+                                CssClass="btn btn-primary btn-block btn-warning"
+                                OnClick="btnVoltar_Click">
                                 <i aria-hidden="true" class="glyphicon glyphicon-backward"></i>&nbsp;&nbsp;Voltar
                             </asp:LinkButton>
                         </div>
                         <div class="col-sm-1">
                             <asp:LinkButton ID="btnPause" 
-                                        runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-primary "
-                                        OnClientClick="document.getElementById('Audio').pause(); return false;">
+                                runat="server" 
+                                CssClass="btn btn-primary btn-block btn-primary"
+                                OnClientClick="document.getElementById('Audio').pause(); return false;">
                                 &nbsp;&nbsp;<i aria-hidden="true" class="glyphicon glyphicon-pause"></i>&nbsp;&nbsp;
                             </asp:LinkButton>
                         </div>
                         <div class="col-sm-1">
                             <asp:LinkButton ID="btnPlay" 
-                                        runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-primary "
-                                        OnClientClick="document.getElementById('Audio').play(); return false;">
+                                runat="server" 
+                                CssClass="btn btn-primary btn-block btn-primary"
+                                OnClientClick="document.getElementById('Audio').play(); return false;">
                                 &nbsp;&nbsp;<i aria-hidden="true" class="glyphicon glyphicon-play"></i>&nbsp;&nbsp;
                             </asp:LinkButton>
                         </div>
                         <div class="col-sm-2">
                             <asp:LinkButton ID="btnAvancar" 
-                                        runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-danger ">
+                                runat="server" 
+                                CssClass="btn btn-primary btn-block btn-danger"
+                                OnClick="btnAvancar_Click">
                                 Avançar&nbsp;&nbsp;<i aria-hidden="true" class="glyphicon glyphicon-forward"></i>
                             </asp:LinkButton>
                         </div>
@@ -51,9 +56,9 @@
                         </div>
                         <div class="col-sm-3">
                             <asp:LinkButton ID="btnFinalizado" 
-                                        runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-success " 
-                                        OnClick="btnFinalizado_Click">
+                                runat="server" 
+                                CssClass="btn btn-primary btn-block btn-success " 
+                                OnClick="btnFinalizado_Click">
                                 <i aria-hidden="true" class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Finalizado
                             </asp:LinkButton>                     
                         </div>
