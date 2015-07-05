@@ -394,6 +394,7 @@ namespace wappKaraoke.Cadastros
             objCoConcurso.nmConcursoKanji = nmConcursoKanji.Text;
             objCoConcurso.cdCidade = Convert.ToInt32(cdCidade.SelectedValue.ToString());
             objCoConcurso.flFinalizado = flFinalizado.Checked ? "S" : "N";
+            objCoConcurso.flConcursoCorrente = flConcursoCorrente.Checked ? "S" : "N";
             DateTime.TryParse(dtIniConcurso.Text, out dtData);
             objCoConcurso.dtIniConcurso = dtData;
             DateTime.TryParse(dtFimConcurso.Text, out dtData);

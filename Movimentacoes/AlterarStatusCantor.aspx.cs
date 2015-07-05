@@ -9,6 +9,7 @@ using wappKaraoke.Classes;
 using wappKaraoke.Classes.Mensagem;
 using wappKaraoke.Classes.Controller;
 using wappKaraoke.Classes.Model.CantoresFases;
+using wappKaraoke.Classes.Model.Cantores;
 
 namespace wappKaraoke.Movimentacoes
 {
@@ -124,6 +125,15 @@ namespace wappKaraoke.Movimentacoes
             Session["nuCantor"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
             Session["deCaminhoMusica"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.deCaminhoMusica].ToString();
             Session["cdCantor"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCantor].ToString();
+
+            conCantores objConCantores = new conCantores();
+            objConCantores.objCoCantores.LimparAtributos();
+            objConCantores.objCoCantores.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
+
+            if (conCantores.Select())
+            {
+                ltInfoCantor.Text = MostraMensagem("Nome:", objConCantores.dtDados.Rows[0][caCantores.nmCantor].ToString(), csMensagem.msgInfo);
+            }
 
             return true;
         }

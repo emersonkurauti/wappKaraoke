@@ -16,9 +16,8 @@ namespace wappKaraoke.Movimentacoes
         {
             if (!IsPostBack)
             {
-                ocsDisplay = new csDisplay("COM5");
+                ocsDisplay = new csDisplay(wappKaraoke.Properties.Settings.Default.sPortaCOM);
                 Session["ocsDisplay"] = ocsDisplay;
-                Session["NumeroAtual"] = 49;
             }
         }
 

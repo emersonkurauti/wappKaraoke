@@ -140,7 +140,6 @@
     <Content Include="css\bootstrap-image-gallery.css" />
     <Content Include="css\bootstrap-image-gallery.min.css" />
     <Content Include="css\demo.css" />
-    <Content Include="hold_my_hand.mp3" />
     <Content Include="img\loading.gif" />
     <Content Include="js\bootstrap-image-gallery.js" />
     <Content Include="js\bootstrap-image-gallery.min.js" />
@@ -149,6 +148,7 @@
     <Content Include="js\jquery.blueimp-gallery.min.js" />
     <Content Include="Movimentacoes\AlterarStatusCantor.aspx" />
     <Content Include="Movimentacoes\CantoresFases.aspx" />
+    <Content Include="Movimentacoes\DefinirConcursoCorrente.aspx" />
     <Content Include="Movimentacoes\NotasCantores.aspx" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
@@ -331,6 +331,13 @@
     <Compile Include="Classes\Model\TipoArquivo\caTipoArquivo.cs" />
     <Compile Include="Classes\Model\TipoArquivo\coTipoArquivo.cs" />
     <Compile Include="Classes\MontaDDL\csConcursos.cs" />
+    <Compile Include="Movimentacoes\DefinirConcursoCorrente.aspx.cs">
+      <DependentUpon>DefinirConcursoCorrente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Movimentacoes\DefinirConcursoCorrente.aspx.designer.cs">
+      <DependentUpon>DefinirConcursoCorrente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

@@ -6,11 +6,11 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span class="panel-title">Notas do Cantor</span>
+                    <span class="panel-title">Player</span>
                 </div><!--Panel Header-->
                 <div class="panel-body">
                     <div class="row" style="text-align:center">
-                        <audio id="Audio"src="../hold_my_hand.mp3" controls="true" autoplay="true"/>
+                        <audio id="Audio"src="" controls="true" autoplay="true"/>
                     </div>
                     <br/>
                     <div class="row">

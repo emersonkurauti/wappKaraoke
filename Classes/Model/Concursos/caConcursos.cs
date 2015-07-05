@@ -78,6 +78,10 @@ namespace wappKaraoke.Classes.Model.Concursos
         {
             get { return "flFinalizado"; }
         }
+        public static string flConcursoCorrente
+        {
+            get { return "flConcursoCorrente"; }
+        }
 		public static string dtFimConcurso
         {
             get { return "dtFimConcurso"; }
@@ -107,11 +111,11 @@ namespace wappKaraoke.Classes.Model.Concursos
         /// <param name="strNome"></param>
         public static void RetornarFields()
         {
-            _strFields = CC_cdRegistro  + "," + cdCidade + "," + dtIniConcurso + "," + flFinalizado + "," + dtFimConcurso + "," + cdConcurso + "," + nmConcursoKanji + "," + nmConcurso + "," + CC_nmCidade;
+            _strFields = CC_cdRegistro + "," + cdCidade + "," + dtIniConcurso + "," + flFinalizado + "," + flConcursoCorrente + "," + dtFimConcurso + "," + cdConcurso + "," + nmConcursoKanji + "," + nmConcurso + "," + CC_nmCidade;
 
-            _strNome = "Cd. Registro, cdCidade, dtIniConcurso, flFinalizado, dtFimConcurso, cdConcurso, nmConcursoKanji, nmConcurso, CC_nmCidade";
+            _strNome = "Cd. Registro, cdCidade, dtIniConcurso, flFinalizado, flConcursoCorrente, dtFimConcurso, cdConcurso, nmConcursoKanji, nmConcurso, CC_nmCidade";
 
-            _strVisivel = "0, 1, 1, 1, 1, 1, 1, 1, 1";
+            _strVisivel = "0, 1, 1, 1, 1, 1, 1, 1, 1, 1";
         }
     }
 }

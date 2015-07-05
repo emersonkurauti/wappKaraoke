@@ -92,6 +92,13 @@ namespace wappKaraoke.Classes.Model.Concursos
             set { _flFinalizado = value; }
         }
 
+        private static string _flConcursoCorrente = "";
+        public string flConcursoCorrente
+        {
+            get { return _flConcursoCorrente; }
+            set { _flConcursoCorrente = value; }
+        }
+
         private static DateTime _dtFimConcurso;
         public DateTime dtFimConcurso
         {
@@ -251,37 +258,37 @@ namespace wappKaraoke.Classes.Model.Concursos
             {
                 if (base.Alterar())
                 {
-                    if (!AtualizarArquivos())
+                    if ((_dtArquivos != null) && !AtualizarArquivos())
                     {
                         objBanco.RollbackTransaction();
                         return false;
                     }
 
-                    if (!AtualizarAssociacoes())
+                    if ((_dtAssociacoes != null) && !AtualizarAssociacoes())
                     {
                         objBanco.RollbackTransaction();
                         return false;
                     }
 
-                    if (!AtualizarGrupoJurado())
+                    if ((_dtGrupoJurados != null) && !AtualizarGrupoJurado())
                     {
                         objBanco.RollbackTransaction();
                         return false;
                     }
 
-                    if (!AtualizarCantoresConcurso())
+                    if ((_dtConcursoCantores != null) && !AtualizarCantoresConcurso())
                     {
                         objBanco.RollbackTransaction();
                         return false;
                     }
 
-                    if (!AtualizarCantoresFases())
+                    if ((_dtConcursoFases != null) && !AtualizarCantoresFases())
                     {
                         objBanco.RollbackTransaction();
                         return false;
                     }
 
-                    if (!AtualizarOrdemCategorias())
+                    if ((_dtOrdemCategoria != null) && !AtualizarOrdemCategorias())
                     {
                         objBanco.RollbackTransaction();
                         return false;
@@ -708,6 +715,26 @@ namespace wappKaraoke.Classes.Model.Concursos
                     }
                 }
                 return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Alterar somente o flConcursoCorrente
+        /// </summary>
+        /// <returns></returns>
+        public bool AlterarConcursoCorrente()
+        {
+            try
+            {
+                string strComando = @"UPDATE CONCURSOS SET flConcursoCorrente = '" + _flConcursoCorrente + "'" +
+                                     " WHERE cdConcurso = " + _cdConcurso;
+                
+                return objBanco.ExecutarSQLPersonalizado(strComando);
+
             }
             catch
             {

@@ -142,6 +142,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon">
                                                     <asp:CheckBox ID="flFinalizado" runat="server" Enabled="false"/>
+                                                    <asp:CheckBox ID="flConcursoCorrente" runat="server" Enabled="false" Visible="false"/>
                                                 </span>
                                                 <asp:label class="form-control" runat="server">
                                                     Finalizado?

@@ -81,6 +81,7 @@
                             <li><a href="../Movimentacoes/NotasCantores.aspx">Notas do Cantor</a></li>
                             <li><a href="../Movimentacoes/Player.aspx">Player</a></li>
                             <li><a href="../Movimentacoes/AlterarStatusCantor.aspx">Status do Cantor</a></li>
+                            <li><a href="../Movimentacoes/DefinirConcursoCorrente.aspx">Concurso Corrente</a></li>
                         </ul>
                     </li>
                     <li><a href="../Cadastros/ConsultaConcursos.aspx">Concurso</a></li>

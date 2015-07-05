@@ -99,5 +99,17 @@ namespace wappKaraoke.Classes.Controller
             }
             return true;
         }
+
+        public static bool AlterarConcursoCorrente()
+        {
+            _strMensagemErro = "";
+
+            if (!_objCoConcursos.AlterarConcursoCorrente())
+            {
+                _strMensagemErro = csMensagem.msgAlterar;
+                return false;
+            }
+            return true;
+        }
     }
 }
