@@ -350,6 +350,29 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         }
 
         /// <summary>
+        /// Retorna o acompanhamento do concurso
+        /// </summary>
+        /// <param name="dtDados"></param>
+        /// <returns></returns>
+        public bool SelectPainelAcompanhamentoConcurso(out DataTable dtDados)
+        {
+            string strComando = @"select cat.deCategoria, nuCantor, ass.nmAssociacao, ca.nmCantor, ca.nmNomeKanji, m.nmMusica, m.nmMusicaKanji, " +
+                                 "       ts.deTpStatus, ts.deCor " +
+                                 "  from concursosordemcategorias coc  " +
+                                 " inner join cantoresfases cf on cf.cdConcurso = coc.cdConcurso and cf.cdCategoria = coc.cdCategoria " +
+                                 " inner join cantoresconcursos cc on cc.cdConcurso = cf.cdConcurso and cc.cdCantor = cf.cdCantor " +
+                                 " inner join associacoes ass on ass.cdAssociacao = cc.cdAssociacao " +
+                                 " inner join cantores ca on ca.cdCantor = cf.cdCantor " +
+                                 " inner join musicas m on m.cdMusica = cf.cdMusica " +
+                                 " inner join categorias cat on cat.cdCategoria = cf.cdCategoria " +
+                                 " inner join tipostatus ts on ts.cdTpStatus = cf.cdTpStatus " +
+                                 " where coc.cdConcurso = " + _cdConcurso +
+                                 " order by coc.nuOrdem, cf.nuOrdemApresentacao, cf.nuCantor";
+
+            return objBanco.SelectPersonalizado(out dtDados, strComando);
+        }
+
+        /// <summary>
         /// Retorna a estrtura para a tabela de Cantores Fases Concursos
         /// </summary>
         /// <returns></returns>

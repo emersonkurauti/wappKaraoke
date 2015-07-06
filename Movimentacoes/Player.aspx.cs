@@ -81,6 +81,12 @@ namespace wappKaraoke.Movimentacoes
             if (pbAtualFinalizado)
             {
                 //Altera o status do cantor atual
+                //Cantou - Add parametro
+            }
+            else
+            {
+                //Alterar o status do cantor atual
+                //Mudou de ordem - Add Parametro
             }
 
             CarregaProximoCantor();

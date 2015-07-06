@@ -94,5 +94,23 @@ namespace wappKaraoke.Properties {
                 return ((string)(this["sCodStatusPronto"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string sCodStatusCantado {
+            get {
+                return ((string)(this["sCodStatusCantado"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string sCodStatusMudouOrdem {
+            get {
+                return ((string)(this["sCodStatusMudouOrdem"]));
+            }
+        }
     }
 }
