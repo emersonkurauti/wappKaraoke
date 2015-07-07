@@ -339,12 +339,17 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         /// <returns></returns>
         public bool SelectProximoCantor(out DataTable dtDados)
         {
-            string strComando = @"select cf.nuCantor, cf.cdCantor " +
-                                 "  from cantoresfases cf " +
-                                 " where cf.cdConcurso = " + _cdConcurso +
-                                 "   and cf.cdTpStatus = " + _cdTpStatus +
-                                 "   and rownum = 1 " +
-                                 " order by cf.nuCanto ";
+            string strComando = @"select * from " +
+                                 "(select cf.nuCantor, cf.cdCantor, cf.cdFase, cf.cdCategoria, cant.nmCantor as CC_nmCantor, " +
+                                 "        cat.deCategoria as CC_deCategoria " +
+                                 "   from cantoresfases cf " +
+                                 "  inner join concursosordemcategorias coc on coc.cdCategoria = cf.cdCategoria " +
+                                 "  inner join cantores cant on cant.cdCantor = cf.cdCantor " +
+                                 "  inner join categorias cat on cat.cdCategoria = coc.cdCategoria " +
+                                 "  where cf.cdConcurso = " + _cdConcurso +
+                                 "    and cf.cdTpStatus = " + _cdTpStatus +
+                                 "  order by coc.nuOrdem, cf.nuOrdemApresentacao) " +
+                                 " where rownum = 1 ";
 
             return objBanco.SelectPersonalizado(out dtDados, strComando);
         }
@@ -495,6 +500,30 @@ namespace wappKaraoke.Classes.Model.CantoresFases
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Alterar o status do cantor
+        /// </summary>
+        /// <returns></returns>
+        public bool AlterarStatus()
+        {
+            try
+            {
+                string strComando = @"UPDATE " + caCantoresFases.nmTabela + " SET " + caCantoresFases.cdTpStatus + "=" + _cdTpStatus +
+                    " WHERE " + caCantoresFases.cdCantor + "=" + _cdCantor +
+                    "  AND " + caCantoresFases.cdConcurso + "=" + _cdConcurso +
+                    "  AND " + caCantoresFases.cdCategoria + "=" + _cdCategoria +
+                    "  AND " + caCantoresFases.cdFase + "=" + _cdFase;
+
+                objBanco.ExecutarSQLPersonalizado(strComando);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
