@@ -16,10 +16,11 @@ namespace wappKaraoke.Paineis
 {
     public partial class PainelAcompanhamentoConcurso : csPage
     {
-        private DataTable _dtCantoresFases;
-
         public override void Page_Load(object sender, EventArgs e)
         {
+            ltRefresh.Text = "<meta http-equiv=\"refresh\" content=\"" + 
+                wappKaraoke.Properties.Settings.Default.sTempoAtualizaçãoPainel + "\" />";
+
             conConcursos objConConcursos = new conConcursos();
             objConConcursos.objCoConcursos.LimparAtributos();
             objConConcursos.objCoConcursos.strFiltro = " WHERE flConcursoCorrente = 'S'";
@@ -62,6 +63,8 @@ namespace wappKaraoke.Paineis
                 ((Literal)gvAcompanhamentoConcurso.Rows[i].FindControl("ltMusicaKanji")).Text = @"" +
                     objConCantoresFases.dtDados.Rows[i]["nmMusica"].ToString() +
                     " <br/> " + objConCantoresFases.dtDados.Rows[i]["nmMusicaKanji"].ToString();
+
+                PintaLinha(gvAcompanhamentoConcurso.Rows[i], objConCantoresFases.dtDados.Rows[i]["deCor"].ToString());
             }
 
             Session["_dtCantoresFases"] = objConCantoresFases.dtDados;
@@ -69,41 +72,31 @@ namespace wappKaraoke.Paineis
             gvAcompanhamentoConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
 
-        protected void gvAcompanhamentoConcurso_RowDataBound(object sender, GridViewRowEventArgs e)
+        private void PintaLinha(GridViewRow gvRow, string strCor)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            if (strCor == "AZUL")
             {
-                if (Session["_dtCantoresFases"] != null)
-                {
-                    _dtCantoresFases = (DataTable)Session["_dtCantoresFases"];
-
-                    foreach (DataRow dr in _dtCantoresFases.Rows)
-                    {
-                        if (DataBinder.Eval(e.Row.DataItem, "nuCantor").ToString() == dr[caCantoresFases.nuCantor].ToString())
-                        {
-                            if (dr[caTipoStatus.deCor].ToString() == "AZUL")
-                            {
-                                e.Row.BackColor = System.Drawing.Color.LightBlue;
-                            }
-                            else if (dr[caTipoStatus.deCor].ToString() == "VERDE")
-                            {
-                                e.Row.BackColor = System.Drawing.Color.LightGreen;
-                            }
-                            else if (dr[caTipoStatus.deCor].ToString() == "VERMELHO")
-                            {
-                                e.Row.BackColor = System.Drawing.Color.Salmon;
-                            }
-                            else if (dr[caTipoStatus.deCor].ToString() == "AMARELO")
-                            {
-                                e.Row.BackColor = System.Drawing.Color.Yellow;
-                            }
-                            else if (dr[caTipoStatus.deCor].ToString() == "LARANJADO")
-                            {
-                                e.Row.BackColor = System.Drawing.Color.Orange;
-                            }
-                        }
-                    }
-                }
+                gvRow.BackColor = System.Drawing.Color.LightBlue;
+            }
+            else if (strCor == "VERDE")
+            {
+                gvRow.BackColor = System.Drawing.Color.LightGreen;
+            }
+            else if (strCor == "VERMELHO")
+            {
+                gvRow.BackColor = System.Drawing.Color.Salmon;
+            }
+            else if (strCor == "AMARELO")
+            {
+                gvRow.BackColor = System.Drawing.Color.Yellow;
+            }
+            else if (strCor == "LARANJADO")
+            {
+                gvRow.BackColor = System.Drawing.Color.Orange;
+            }
+            else if (strCor == "BRANCO")
+            {
+                gvRow.BackColor = System.Drawing.Color.White;
             }
         }
     }

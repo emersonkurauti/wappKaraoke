@@ -97,19 +97,37 @@ namespace wappKaraoke.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string sCodStatusCantado {
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public string sCodStatusCantou {
             get {
-                return ((string)(this["sCodStatusCantado"]));
+                return ((string)(this["sCodStatusCantou"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
         public string sCodStatusMudouOrdem {
             get {
                 return ((string)(this["sCodStatusMudouOrdem"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public string sCodStatusCantando {
+            get {
+                return ((string)(this["sCodStatusCantando"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public string sTempoAtualizaçãoPainel {
+            get {
+                return ((string)(this["sTempoAtualizaçãoPainel"]));
             }
         }
     }
