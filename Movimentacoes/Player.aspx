@@ -13,7 +13,7 @@
                         <div class="col-sm-12">
                             <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
                         </div>
-                        <audio id="Audio"src="" controls="true" autoplay="true"/>
+                        <asp:Literal ID="ltAudio" runat="server"></asp:Literal>
                     </div>
                     <br/>
                     <div class="row">
@@ -51,7 +51,8 @@
                         </div>
                         <div class="col-sm-3" style="text-align:center">
                             <asp:TextBox ID="nuCantor" class="form-control" runat="server" 
-                                placeholder="Número do Cantor..." Visible="True">
+                                placeholder="Número do Cantor..." Visible="True" 
+                                ontextchanged="nuCantor_TextChanged">
                             </asp:TextBox>
                         </div>
                         <div class="col-sm-3">

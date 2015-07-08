@@ -9,7 +9,7 @@
       <Value Profile="(Default)">Arquivos\Musicas\Cantado\</Value>
     </Setting>
     <Setting Name="sCaminhoKaraokeConcurso" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Arquivos\Musicas\KaraokeConcurso\</Value>
+      <Value Profile="(Default)">../Arquivos/Musicas/KaraokeConcurso/</Value>
     </Setting>
     <Setting Name="sCaminhoArqImagens" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Arquivos\Imagens\</Value>

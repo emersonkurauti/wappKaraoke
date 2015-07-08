@@ -21,10 +21,12 @@ namespace wappKaraoke.Movimentacoes
         {
             if (!IsPostBack)
             {
+                bool bAchouCantorCantando = false;
+
                 conConcursos objConConcursos = new conConcursos();
                 objConConcursos.objCoConcursos.LimparAtributos();
                 objConConcursos.objCoConcursos.strFiltro = " WHERE flConcursoCorrente = 'S'";
-                
+
                 if (conConcursos.Select())
                 {
                     Session["cdConcurso"] = objConConcursos.dtDados.Rows[0][caConcursos.cdConcurso].ToString();
@@ -36,7 +38,26 @@ namespace wappKaraoke.Movimentacoes
                     return;
                 }
 
-                CarregaProximoCantor();
+                conCantoresFases objConCantoresFases = new conCantoresFases();
+                objConCantoresFases.objCoCantoresFases.LimparAtributos();
+                objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+                objConCantoresFases.objCoCantoresFases.cdTpStatus = Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantando);
+
+                if (conCantoresFases.Select())
+                {
+                    if (objConCantoresFases.dtDados.Rows.Count > 0)
+                    {
+                        PreencheDadosCantor(objConCantoresFases);
+                        bAchouCantorCantando = true;
+                    }
+                    else
+                        CarregaProximoCantor();
+                }
+                else
+                    CarregaProximoCantor();
+
+                if (!bAchouCantorCantando)
+                    MudarStatusCantor(Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantando));
 
                 ocsDisplay = new csDisplay(wappKaraoke.Properties.Settings.Default.sPortaCOM);
                 int iNumero = Convert.ToInt32(Session["NumeroAtual"].ToString());
@@ -72,17 +93,13 @@ namespace wappKaraoke.Movimentacoes
                 return;
             }
 
-            Session["NumeroAtual"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
-            Session["cdCantor"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCantor].ToString();
-            Session["cdFase"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdFase].ToString();
-            Session["cdCategoria"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCategoria].ToString();
+            if (objConCantoresFases.dtDados.Rows.Count == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Não existe cantor pronto para cantar.", csMensagem.msgWarning);
+                return;
+            }
 
-            ltMensagem.Text = MostraMensagem("Detalhes Cantor:", 
-                "<br/>"+
-                "Número: "+Session["NumeroAtual"]+"<br/>"+
-                "Nome: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_nmCantor].ToString() + "<br/>" +
-                "Categoria: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_deCategoria].ToString() + "<br/>" +
-                "", csMensagem.msgInfo);
+            PreencheDadosCantor(objConCantoresFases);
         }
 
         private void MudarStatusCantor(int pcdStatus)
@@ -121,6 +138,53 @@ namespace wappKaraoke.Movimentacoes
             Session["ocsDisplay"] = ocsDisplay;
 
             MudarStatusCantor(Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantando));
+        }
+
+        private void PreencheDadosCantor(conCantoresFases objConCantoresFases)
+        {
+            Session["NumeroAtual"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
+            Session["cdCantor"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCantor].ToString();
+            Session["cdFase"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdFase].ToString();
+            Session["cdCategoria"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCategoria].ToString();
+
+            ltMensagem.Text = MostraMensagem("Detalhes Cantor:",
+                "<br/>" +
+                "Número: " + Session["NumeroAtual"] + "<br/>" +
+                "Nome: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_nmCantor].ToString() + "<br/>" +
+                "Categoria: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_deCategoria].ToString() + "<br/>" +
+                "", csMensagem.msgInfo);
+
+            CarregarMusica(objConCantoresFases);
+        }
+
+        private void CarregarMusica(conCantoresFases objConCantoresFases)
+        {
+            string strArquivoMusica = wappKaraoke.Properties.Settings.Default.sCaminhoKaraokeConcurso + 
+                Session["NumeroAtual"].ToString();
+
+            ltAudio.Text = "<audio id=\"Audio\"src=\"" + strArquivoMusica + ".mp3\" controls=\"true\"/>";
+        }
+
+        protected void nuCantor_TextChanged(object sender, EventArgs e)
+        {
+            conCantoresFases objConCantoresFases = new conCantoresFases();
+            objConCantoresFases.objCoCantoresFases.LimparAtributos();
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+            objConCantoresFases.objCoCantoresFases.nuCantor = nuCantor.Text;
+
+            if (!conCantoresFases.Select())
+            {
+                ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível localizar o cantor pelo número.", csMensagem.msgDanger);
+                return;
+            }
+
+            if (objConCantoresFases.dtDados.Rows.Count == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Não existe cantor com o número informado.", csMensagem.msgWarning);
+                return;
+            }
+
+            PreencheDadosCantor(objConCantoresFases);
         }
     }
 }

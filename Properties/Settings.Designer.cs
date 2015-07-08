@@ -43,7 +43,7 @@ namespace wappKaraoke.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Arquivos\\Musicas\\KaraokeConcurso\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("../Arquivos/Musicas/KaraokeConcurso/")]
         public string sCaminhoKaraokeConcurso {
             get {
                 return ((string)(this["sCaminhoKaraokeConcurso"]));
