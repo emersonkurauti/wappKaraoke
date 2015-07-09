@@ -24,45 +24,29 @@
                     <br/>
                     <!--Notas-->
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <asp:Literal ID="ltNotasJurados" runat="server"></asp:Literal>
                                 </div>
                             </div><!--Fim Panel Body Notas-->
                         </div>
-                        <div class="col-sm-6">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <asp:TextBox ID="deFormulaPontuacao" class="form-control" runat="server" 
-                                        placeholder="Fórmula..." Visible="True">
-                                    </asp:TextBox>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <asp:TextBox ID="nuNotaFinal" class="form-control" runat="server" 
-                                        placeholder="Nota Final..." Visible="True" ReadOnly="true">
-                                    </asp:TextBox>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <asp:TextBox ID="deObservacao" class="form-control" runat="server" 
-                                        placeholder="Observação..." Visible="True">
-                                    </asp:TextBox>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <asp:TextBox ID="pcDesconto" class="form-control" runat="server" 
-                                        placeholder="Desconto..." Visible="True">
-                                    </asp:TextBox>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <asp:TextBox ID="deFormulaPontuacao" class="form-control" runat="server" 
+                                placeholder="Fórmula..." Visible="True">
+                            </asp:TextBox>
+                        </div>
+                        <div class="col-sm-4">
+                            <asp:TextBox ID="pcDesconto" class="form-control" runat="server" 
+                                placeholder="% Desconto..." Visible="True">
+                            </asp:TextBox>
+                        </div>
+                        <div class="col-sm-4">
+                            <asp:TextBox ID="nuNotaFinal" class="form-control" runat="server" 
+                                placeholder="Nota Final..." Visible="True" ReadOnly="true">
+                            </asp:TextBox>
                         </div>
                     </div>
                     <!--Fim Notas-->                    

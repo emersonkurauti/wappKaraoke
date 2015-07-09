@@ -49,24 +49,6 @@ namespace wappKaraoke.Movimentacoes {
         protected global::System.Web.UI.WebControls.TextBox deFormulaPontuacao;
         
         /// <summary>
-        /// nuNotaFinal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox nuNotaFinal;
-        
-        /// <summary>
-        /// deObservacao control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox deObservacao;
-        
-        /// <summary>
         /// pcDesconto control.
         /// </summary>
         /// <remarks>
@@ -74,6 +56,15 @@ namespace wappKaraoke.Movimentacoes {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox pcDesconto;
+        
+        /// <summary>
+        /// nuNotaFinal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox nuNotaFinal;
         
         /// <summary>
         /// btnAnterior control.

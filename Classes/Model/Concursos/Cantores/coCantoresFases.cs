@@ -348,6 +348,32 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  "  inner join categorias cat on cat.cdCategoria = coc.cdCategoria " +
                                  "  where cf.cdConcurso = " + _cdConcurso +
                                  "    and cf.cdTpStatus = " + _cdTpStatus +
+                                 //"    and cf.cdFase = " +
+                                 "  order by coc.nuOrdem, cf.nuOrdemApresentacao) " +
+                                 " where rownum = 1 ";
+
+            return objBanco.SelectPersonalizado(out dtDados, strComando);
+        }
+
+        /// <summary>
+        /// Retorna o primeiro cantor que cantou e que não possui nota
+        /// </summary>
+        /// <param name="dtDados"></param>
+        /// <returns></returns>
+        public bool SelectProximoCantorSemNota(out DataTable dtDados)
+        {
+            string strComando = @"select * from " +
+                                 "(Select cf.nuCantor, cf.cdCantor, can.nmCantor, can.nmNomeKanji, " +
+                                 "        cat.cdCategoria, cat.deCategoria, cat.deFormulaPontuacao, f.cdFase, f.deFase " +
+                                 "   from cantoresfases cf " +
+                                 "  inner join concursosordemcategorias coc on coc.cdConcurso = cf.cdConcurso and coc.cdCategoria = cf.cdCategoria " +
+                                 "  inner join cantores can on can.cdCantor = cf.cdCantor " +
+                                 "  inner join categorias cat on cat.cdCategoria = cf.cdCategoria " +
+                                 "  inner join fases f on f.cdFase = cf.cdFase " +
+                                 "  where cf.nuNotaFinal = 0 " +
+                                 "    and cf.cdTpStatus = " + _cdTpStatus +
+                                 "    and cf.cdConcurso = " + _cdConcurso +
+                                 //"    and cf.cdFase = " +
                                  "  order by coc.nuOrdem, cf.nuOrdemApresentacao) " +
                                  " where rownum = 1 ";
 

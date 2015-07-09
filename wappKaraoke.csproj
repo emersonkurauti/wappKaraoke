@@ -313,6 +313,7 @@
     <Compile Include="Classes\Controller\conConcursos.cs" />
     <Compile Include="Classes\Controller\conConcursosOrdemCategorias.cs" />
     <Compile Include="Classes\Controller\conGrupos.cs" />
+    <Compile Include="Classes\Controller\conNotas.cs" />
     <Compile Include="Classes\Controller\conTipoArquivo.cs" />
     <Compile Include="Classes\Dinamico\csDinamico.cs" />
     <Compile Include="Classes\Model\Concursos\Arquivos\caArquivos.cs" />
@@ -329,6 +330,8 @@
     <Compile Include="Classes\Model\Concursos\Grupos\coGrupos.cs" />
     <Compile Include="Classes\Model\Concursos\OdemCategoria\caConcursosOrdemCategorias.cs" />
     <Compile Include="Classes\Model\Concursos\OdemCategoria\coConcursosOrdemCategorias.cs" />
+    <Compile Include="Classes\Model\Notas\caNotas.cs" />
+    <Compile Include="Classes\Model\Notas\coNotas.cs" />
     <Compile Include="Classes\Model\TipoArquivo\caTipoArquivo.cs" />
     <Compile Include="Classes\Model\TipoArquivo\coTipoArquivo.cs" />
     <Compile Include="Classes\MontaDDL\csConcursos.cs" />
