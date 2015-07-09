@@ -74,5 +74,16 @@ namespace wappKaraoke.Classes
             "	     </div>" + "\n" +
             "       </div>" + "\n" +
             "   </li>";
+
+        public static string strLinhaNotaJurado =
+            "<div class=\"row\">" +
+            "    <div class=\"col-sm-6\">" +
+            "        <h5 style=\"text-align: right\">[CC_nmJurado]</h5>" +
+            "    </div>" +
+            "    <div class=\"col-sm-6\">" +
+            "        <input type=\"Text\" ID=\"txtNotaJurado_[cdJurado]\" class=\"form-control\" " +
+            "            placeholder=\"Nota...\"/>" +
+            "    </div>" +
+            "</div><br />";
     }
 }

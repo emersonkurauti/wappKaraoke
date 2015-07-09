@@ -58,11 +58,6 @@ namespace wappKaraoke.Movimentacoes
 
                 if (!bAchouCantorCantando)
                     MudarStatusCantor(Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantando));
-
-                ocsDisplay = new csDisplay(wappKaraoke.Properties.Settings.Default.sPortaCOM);
-                int iNumero = Convert.ToInt32(Session["NumeroAtual"].ToString());
-                //ocsDisplay.MudarNumero(iNumero.ToString());
-                Session["ocsDisplay"] = ocsDisplay;
             }
         }
 
@@ -132,11 +127,6 @@ namespace wappKaraoke.Movimentacoes
 
             CarregaProximoCantor();
 
-            ocsDisplay = (csDisplay)Session["ocsDisplay"];
-            int iNumero = Convert.ToInt32(Session["NumeroAtual"].ToString());
-            //ocsDisplay.MudarNumero(iNumero.ToString());
-            Session["ocsDisplay"] = ocsDisplay;
-
             MudarStatusCantor(Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantando));
         }
 
@@ -155,6 +145,8 @@ namespace wappKaraoke.Movimentacoes
                 "", csMensagem.msgInfo);
 
             CarregarMusica(objConCantoresFases);
+
+            TrocarNumetoDisplay();
         }
 
         private void CarregarMusica(conCantoresFases objConCantoresFases)
@@ -185,6 +177,14 @@ namespace wappKaraoke.Movimentacoes
             }
 
             PreencheDadosCantor(objConCantoresFases);
+        }
+
+        private void TrocarNumetoDisplay()
+        {
+            ocsDisplay = (csDisplay)Session["ocsDisplay"];
+            int iNumero = Convert.ToInt32(Session["NumeroAtual"].ToString());
+            //ocsDisplay.MudarNumero(iNumero.ToString());
+            Session["ocsDisplay"] = ocsDisplay;
         }
     }
 }

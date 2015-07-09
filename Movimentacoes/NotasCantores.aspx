@@ -10,28 +10,15 @@
                 </div><!--Panel Header-->
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <asp:DropDownList ID="cdConcurso" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True">
-                            </asp:DropDownList>
-                        </div>
-                        <div class="col-sm-6">
-                            <asp:DropDownList ID="cdFase" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True">
-                            </asp:DropDownList>
+                        <div class="col-sm-12">
+                            <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
                         </div>
                     </div>
-                    <br/>
                     <div class="row">
-                        <div class="col-sm-6">
-                            <asp:DropDownList ID="cdCategoria" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True">
-                            </asp:DropDownList>
-                        </div>
-                        <div class="col-sm-6">
-                            <asp:DropDownList ID="cdCantor" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True">
-                            </asp:DropDownList>
+                        <div class="col-sm-12">
+                            <asp:TextBox ID="nuCantor" class="form-control" runat="server" 
+                                placeholder="Número do Cantor..." Visible="True">
+                            </asp:TextBox>
                         </div>
                     </div>
                     <br/>
@@ -40,38 +27,7 @@
                         <div class="col-sm-6">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <h5 style="text-align: right">Jurado de teste 1</h5>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <asp:TextBox ID="txtNotaJurado_1" class="form-control" runat="server" 
-                                                placeholder="Nota..." Visible="True">
-                                            </asp:TextBox>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <h5 style="text-align: right">Jurado de teste 2</h5>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <asp:TextBox ID="TextBox1" class="form-control" runat="server" 
-                                                placeholder="Nota..." Visible="True">
-                                            </asp:TextBox>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <h5 style="text-align: right">Jurado de teste 3</h5>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <asp:TextBox ID="TextBox2" class="form-control" runat="server" 
-                                                placeholder="Nota..." Visible="True">
-                                            </asp:TextBox>
-                                        </div>
-                                    </div>
+                                    <asp:Literal ID="ltNotasJurados" runat="server"></asp:Literal>
                                 </div>
                             </div><!--Fim Panel Body Notas-->
                         </div>
@@ -109,7 +65,7 @@
                             </div>
                         </div>
                     </div>
-                    <!--Fim Notas-->
+                    <!--Fim Notas-->                    
                     <br />
                     <div class="row">
                         <div class="col-sm-2">
