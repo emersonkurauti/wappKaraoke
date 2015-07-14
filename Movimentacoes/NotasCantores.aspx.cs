@@ -41,8 +41,6 @@ namespace wappKaraoke.Movimentacoes
                 }
 
                 CarregarProximoCantorSemNota();
-
-                CarregaPainelNotaJurados();
             }
         }
 
@@ -62,18 +60,31 @@ namespace wappKaraoke.Movimentacoes
                     return;
                 }
 
+                string strNota = "";
+                string strObs = "";
                 int index = 1;
+
                 foreach (DataRow dr in objConGrupos.dtDados.Rows)
                 {
+                    //Carregar nota do banco caso exista
+                    if (Session[csDinamico.strCampoNotaJurado.Replace("[cdJurado]", "N" + (index))] != null)
+                        strNota = Session[csDinamico.strCampoNotaJurado.Replace("[cdJurado]", "N" + (index))].ToString();
+
+                    if (Session[csDinamico.strCampoObsJurado.Replace("[cdJurado]", "N" + (index))] != null)
+                        strObs = Session[csDinamico.strCampoObsJurado.Replace("[cdJurado]", "N" + (index))].ToString();
+
                     ltNotasJurados.Text += csDinamico.strLinhaNotaJurado.Replace("[CC_nmJurado]",
                         dr[caGrupos.CC_nmJurado].ToString() + " [N" + (index) + "]").Replace("[cdJurado]", "N" + (index));
-                    ltNotasJurados.Text = ltNotasJurados.Text.Replace("[Nota]", "");
+
+                    ltNotasJurados.Text = ltNotasJurados.Text.Replace("[Nota]", strNota);
+                    ltNotasJurados.Text = ltNotasJurados.Text.Replace("[Obs]", strObs);
+
                     index++;
                 }
             }
         }
 
-        private void CarregarProximoCantorSemNota()
+        private void CarregarProximoCantorSemNota(string psnuCantor = "")
         {
             ltMensagem.Text = "";
 
@@ -94,6 +105,7 @@ namespace wappKaraoke.Movimentacoes
                 return;
             }
 
+            Session["nuCantor"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
             Session["cdCantor"] = objConCantoresFases.dtDados.Rows[0][caCantores.cdCantor].ToString();
             Session["cdCategoria"] = objConCantoresFases.dtDados.Rows[0][caCategorias.cdCategoria].ToString();
             Session["cdFase"] = objConCantoresFases.dtDados.Rows[0][caFases.cdFase].ToString();
@@ -104,6 +116,8 @@ namespace wappKaraoke.Movimentacoes
                 "Cantor: " + objConCantoresFases.dtDados.Rows[0][caCantores.nmCantor].ToString() + "<br/>" +
                 "Categoria: " + objConCantoresFases.dtDados.Rows[0][caCategorias.deCategoria].ToString(),
                 csMensagem.msgInfo);
+
+            CarregaPainelNotaJurados();
         }
 
         private void CalculaNota()
@@ -118,6 +132,9 @@ namespace wappKaraoke.Movimentacoes
             {
                 vNotas = sNota.Split('=');
                 strFormula = strFormula.Replace("[" + vNotas[0] + "]", vNotas[1]);
+
+                Session[csDinamico.strCampoNotaJurado.Replace("[cdJurado]", vNotas[0])] = vNotas[1];
+                Session[csDinamico.strCampoObsJurado.Replace("[cdJurado]", vNotas[0])] = vNotas[2];
             }
 
             double dpcDesconto;
@@ -137,23 +154,29 @@ namespace wappKaraoke.Movimentacoes
             }
 
             nuNotaFinal.Text = objConNotas.dtDados.Rows[0][caNotas.CC_deFormula].ToString();
+            CarregaPainelNotaJurados();
         }
 
         protected void btnSalvar_Click(object sender, EventArgs e)
         {
             CalculaNota();
+
+            //Salvar
+
+            CarregarProximoCantorSemNota(Session["nuCantor"].ToString());
         }
 
         protected void btnAtualizar_Click(object sender, EventArgs e)
         {
-
+            CarregarProximoCantorSemNota();
         }
 
         protected void nuCantor_TextChanged(object sender, EventArgs e)
         {
-
+            CarregarProximoCantorSemNota(nuCantor.Text);
         }
 
+        //CarregaPainelNotaJurados -- Alterar para carregar notas do banco caso haja
         //Salvar -> calcula Salva: nota final, desconto, notas dos jurados
         //Atualiza -> Recarrega buscanco o primeiro cantor cantado sem nota, caso nao exista, carrega o ultimo cantado
         //Digitar o numero do cantor carrega ele

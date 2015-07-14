@@ -87,9 +87,13 @@ namespace wappKaraoke.Classes
             "            placeholder=\"Nota...\" value=\"[Nota]\" />" +
             "    </div>" +
             "    <div class=\"col-sm-10\">" +
-            "        <input type=\"Text\" ID=\"deObservacao_[cdJurado]\" class=\"form-control\" " +
-            "            placeholder=\"Observação...\"/>" +
+            "        <input type=\"Text\" name=\"txtObs\" ID=\"deObservacao_[cdJurado]\" class=\"form-control\" " +
+            "            placeholder=\"Observação...\" value=\"[Obs]\" />" +
             "    </div>" +
             "</div>";
+
+        public static string strCampoNotaJurado = "txtNotaJurado_[cdJurado]";
+
+        public static string strCampoObsJurado = "deObservacao_[cdJurado]";
     }
 }

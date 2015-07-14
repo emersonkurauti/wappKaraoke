@@ -3,6 +3,7 @@
     <script type="text/javascript">
         function AtualizaNota() {
             var vNotas = document.getElementsByName('txtNota');
+            var vObs = document.getElementsByName('txtObs');
             var hfNotas = '';
             var strNomeCampo = '';
             var strCodNota = '';
@@ -12,9 +13,9 @@
 
                 strCodNota = strNomeCampo.substring(strNomeCampo.indexOf('_') + 1, strNomeCampo.lenght);
 
-                hfNotas += strCodNota + "=" + vNotas[i].value + ';';
+                hfNotas += strCodNota + "=" + vNotas[i].value + "=" + vObs[i].value + ';';
             }
-            
+
             document.getElementById('<%=hfNotas.ClientID%>').value = hfNotas;
         }
     </script>
