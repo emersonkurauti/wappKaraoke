@@ -50,6 +50,19 @@ namespace wappKaraoke.Classes.Controller
             return true;
         }
 
+        public static bool CalcularNota()
+        {
+            _strMensagemErro = "";
+
+            if (!_objCoNotas.CalcularNota(out _dtDados))
+            {
+                _strMensagemErro = csMensagem.msgConsultar;
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Inserir
         /// </summary>

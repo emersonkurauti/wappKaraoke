@@ -83,8 +83,8 @@ namespace wappKaraoke.Classes
             "</div>" +
             "<div class=\"row\">" +
             "    <div class=\"col-sm-2\">" +
-            "        <input type=\"Text\" ID=\"txtNotaJurado_[cdJurado]\" class=\"form-control\" " +
-            "            placeholder=\"Nota...\"/>" +
+            "        <input type=\"Text\" name=\"txtNota\" ID=\"txtNotaJurado_[cdJurado]\" class=\"form-control\" " +
+            "            placeholder=\"Nota...\" value=\"[Nota]\" />" +
             "    </div>" +
             "    <div class=\"col-sm-10\">" +
             "        <input type=\"Text\" ID=\"deObservacao_[cdJurado]\" class=\"form-control\" " +

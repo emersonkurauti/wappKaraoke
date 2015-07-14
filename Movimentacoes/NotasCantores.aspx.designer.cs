@@ -40,6 +40,15 @@ namespace wappKaraoke.Movimentacoes {
         protected global::System.Web.UI.WebControls.Literal ltNotasJurados;
         
         /// <summary>
+        /// hfNotas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfNotas;
+        
+        /// <summary>
         /// deFormulaPontuacao control.
         /// </summary>
         /// <remarks>
@@ -67,13 +76,13 @@ namespace wappKaraoke.Movimentacoes {
         protected global::System.Web.UI.WebControls.TextBox nuNotaFinal;
         
         /// <summary>
-        /// btnAnterior control.
+        /// btnAtualizar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnAnterior;
+        protected global::System.Web.UI.WebControls.LinkButton btnAtualizar;
         
         /// <summary>
         /// btnSalvar control.
@@ -83,14 +92,5 @@ namespace wappKaraoke.Movimentacoes {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSalvar;
-        
-        /// <summary>
-        /// btnProximo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnProximo;
     }
 }

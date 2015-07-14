@@ -12,7 +12,10 @@ using wappKaraoke.Classes.Model.Grupos;
 using wappKaraoke.Classes.Model.Cantores;
 using wappKaraoke.Classes.Model.Categorias;
 using wappKaraoke.Classes.Model.Fases;
+using wappKaraoke.Classes.Model.Notas;
+using wappKaraoke.Classes.Model.CantoresFases;
 using System.Data;
+using System.Collections;
 
 namespace wappKaraoke.Movimentacoes
 {
@@ -59,9 +62,13 @@ namespace wappKaraoke.Movimentacoes
                     return;
                 }
 
+                int index = 1;
                 foreach (DataRow dr in objConGrupos.dtDados.Rows)
                 {
-                    ltNotasJurados.Text += csDinamico.strLinhaNotaJurado.Replace("[CC_nmJurado]", dr[caGrupos.CC_nmJurado].ToString()).Replace("[cdJurado]", dr[caGrupos.cdJurado].ToString());
+                    ltNotasJurados.Text += csDinamico.strLinhaNotaJurado.Replace("[CC_nmJurado]",
+                        dr[caGrupos.CC_nmJurado].ToString() + " [N" + (index) + "]").Replace("[cdJurado]", "N" + (index));
+                    ltNotasJurados.Text = ltNotasJurados.Text.Replace("[Nota]", "");
+                    index++;
                 }
             }
         }
@@ -93,15 +100,52 @@ namespace wappKaraoke.Movimentacoes
 
             deFormulaPontuacao.Text = objConCantoresFases.dtDados.Rows[0][caCategorias.deFormulaPontuacao].ToString();
 
-            ltMensagem.Text = MostraMensagem("Detalhes:",
+            ltMensagem.Text = MostraMensagem("Nº: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString(),
                 "Cantor: " + objConCantoresFases.dtDados.Rows[0][caCantores.nmCantor].ToString() + "<br/>" +
                 "Categoria: " + objConCantoresFases.dtDados.Rows[0][caCategorias.deCategoria].ToString(),
                 csMensagem.msgInfo);
         }
 
-        //Salvar -> Salva e passa o próximo
-        //Anterior -> volta
-        //Proximo -> vai pro proóximo número
+        private void CalculaNota()
+        {
+            hfNotas.Value = hfNotas.Value.ToString().Substring(0, hfNotas.Value.Length - 1);
+
+            string strFormula = deFormulaPontuacao.Text;
+            string[] vNotasJurados = hfNotas.Value.ToString().Split(';');
+            string[] vNotas;
+
+            foreach (string sNota in vNotasJurados)
+            {
+                vNotas = sNota.Split('=');
+                strFormula = strFormula.Replace("[" + vNotas[0] + "]", vNotas[1]);
+            }
+
+            double dpcDesconto;
+            Double.TryParse(pcDesconto.Text, out dpcDesconto);
+            dpcDesconto = (100 - dpcDesconto) / 100;
+            strFormula += "*" + dpcDesconto;
+            strFormula = strFormula.Replace(',', '.');
+
+            conNotas objConNotas = new conNotas();
+            objConNotas.objCoNotas.LimparAtributos();
+            objConNotas.objCoNotas.CC_deFormula = strFormula;
+
+            if (!conNotas.CalcularNota())
+            {
+                ltMensagem.Text = MostraMensagem("Falha!", "Erro ao calcular nota do cantor.", csMensagem.msgDanger);
+                return;
+            }
+
+            nuNotaFinal.Text = objConNotas.dtDados.Rows[0][caNotas.CC_deFormula].ToString();
+        }
+
+        protected void btnSalvar_Click(object sender, EventArgs e)
+        {
+            CalculaNota();
+        }
+
+        //Salvar -> calcula Salva: nota final, desconto, notas dos jurados
+        //Atualiza -> Recarrega buscanco o primeiro cantor cantado sem nota
         //Digitar o numero do cantor carrega ele
     }
 }

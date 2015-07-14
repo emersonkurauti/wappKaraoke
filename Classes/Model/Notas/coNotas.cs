@@ -108,6 +108,13 @@ namespace wappKaraoke.Classes.Model.Notas
             set { _CC_nmJurado = value; }
         }
 
+        private static string _CC_deFormula = "";
+        public string CC_deFormula
+        {
+            get { return _CC_deFormula; }
+            set { _CC_deFormula = value; }
+        }
+
         /// <summary>
         /// Construtor
         /// </summary>
@@ -203,6 +210,18 @@ namespace wappKaraoke.Classes.Model.Notas
                 return false;
 
             return true;
+        }
+
+        /// <summary>
+        /// Calcula a nota do cantor
+        /// </summary>
+        /// <param name="dtDados"></param>
+        /// <returns></returns>
+        public bool CalcularNota(out DataTable dtDados)
+        {
+            string strComando = @"select ROUND(" + _CC_deFormula + ", 2) as " + caNotas.CC_deFormula + " from dual";
+
+            return objBanco.SelectPersonalizado(out dtDados, strComando);
         }
 
         /// <summary>

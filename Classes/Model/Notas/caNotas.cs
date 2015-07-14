@@ -114,6 +114,10 @@ namespace wappKaraoke.Classes.Model.Notas
         {
             get { return "CC_nmJurado"; }
         }
+        public static string CC_deFormula
+        {
+            get { return "CC_deFormula"; }
+        }
 
         /// <summary>
         /// Retorna os fields para montar DataGridView
@@ -123,11 +127,11 @@ namespace wappKaraoke.Classes.Model.Notas
         /// <param name="strNome"></param>
         public static void RetornarFields()
         {
-            _strFields = CC_cdRegistro  + "," + cdCategoria + "," + cdFase + "," + cdCantor + "," + cdConcurso + "," + cdJurado + "," + deObservacao + "," + nuNota + "," + CC_deCategoria + "," + CC_deFase + "," + CC_nmCantor + "," + CC_nmConcurso + "," + CC_nmJurado;
+            _strFields = CC_cdRegistro + "," + cdCategoria + "," + cdFase + "," + cdCantor + "," + cdConcurso + "," + cdJurado + "," + deObservacao + "," + nuNota + "," + CC_deCategoria + "," + CC_deFase + "," + CC_nmCantor + "," + CC_nmConcurso + "," + CC_nmJurado + "," + CC_deFormula;
 
-            _strNome = "Cd. Registro, cdCategoria, cdFase, cdCantor, cdConcurso, cdJurado, deObservacao, nuNota, CC_deCategoria, CC_deFase, CC_nmCantor, CC_nmConcurso, CC_nmJurado";
+            _strNome = "Cd. Registro, cdCategoria, cdFase, cdCantor, cdConcurso, cdJurado, deObservacao, nuNota, CC_deCategoria, CC_deFase, CC_nmCantor, CC_nmConcurso, CC_nmJurado, CC_deFormula";
 
-            _strVisivel = "0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1";
+            _strVisivel = "0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1";
         }
     }
 }
