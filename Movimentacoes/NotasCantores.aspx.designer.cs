@@ -76,15 +76,6 @@ namespace wappKaraoke.Movimentacoes {
         protected global::System.Web.UI.WebControls.TextBox nuNotaFinal;
         
         /// <summary>
-        /// btnAtualizar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnAtualizar;
-        
-        /// <summary>
         /// btnSalvar control.
         /// </summary>
         /// <remarks>
@@ -92,5 +83,14 @@ namespace wappKaraoke.Movimentacoes {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSalvar;
+        
+        /// <summary>
+        /// btnAtualizar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnAtualizar;
     }
 }

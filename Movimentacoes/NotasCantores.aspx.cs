@@ -144,8 +144,18 @@ namespace wappKaraoke.Movimentacoes
             CalculaNota();
         }
 
+        protected void btnAtualizar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void nuCantor_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
         //Salvar -> calcula Salva: nota final, desconto, notas dos jurados
-        //Atualiza -> Recarrega buscanco o primeiro cantor cantado sem nota
+        //Atualiza -> Recarrega buscanco o primeiro cantor cantado sem nota, caso nao exista, carrega o ultimo cantado
         //Digitar o numero do cantor carrega ele
     }
 }
