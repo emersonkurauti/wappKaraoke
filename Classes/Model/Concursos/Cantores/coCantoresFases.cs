@@ -9,11 +9,19 @@ using wappKaraoke.Classes.Model.Categorias;
 using wappKaraoke.Classes.Model.Musicas;
 using wappKaraoke.Classes.Model.TipoStatus;
 using wappKaraoke.Classes.Model.Cantores;
+using wappKaraoke.Classes.Model.Notas;
 
 namespace wappKaraoke.Classes.Model.CantoresFases
 {
     public class coCantoresFases : KuraFrameWork.ClasseBase.csModelBase
     {
+        private DataTable _dtNotas;
+        public DataTable dtNotas
+        {
+            get { return _dtNotas; }
+            set { _dtNotas = value; }
+        }
+
         private static  int _CC_cdRegistro;
         public static int CC_cdRegistro
         {
@@ -157,6 +165,13 @@ namespace wappKaraoke.Classes.Model.CantoresFases
             set { _CC_nmMusicaKanji = value; }
         }
 
+        private static string _CC_deFormulaPontuacao = "";
+        public string CC_deFormulaPontuacao
+        {
+            get { return _CC_deFormulaPontuacao; }
+            set { _CC_deFormulaPontuacao = value; }
+        }
+
         /// <summary>
         /// Construtor
         /// </summary>
@@ -200,6 +215,9 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                 dtDados.Columns[caCantoresFases.CC_nmNomeKanji].MaxLength = 100;
                 dtDados.Columns[caCantoresFases.CC_nmMusicaKanji].ReadOnly = false;
                 dtDados.Columns[caCantoresFases.CC_nmMusicaKanji].MaxLength = 100;
+                dtDados.Columns[caCantoresFases.CC_deFormulaPontuacao].ReadOnly = false;
+                dtDados.Columns[caCantoresFases.CC_deFormulaPontuacao].MaxLength = 100;
+                
 
                 foreach (DataRow dr in dtAux.Rows)
                 {
@@ -529,6 +547,78 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         }
 
         /// <summary>
+        /// Sobrescrito para alterar as notas do cantor em transação
+        /// </summary>
+        /// <returns></returns>
+        public override bool Alterar()
+        {
+            objBanco.BeginTransaction();
+
+            try
+            {
+
+                if (!Alterar())
+                {
+                    objBanco.RollbackTransaction();
+                    return false;
+                }
+
+                if (!AtualizarNotaCantor())
+                {
+                    objBanco.RollbackTransaction();
+                    return false;
+                }
+
+                objBanco.CommitTransaction();
+                return true;
+            }
+            catch
+            {
+                objBanco.RollbackTransaction();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Atualiza as notas do cantor
+        /// </summary>
+        /// <returns></returns>
+        public bool AtualizarNotaCantor()
+        {
+            if (_dtNotas == null || _dtNotas.Rows.Count == 0)
+                return false;
+
+            try
+            {
+                conNotas objConNotas = new conNotas();
+
+                foreach (DataRow dr in _dtNotas.Rows)
+                {
+                    objConNotas.objCoNotas.LimparAtributos();
+                    objConNotas.objCoNotas.cdConcurso = Convert.ToInt32(dr[caNotas.cdConcurso].ToString());
+                    objConNotas.objCoNotas.cdCantor = Convert.ToInt32(dr[caNotas.cdCantor].ToString());
+                    objConNotas.objCoNotas.cdCategoria = Convert.ToInt32(dr[caNotas.cdCategoria].ToString());
+                    objConNotas.objCoNotas.cdFase = Convert.ToInt32(dr[caNotas.cdFase].ToString());
+                    objConNotas.objCoNotas.cdJurado = Convert.ToInt32(dr[caNotas.cdJurado].ToString());
+                    objConNotas.objCoNotas.nuNota = Convert.ToInt32(dr[caNotas.nuNota].ToString());
+                    objConNotas.objCoNotas.deObservacao = dr[caNotas.deObservacao].ToString();
+
+                    if (!conNotas.Excluir())
+                        return false;
+
+                    if (!conNotas.Inserir())
+                        return false;
+                }
+
+                return true;
+            }
+            catch 
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Alterar o status do cantor
         /// </summary>
         /// <returns></returns>
@@ -537,6 +627,31 @@ namespace wappKaraoke.Classes.Model.CantoresFases
             try
             {
                 string strComando = @"UPDATE " + caCantoresFases.nmTabela + " SET " + caCantoresFases.cdTpStatus + "=" + _cdTpStatus +
+                    " WHERE " + caCantoresFases.cdCantor + "=" + _cdCantor +
+                    "  AND " + caCantoresFases.cdConcurso + "=" + _cdConcurso +
+                    "  AND " + caCantoresFases.cdCategoria + "=" + _cdCategoria +
+                    "  AND " + caCantoresFases.cdFase + "=" + _cdFase;
+
+                objBanco.ExecutarSQLPersonalizado(strComando);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Alterar a nota final do cantor
+        /// </summary>
+        /// <returns></returns>
+        public bool AlterarNotaCantor()
+        {
+            try
+            {
+                string strComando = @"UPDATE " + caCantoresFases.nmTabela + " SET " + caCantoresFases.nuNotafinal + "=" + _nuNotafinal + ", " +
+                    caCantoresFases.nuNotafinal + "=" + _nuNotafinal +
                     " WHERE " + caCantoresFases.cdCantor + "=" + _cdCantor +
                     "  AND " + caCantoresFases.cdConcurso + "=" + _cdConcurso +
                     "  AND " + caCantoresFases.cdCategoria + "=" + _cdCategoria +

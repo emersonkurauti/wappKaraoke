@@ -142,6 +142,10 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         {
             get { return "CC_nmMusicaKanji"; }
         }
+        public static string CC_deFormulaPontuacao
+        {
+            get { return "CC_deFormulaPontuacao"; }
+        }
 
         /// <summary>
         /// Retorna os fields para montar DataGridView
@@ -151,11 +155,11 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         /// <param name="strNome"></param>
         public static void RetornarFields()
         {
-            _strFields = CC_Controle + "," + CC_cdRegistro + "," + cdConcurso + "," + cdCantor + "," + cdMusica + "," + cdTpStatus + "," + cdCategoria + "," + cdFase + "," + nuCantor + "," + deCaminhoMusica + "," + nuOrdemApresentacao + "," + nuNotafinal + "," + pcDesconto + "," + CC_nmCantor + "," + CC_nmMusica + "," + CC_deTpStatus + "," + CC_deFase + "," + CC_deCategoria + "," + CC_nmNomeKanji + "," + CC_nmMusicaKanji;
+            _strFields = CC_Controle + "," + CC_cdRegistro + "," + cdConcurso + "," + cdCantor + "," + cdMusica + "," + cdTpStatus + "," + cdCategoria + "," + cdFase + "," + nuCantor + "," + deCaminhoMusica + "," + nuOrdemApresentacao + "," + nuNotafinal + "," + pcDesconto + "," + CC_nmCantor + "," + CC_nmMusica + "," + CC_deTpStatus + "," + CC_deFase + "," + CC_deCategoria + "," + CC_nmNomeKanji + "," + CC_nmMusicaKanji + "," + CC_deFormulaPontuacao;
 
-            _strNome = "Controle, Cd. Registro, cdConcurso, cdCantor, cdMusica, cdTpStatus, cdCategoria, cdFase, nuCantor, deCaminhoMusica, nuOrdemApresentacao, nuNotafinal, pcDesconto, CC_nmCantor, CC_nmMusica, CC_deTpStatus, CC_deFase, CC_deCategoria, CC_nmNomeKanji, CC_nmMusicaKanji";
+            _strNome = "Controle, Cd. Registro, cdConcurso, cdCantor, cdMusica, cdTpStatus, cdCategoria, cdFase, nuCantor, deCaminhoMusica, nuOrdemApresentacao, nuNotafinal, pcDesconto, CC_nmCantor, CC_nmMusica, CC_deTpStatus, CC_deFase, CC_deCategoria, CC_nmNomeKanji, CC_nmMusicaKanji, CC_deFormulaPontuacao";
 
-            _strVisivel = "0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1";
+            _strVisivel = "0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1";
         }
     }
 }

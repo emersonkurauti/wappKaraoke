@@ -187,6 +187,18 @@ namespace wappKaraoke.Classes.Controller
             return true;
         }
 
+        public static bool AlterarNotaCantor()
+        {
+            _strMensagemErro = "";
+
+            if (!_objCoCantoresFases.AlterarNotaCantor())
+            {
+                _strMensagemErro = csMensagem.msgAlterar;
+                return false;
+            }
+            return true;
+        }
+
         /// <summary>
         /// Excluir
         /// </summary>
