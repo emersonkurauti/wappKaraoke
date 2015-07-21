@@ -50,7 +50,7 @@ namespace wappKaraoke.Classes.Model.Notas
 
         public static string nmCampoChave
         {
-            get { return "cdCategoria"; }
+            get { return "cdConcurso"; }
         }
 
         public static string dePrincipal
@@ -60,7 +60,7 @@ namespace wappKaraoke.Classes.Model.Notas
 
         public static string deChaveComposta
         {
-            get { return "[ChComposta]"; }
+            get { return "cdCantor;cdFase;cdCategoria;cdJurado"; }
         }
 
 		/// <summary>

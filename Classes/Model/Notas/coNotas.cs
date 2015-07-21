@@ -223,20 +223,5 @@ namespace wappKaraoke.Classes.Model.Notas
 
             return objBanco.SelectPersonalizado(out dtDados, strComando);
         }
-
-        /// <summary>
-        /// Sobrescrito para retornar a chave
-        /// </summary>
-        /// <returns></returns>
-        public override bool Inserir()
-        {
-            if (base.Inserir())
-            {
-                cdCategoria = objBanco.cdChave;
-                return true;
-            }
-
-            return false;
-        }
     }
 }

@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <asp:TextBox ID="nuCantor" class="form-control" runat="server" 
-                                placeholder="Número do Cantor..." Visible="True" 
+                                placeholder="Número do Cantor..." Visible="True" AutoPostBack="True"
                                 ontextchanged="nuCantor_TextChanged">
                             </asp:TextBox>
                         </div>

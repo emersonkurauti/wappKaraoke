@@ -251,6 +251,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                         if (objConCategorias.dtDados.Rows.Count > 0)
                         {
                             dr[caCantoresFases.CC_deCategoria] = objConCategorias.dtDados.Rows[0][caCategorias.deCategoria].ToString();
+                            dr[caCantoresFases.CC_deFormulaPontuacao] = objConCategorias.dtDados.Rows[0][caCategorias.deFormulaPontuacao].ToString();
                         }
                     }
                     if (conCantores.Select())
@@ -547,39 +548,6 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         }
 
         /// <summary>
-        /// Sobrescrito para alterar as notas do cantor em transação
-        /// </summary>
-        /// <returns></returns>
-        public override bool Alterar()
-        {
-            objBanco.BeginTransaction();
-
-            try
-            {
-
-                if (!Alterar())
-                {
-                    objBanco.RollbackTransaction();
-                    return false;
-                }
-
-                if (!AtualizarNotaCantor())
-                {
-                    objBanco.RollbackTransaction();
-                    return false;
-                }
-
-                objBanco.CommitTransaction();
-                return true;
-            }
-            catch
-            {
-                objBanco.RollbackTransaction();
-                return false;
-            }
-        }
-
-        /// <summary>
         /// Atualiza as notas do cantor
         /// </summary>
         /// <returns></returns>
@@ -650,19 +618,34 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         {
             try
             {
-                string strComando = @"UPDATE " + caCantoresFases.nmTabela + " SET " + caCantoresFases.nuNotafinal + "=" + _nuNotafinal + ", " +
-                    caCantoresFases.nuNotafinal + "=" + _nuNotafinal +
+                string strComando = @"UPDATE " + caCantoresFases.nmTabela +
+                    " SET " + caCantoresFases.nuNotafinal + "=" + _nuNotafinal.ToString().Replace(',', '.') + ", " +
+                    caCantoresFases.pcDesconto + "=" + _pcDesconto.ToString().Replace(',', '.') +
                     " WHERE " + caCantoresFases.cdCantor + "=" + _cdCantor +
                     "  AND " + caCantoresFases.cdConcurso + "=" + _cdConcurso +
                     "  AND " + caCantoresFases.cdCategoria + "=" + _cdCategoria +
                     "  AND " + caCantoresFases.cdFase + "=" + _cdFase;
 
-                objBanco.ExecutarSQLPersonalizado(strComando);
+                objBanco.BeginTransaction();
 
+                if (!objBanco.ExecutarSQLPersonalizado(strComando, false))
+                {
+                    objBanco.RollbackTransaction();
+                    return false;
+                }
+
+                if (!AtualizarNotaCantor())
+                {
+                    objBanco.RollbackTransaction();
+                    return false;
+                }
+
+                objBanco.CommitTransaction();
                 return true;
             }
             catch
             {
+                objBanco.RollbackTransaction();
                 return false;
             }
         }
