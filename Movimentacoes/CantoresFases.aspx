@@ -20,8 +20,14 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-12">
+                            <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
                             <asp:DropDownList ID="cdCategoria" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True">
+                                runat="server" Width="100%" AutoPostBack="True" 
+                                onselectedindexchanged="cdCategoria_SelectedIndexChanged">
                             </asp:DropDownList>
                         </div>
                     </div>
@@ -29,7 +35,8 @@
                     <div class="row">
                         <div class="col-sm-5">
                             <asp:DropDownList ID="cdFase" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True">
+                                runat="server" Width="100%" AutoPostBack="True" 
+                                onselectedindexchanged="cdFase_SelectedIndexChanged">
                             </asp:DropDownList>
                         </div>
                         <div class="col-sm-2">
@@ -37,7 +44,8 @@
                         </div>
                         <div class="col-sm-5">
                             <asp:DropDownList ID="cdProxFase" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True">
+                                runat="server" Width="100%" AutoPostBack="True" 
+                                onselectedindexchanged="cdProxFase_SelectedIndexChanged">
                             </asp:DropDownList>
                         </div>
                     </div>
@@ -54,6 +62,8 @@
                                     </asp:TemplateField>
                                     <asp:BoundField HeaderText="Nome" DataField="nmCantor">
                                     </asp:BoundField>
+                                    <asp:BoundField DataField="nuNotaFinal" HeaderText="Nota" />
+                                    <asp:BoundField DataField="pcDesconto" HeaderText="% Desconto" />
                                 </Columns>
                                 <HeaderStyle CssClass="info" />
                             </asp:GridView>
@@ -86,6 +96,8 @@
                                     </asp:TemplateField>
                                     <asp:BoundField HeaderText="Nome" DataField="nmCantor">
                                     </asp:BoundField>
+                                    <asp:BoundField DataField="nuNotaFinal" HeaderText="Nota" />
+                                    <asp:BoundField DataField="pcDesconto" HeaderText="% Desconto" />
                                 </Columns>
                                 <HeaderStyle CssClass="info" />
                             </asp:GridView>

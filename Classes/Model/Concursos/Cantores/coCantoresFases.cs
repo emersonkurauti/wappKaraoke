@@ -337,6 +337,24 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         }
 
         /// <summary>
+        /// Retorna os cantores da fase e categoria do concurso
+        /// </summary>
+        /// <param name="dtDados"></param>
+        /// <returns></returns>
+        public bool SelectCantoresFasesCategoriasConcurso(out DataTable dtDados)
+        {
+            string strComando = @"SELECT CANT.cdCantor, CANT.nmCantor, CF.nuNotaFinal, CF.pcDesconto" +
+                                 "  FROM CANTORESFASES CF " +
+                                 " INNER JOIN CANTORES CANT on CANT.cdCantor = CF.cdCantor" +
+                                 " WHERE CF.cdConcurso = " + _cdConcurso +
+                                 "   AND CF.cdFase = " + _cdFase +
+                                 "   AND CF.cdCategoria = " + _cdCategoria+
+                                 " ORDER BY CF.nuNotaFinal DESC";
+
+            return objBanco.SelectPersonalizado(out dtDados, strComando);
+        }
+
+        /// <summary>
         /// Retorna somete as fases existentes no concurso
         /// </summary>
         /// <param name="dtDados"></param>

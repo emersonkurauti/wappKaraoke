@@ -326,9 +326,5 @@ namespace wappKaraoke.Movimentacoes
         {
             CarregarNotasCantor(nuCantor.Text);
         }
-        
-        //Salvar -> calcula Salva: nota final, desconto, notas dos jurados
-        //Atualiza -> Recarrega buscanco o primeiro cantor cantado sem nota, caso nao exista, carrega o ultimo cantado
-        //Digitar o numero do cantor carrega ele
     }
 }
