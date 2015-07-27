@@ -3,9 +3,6 @@
     <script type="text/javascript">
         $(function () {
             $('[id*=gvFase]').footable();
-        });
-
-        $(function () {
             $('[id*=gvProxFase]').footable();
         });
     </script>
@@ -53,7 +50,8 @@
                         <div class="col-sm-5">
                             <!--Grid 1-->
                             <asp:GridView ID="gvFase" runat="server"
-                                CssClass="footable table table-bordered table-hover footable" AutoGenerateColumns="False">
+                                CssClass="footable table table-bordered table-hover footable" 
+                                AutoGenerateColumns="False">
                                 <Columns>
                                     <asp:TemplateField>
                                         <ItemTemplate>
@@ -73,13 +71,15 @@
                             <br/>
                             <asp:LinkButton ID="btnProxima" 
                                         runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-success">
+                                        CssClass="btn btn-primary btn-block btn-success" 
+                                onclick="btnProxima_Click">
                                 Passar&nbsp;&nbsp;<i aria-hidden="true" class="glyphicon glyphicon-arrow-right"></i>
                             </asp:LinkButton>
                             <br/>
                             <asp:LinkButton ID="btnAnterior" 
                                         runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-success ">
+                                        CssClass="btn btn-primary btn-block btn-success " 
+                                onclick="btnAnterior_Click">
                                 <i aria-hidden="true" class="glyphicon glyphicon-arrow-left"></i>&nbsp;&nbsp;Voltar
                             </asp:LinkButton>
                             <br/>
@@ -87,7 +87,8 @@
                         <div class="col-sm-5">
                             <!--Grid 2-->
                             <asp:GridView ID="gvProxFase" runat="server"
-                                CssClass="footable table table-bordered table-hover footable" AutoGenerateColumns="False">
+                                CssClass="footable table table-bordered table-hover footable" 
+                                AutoGenerateColumns="False">
                                 <Columns>
                                     <asp:TemplateField>
                                         <ItemTemplate>
@@ -102,6 +103,26 @@
                                 <HeaderStyle CssClass="info" />
                             </asp:GridView>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2" align="left" style="float: left">
+                            <asp:LinkButton ID="btnSalvar" 
+                                    runat="server" 
+                                    CssClass="btn btn-primary btn-block btn-success" 
+                                onclick="btnSalvar_Click">
+                                <i aria-hidden="true" class="glyphicon glyphicon-save"></i>&nbsp;&nbsp;Salvar
+                            </asp:LinkButton>
+                        </div>
+                        <div class="col-sm-2" align="center" style="float: left">
+                            <asp:LinkButton ID="btnCancelar" 
+                                    runat="server" 
+                                    CssClass="btn btn-primary btn-block btn-danger" 
+                                onclick="btnCancelar_Click">
+                                <i aria-hidden="true" class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp;Cancelar
+                            </asp:LinkButton>
+                        </div>
+                        <div class="col-sm-8" align="right" style="float: right">                            
+                        </div>                        
                     </div>
                 </div>
             </div>

@@ -38,5 +38,8 @@
     <Setting Name="sTempoAtualizaçãoPainel" Type="System.String" Scope="Application">
       <Value Profile="(Default)">2</Value>
     </Setting>
+    <Setting Name="sCodFaseInicial" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -202,16 +202,6 @@ namespace wappKaraoke.Cadastros
 
         private void ConfiguraGridAssociacoes()
         {
-            //Associações
-            //Attribute to show the Plus Minus Button.
-            //gvAssociacoes.HeaderRow.Cells[1].Attributes["data-class"] = "expand";
-
-            //Attribute to hide column in Phone.
-            //gvAssociacoes.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
-            //gvAssociacoes.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
-            //gvAssociacoes.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
-
-            //Adds THEAD and TBODY to GridView.
             gvAssociacoes.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
 
@@ -395,6 +385,7 @@ namespace wappKaraoke.Cadastros
             objCoConcurso.cdCidade = Convert.ToInt32(cdCidade.SelectedValue.ToString());
             objCoConcurso.flFinalizado = flFinalizado.Checked ? "S" : "N";
             objCoConcurso.flConcursoCorrente = flConcursoCorrente.Checked ? "S" : "N";
+            objCoConcurso.cdFaseCorrente = Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodFaseInicial);
             DateTime.TryParse(dtIniConcurso.Text, out dtData);
             objCoConcurso.dtIniConcurso = dtData;
             DateTime.TryParse(dtFimConcurso.Text, out dtData);

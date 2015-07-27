@@ -31,6 +31,15 @@ namespace wappKaraoke.Movimentacoes {
         protected global::System.Web.UI.WebControls.DropDownList cdConcurso;
         
         /// <summary>
+        /// cdFase control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cdFase;
+        
+        /// <summary>
         /// btnDefinirConcursoCorrente control.
         /// </summary>
         /// <remarks>

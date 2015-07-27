@@ -78,6 +78,13 @@ namespace wappKaraoke.Classes.Model.Concursos
             set { _cdCidade = value; }
         }
 
+        private static int _cdFaseCorrente;
+        public int cdFaseCorrente
+        {
+            get { return _cdFaseCorrente; }
+            set { _cdFaseCorrente = value; }
+        }
+
 		private static DateTime _dtIniConcurso;
         public DateTime dtIniConcurso
         {
@@ -730,7 +737,8 @@ namespace wappKaraoke.Classes.Model.Concursos
         {
             try
             {
-                string strComando = @"UPDATE CONCURSOS SET flConcursoCorrente = '" + _flConcursoCorrente + "'" +
+                string strComando = @"UPDATE CONCURSOS SET flConcursoCorrente = '" + _flConcursoCorrente + "', " +
+                                     " cdFaseCorrente = " + _cdFaseCorrente +
                                      " WHERE cdConcurso = " + _cdConcurso;
                 
                 return objBanco.ExecutarSQLPersonalizado(strComando);

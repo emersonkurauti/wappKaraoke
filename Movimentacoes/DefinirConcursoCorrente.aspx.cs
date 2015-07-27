@@ -84,5 +84,10 @@ namespace wappKaraoke.Movimentacoes
                 ltMensagem.Text = MostraMensagem("Sucesso!", "Concurso corrente definido com sucesso.", csMensagem.msgSucess);
             }
         }
+
+        protected void cdConcurso_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -63,11 +63,10 @@ namespace wappKaraoke.Movimentacoes
 
         protected override bool ConfigurarGridView()
         {
-            if (!base.ConfigurarGridView())
-                return false;
-
             try
             {
+                gvFase.HeaderRow.TableSection = TableRowSection.TableHeader;
+                gvProxFase.HeaderRow.TableSection = TableRowSection.TableHeader;
                 return true;
             }
             catch
@@ -98,8 +97,37 @@ namespace wappKaraoke.Movimentacoes
             return dtResultado;
         }
 
+        private void RetornaEstruturaDT(ref DataTable dtCantorFase)
+        {
+            dtCantorFase.Columns.Add("cdCantor", typeof(int));
+            dtCantorFase.Columns.Add("nmCantor", typeof(string));
+            dtCantorFase.Columns.Add("nuNotaFinal", typeof(decimal));
+            dtCantorFase.Columns.Add("pcDesconto", typeof(decimal));
+        }
+
+        private void CancelaOperacao()
+        {
+            cdFase.SelectedIndex = 0;
+            Session["dtCantoresFase"] = null;
+            gvFase.DataSource = null;
+            gvFase.DataBind();
+
+            cdProxFase.SelectedIndex = 0;
+            Session["dtCantoresProxFase"] = null;
+            gvProxFase.DataSource = null;
+            gvProxFase.DataBind();
+
+            ConfigurarGridView();
+        }
+
         protected void cdFase_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if ((cdFase.SelectedIndex != 0) && (cdFase.SelectedValue == cdProxFase.SelectedValue))
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Não pode ser selecionada a mesma fase.", csMensagem.msgWarning);
+                return;
+            }
+
             if (cdFase.SelectedIndex == 0)
                 dtCantoresFase = null;
             else
@@ -108,6 +136,8 @@ namespace wappKaraoke.Movimentacoes
             Session["dtCantoresFase"] = dtCantoresFase;
             gvFase.DataSource = dtCantoresFase;
             gvFase.DataBind();
+
+            ConfigurarGridView();
         }
 
         protected void cdProxFase_SelectedIndexChanged(object sender, EventArgs e)
@@ -120,20 +150,118 @@ namespace wappKaraoke.Movimentacoes
             Session["dtCantoresProxFase"] = dtCantoresProxFase;
             gvProxFase.DataSource = dtCantoresProxFase;
             gvProxFase.DataBind();
+
+            ConfigurarGridView();
         }
 
         protected void cdCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cdFase.SelectedIndex = 0;
-            Session["dtCantoresFase"] = null;
-            gvFase.DataSource = null;
-            gvFase.DataBind();
-
-            cdProxFase.SelectedIndex = 0;
-            Session["dtCantoresProxFase"] = null;
-            gvProxFase.DataSource = null;
-            gvProxFase.DataBind();
+            CancelaOperacao();
         }
 
+        protected void btnProxima_Click(object sender, EventArgs e)
+        {
+            dtCantoresFase = Session["dtCantoresFase"] == null ? null : (DataTable)Session["dtCantoresFase"];
+            dtCantoresProxFase = Session["dtCantoresProxFase"] == null ? null : (DataTable)Session["dtCantoresProxFase"];
+
+            if (cdProxFase.SelectedIndex == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Selecione a fila de destino.", csMensagem.msgWarning);
+                return;
+            }
+
+            if (dtCantoresFase == null)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Não existem cantores na fila de origem.", csMensagem.msgWarning);
+                return;
+            }
+
+            if (dtCantoresProxFase == null)
+                RetornaEstruturaDT(ref dtCantoresProxFase);
+
+            int i = 0;
+
+            foreach (GridViewRow row in gvFase.Rows)
+            {
+                CheckBox chSelecionado = (CheckBox)row.FindControl("chkRow");
+
+                if (chSelecionado.Checked)
+                {
+                    dtCantoresProxFase.ImportRow(dtCantoresFase.Rows[i]);
+                    dtCantoresFase.Rows.RemoveAt(i);
+                    i--;
+                }
+
+                i++;
+            }
+
+            Session["dtCantoresFase"] = dtCantoresFase;
+            gvFase.DataSource = dtCantoresFase;
+            gvFase.DataBind();
+
+            Session["dtCantoresProxFase"] = dtCantoresProxFase;
+            gvProxFase.DataSource = dtCantoresProxFase;
+            gvProxFase.DataBind();
+
+            ConfigurarGridView();
+        }
+
+        protected void btnAnterior_Click(object sender, EventArgs e)
+        {
+            dtCantoresFase = Session["dtCantoresFase"] == null ? null : (DataTable)Session["dtCantoresFase"];
+            dtCantoresProxFase = Session["dtCantoresProxFase"] == null ? null : (DataTable)Session["dtCantoresProxFase"];
+
+            if (cdFase.SelectedIndex == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Selecione a fila de destino.", csMensagem.msgWarning);
+                return;
+            }
+
+            if (dtCantoresProxFase == null)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Não existem cantores na fila de origem.", csMensagem.msgWarning);
+                return;
+            }
+
+            if (dtCantoresFase == null)
+                RetornaEstruturaDT(ref dtCantoresFase);
+
+            int i = 0;
+
+            foreach (GridViewRow row in gvProxFase.Rows)
+            {
+                CheckBox chSelecionado = (CheckBox)row.FindControl("chkRow");
+
+                if (chSelecionado.Checked)
+                {
+                    dtCantoresFase.ImportRow(dtCantoresProxFase.Rows[i]);
+                    dtCantoresProxFase.Rows.RemoveAt(i);
+                    i--;
+                }
+
+                i++;
+            }
+
+            Session["dtCantoresFase"] = dtCantoresFase;
+            gvFase.DataSource = dtCantoresFase;
+            gvFase.DataBind();
+
+            Session["dtCantoresProxFase"] = dtCantoresProxFase;
+            gvProxFase.DataSource = dtCantoresProxFase;
+            gvProxFase.DataBind();
+
+            ConfigurarGridView();
+        }
+
+        protected void btnSalvar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            cdCategoria.SelectedIndex = 0;
+            CancelaOperacao();
+        }
     }
 }

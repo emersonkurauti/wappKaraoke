@@ -130,5 +130,14 @@ namespace wappKaraoke.Properties {
                 return ((string)(this["sTempoAtualizaçãoPainel"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public string sCodFaseInicial {
+            get {
+                return ((string)(this["sCodFaseInicial"]));
+            }
+        }
     }
 }
