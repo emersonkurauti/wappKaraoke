@@ -24,8 +24,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <asp:DropDownList ID="cdConcurso" class="form-control selectpicker" style="text-align:left" 
-                                    runat="server" Width="100%" AutoPostBack="False" 
-                                    onselectedindexchanged="cdConcurso_SelectedIndexChanged">
+                                    runat="server" Width="100%" AutoPostBack="False">
                                 </asp:DropDownList>
                             </div>
                             <div class="col-sm-3">
