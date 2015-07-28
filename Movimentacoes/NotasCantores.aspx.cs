@@ -40,6 +40,7 @@ namespace wappKaraoke.Movimentacoes
                     return;
                 }
 
+                Session["NotasJurados"] = null;
                 CarregarProximoCantorSemNota();
             }
         }
@@ -63,7 +64,6 @@ namespace wappKaraoke.Movimentacoes
                 Session["QtdJurados"] = objConGrupos.dtDados.Rows.Count;
                 Session["NotasJurados"] = null;
 
-                bool bTemNotaGravada = false;
                 string strNota = "";
                 string strObs = "";
                 int index = 1;
@@ -90,20 +90,9 @@ namespace wappKaraoke.Movimentacoes
 
                         if (objConNotas.dtDados.Rows.Count > 0)
                         {
-                            bTemNotaGravada = true;
                             strNota = objConNotas.dtDados.Rows[0][caNotas.nuNota].ToString();
                             strObs = objConNotas.dtDados.Rows[0][caNotas.deObservacao].ToString();
                         }
-                    }
-
-
-                    if (!bTemNotaGravada)
-                    {
-                        if (Session[csDinamico.strCampoNotaJurado.Replace("[cdJurado]", dr[caGrupos.cdJurado].ToString())] != null)
-                            strNota = Session[csDinamico.strCampoNotaJurado.Replace("[cdJurado]", dr[caGrupos.cdJurado].ToString())].ToString();
-
-                        if (Session[csDinamico.strCampoObsJurado.Replace("[cdJurado]", "N" + (index))] != null)
-                            strObs = Session[csDinamico.strCampoObsJurado.Replace("[cdJurado]", dr[caGrupos.cdJurado].ToString())].ToString();
                     }
 
                     ltNotasJurados.Text += csDinamico.strLinhaNotaJurado.Replace("[CC_nmJurado]",
@@ -314,16 +303,19 @@ namespace wappKaraoke.Movimentacoes
                 return;
             }
 
+            Session["NotasJurados"] = null;
             CarregarNotasCantor(Session["nuCantor"].ToString());
         }
 
         protected void btnAtualizar_Click(object sender, EventArgs e)
         {
+            Session["NotasJurados"] = null;
             CarregarProximoCantorSemNota();
         }
 
         protected void nuCantor_TextChanged(object sender, EventArgs e)
         {
+            Session["NotasJurados"] = null;
             CarregarNotasCantor(nuCantor.Text);
         }
     }
