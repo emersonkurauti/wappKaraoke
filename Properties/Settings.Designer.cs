@@ -139,5 +139,14 @@ namespace wappKaraoke.Properties {
                 return ((string)(this["sCodFaseInicial"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public string sCodStatusInicial {
+            get {
+                return ((string)(this["sCodStatusInicial"]));
+            }
+        }
     }
 }

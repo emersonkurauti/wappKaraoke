@@ -41,5 +41,8 @@
     <Setting Name="sCodFaseInicial" Type="System.String" Scope="Application">
       <Value Profile="(Default)">1</Value>
     </Setting>
+    <Setting Name="sCodStatusInicial" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

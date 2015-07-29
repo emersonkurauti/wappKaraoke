@@ -408,7 +408,7 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <asp:DropDownList ID="cdAssociacao" class="form-control selectpicker" style="text-align:left" 
-                                                        runat="server" Width="100%" AutoPostBack="False">
+                                                        runat="server" Width="100%" AutoPostBack="True">
                                                     </asp:DropDownList>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -721,19 +721,6 @@
                                                         runat="server" Width="100%" AutoPostBack="False">
                                                     </asp:DropDownList>
                                                 </div>                                                
-                                            </div>
-                                            <br/>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <asp:DropDownList ID="cdFaseCantor" class="form-control selectpicker" style="text-align:left" 
-                                                        runat="server" Width="100%" AutoPostBack="False" Visible="false">
-                                                    </asp:DropDownList>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <asp:DropDownList ID="cdStatus" class="form-control selectpicker" style="text-align:left" 
-                                                        runat="server" Width="100%" AutoPostBack="False" Visible="false">
-                                                    </asp:DropDownList>
-                                                </div>
                                             </div>
                                             <br/>
                                             <div class="row">

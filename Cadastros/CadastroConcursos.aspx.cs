@@ -347,17 +347,11 @@ namespace wappKaraoke.Cadastros
             csCategorias vcsCategorias = new csCategorias();
             cdCategoria = vcsCategorias.CarregaDDL(cdCategoria);
 
-            csFases vcsFasesConcurso = new csFases();
-            cdFaseCantor = vcsFasesConcurso.CarregaDDL(cdFaseCantor);
-
             csCantores vcsCancotres = new csCantores();
             cdCantor = vcsCancotres.CarregaDDL(cdCantor);
 
             csMusicas vcsMusicas = new csMusicas();
             cdMusica = vcsMusicas.CarregaDDL(cdMusica);
-
-            csStatus vcsStatus = new csStatus();
-            cdStatus = vcsStatus.CarregaDDL(cdStatus);
 
             CarregaDDLAssociacoesCantores();
         }
@@ -1213,10 +1207,6 @@ namespace wappKaraoke.Cadastros
 
             CarregaDataTableOrdemCategoriasSession();
 
-            //for (int i = 0; i < alCdCategoria.Count; i++)
-            //{
-            //    AdicionaCantorCategoriaConcurso(alDeCategoria[i].ToString(), alDeCategoria[i].ToString(), false, false);
-            //}
 
             foreach (DataRow dr in _dtOrdemCategoria.Rows)
             {
@@ -1347,20 +1337,8 @@ namespace wappKaraoke.Cadastros
                 ltMensagensCategorias.Text = MostraMensagem("Validação!", "Deve ser selecionada a Música.", csMensagem.msgWarning);
                 return;
             }
-            else if (cdFaseCantor.Items.Count == 1)
-            {
-                ltMensagensCategorias.Text = MostraMensagem("Validação!", "Deve ser cadastrada pelo menos uma Fase.", csMensagem.msgWarning);
-                return;
-            }
-            else if (cdStatus.Items.Count == 1)
-            {
-                ltMensagensCategorias.Text = MostraMensagem("Validação!", "Deve ser cadastrado pelo menos um Tipo de Status.", csMensagem.msgWarning);
-                return;
-            }
             else
             {
-                cdStatus.SelectedIndex = 1;
-                cdFaseCantor.SelectedIndex = 1;
                 AdicionaCantorCategoriaConcurso(cdCategoria.SelectedValue.ToString(), cdCategoria.SelectedItem.ToString());
                 ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaCantores(" + cdCategoria.SelectedValue.ToString() + ");", true);
                 ConfigurarGridView();
@@ -1458,9 +1436,9 @@ namespace wappKaraoke.Cadastros
             dr[caCantoresFases.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
             dr[caCantoresFases.cdCategoria] = cdCategoria.SelectedValue;
             dr[caCantoresFases.cdCantor] = cdCantor.SelectedValue;
-            dr[caCantoresFases.cdFase] = cdFaseCantor.SelectedValue;
+            dr[caCantoresFases.cdFase] = wappKaraoke.Properties.Settings.Default.sCodFaseInicial;
             dr[caCantoresFases.cdMusica] = cdMusica.SelectedValue;
-            dr[caCantoresFases.cdTpStatus] = cdStatus.SelectedValue;
+            dr[caCantoresFases.cdTpStatus] = wappKaraoke.Properties.Settings.Default.sCodStatusInicial;
             _dtCantoresFases.Rows.Add(dr);
 
             Session["_dtCantoresFases"] = _dtCantoresFases;
@@ -1616,9 +1594,9 @@ namespace wappKaraoke.Cadastros
                                         dr[caMusicas.nmMusica] = cdMusica.SelectedItem.Text;
                                         dr[caMusicas.nmMusicaKanji] = RetornaNomeMusicaKanji();
                                         //Fase
-                                        dr[caFases.cdFase] = cdFaseCantor.SelectedValue;
+                                        dr[caFases.cdFase] = wappKaraoke.Properties.Settings.Default.sCodFaseInicial;
                                         dr[caCategorias.cdCategoria] = cdCategoria.SelectedValue;
-                                        dr[caTipoStatus.cdTpStatus] = cdStatus.SelectedValue;
+                                        dr[caTipoStatus.cdTpStatus] = wappKaraoke.Properties.Settings.Default.sCodStatusInicial;
                                         dr[caCantoresFases.nuCantor] = "";
                                         dr[caCantoresFases.nuOrdemApresentacao] = 0;
                                         dtDados.Rows.Add(dr);
@@ -2073,6 +2051,22 @@ namespace wappKaraoke.Cadastros
                 LinkButton lnkEditAss = gvr.FindControl("lnkEditAss") as LinkButton;
                 ScriptManager.GetCurrent(this).RegisterPostBackControl(lnkEditAss);
             }
+        }
+
+        protected void cdAssociacao_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Carregar dados
+            conAssociacoes objConAssociacoes = new conAssociacoes();
+            objConAssociacoes.objCoAssociacoes.LimparAtributos();
+            objConAssociacoes.objCoAssociacoes.cdAssociacao = Convert.ToInt32(cdAssociacao.SelectedValue);
+
+            if (!conAssociacoes.Select())
+            {
+                ltMensagemAssociacoes.Text = MostraMensagem("Falha!", "Não foi possível carregar os dados do representante.", csMensagem.msgWarning);
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
+            }
+
+            nmRepresentante.Text = objConAssociacoes.dtDados.Rows[0][caAssociacoes.nmRepresentante].ToString();
         }
 
         /// <summary>
