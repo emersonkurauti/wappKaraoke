@@ -32,11 +32,18 @@ namespace wappKaraoke.Movimentacoes
                 if (conConcursos.Select())
                 {
                     Session["cdConcurso"] = objConConcursos.dtDados.Rows[0][caConcursos.cdConcurso].ToString();
+                    Session["cdFaseCorrente"] = objConConcursos.dtDados.Rows[0][caConcursos.cdFaseCorrente].ToString();
                 }
 
                 if (Session["cdConcurso"] == null)
                 {
                     ltMensagem.Text = MostraMensagem("Falha!", "Não existe concurso corrente definido.", csMensagem.msgDanger);
+                    return;
+                }
+
+                if (Session["cdFaseCorrente"] == null)
+                {
+                    ltMensagem.Text = MostraMensagem("Falha!", "Não existe fase corrente definida.", csMensagem.msgDanger);
                     return;
                 }
 
@@ -71,13 +78,13 @@ namespace wappKaraoke.Movimentacoes
                 foreach (DataRow dr in objConGrupos.dtDados.Rows)
                 {
                     if ((Session["cdCantor"] != null) && (Session["cdCategoria"] != null) &&
-                        (Session["cdFase"] != null) && (Session["cdConcurso"] != null))
+                        (Session["cdFaseCorrente"] != null) && (Session["cdConcurso"] != null))
                     {
                         conNotas objConNotas = new conNotas();
                         objConNotas.objCoNotas.LimparAtributos();
                         objConNotas.objCoNotas.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
                         objConNotas.objCoNotas.cdCategoria = Convert.ToInt32(Session["cdCategoria"].ToString());
-                        objConNotas.objCoNotas.cdFase= Convert.ToInt32(Session["cdFase"].ToString());
+                        objConNotas.objCoNotas.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
                         objConNotas.objCoNotas.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
                         objConNotas.objCoNotas.cdJurado = Convert.ToInt32(dr[caGrupos.cdJurado].ToString());
 
@@ -121,6 +128,7 @@ namespace wappKaraoke.Movimentacoes
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
             objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
             objConCantoresFases.objCoCantoresFases.cdTpStatus = Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantou);
 
             if (!conCantoresFases.SelectProximoCantorSemNota())
@@ -143,7 +151,6 @@ namespace wappKaraoke.Movimentacoes
             Session["nuCantor"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
             Session["cdCantor"] = objConCantoresFases.dtDados.Rows[0][caCantores.cdCantor].ToString();
             Session["cdCategoria"] = objConCantoresFases.dtDados.Rows[0][caCategorias.cdCategoria].ToString();
-            Session["cdFase"] = objConCantoresFases.dtDados.Rows[0][caFases.cdFase].ToString();
 
             deFormulaPontuacao.Text = objConCantoresFases.dtDados.Rows[0][caCategorias.deFormulaPontuacao].ToString();
 
@@ -273,7 +280,7 @@ namespace wappKaraoke.Movimentacoes
                 _drNota[caNotas.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
                 _drNota[caNotas.cdCantor] = Convert.ToInt32(Session["cdCantor"].ToString());
                 _drNota[caNotas.cdCategoria] = Convert.ToInt32(Session["cdCategoria"].ToString());
-                _drNota[caNotas.cdFase] = Convert.ToInt32(Session["cdFase"].ToString());
+                _drNota[caNotas.cdFase] = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
                 _drNota[caNotas.cdJurado] = Convert.ToInt32(vNotas[0]);
                 _drNota[caNotas.nuNota] = Convert.ToInt32(vNotas[1]);
                 _drNota[caNotas.deObservacao] = vNotas[2];
@@ -292,7 +299,7 @@ namespace wappKaraoke.Movimentacoes
             objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
             objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
             objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(Session["cdCategoria"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFase"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
             objConCantoresFases.objCoCantoresFases.nuNotafinal = dNuNotaFina;
             objConCantoresFases.objCoCantoresFases.pcDesconto = dpcDesconto;
             objConCantoresFases.objCoCantoresFases.dtNotas = _dtNotas;

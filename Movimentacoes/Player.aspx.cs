@@ -30,6 +30,7 @@ namespace wappKaraoke.Movimentacoes
                 if (conConcursos.Select())
                 {
                     Session["cdConcurso"] = objConConcursos.dtDados.Rows[0][caConcursos.cdConcurso].ToString();
+                    Session["cdFaseCorrente"] = objConConcursos.dtDados.Rows[0][caConcursos.cdFaseCorrente].ToString();
                 }
 
                 if (Session["cdConcurso"] == null)
@@ -38,9 +39,16 @@ namespace wappKaraoke.Movimentacoes
                     return;
                 }
 
+                if (Session["cdFaseCorrente"] == null)
+                {
+                    ltMensagem.Text = MostraMensagem("Falha!", "Não existe fase corrente definida.", csMensagem.msgDanger);
+                    return;
+                }
+
                 conCantoresFases objConCantoresFases = new conCantoresFases();
                 objConCantoresFases.objCoCantoresFases.LimparAtributos();
                 objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+                objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
                 objConCantoresFases.objCoCantoresFases.cdTpStatus = Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantando);
 
                 if (conCantoresFases.Select())
@@ -80,6 +88,7 @@ namespace wappKaraoke.Movimentacoes
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
             objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
             objConCantoresFases.objCoCantoresFases.cdTpStatus = Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusPronto);
 
             if (!conCantoresFases.SelectProximoCantor())
@@ -101,8 +110,8 @@ namespace wappKaraoke.Movimentacoes
         {
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
-            objConCantoresFases.objCoCantoresFases.cdConcurso=Convert.ToInt32(Session["cdConcurso"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFase"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
             objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(Session["cdCategoria"].ToString());
             objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
             objConCantoresFases.objCoCantoresFases.cdTpStatus = pcdStatus;
@@ -134,7 +143,6 @@ namespace wappKaraoke.Movimentacoes
         {
             Session["NumeroAtual"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
             Session["cdCantor"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCantor].ToString();
-            Session["cdFase"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdFase].ToString();
             Session["cdCategoria"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCategoria].ToString();
 
             ltMensagem.Text = MostraMensagem("Detalhes Cantor:",
@@ -162,6 +170,7 @@ namespace wappKaraoke.Movimentacoes
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
             objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
             objConCantoresFases.objCoCantoresFases.nuCantor = nuCantor.Text;
 
             if (!conCantoresFases.Select())
