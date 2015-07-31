@@ -123,6 +123,8 @@ namespace wappKaraoke.Cadastros
             }
 
             base.Page_Load(sender, e);
+
+            MostrarAvisoConcursoFinalizado();
         }
 
         /// <summary>
@@ -310,14 +312,15 @@ namespace wappKaraoke.Cadastros
 
         public void btnFechar_Click(Object sender, EventArgs e)
         {
-            flFinalizado.Checked = true;
-
+            flFinalizado.Checked = true;            
             GerarSeqNuCantor();
+            MostrarAvisoConcursoFinalizado();
         }
 
         public void btnReabrir_Click(Object sender, EventArgs e)
         {
             flFinalizado.Checked = false;
+            MostrarAvisoConcursoFinalizado();
         }
 
         private void PegarChaveConcurso()
@@ -580,6 +583,28 @@ namespace wappKaraoke.Cadastros
             DataView dv = dtOrdena.DefaultView;
             dv.Sort = strOrdenacao;
             dtOrdena = dv.ToTable();
+        }
+
+        private bool ValidarConcursoFechado()
+        {
+            return flFinalizado.Checked; 
+        }
+
+        private void MostrarAvisoConcursoFinalizado()
+        {
+            btnFechar.Enabled = !flFinalizado.Checked;
+            btnFechar.CssClass += " disabled";
+
+            if (btnFechar.Enabled)
+                btnFechar.CssClass = btnFechar.CssClass.Replace("disabled", "");                
+
+            ltMensagem.Text = "";
+
+            if (ValidarConcursoFechado())
+            {
+                ltMensagem.Text = MostraMensagem("CONCURSO FINALIZADO!", "Concurso finalizado não permite a edição dos dados," +
+                        " apenas de arquivos (Imagens e Documentos).", csMensagem.msgInfo);
+            }
         }
 
         /// <summary>
