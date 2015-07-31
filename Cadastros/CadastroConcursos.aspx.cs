@@ -595,8 +595,14 @@ namespace wappKaraoke.Cadastros
             btnFechar.Enabled = !flFinalizado.Checked;
             btnFechar.CssClass += " disabled";
 
+            btnSalvar.Enabled = !flFinalizado.Checked;
+            btnSalvar.CssClass += " disabled";
+
             if (btnFechar.Enabled)
-                btnFechar.CssClass = btnFechar.CssClass.Replace("disabled", "");                
+            {
+                btnFechar.CssClass = btnFechar.CssClass.Replace("disabled", "");
+                btnSalvar.CssClass = btnSalvar.CssClass.Replace("disabled", "");   
+            }
 
             ltMensagem.Text = "";
 
@@ -1017,6 +1023,9 @@ namespace wappKaraoke.Cadastros
 
         protected void btnConfirmarEdicaoCantor_Click(object sender, EventArgs e)
         {
+            if (ValidarConcursoFechado())
+                return;
+
             if (cdAssociacaoEdit.SelectedIndex > 0 && cdMusicaEdit.SelectedIndex > 0)
             {
                 int indexCantorFase = Convert.ToInt32(Session["indexCantorFase"].ToString());
@@ -1084,6 +1093,12 @@ namespace wappKaraoke.Cadastros
         private void RemoverCantor()
         {
             string[] strParam = Request["__EVENTARGUMENT"].Split(';');
+
+            if (ValidarConcursoFechado())
+            {
+                AtivaAbaCategoria(strParam[1]);
+                return;
+            }
 
             if (Session["_dtCantoresFases"] != null)
                 _dtCantoresFases = (DataTable)Session["_dtCantoresFases"];
@@ -1157,6 +1172,9 @@ namespace wappKaraoke.Cadastros
 
         private void RemoveCantorConcursoAssociacao(string pcdCantor)
         {
+            if (ValidarConcursoFechado())
+                return;
+
             if (!ExisteCantorFase(pcdCantor))
             {
                 if (Session["_dtCantoresConcurso"] != null)
@@ -1196,6 +1214,9 @@ namespace wappKaraoke.Cadastros
 
         private void RemoveCategoria(string pcdCategoria, string psNomeGridView)
         {
+            if (ValidarConcursoFechado())
+                return;
+
             if (!ExisteCategoria(pcdCategoria))
             {
                 CarregaDataTableOrdemCategoriasSession();
@@ -1340,6 +1361,12 @@ namespace wappKaraoke.Cadastros
 
         public void btnAdicionarCategoria_OnClick(Object sender, EventArgs e)
         {
+            if (ValidarConcursoFechado())
+            {
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaCantores(" + cdCategoria.SelectedValue.ToString() + ");", true);
+                return;
+            }
+
             ltMensagensCategorias.Text = "";
 
             if (cdAssociacaoCantor.SelectedIndex == 0)
@@ -1693,6 +1720,9 @@ namespace wappKaraoke.Cadastros
 
         protected void btnAdicionarGrupoJurado_Click(object sender, EventArgs e)
         {
+            if (ValidarConcursoFechado())
+                return;
+
             ltMensagemJurados.Text = "";
 
             if (cdJurado.SelectedIndex > 0)
@@ -1748,6 +1778,9 @@ namespace wappKaraoke.Cadastros
 
         protected void RemoveJurados(int pintIndice)
         {
+            if (ValidarConcursoFechado())
+                return;
+
             _dtGruposJurados = (DataTable)Session["_dtGruposJurados"];
             _dtGruposJurados.Rows[pintIndice][caGrupos.CC_Controle] = KuraFrameWork.csConstantes.sTpExcluido;
 
@@ -1821,6 +1854,9 @@ namespace wappKaraoke.Cadastros
 
         protected void btnConfirmarEdicaoJur_Click(object sender, EventArgs e)
         {
+            if (ValidarConcursoFechado())
+                return;
+
             if (deGrupoEdit.Text.Trim() != "")
             {
                 int indexJurado = Convert.ToInt32(Session["indexJurado"].ToString());
@@ -1883,6 +1919,12 @@ namespace wappKaraoke.Cadastros
 
         protected void btnAdicionarAssociacao_Click(object sender, EventArgs e)
         {
+            if (ValidarConcursoFechado())
+            {
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
+                return;
+            }
+
             ltMensagemAssociacoes.Text = "";
 
             if (cdAssociacao.SelectedIndex > 0)
@@ -1950,6 +1992,12 @@ namespace wappKaraoke.Cadastros
 
         protected void RemoveAssociacao(int pintIndice)
         {
+            if (ValidarConcursoFechado())
+            {
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaAssociacoes();", true);
+                return;
+            }
+
             ltMensagemAssociacoes.Text = "";
 
             _dtAssociacoes = (DataTable)Session["_dtAssociacoes"];
@@ -2036,6 +2084,9 @@ namespace wappKaraoke.Cadastros
 
         protected void btnConfirmarEdicaoAss_Click(object sender, EventArgs e)
         {
+            if (ValidarConcursoFechado())
+                return;
+
             if (nmRepresentanteEdit.Text.Trim() != "")
             {
                 if (deEmailRepresentanteEdit.Text.Trim() != "")
@@ -2129,6 +2180,9 @@ namespace wappKaraoke.Cadastros
 
         protected void lnkUpCategoria_Click(object sender, EventArgs e)
         {
+            if (ValidarConcursoFechado())
+                return;
+
             _dtOrdemCategoria = (DataTable)Session["_dtOrdemCategoria"];
             int indexCategoria = Convert.ToInt32(((LinkButton)sender).CommandArgument);
 
@@ -2155,6 +2209,9 @@ namespace wappKaraoke.Cadastros
 
         protected void lnkDownCategoria_Click(object sender, EventArgs e)
         {
+            if (ValidarConcursoFechado())
+                return;
+
             _dtOrdemCategoria = (DataTable)Session["_dtOrdemCategoria"];
             int indexCategoria = Convert.ToInt32(((LinkButton)sender).CommandArgument);
 
