@@ -164,8 +164,6 @@ namespace wappKaraoke.Classes.Controller
 
             if (!_objCoCantoresFases.Inserir())
             {
-            _strMensagemErro = "";
-
                 _strMensagemErro = csMensagem.msgInserir;
                 return false;
             }
@@ -205,6 +203,22 @@ namespace wappKaraoke.Classes.Controller
             _strMensagemErro = "";
 
             if (!_objCoCantoresFases.AlterarNotaCantor())
+            {
+                _strMensagemErro = csMensagem.msgAlterar;
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Movimenta cantores entre fases
+        /// </summary>
+        /// <returns></returns>
+        public static bool MovimentarCantoresEntreFases()
+        {
+            _strMensagemErro = "";
+
+            if (!_objCoCantoresFases.MovimentarCantoresEntreFases())
             {
                 _strMensagemErro = csMensagem.msgAlterar;
                 return false;

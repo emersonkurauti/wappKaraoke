@@ -75,13 +75,13 @@
                                 onclick="btnProxima_Click">
                                 Passar&nbsp;&nbsp;<i aria-hidden="true" class="glyphicon glyphicon-arrow-right"></i>
                             </asp:LinkButton>
-                            <br/>
+                            <!--<br/>
                             <asp:LinkButton ID="btnAnterior" 
                                         runat="server" 
                                         CssClass="btn btn-primary btn-block btn-success " 
                                 onclick="btnAnterior_Click">
                                 <i aria-hidden="true" class="glyphicon glyphicon-arrow-left"></i>&nbsp;&nbsp;Voltar
-                            </asp:LinkButton>
+                            </asp:LinkButton>-->
                             <br/>
                         </div>
                         <div class="col-sm-5">

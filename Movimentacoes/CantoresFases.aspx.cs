@@ -28,11 +28,18 @@ namespace wappKaraoke.Movimentacoes
                 if (conConcursos.Select())
                 {
                     Session["cdConcurso"] = objConConcursos.dtDados.Rows[0][caConcursos.cdConcurso].ToString();
+                    Session["cdFaseCorrente"] = objConConcursos.dtDados.Rows[0][caConcursos.cdFaseCorrente].ToString();
                 }
 
                 if (Session["cdConcurso"] == null)
                 {
                     ltMensagem.Text = MostraMensagem("Falha!", "Não existe concurso corrente definido.", csMensagem.msgDanger);
+                    return;
+                }
+
+                if (Session["cdFaseCorrente"] == null || Session["cdFaseCorrente"].ToString() == "")
+                {
+                    ltMensagem.Text = MostraMensagem("Falha!", "Não existe fase corrente definida.", csMensagem.msgDanger);
                     return;
                 }
 
@@ -53,6 +60,8 @@ namespace wappKaraoke.Movimentacoes
 
                 csFases vcsFases = new csFases();
                 cdFase = vcsFases.CarregaDDL(cdFase);
+                cdFase.Enabled = false;
+                cdFase.CssClass += " disabled";
 
                 vcsFases = new csFases();
                 cdProxFase = vcsFases.CarregaDDL(cdProxFase);
@@ -99,6 +108,7 @@ namespace wappKaraoke.Movimentacoes
 
         private void RetornaEstruturaDT(ref DataTable dtCantorFase)
         {
+            dtCantorFase.Columns.Add("cdMusica", typeof(int));
             dtCantorFase.Columns.Add("cdCantor", typeof(int));
             dtCantorFase.Columns.Add("nmCantor", typeof(string));
             dtCantorFase.Columns.Add("nuNotaFinal", typeof(decimal));
@@ -122,6 +132,8 @@ namespace wappKaraoke.Movimentacoes
 
         protected void cdFase_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ltMensagem.Text = "";
+
             if ((cdFase.SelectedIndex != 0) && (cdFase.SelectedValue == cdProxFase.SelectedValue))
             {
                 ltMensagem.Text = MostraMensagem("Validação!", "Não pode ser selecionada a mesma fase.", csMensagem.msgWarning);
@@ -142,12 +154,23 @@ namespace wappKaraoke.Movimentacoes
 
         protected void cdProxFase_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cdFase.SelectedIndex == 0)
+            ltMensagem.Text = "";
+
+            if ((cdProxFase.SelectedIndex != 0) && (cdFase.SelectedValue == cdProxFase.SelectedValue))
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Não pode ser selecionada a mesma fase.", csMensagem.msgWarning);
+                cdProxFase.SelectedIndex = 0;
+                return;
+            }
+
+            if (cdProxFase.SelectedIndex == 0)
                 dtCantoresProxFase = null;
             else
                 dtCantoresProxFase = RetornarCantoresFases(Convert.ToInt32(cdProxFase.SelectedValue));
 
-            Session["dtCantoresProxFase"] = dtCantoresProxFase;
+            if (dtCantoresProxFase != null && dtCantoresProxFase.Rows.Count > 0)
+                Session["dtCantoresProxFase"] = dtCantoresProxFase;
+
             gvProxFase.DataSource = dtCantoresProxFase;
             gvProxFase.DataBind();
 
@@ -156,13 +179,18 @@ namespace wappKaraoke.Movimentacoes
 
         protected void cdCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ltMensagem.Text = "";
             CancelaOperacao();
+            cdFase.SelectedValue = Session["cdFaseCorrente"].ToString();
+            cdFase_SelectedIndexChanged(cdFase, null);
         }
 
         protected void btnProxima_Click(object sender, EventArgs e)
         {
             dtCantoresFase = Session["dtCantoresFase"] == null ? null : (DataTable)Session["dtCantoresFase"];
             dtCantoresProxFase = Session["dtCantoresProxFase"] == null ? null : (DataTable)Session["dtCantoresProxFase"];
+
+            ltMensagem.Text = "";
 
             if (cdProxFase.SelectedIndex == 0)
             {
@@ -177,7 +205,10 @@ namespace wappKaraoke.Movimentacoes
             }
 
             if (dtCantoresProxFase == null)
+            {
+                dtCantoresProxFase = new DataTable();
                 RetornaEstruturaDT(ref dtCantoresProxFase);
+            }
 
             int i = 0;
 
@@ -208,6 +239,8 @@ namespace wappKaraoke.Movimentacoes
 
         protected void btnAnterior_Click(object sender, EventArgs e)
         {
+            ltMensagem.Text = "";
+
             dtCantoresFase = Session["dtCantoresFase"] == null ? null : (DataTable)Session["dtCantoresFase"];
             dtCantoresProxFase = Session["dtCantoresProxFase"] == null ? null : (DataTable)Session["dtCantoresProxFase"];
 
@@ -255,11 +288,37 @@ namespace wappKaraoke.Movimentacoes
 
         protected void btnSalvar_Click(object sender, EventArgs e)
         {
+            ltMensagem.Text = "";
 
+            dtCantoresFase = Session["dtCantoresFase"] == null ? null : (DataTable)Session["dtCantoresFase"];
+            dtCantoresProxFase = Session["dtCantoresProxFase"] == null ? null : (DataTable)Session["dtCantoresProxFase"];
+
+            if (dtCantoresProxFase == null || dtCantoresProxFase.Rows.Count == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Não existe cantores para movimentar.", csMensagem.msgWarning);
+                return;
+            }
+
+            conCantoresFases objConCantoresFases = new conCantoresFases();
+            objConCantoresFases.objCoCantoresFases.LimparAtributos();
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(cdProxFase.SelectedValue);
+            objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(cdCategoria.SelectedValue);
+            objConCantoresFases.objCoCantoresFases.dtCantoresProxFase = dtCantoresProxFase;
+            objConCantoresFases.objCoCantoresFases.cdTpStatus = Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusInicial);
+
+            if (!conCantoresFases.MovimentarCantoresEntreFases())
+            {
+                ltMensagem.Text = MostraMensagem("Falha!", "Problemas ao movimentar o(s) cantor(es) de fase.", csMensagem.msgDanger);
+                return;
+            }
+
+            ltMensagem.Text = MostraMensagem("Sucesso!", "Movimentação entre fases realizada com sucesso.", csMensagem.msgDanger);
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
+            ltMensagem.Text = "";
             cdCategoria.SelectedIndex = 0;
             CancelaOperacao();
         }

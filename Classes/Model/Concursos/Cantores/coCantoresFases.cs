@@ -15,6 +15,13 @@ namespace wappKaraoke.Classes.Model.CantoresFases
 {
     public class coCantoresFases : KuraFrameWork.ClasseBase.csModelBase
     {
+        private DataTable _dtCantoresProxFase;
+        public DataTable dtCantoresProxFase
+        {
+            get { return _dtCantoresProxFase; }
+            set { _dtCantoresProxFase = value; }
+        }
+
         private DataTable _dtNotas;
         public DataTable dtNotas
         {
@@ -114,6 +121,13 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         {
             get { return _pcDesconto; }
             set { _pcDesconto = value; }
+        }
+
+        private static string _flFaseCorrente;
+        public string flFaseCorrente
+        {
+            get { return _flFaseCorrente; }
+            set { _flFaseCorrente = value; }
         }
 
 		private static string _CC_nmCantor = "";
@@ -343,12 +357,13 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         /// <returns></returns>
         public bool SelectCantoresFasesCategoriasConcurso(out DataTable dtDados)
         {
-            string strComando = @"SELECT CANT.cdCantor, CANT.nmCantor, CF.nuNotaFinal, CF.pcDesconto" +
+            string strComando = @"SELECT CF.cdMusica, CANT.cdCantor, CANT.nmCantor, CF.nuNotaFinal, CF.pcDesconto" +
                                  "  FROM CANTORESFASES CF " +
                                  " INNER JOIN CANTORES CANT on CANT.cdCantor = CF.cdCantor" +
                                  " WHERE CF.cdConcurso = " + _cdConcurso +
                                  "   AND CF.cdFase = " + _cdFase +
-                                 "   AND CF.cdCategoria = " + _cdCategoria+
+                                 "   AND CF.cdCategoria = " + _cdCategoria +
+                                 "   AND CF.flFaseCorrente = 'S'" +
                                  " ORDER BY CF.nuNotaFinal DESC";
 
             return objBanco.SelectPersonalizado(out dtDados, strComando);
@@ -385,7 +400,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  "  inner join categorias cat on cat.cdCategoria = coc.cdCategoria " +
                                  "  where cf.cdConcurso = " + _cdConcurso +
                                  "    and cf.cdTpStatus = " + _cdTpStatus +
-                                 //"    and cf.cdFase = " +
+                                 "    and cf.cdFase = " + _cdFase +
                                  "  order by coc.nuOrdem, cf.nuOrdemApresentacao) " +
                                  " where rownum = 1 ";
 
@@ -410,7 +425,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  "  where cf.nuNotaFinal = 0 " +
                                  "    and cf.cdTpStatus = " + _cdTpStatus +
                                  "    and cf.cdConcurso = " + _cdConcurso +
-                                 //"    and cf.cdFase = " +
+                                 "    and cf.cdFase = " + _cdFase +
                                  "  order by coc.nuOrdem, cf.nuOrdemApresentacao) " +
                                  " where rownum = 1 ";
 
@@ -436,6 +451,23 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  " inner join tipostatus ts on ts.cdTpStatus = cf.cdTpStatus " +
                                  " where coc.cdConcurso = " + _cdConcurso +
                                  " order by coc.nuOrdem, cf.nuOrdemApresentacao, cf.nuCantor";
+
+            return objBanco.SelectPersonalizado(out dtDados, strComando);
+        }
+
+        /// <summary>
+        /// Retorna somete as fases existentes no concurso
+        /// </summary>
+        /// <param name="dtDados"></param>
+        /// <returns></returns>
+        public bool SelectFasesCategoriasCantoresConcurso(out DataTable dtDados)
+        {
+            string strComando = @"SELECT 1" +
+                                 "  FROM CANTORESFASES CF " +
+                                 " WHERE CF.cdConcurso = " + _cdConcurso +
+                                 "   AND CF.cdCategoria = " + _cdCategoria +
+                                 "   AND CF.cdCantor = " + _cdCantor +
+                                 "   AND CF.cdFase = " + _cdFase;
 
             return objBanco.SelectPersonalizado(out dtDados, strComando);
         }
@@ -656,6 +688,94 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                 {
                     objBanco.RollbackTransaction();
                     return false;
+                }
+
+                objBanco.CommitTransaction();
+                return true;
+            }
+            catch
+            {
+                objBanco.RollbackTransaction();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Altera a fase corrente do cantor
+        /// </summary>
+        /// <returns></returns>
+        public bool AlterarFaseCorrente(bool bControlaTransacao = true)
+        {
+            try
+            {
+                string strComando = @"UPDATE " + caCantoresFases.nmTabela +
+                    " SET " + caCantoresFases.flFaseCorrente + "= '" + _flFaseCorrente + "'" +
+                    " WHERE " + caCantoresFases.cdCantor + "=" + _cdCantor +
+                    "  AND " + caCantoresFases.cdConcurso + "=" + _cdConcurso +
+                    "  AND " + caCantoresFases.cdCategoria + "=" + _cdCategoria;
+
+                objBanco.ExecutarSQLPersonalizado(strComando, bControlaTransacao);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Movimenta os cantores entre as fases
+        /// </summary>
+        /// <returns></returns>
+        public bool MovimentarCantoresEntreFases()
+        {
+            if (_dtCantoresProxFase == null)
+                return false;
+
+            DataTable dtCantorFase;
+
+            try
+            {
+                objBanco.BeginTransaction();
+
+                foreach (DataRow dr in _dtCantoresProxFase.Rows)
+                {
+                    bool bControlaTransacao = false;
+                    _cdCantor = Convert.ToInt32(dr[caCantoresFases.cdCantor].ToString());
+                    _cdMusica = Convert.ToInt32(dr[caCantoresFases.cdMusica].ToString());
+
+                    _flFaseCorrente = "N";
+
+                    if (!AlterarFaseCorrente(bControlaTransacao))
+                    {
+                        objBanco.RollbackTransaction();
+                        return false;
+                    }
+
+
+                    SelectFasesCategoriasCantoresConcurso(out dtCantorFase);
+
+                    if (dtCantorFase.Rows.Count == 1)
+                    {
+                        _flFaseCorrente = "S";
+
+                        if (!AlterarFaseCorrente(bControlaTransacao))
+                        {
+                            objBanco.RollbackTransaction();
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        _flFaseCorrente = "S";
+
+                        if (!Inserir())
+                        {
+                            objBanco.RollbackTransaction();
+                            return false;
+                        }
+                    }
                 }
 
                 objBanco.CommitTransaction();

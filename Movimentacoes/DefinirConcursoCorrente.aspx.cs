@@ -17,6 +17,9 @@ namespace wappKaraoke.Movimentacoes
         {
             if (!IsPostBack)
             {
+                csFases vcsFases = new csFases();
+                cdFase = vcsFases.CarregaDDL(cdFase);
+
                 csConcursos vcsConcursos = new csConcursos();
                 cdConcurso = vcsConcursos.CarregaDDL(cdConcurso);
 
@@ -24,6 +27,7 @@ namespace wappKaraoke.Movimentacoes
                 objConConcursos.objCoConcursos.strFiltro = " WHERE flConcursoCorrente = 'S'";
 
                 Session["cdConcursoCorrente"] = null;
+                Session["cdFaseCorrente"] = null;
 
                 if (conConcursos.Select())
                 {
@@ -31,10 +35,10 @@ namespace wappKaraoke.Movimentacoes
                     {
                         cdConcurso.SelectedValue = objConConcursos.dtDados.Rows[0][caConcursos.cdConcurso].ToString();
                         Session["cdConcursoCorrente"] = cdConcurso.SelectedValue;
-                    }
 
-                    csFases vcsFases = new csFases();
-                    cdFase = vcsFases.CarregaDDL(cdFase);
+                        cdFase.SelectedValue = objConConcursos.dtDados.Rows[0][caConcursos.cdFaseCorrente].ToString();
+                        Session["cdFaseCorrente"] = cdFase.SelectedValue;
+                    }
                 }
             }
         }
@@ -74,12 +78,26 @@ namespace wappKaraoke.Movimentacoes
                         return;
                     }
                 }
+                else
+                {
+                    objConConcursos.objCoConcursos.LimparAtributos();
+                    objConConcursos.objCoConcursos.cdConcurso = Convert.ToInt32(cdConcurso.SelectedValue.ToString());
+                    objConConcursos.objCoConcursos.flConcursoCorrente = "S";
+                    objConConcursos.objCoConcursos.cdFaseCorrente = Convert.ToInt32(cdFase.SelectedValue);
+
+                    if (!conConcursos.AlterarConcursoCorrente())
+                    {
+                        ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível alterar o concurso corrente.", csMensagem.msgDanger);
+                        return;
+                    }
+                }
             }
             else
             {
                 objConConcursos.objCoConcursos.LimparAtributos();
                 objConConcursos.objCoConcursos.cdConcurso = Convert.ToInt32(cdConcurso.SelectedValue.ToString());
                 objConConcursos.objCoConcursos.flConcursoCorrente = "S";
+                objConConcursos.objCoConcursos.cdFaseCorrente = Convert.ToInt32(cdFase.SelectedValue);
 
                 if (!conConcursos.AlterarConcursoCorrente())
                 {
@@ -89,6 +107,7 @@ namespace wappKaraoke.Movimentacoes
             }
 
             Session["cdConcursoCorrente"] = cdConcurso.SelectedValue.ToString();
+            Session["cdFaseCorrente"] = cdFase.SelectedValue.ToString();
             ltMensagem.Text = MostraMensagem("Sucesso!", "Concurso corrente definido com sucesso.", csMensagem.msgSucess);
         }
     }
