@@ -316,6 +316,7 @@ namespace wappKaraoke.Cadastros
             flFinalizado.Checked = true;            
             GerarSeqNuCantor();
             MostrarAvisoConcursoFinalizado();
+            btnSalvar_Click(null, null);
         }
 
         public void btnReabrir_Click(Object sender, EventArgs e)
@@ -694,8 +695,8 @@ namespace wappKaraoke.Cadastros
                 }
 
                 OrdenaDataTable(ref _dtCantoresFases, caCantoresFases.nuOrdemApresentacao.ToString());
-                GerarSeqNuCantor();
                 Session["_dtCantoresFases"] = _dtCantoresFases;
+                GerarSeqNuCantor();
                 MontaCantoresCategorias(false, false);
             }
         }

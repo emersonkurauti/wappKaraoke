@@ -774,7 +774,7 @@
                                                                         <div class="row">
                                                                             <div class="col-sm-6">
                                                                                 <asp:TextBox ID="nuOrdemApresentacaoEdit" class="form-control" 
-                                                                                    runat="server" ReadOnly="true"
+                                                                                    runat="server"
                                                                                     placeholder="Odem Apresentação..." Visible="True">
                                                                                 </asp:TextBox>
                                                                             </div>

@@ -60,7 +60,9 @@ namespace wappKaraoke.Classes.Model.CantoresFases
 
         public static string deChaveComposta
         {
-            get { return "cdCantor;cdFase;cdCategoria;nuCantor"; }
+            /*Com nuCantor fazendo parte da chave composta não é possível inserir um novo concurso*/
+            /*get { return "cdCantor;cdFase;cdCategoria;nuCantor"; } */
+            get { return "cdCantor;cdFase;cdCategoria"; }
         }
 
 		/// <summary>
