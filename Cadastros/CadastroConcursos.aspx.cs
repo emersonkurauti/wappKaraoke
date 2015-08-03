@@ -291,7 +291,8 @@ namespace wappKaraoke.Cadastros
                                     if (drCantor[caCantoresFases.cdCantor].ToString() == drCantCat[caCantoresFases.cdCantor].ToString())
                                     {
                                         drCantCat[caCantoresFases.nuOrdemApresentacao] = nuSeq;
-                                        drCantCat[caCantoresFases.nuCantor] = (nuCantor).ToString().PadLeft(3, '0'); ;
+                                        drCantCat[caCantoresFases.nuCantor] = (nuCantor).ToString().PadLeft(3, '0');
+                                        break;
                                     }
                                 }
 
@@ -598,10 +599,14 @@ namespace wappKaraoke.Cadastros
             btnSalvar.Enabled = !flFinalizado.Checked;
             btnSalvar.CssClass += " disabled";
 
+            btnSortearOrdemApresentacao.Enabled = !flFinalizado.Checked;
+            btnSortearOrdemApresentacao.CssClass += " disabled";
+
             if (btnFechar.Enabled)
             {
                 btnFechar.CssClass = btnFechar.CssClass.Replace("disabled", "");
-                btnSalvar.CssClass = btnSalvar.CssClass.Replace("disabled", "");   
+                btnSalvar.CssClass = btnSalvar.CssClass.Replace("disabled", "");
+                btnSortearOrdemApresentacao.CssClass = btnSortearOrdemApresentacao.CssClass.Replace("disabled", "");   
             }
 
             ltMensagem.Text = "";
@@ -610,6 +615,88 @@ namespace wappKaraoke.Cadastros
             {
                 ltMensagem.Text = MostraMensagem("CONCURSO FINALIZADO!", "Concurso finalizado não permite a edição dos dados," +
                         " apenas de arquivos (Imagens e Documentos).", csMensagem.msgInfo);
+            }
+        }
+
+        private bool ValidarNumeroValido(ArrayList palNumerosSorteados, int pNumero)
+        {
+            foreach (int strNum in palNumerosSorteados)
+            {
+                if (pNumero == strNum)
+                    return false;
+            }
+            return true;
+        }
+
+        private int ContarCantoresFaseCategoria(DataTable pDtCantores, int pcdCategoria)
+        {
+            int Contador = 0;
+
+            foreach (DataRow dr in pDtCantores.Rows)
+            {
+                if (Convert.ToInt32(dr[caCantoresFases.cdCategoria].ToString()) == pcdCategoria)
+                    Contador++;
+            }
+
+            return Contador;
+        }
+
+        protected void btnlnkSortearOrdemApresentacao_OnClick(object sender, EventArgs e)
+        {
+            if (Session["_dtOrdemCategoria"] != null)
+            {
+                int nuSeq;
+                int qtdCantoresFasesCategoria;
+                ArrayList alNumSorteados = new ArrayList();
+                _dtCantoresFases = (DataTable)Session["_dtCantoresFases"];
+                _dtOrdemCategoria = (DataTable)Session["_dtOrdemCategoria"];
+
+                foreach (DataRow drCategoria in _dtOrdemCategoria.Rows)
+                {
+                    alNumSorteados.Clear();
+                    qtdCantoresFasesCategoria =
+                        ContarCantoresFaseCategoria(_dtCantoresFases, Convert.ToInt32(drCategoria[caCantoresFases.cdCategoria]));
+
+                    if (Session["dvCantores_" + drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString()] != null)
+                    {
+                        DataTable dt = (DataTable)Session["dvCantores_" + drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString()];
+                        dt.Columns[caCantoresFases.nuOrdemApresentacao].ReadOnly = false;
+                        dt.Columns[caCantoresFases.nuCantor].ReadOnly = false;
+
+                        foreach (DataRow drCantor in _dtCantoresFases.Rows)
+                        {
+                            if (drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString() == drCantor[caCantoresFases.cdCategoria].ToString())
+                            {
+                                Random rndNuOrdemApres = new Random(DateTime.Now.Millisecond);
+
+                                do
+                                {
+                                    nuSeq = Convert.ToInt32(rndNuOrdemApres.Next(1, qtdCantoresFasesCategoria + 1).ToString());
+                                } while (!ValidarNumeroValido(alNumSorteados, nuSeq));
+
+                                foreach (DataRow drCantCat in dt.Rows)
+                                {
+                                    if (drCantor[caCantoresFases.cdCantor].ToString() == drCantCat[caCantoresFases.cdCantor].ToString())
+                                    {
+                                        alNumSorteados.Add(nuSeq);
+                                        drCantCat[caCantoresFases.nuOrdemApresentacao] = nuSeq;
+                                        break;
+                                    }
+                                }
+
+                                drCantor[caCantoresFases.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
+                                drCantor[caCantoresFases.nuOrdemApresentacao] = nuSeq;
+                            }
+                        }
+
+                        Session["dvCantores_" + drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString()] = dt;
+                    }
+                }
+
+                OrdenaDataTable(ref _dtCantoresFases, caCantoresFases.nuOrdemApresentacao.ToString());
+                GerarSeqNuCantor();
+                Session["_dtCantoresFases"] = _dtCantoresFases;
+                MontaCantoresCategorias(false, false);
             }
         }
 
@@ -1309,6 +1396,7 @@ namespace wappKaraoke.Cadastros
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
             objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusInicial);
 
             if (!conCantoresFases.Select())
             {
@@ -1412,6 +1500,7 @@ namespace wappKaraoke.Cadastros
         private void InsereCategoria(string strCdCategoria, string strDeCategoria)
         {
             bool bAchou = false;
+            int nuOrdemCategoria;
 
             CarregaDataTableOrdemCategoriasSession();
 
@@ -1423,13 +1512,18 @@ namespace wappKaraoke.Cadastros
 
             if (!bAchou)
             {
+                nuOrdemCategoria = 1;
+
+                if (_dtOrdemCategoria.Rows.Count > 0)
+                    nuOrdemCategoria = 
+                        Convert.ToInt32(_dtOrdemCategoria.Rows[_dtOrdemCategoria.Rows.Count - 1][caConcursosOrdemCategorias.nuOrdem].ToString()) + 1;
+
                 DataRow dr = _dtOrdemCategoria.NewRow();
                 dr[caConcursosOrdemCategorias.CC_Controle] = KuraFrameWork.csConstantes.sInserindo;
                 dr[caConcursosOrdemCategorias.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
                 dr[caConcursosOrdemCategorias.cdCategoria] = strCdCategoria;
                 dr[caConcursosOrdemCategorias.CC_deCategoria] = strDeCategoria;
-                dr[caConcursosOrdemCategorias.nuOrdem] =
-                    Convert.ToInt32(_dtOrdemCategoria.Rows[_dtOrdemCategoria.Rows.Count - 1][caConcursosOrdemCategorias.nuOrdem].ToString()) + 1;
+                dr[caConcursosOrdemCategorias.nuOrdem] = nuOrdemCategoria;
 
                 _dtOrdemCategoria.Rows.Add(dr);
                 OrdenaDataTable(ref _dtOrdemCategoria, caConcursosOrdemCategorias.nuOrdem + KuraFrameWork.csConstantes.sCrescente);
@@ -1491,6 +1585,7 @@ namespace wappKaraoke.Cadastros
             dr[caCantoresFases.cdFase] = wappKaraoke.Properties.Settings.Default.sCodFaseInicial;
             dr[caCantoresFases.cdMusica] = cdMusica.SelectedValue;
             dr[caCantoresFases.cdTpStatus] = wappKaraoke.Properties.Settings.Default.sCodStatusInicial;
+            dr[caCantoresFases.nuOrdemApresentacao] = 0;
             _dtCantoresFases.Rows.Add(dr);
 
             Session["_dtCantoresFases"] = _dtCantoresFases;
@@ -1602,6 +1697,8 @@ namespace wappKaraoke.Cadastros
                                     conCantoresFases objConCantoresFases = new conCantoresFases();
                                     objConCantoresFases.objCoCantoresFases.LimparAtributos();
                                     objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+                                    objConCantoresFases.objCoCantoresFases.cdFase = 
+                                        Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusInicial);
                                     objConCantoresFases.objCoCantoresFases.cdCategoria = 
                                         Convert.ToInt32(_dtOrdemCategoria.Rows[i][caConcursosOrdemCategorias.cdCategoria].ToString());
 

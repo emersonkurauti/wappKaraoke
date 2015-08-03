@@ -724,7 +724,15 @@
                                             </div>
                                             <br/>
                                             <div class="row">
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-2">
+                                                    <asp:LinkButton ID="btnSortearOrdemApresentacao" 
+                                                            runat="server" 
+                                                            CssClass="btn btn-warning btn-block"
+                                                            OnClick="btnlnkSortearOrdemApresentacao_OnClick">
+                                                        <i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Sorteio
+                                                    </asp:LinkButton>
+                                                </div>
+                                                <div class="col-sm-8">
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <asp:LinkButton ID="btnAdicionarCategoria" 
