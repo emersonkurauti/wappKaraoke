@@ -726,9 +726,9 @@
                                             <div class="row">
                                                 <div class="col-sm-2">
                                                     <asp:LinkButton ID="btnSortearOrdemApresentacao" 
-                                                            runat="server" 
-                                                            CssClass="btn btn-warning btn-block"
-                                                            OnClick="btnlnkSortearOrdemApresentacao_OnClick">
+                                                        runat="server" 
+                                                        CssClass="btn btn-warning btn-block"
+                                                        OnClick="btnlnkSortearOrdemApresentacao_OnClick">
                                                         <i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Sorteio
                                                     </asp:LinkButton>
                                                 </div>
@@ -736,9 +736,9 @@
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <asp:LinkButton ID="btnAdicionarCategoria" 
-                                                            runat="server" 
-                                                            CssClass="btn btn-success btn-block"
-                                                            OnClick="btnAdicionarCategoria_OnClick">
+                                                        runat="server" 
+                                                        CssClass="btn btn-success btn-block"
+                                                        OnClick="btnAdicionarCategoria_OnClick">
                                                         <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
                                                     </asp:LinkButton>
                                                 </div>
