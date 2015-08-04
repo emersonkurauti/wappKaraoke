@@ -621,7 +621,7 @@ namespace wappKaraoke.Classes.Model.Concursos
         /// Atualiza os cantores fases
         /// </summary>
         /// <returns></returns>
-        private bool AtualizarCantoresFases()
+        private bool AtualizarCantoresFases(bool pbAlterarFaseCorrente = true)
         {
             conCantoresFases objConCantoresFases = new conCantoresFases();
             try
@@ -639,7 +639,9 @@ namespace wappKaraoke.Classes.Model.Concursos
                         objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(dr[caCantoresFases.cdFase].ToString());
                         objConCantoresFases.objCoCantoresFases.nuCantor = dr[caCantoresFases.nuCantor].ToString();
                         objConCantoresFases.objCoCantoresFases.nuOrdemApresentacao = Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString());
-                        objConCantoresFases.objCoCantoresFases.flFaseCorrente = "S";
+                        
+                        if (pbAlterarFaseCorrente)
+                            objConCantoresFases.objCoCantoresFases.flFaseCorrente = "S";
 
                         if (dr[caCantoresFases.CC_Controle].ToString() != KuraFrameWork.csConstantes.sTpInserido)
                         {
@@ -747,6 +749,34 @@ namespace wappKaraoke.Classes.Model.Concursos
             }
             catch
             {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Atualiza os cantores fases da próxima fase
+        /// </summary>
+        /// <returns></returns>
+        public bool AtualizarProximaFase()
+        {
+            objBanco.BeginTransaction();
+
+            bool bAlteraFaseCorrente = false;
+
+            try
+            {
+                if (!AtualizarCantoresFases(bAlteraFaseCorrente))
+                {
+                    objBanco.CommitTransaction();
+                    return false;
+                }
+
+                objBanco.CommitTransaction();
+                return true;
+            }
+            catch
+            {
+                objBanco.RollbackTransaction();
                 return false;
             }
         }

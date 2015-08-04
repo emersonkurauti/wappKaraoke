@@ -227,8 +227,23 @@ namespace wappKaraoke.Movimentacoes
             }
         }
 
-        protected void btnFinalizarGeracao_OnClick(object sender, EventArgs e)
-        { }
+        protected void btnSalvar_OnClick(object sender, EventArgs e)
+        {
+            if (Session["_dtCantoresFases"] != null)
+            {
+                GerarSeqNuCantor();
+
+                conConcursos objConConcursos = new conConcursos();
+                objConConcursos.objCoConcursos.LimparAtributos();
+                objConConcursos.objCoConcursos.dtConcursoFases = (DataTable)Session["_dtCantoresFases"];
+
+                if (!conConcursos.AtualizarProximaFase())
+                {
+                    ltMensagem.Text = MostraMensagem("Falha", "Problemas ao salvar alterações na próxima fase.", csMensagem.msgDanger);
+                    return;
+                }
+            }
+        }
 
         protected void btnConfirmarEdicaoCantor_Click(object sender, EventArgs e)
         {

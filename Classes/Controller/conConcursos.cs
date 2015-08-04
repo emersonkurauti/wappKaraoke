@@ -111,5 +111,17 @@ namespace wappKaraoke.Classes.Controller
             }
             return true;
         }
+
+        public static bool AtualizarProximaFase()
+        {
+            _strMensagemErro = "";
+
+            if (!_objCoConcursos.AtualizarProximaFase())
+            {
+                _strMensagemErro = csMensagem.msgAlterar;
+                return false;
+            }
+            return true;
+        }
     }
 }

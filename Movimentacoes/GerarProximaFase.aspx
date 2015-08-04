@@ -35,10 +35,10 @@
                             </asp:LinkButton>
                         </div>
                         <div class="col-sm-3">
-                            <asp:LinkButton ID="btnFinalizarGeracao" 
+                            <asp:LinkButton ID="btnSalvar" 
                                 runat="server" 
                                 CssClass="btn btn-success btn-block"
-                                OnClick="btnFinalizarGeracao_OnClick">
+                                OnClick="btnSalvar_OnClick">
                                 <i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Salvar
                             </asp:LinkButton>
                         </div>
