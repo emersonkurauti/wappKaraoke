@@ -1089,6 +1089,7 @@ namespace wappKaraoke.Cadastros
                     cdMusicaEdit.SelectedValue = _dtCantoresFases.Rows[i][caCantoresFases.cdMusica].ToString();
                     nuCantorEdit.Text = _dtCantoresFases.Rows[i][caCantoresFases.nuCantor].ToString();
                     nuOrdemApresentacaoEdit.Text = _dtCantoresFases.Rows[i][caCantoresFases.nuOrdemApresentacao].ToString();
+                    Session["nuOrdemApresentacaoEdit"] = nuOrdemApresentacaoEdit.Text;
 
                     for (int k = 0; k < _dtCantoresConcurso.Rows.Count; k++)
                     {
@@ -1109,6 +1110,81 @@ namespace wappKaraoke.Cadastros
             ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoCantor('" + cdCategoriaEdit + "');", true);
         }
 
+        private bool AtualizarNuOrdemApresentacao(ref DataTable pdtCantores, int pnuOrdemAtual)
+        {
+            try
+            {
+                int nuOrdemAnterior = Convert.ToInt32(Session["nuOrdemApresentacaoEdit"]);
+
+                if (Session["dvCantores_" + Session["cdCategoriaEdit"].ToString()] != null)
+                    dtDados = (DataTable)Session["dvCantores_" + Session["cdCategoriaEdit"].ToString().ToString()];
+
+                dtDados.Columns[caCantoresFases.nuOrdemApresentacao].ReadOnly = false;
+                DataRow drAtual = dtDados.NewRow();
+
+                if (pnuOrdemAtual > nuOrdemAnterior)
+                {
+                    foreach (DataRow dr in pdtCantores.Rows)
+                    {
+                        if ((Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) <= pnuOrdemAtual) &&
+                            (Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) > nuOrdemAnterior) &&
+                            (Convert.ToInt32(Session["cdCategoriaEdit"])) == (Convert.ToInt32(dr[caCantoresFases.cdCategoria].ToString())))
+                            dr[caCantoresFases.nuOrdemApresentacao] = Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) - 1;
+                    }
+
+                    foreach (DataRow dr in dtDados.Rows)
+                    {
+                        if (Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) == nuOrdemAnterior)
+                        {
+                            drAtual = dr;
+                            break;
+                        }
+                    }
+
+                    foreach (DataRow dr in dtDados.Rows)
+                    {
+                        if ((Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) <= pnuOrdemAtual) &&
+                            (Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) > nuOrdemAnterior))
+                            dr[caCantoresFases.nuOrdemApresentacao] = Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) - 1;
+                    }
+                }
+                else if (pnuOrdemAtual < nuOrdemAnterior)
+                {
+                    foreach (DataRow dr in pdtCantores.Rows)
+                    {
+                        if ((Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) >= pnuOrdemAtual) &&
+                            (Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) < nuOrdemAnterior) &&
+                            (Convert.ToInt32(Session["cdCategoriaEdit"])) == (Convert.ToInt32(dr[caCantoresFases.cdCategoria].ToString())))
+                            dr[caCantoresFases.nuOrdemApresentacao] = Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) + 1;
+                    }
+
+                    foreach (DataRow dr in dtDados.Rows)
+                    {
+                        if (Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) == nuOrdemAnterior)
+                        {
+                            drAtual = dr;
+                            break;
+                        }
+                    }
+
+                    foreach (DataRow dr in dtDados.Rows)
+                    {
+                        if ((Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) >= pnuOrdemAtual) &&
+                            (Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) < nuOrdemAnterior))
+                            dr[caCantoresFases.nuOrdemApresentacao] = Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) + 1;
+                    }
+                }
+
+                drAtual[caCantoresFases.nuOrdemApresentacao] = pnuOrdemAtual;
+                Session["dvCantores_" + Session["cdCategoriaEdit"].ToString().ToString()] = dtDados;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         protected void btnConfirmarEdicaoCantor_Click(object sender, EventArgs e)
         {
             if (ValidarConcursoFechado())
@@ -1123,13 +1199,24 @@ namespace wappKaraoke.Cadastros
                 _dtCantoresFases.Rows[indexCantorFase][caCantoresFases.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
                 _dtCantoresFases.Rows[indexCantorFase][caCantoresFases.cdMusica] = cdMusicaEdit.SelectedValue;
 
+                AtualizarNuOrdemApresentacao(ref _dtCantoresFases, Convert.ToInt32(nuOrdemApresentacaoEdit.Text));
+
+                if ((nuOrdemApresentacaoEdit.Text.Trim() != "") && (Convert.ToInt32(nuOrdemApresentacaoEdit.Text) > 0))
+                    _dtCantoresFases.Rows[indexCantorFase][caCantoresFases.nuOrdemApresentacao] = 
+                        Convert.ToInt32(nuOrdemApresentacaoEdit.Text);
+                else
+                {
+                    ltMensagemEdicaoCantor.Text = MostraMensagem("Validação!", "Selecione uma Associação e uma Música.", csMensagem.msgWarning);
+                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoCantor('" + Session["cdCategoriaEdit"].ToString() + "');", true);
+                    return;
+                }
+
                 _dtCantoresConcurso = (DataTable)Session["_dtCantoresConcurso"];
                 _dtCantoresConcurso.Rows[indexCantorConcurso][caCantoresConcursos.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
                 _dtCantoresConcurso.Rows[indexCantorConcurso][caCantoresConcursos.cdAssociacao] = cdAssociacaoEdit.SelectedValue;
 
                 DataTable dt;
                 CarregaDataTableOrdemCategoriasSession();
-
 
                 foreach (DataRow drCategoria in _dtOrdemCategoria.Rows)
                 {
