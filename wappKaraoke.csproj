@@ -149,6 +149,7 @@
     <Content Include="Movimentacoes\AlterarStatusCantor.aspx" />
     <Content Include="Movimentacoes\CantoresFases.aspx" />
     <Content Include="Movimentacoes\DefinirConcursoCorrente.aspx" />
+    <Content Include="Movimentacoes\GerarProximaFase.aspx" />
     <Content Include="Movimentacoes\NotasCantores.aspx" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
@@ -341,6 +342,13 @@
     </Compile>
     <Compile Include="Movimentacoes\DefinirConcursoCorrente.aspx.designer.cs">
       <DependentUpon>DefinirConcursoCorrente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Movimentacoes\GerarProximaFase.aspx.cs">
+      <DependentUpon>GerarProximaFase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Movimentacoes\GerarProximaFase.aspx.designer.cs">
+      <DependentUpon>GerarProximaFase.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paineis\PainelAcompanhamentoConcurso.aspx.cs">
       <DependentUpon>PainelAcompanhamentoConcurso.aspx</DependentUpon>
