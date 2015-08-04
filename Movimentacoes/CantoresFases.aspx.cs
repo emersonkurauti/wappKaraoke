@@ -313,7 +313,7 @@ namespace wappKaraoke.Movimentacoes
                 return;
             }
 
-            ltMensagem.Text = MostraMensagem("Sucesso!", "Movimentação entre fases realizada com sucesso.", csMensagem.msgDanger);
+            ltMensagem.Text = MostraMensagem("Sucesso!", "Movimentação entre fases realizada com sucesso.", csMensagem.msgSucess);
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)

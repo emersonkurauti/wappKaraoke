@@ -584,21 +584,6 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         }
 
         /// <summary>
-        /// Sobrescrito para retornar a chave
-        /// </summary>
-        /// <returns></returns>
-        public override bool Inserir()
-        {
-            if (base.Inserir())
-            {
-                cdConcurso = objBanco.cdChave;
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Atualiza as notas do cantor
         /// </summary>
         /// <returns></returns>

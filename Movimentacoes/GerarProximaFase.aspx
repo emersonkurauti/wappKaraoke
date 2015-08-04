@@ -39,7 +39,7 @@
                                 runat="server" 
                                 CssClass="btn btn-success btn-block"
                                 OnClick="btnFinalizarGeracao_OnClick">
-                                <i class="glyphicon glyphicon-thumbs-up"></i>&nbsp;&nbsp;Finalizar Geração
+                                <i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Salvar
                             </asp:LinkButton>
                         </div>
                     </div>
