@@ -155,13 +155,6 @@ namespace wappKaraoke.Movimentacoes
             Session["_dtAssociacoes"] = _dtAssociacoes;
         }
 
-        private void OrdenaDataTable(ref DataTable dtOrdena, string strOrdenacao)
-        {
-            DataView dv = dtOrdena.DefaultView;
-            dv.Sort = strOrdenacao;
-            dtOrdena = dv.ToTable();
-        }
-
         protected void cdFase_SelectedIndexChanged(object sender, EventArgs e)
         {
             Session["cdFaseAlteracao"] = cdFase.SelectedValue;

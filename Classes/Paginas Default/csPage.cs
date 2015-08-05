@@ -5,6 +5,7 @@ using System.Web;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 
 namespace wappKaraoke.Classes
 {
@@ -89,6 +90,13 @@ namespace wappKaraoke.Classes
             ScriptManager.RegisterStartupScript(Pagina,
                 this.GetType(), "Aviso", "<script language='javascript'>alert('" +
                 sMensagem + "');</script>", false);
+        }
+
+        protected virtual void OrdenaDataTable(ref DataTable dtOrdena, string strOrdenacao)
+        {
+            DataView dv = dtOrdena.DefaultView;
+            dv.Sort = strOrdenacao;
+            dtOrdena = dv.ToTable();
         }
     }
 }

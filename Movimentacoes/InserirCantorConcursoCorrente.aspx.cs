@@ -8,11 +8,14 @@ using wappKaraoke.Classes;
 using wappKaraoke.Classes.Controller;
 using wappKaraoke.Classes.Model.Concursos;
 using wappKaraoke.Classes.Mensagem;
+using System.Data;
 
 namespace wappKaraoke.Movimentacoes
 {
-    public partial class InserirCantorConcursoCorrente : csPageCadastro
+    public partial class InserirCantorConcursoCorrente : csPageDefault
     {
+        private DataTable dtCantoresCategoria;
+
         public override void Page_Load(object sender, EventArgs e)
         {
             ltMensagemDefault = ltMensagem;
@@ -26,6 +29,20 @@ namespace wappKaraoke.Movimentacoes
             }
 
             base.Page_Load(sender, e);
+        }
+
+        protected override bool ConfigurarGridView()
+        {
+            try
+            {
+                gvCantores.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void CarregarDDL()
@@ -73,6 +90,56 @@ namespace wappKaraoke.Movimentacoes
             {
                 ltMensagem.Text = MostraMensagem("Falha!", "Não existe fase corrente definida.", csMensagem.msgDanger);
                 return;
+            }
+        }
+
+        protected void cdCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CarregarCantoresFasesCategoria();
+        }
+
+        private void CarregarCantoresFasesCategoria()
+        {
+            if (cdCategoria.SelectedIndex > 0)
+            {
+                conCantoresFases objConCantoresFases = new conCantoresFases();
+                objConCantoresFases.objCoCantoresFases.LimparAtributos();
+                objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"]);
+                objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"]);
+                objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(cdCategoria.SelectedValue);
+
+                if (!conCantoresFases.SelectCantoresCategoriasConcurso())
+                {
+                    ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível carregar os cantores desta categoria.", csMensagem.msgDanger);
+                }
+
+                if (objConCantoresFases.dtDados != null && objConCantoresFases.dtDados.Rows.Count == 0)
+                {
+                    ltMensagem.Text = MostraMensagem("Aviso!", "Não foram localizados cantores desta categoria.", csMensagem.msgWarning);
+                }
+
+                dtCantoresCategoria = objConCantoresFases.dtDados;
+                OrdenaDataTable(ref dtCantoresCategoria, "nuOrdemApresentacao");
+                Session["dtCantoresCategoria"] = dtCantoresCategoria;
+                gvCantores.DataSource = dtCantoresCategoria;
+                gvCantores.DataBind();
+
+                NomeKanji();
+                ConfigurarGridView();
+            }
+        }
+
+        protected void NomeKanji()
+        {
+            if (Session["dtCantoresCategoria"] != null)
+            {
+                dtCantoresCategoria = (DataTable)Session["dtCantoresCategoria"];
+
+                for (int i = 0; i < dtCantoresCategoria.Rows.Count; i++)
+                {
+                    ((Literal)gvCantores.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dtCantoresCategoria.Rows[i]["nmCantor"].ToString() +
+                        " <br/> " + dtCantoresCategoria.Rows[i]["nmNomeKanji"].ToString();
+                }
             }
         }
     }

@@ -1,5 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master Page/mpKaraoke.Master" AutoEventWireup="true" CodeBehind="InserirCantorConcursoCorrente.aspx.cs" Inherits="wappKaraoke.Movimentacoes.InserirCantorConcursoCorrente" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+        $(function () {
+            $('[id*=gvCantores]').footable();
+    </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
@@ -18,7 +23,8 @@
                         </div>
                         <div class="col-sm-6">
                             <asp:DropDownList ID="cdCategoria" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True">
+                                runat="server" Width="100%" AutoPostBack="True" 
+                                onselectedindexchanged="cdCategoria_SelectedIndexChanged">
                             </asp:DropDownList>
                         </div>
                     </div>

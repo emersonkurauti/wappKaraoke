@@ -580,13 +580,6 @@ namespace wappKaraoke.Cadastros
             return false;
         }
 
-        private void OrdenaDataTable(ref DataTable dtOrdena, string strOrdenacao)
-        {
-            DataView dv = dtOrdena.DefaultView;
-            dv.Sort = strOrdenacao;
-            dtOrdena = dv.ToTable();
-        }
-
         private bool ValidarConcursoFechado()
         {
             return flFinalizado.Checked; 
