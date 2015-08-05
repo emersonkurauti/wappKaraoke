@@ -136,6 +136,8 @@
     <Content Include="Cadastros\ConsultaTipoStatus.aspx" />
     <Content Include="css\blueimp-gallery.min.css" />
     <Content Include="css\bootstrap-3-0-2-gallery.min.css" />
+    <Content Include="css\bootstrap-submenu.css" />
+    <Content Include="css\bootstrap-submenu.min.css" />
     <Content Include="js\bootstrap-3-0-2-gallery.min.js" />
     <Content Include="css\bootstrap-image-gallery.css" />
     <Content Include="css\bootstrap-image-gallery.min.css" />
@@ -143,6 +145,8 @@
     <Content Include="img\loading.gif" />
     <Content Include="js\bootstrap-image-gallery.js" />
     <Content Include="js\bootstrap-image-gallery.min.js" />
+    <Content Include="js\bootstrap-submenu.js" />
+    <Content Include="js\bootstrap-submenu.min.js" />
     <Content Include="js\demo-gallery.js" />
     <Content Include="js\jquery-10-0-2-gallery.min.js" />
     <Content Include="js\jquery.blueimp-gallery.min.js" />
@@ -150,6 +154,7 @@
     <Content Include="Movimentacoes\CantoresFases.aspx" />
     <Content Include="Movimentacoes\DefinirConcursoCorrente.aspx" />
     <Content Include="Movimentacoes\GerarProximaFase.aspx" />
+    <Content Include="Movimentacoes\InserirCantorConcursoCorrente.aspx" />
     <Content Include="Movimentacoes\NotasCantores.aspx" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
@@ -171,6 +176,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Movimentacoes\Player.aspx" />
     <Content Include="Paineis\PainelAcompanhamentoConcurso.aspx" />
+    <Content Include="teste.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -350,6 +356,13 @@
     <Compile Include="Movimentacoes\GerarProximaFase.aspx.designer.cs">
       <DependentUpon>GerarProximaFase.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Movimentacoes\InserirCantorConcursoCorrente.aspx.cs">
+      <DependentUpon>InserirCantorConcursoCorrente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Movimentacoes\InserirCantorConcursoCorrente.aspx.designer.cs">
+      <DependentUpon>InserirCantorConcursoCorrente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Paineis\PainelAcompanhamentoConcurso.aspx.cs">
       <DependentUpon>PainelAcompanhamentoConcurso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -361,6 +374,13 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="teste.aspx.cs">
+      <DependentUpon>teste.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="teste.aspx.designer.cs">
+      <DependentUpon>teste.aspx</DependentUpon>
     </Compile>
     <Content Include="css\footable.min.css" />
     <Content Include="js\jquery.min.js" />
@@ -462,6 +482,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\js\README.md" />
+    <None Include="css\bootstrap-submenu.css.map" />
     <None Include="css\bootstrap-theme.css.map" />
     <None Include="css\bootstrap.css.map" />
     <None Include="fonts\glyphicons-halflings-regular.eot" />
