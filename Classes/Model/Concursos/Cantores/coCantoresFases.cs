@@ -10,6 +10,7 @@ using wappKaraoke.Classes.Model.Musicas;
 using wappKaraoke.Classes.Model.TipoStatus;
 using wappKaraoke.Classes.Model.Cantores;
 using wappKaraoke.Classes.Model.Notas;
+using wappKaraoke.Classes.Model.CantoresConcursos;
 
 namespace wappKaraoke.Classes.Model.CantoresFases
 {
@@ -451,6 +452,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  " inner join categorias cat on cat.cdCategoria = cf.cdCategoria " +
                                  " inner join tipostatus ts on ts.cdTpStatus = cf.cdTpStatus " +
                                  " where coc.cdConcurso = " + _cdConcurso +
+                                 "   and cf.cdFase = " + _cdFase +
                                  " order by coc.nuOrdem, cf.nuOrdemApresentacao, cf.nuCantor";
 
             return objBanco.SelectPersonalizado(out dtDados, strComando);
@@ -463,12 +465,32 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         /// <returns></returns>
         public bool SelectFasesCategoriasCantoresConcurso(out DataTable dtDados)
         {
-            string strComando = @"SELECT 1" +
-                                 "  FROM CANTORESFASES CF " +
+            string strComando = @"SELECT " +
+                                    caCantoresFases.cdMusica + "," +
+                                    caCantoresFases.cdTpStatus + "," +
+                                    caCantoresFases.nuCantor + "," +
+                                    caCantoresConcursos.cdAssociacao +
+                                 "  FROM " + caCantoresFases.nmTabela + " CF " +
+                                 " INNER JOIN " + caCantoresConcursos.nmTabela + " CC ON " +
+                                    "CC." + caCantoresConcursos.cdConcurso + "=" + "CF." + caCantoresFases.cdConcurso + " AND " +
+                                    "CC." + caCantoresConcursos.cdCantor + "=" + "CF." + caCantoresFases.cdCantor +
                                  " WHERE CF.cdConcurso = " + _cdConcurso +
                                  "   AND CF.cdCategoria = " + _cdCategoria +
                                  "   AND CF.cdCantor = " + _cdCantor +
                                  "   AND CF.cdFase = " + _cdFase;
+
+            return objBanco.SelectPersonalizado(out dtDados, strComando);
+        }
+
+        public bool SelectCantoresFasesConcursoPorNumero(out DataTable dtDados)
+        {
+            string strComando = @"SELECT CF.cdCantor" +
+                                 "  FROM CANTORESFASES CF " +
+                                 " INNER JOIN CATEGORIAS C on C.cdCategoria = CF.cdCategoria" +
+                                 " WHERE CF.cdConcurso = " + _cdConcurso +
+                                 "   AND CF.cdFase = " + _cdFase +
+                                 "   AND CF.nuCantor = '" + _nuCantor + "'" +
+                                 " GROUP BY C.cdCategoria, C.deCategoria";
 
             return objBanco.SelectPersonalizado(out dtDados, strComando);
         }

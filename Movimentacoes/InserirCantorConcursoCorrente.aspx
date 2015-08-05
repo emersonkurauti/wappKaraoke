@@ -18,7 +18,8 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <asp:DropDownList ID="cdFase" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True">
+                                runat="server" Width="100%" AutoPostBack="True" 
+                                onselectedindexchanged="cdFase_SelectedIndexChanged">
                             </asp:DropDownList>
                         </div>
                         <div class="col-sm-6">
@@ -32,7 +33,8 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <asp:DropDownList ID="cdCantor" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="True">
+                                runat="server" Width="100%" AutoPostBack="True" 
+                                onselectedindexchanged="cdCantor_SelectedIndexChanged">
                             </asp:DropDownList>
                         </div>
                         <div class="col-sm-6">
@@ -43,18 +45,23 @@
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
+                            <asp:DropDownList ID="cdAssociacao" class="form-control selectpicker" style="text-align:left" 
+                                runat="server" Width="100%" AutoPostBack="True">
+                            </asp:DropDownList>
+                        </div>
+                        <div class="col-sm-4">
                             <asp:DropDownList ID="cdTpStatus" class="form-control selectpicker" style="text-align:left" 
                                 runat="server" Width="100%" AutoPostBack="True">
                             </asp:DropDownList>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <asp:TextBox ID="nuCantor" class="form-control" runat="server" 
                                 placeholder="Nº do Cantor..." Visible="True" 
                                 ontextchanged="nuCantor_TextChanged">
                             </asp:TextBox>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <asp:LinkButton ID="btnAdicionar" 
                                     runat="server" 
                                     CssClass="btn btn-primary btn-block btn-success" 

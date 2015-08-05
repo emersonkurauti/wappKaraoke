@@ -9,6 +9,12 @@ using wappKaraoke.Classes.Controller;
 using wappKaraoke.Classes.Model.Concursos;
 using wappKaraoke.Classes.Mensagem;
 using System.Data;
+using wappKaraoke.Classes.Model.CantoresFases;
+using wappKaraoke.Classes.Model.Cantores;
+using wappKaraoke.Classes.Model.Musicas;
+using wappKaraoke.Classes.Model.Associacoes;
+using wappKaraoke.Classes.Model.TipoStatus;
+using wappKaraoke.Classes.Model.CantoresConcursos;
 
 namespace wappKaraoke.Movimentacoes
 {
@@ -51,11 +57,26 @@ namespace wappKaraoke.Movimentacoes
             cdCantor.DataSource = null;
             cdMusica.DataSource = null;
             cdTpStatus.DataSource = null;
+            cdAssociacao.DataSource = null;
             nuCantor.Text = "";
 
             PegarChaveConcurso();
             CarregarDDL();
 
+            LimparGvCantores();
+        }
+
+        private void LimparCamposCarregados()
+        {
+            cdAssociacao.SelectedIndex = 0;
+            cdMusica.SelectedIndex = 0;
+            cdTpStatus.SelectedValue = wappKaraoke.Properties.Settings.Default.sCodStatusInicial;
+            nuCantor.Text = "";
+            HabilitarCampos();
+        }
+
+        private void LimparGvCantores()
+        {
             Session["dtCantoresCategoria"] = null;
             gvCantores.DataSource = null;
             gvCantores.DataBind();
@@ -77,6 +98,9 @@ namespace wappKaraoke.Movimentacoes
 
             csMusicas vcsMusicas = new csMusicas();
             cdMusica = vcsMusicas.CarregaDDL(cdMusica);
+
+            csAssociacoes vcsAssociacoes = new csAssociacoes();
+            cdAssociacao = vcsAssociacoes.CarregaDDL(cdAssociacao);
 
             csStatus vcsStatus = new csStatus();
             cdTpStatus = vcsStatus.CarregaDDL(cdTpStatus);
@@ -109,15 +133,12 @@ namespace wappKaraoke.Movimentacoes
             }
         }
 
-        protected void cdCategoria_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CarregarCantoresFasesCategoria();
-        }
-
         private void CarregarCantoresFasesCategoria()
         {
             if (cdCategoria.SelectedIndex > 0)
             {
+                LimparCamposCarregados();
+
                 conCantoresFases objConCantoresFases = new conCantoresFases();
                 objConCantoresFases.objCoCantoresFases.LimparAtributos();
                 objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"]);
@@ -162,23 +183,123 @@ namespace wappKaraoke.Movimentacoes
             }
         }
 
+        protected void cdFase_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cdCategoria.SelectedIndex = 0;
+            cdCantor.SelectedIndex = 0;
+            LimparCamposCarregados();
+            LimparGvCantores();
+        }
+
+        protected void cdCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cdCantor.SelectedIndex = 0;
+            CarregarCantoresFasesCategoria();
+        }
+
+        protected void cdCantor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LimparCamposCarregados();
+
+            if (cdFase.SelectedIndex == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Selecione a fase.", csMensagem.msgWarning);
+                return;
+            }
+
+            if (cdCategoria.SelectedIndex == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Selecione a categoria.", csMensagem.msgWarning);
+                return;
+            }
+
+            conCantoresFases objConCantoresFases = new conCantoresFases();
+            objConCantoresFases.objCoCantoresFases.LimparAtributos();
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"]);
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(cdFase.SelectedValue);
+            objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(cdCategoria.SelectedValue);
+            objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(cdCantor.SelectedValue);
+
+            if (!conCantoresFases.SelectFasesCategoriasCantoresConcurso())
+            {
+                ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível consultar cantor.", csMensagem.msgWarning);
+                return;
+            }
+
+            if (objConCantoresFases.dtDados.Rows.Count == 0)
+            {
+                cdAssociacao.SelectedValue = BuscarAssociacaoCantor().ToString();
+                return;
+            }
+
+            cdMusica.SelectedValue = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdMusica].ToString();
+            cdAssociacao.SelectedValue = objConCantoresFases.dtDados.Rows[0][caCantoresConcursos.cdAssociacao].ToString();
+            cdTpStatus.SelectedValue = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdTpStatus].ToString();
+            nuCantor.Text = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
+
+            DesabilitarCampos();
+        }
+
         protected void nuCantor_TextChanged(object sender, EventArgs e)
         {
-            //Consultar pelo número no concurso/fase corrente
-            //Caso encontre:
-                //Carregar em uma caixa do tipo INFO os dados encontrados, Categoria, ordem apres, nuCantor, Status, nome cantor
-                //perguntar se deve alterá-lo para os dados informados acima
-                //Exibir botões, sim e não (criar novo mostra mensagem onde conterá os botões e os clicks retornarão a opção escolhida);
-                    //Se sim, alterar o cdCantor para o encontrado
-                    //Se não, limpar o número do cantor
-            //Caso não exista:
-                //Consultar pelo cdCantor no concurso/fase corrente e categria selecionada 
-                //Caso encontre:
-                    //Carregar em uma caixa do tipo INFO os dados encontrados, Categoria, ordem apres, nuCantor, Status, nome cantor
-                    //perguntar se deve alterá-lo para os dados informados acima
-                    //Exibir botões, sim e não (criar novo mostra mensagem onde conterá os botões e os clicks retornarão a opção escolhida);
-                        //Se sim, trocar o número do cantor para o encontrado
-                        //Se não, limpar os dados
+            //numero não pode existir no concurso/fase
+
+        }
+
+        private int BuscarAssociacaoCantor()
+        {
+            conCantoresConcursos objConCantoresConcursos = new conCantoresConcursos();
+            objConCantoresConcursos.objCoCantoresConcursos.LimparAtributos();
+            objConCantoresConcursos.objCoCantoresConcursos.cdConcurso = Convert.ToInt32(Session["cdConcurso"]);
+            objConCantoresConcursos.objCoCantoresConcursos.cdCantor = Convert.ToInt32(cdCantor.SelectedValue);
+
+            if (!conCantoresConcursos.Select())
+            {
+                ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível consultar a associação do cantor.", csMensagem.msgWarning);
+                return 0;
+            }
+
+            if (objConCantoresConcursos.dtDados.Rows.Count == 0)
+                return 0;
+
+            DesabilitarCdAssociacao();
+            return Convert.ToInt32(objConCantoresConcursos.dtDados.Rows[0][caCantoresConcursos.cdAssociacao].ToString());
+        }
+
+        private void DesabilitarCdAssociacao()
+        {
+            cdAssociacao.CssClass += " disabled";
+            cdAssociacao.Enabled = false;
+        }
+
+        private void DesabilitarCampos()
+        {
+            btnAdicionar.Enabled = false;
+            btnAdicionar.CssClass += " disabled";
+
+            DesabilitarCdAssociacao();
+
+            cdTpStatus.CssClass += " disabled";
+            cdTpStatus.Enabled = false;
+
+            cdMusica.CssClass += " disabled";
+            cdMusica.Enabled = false;
+
+            nuCantor.ReadOnly = true;
+        }
+
+        private void HabilitarCampos()
+        {
+            btnAdicionar.Enabled = true;
+            btnAdicionar.CssClass = btnAdicionar.CssClass.Replace(" disabled", "");
+            cdAssociacao.Enabled = true;
+            cdAssociacao.CssClass = cdAssociacao.CssClass.Replace(" disabled", "");
+            cdTpStatus.Enabled = true;
+            cdTpStatus.CssClass = cdAssociacao.CssClass.Replace(" disabled", "");
+            cdMusica.Enabled = true;
+            cdMusica.CssClass = cdAssociacao.CssClass.Replace(" disabled", "");
+
+            nuCantor.ReadOnly = false;
         }
 
         protected void btnAdicionar_Click(object sender, EventArgs e)
@@ -218,6 +339,29 @@ namespace wappKaraoke.Movimentacoes
                 ltMensagem.Text = MostraMensagem("Validação!", "Informe o número do cantor.", csMensagem.msgWarning);
                 return;
             }
+
+            dtCantoresCategoria = Session["dtCantoresCategoria"] == null ? null : (DataTable)Session["dtCantoresCategoria"];
+
+            int nuOrdemApresentacao = dtCantoresCategoria == null || dtCantoresCategoria.Rows.Count == 0 ? 1 : 
+                Convert.ToInt32(dtCantoresCategoria.Rows[dtCantoresCategoria.Rows.Count-1][caCantoresFases.nuOrdemApresentacao]) + 1;
+
+            DataRow dr = dtCantoresCategoria.NewRow();
+
+            dr[caCantoresFases.cdConcurso] = Convert.ToInt32(Session["cdConcurso"]);
+            dr[caCantoresFases.nuOrdemApresentacao] = nuOrdemApresentacao;
+            dr[caCantoresFases.nuCantor] = nuCantor.Text;
+            dr[caCantoresFases.cdCantor] = Convert.ToInt32(Session["cdConcurso"]);
+            dr[caCantores.nmCantor] = Convert.ToInt32(Session["cdConcurso"]);
+            dr[caCantores.nmNomeKanji] = Convert.ToInt32(Session["cdConcurso"]);
+            dr[caCantoresFases.cdMusica] = Convert.ToInt32(Session["cdConcurso"]);
+            dr[caMusicas.nmMusica] = Convert.ToInt32(Session["cdConcurso"]);
+            dr[caMusicas.nmMusicaKanji] = Convert.ToInt32(Session["cdConcurso"]);
+            dr[caAssociacoes.cdAssociacao] = Convert.ToInt32(Session["cdConcurso"]);
+            dr[caAssociacoes.nmAssociacao] = Convert.ToInt32(Session["cdConcurso"]);
+            dr[caCantoresFases.cdFase] = Convert.ToInt32(Session["cdConcurso"]);
+            dr[caCantoresFases.cdTpStatus] = Convert.ToInt32(Session["cdConcurso"]);
+            dr[caTipoStatus.deTpStatus] = Convert.ToInt32(Session["cdConcurso"]);
+
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)

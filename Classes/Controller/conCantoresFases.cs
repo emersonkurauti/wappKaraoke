@@ -154,6 +154,32 @@ namespace wappKaraoke.Classes.Controller
             return true;
         }
 
+        public static bool SelectFasesCategoriasCantoresConcurso()
+        {
+            _strMensagemErro = "";
+
+            if (!_objCoCantoresFases.SelectFasesCategoriasCantoresConcurso(out _dtDados))
+            {
+                _strMensagemErro = csMensagem.msgConsultar;
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool SelectCantoresFasesConcursoPorNumero()
+        {
+            _strMensagemErro = "";
+
+            if (!_objCoCantoresFases.SelectCantoresFasesConcursoPorNumero(out _dtDados))
+            {
+                _strMensagemErro = csMensagem.msgConsultar;
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Inserir
         /// </summary>

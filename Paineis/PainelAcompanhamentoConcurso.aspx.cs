@@ -32,6 +32,7 @@ namespace wappKaraoke.Paineis
                 if (objConConcursos.dtDados != null && objConConcursos.dtDados.Rows.Count > 0)
                 {
                     Session["cdConcursoCorrente"] = objConConcursos.dtDados.Rows[0][caConcursos.cdConcurso].ToString();
+                    Session["cdFaseCorrente"] = objConConcursos.dtDados.Rows[0][caConcursos.cdFaseCorrente].ToString();
                 }
             }
 
@@ -41,9 +42,16 @@ namespace wappKaraoke.Paineis
                 return;
             }
 
+            if (Session["cdFaseCorrente"] == null)
+            {
+                ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível localizar a fase corrente.", csMensagem.msgDanger);
+                return;
+            }
+
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
             objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoCorrente"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
 
             if (!conCantoresFases.SelectPainelAcompanhamentoConcurso())
             {
