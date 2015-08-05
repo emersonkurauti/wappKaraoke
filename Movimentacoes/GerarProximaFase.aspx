@@ -1,8 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master Page/mpKaraoke.Master" AutoEventWireup="true" CodeBehind="GerarProximaFase.aspx.cs" Inherits="wappKaraoke.Movimentacoes.GerarProximaFase" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
+        function AtivaAbaCantores(strIdCategoria) {
+            document.getElementById('lnkDivCantores_' + strIdCategoria).click();
+        }
+
         function AtivaEdicaoCantor(strIdCategoria) {
             document.getElementById('divEdicaoCantor').setAttribute('style', 'display: block;');
+            AtivaAbaCantores(strIdCategoria);
         }
 
         function DesativaEdicaoCantor() {

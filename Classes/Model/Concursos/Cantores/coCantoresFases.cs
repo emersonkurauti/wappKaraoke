@@ -359,7 +359,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         /// <returns></returns>
         public bool SelectCantoresFasesCategoriasConcurso(out DataTable dtDados)
         {
-            string strComando = @"SELECT CF.cdMusica, CANT.cdCantor, CANT.nmCantor, CF.nuNotaFinal, CF.pcDesconto" +
+            string strComando = @"SELECT CF.cdMusica, CANT.cdCantor, CANT.nmCantor, CF.nuNotaFinal, CF.pcDesconto, CF.nuCantor" +
                                  "  FROM CANTORESFASES CF " +
                                  " INNER JOIN CANTORES CANT on CANT.cdCantor = CF.cdCantor" +
                                  " WHERE CF.cdConcurso = " + _cdConcurso +
@@ -754,6 +754,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                     bool bControlaTransacao = false;
                     _cdCantor = Convert.ToInt32(dr[caCantoresFases.cdCantor].ToString());
                     _cdMusica = Convert.ToInt32(dr[caCantoresFases.cdMusica].ToString());
+                    _nuCantor = dr[caCantoresFases.nuCantor].ToString();
 
                     _flFaseCorrente = "N";
 

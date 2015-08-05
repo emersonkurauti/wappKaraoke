@@ -237,6 +237,7 @@ namespace wappKaraoke.Movimentacoes
                 }
 
                 ltMensagem.Text = MostraMensagem("Sucesso!", "Alterações realizadas com sucesso.", csMensagem.msgSucess);
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaCantores('" + Session["cdCategoriaEdit"] + "');", true);
             }
         }
 
@@ -300,6 +301,7 @@ namespace wappKaraoke.Movimentacoes
                 PreencheLiteral(Session["cdCategoriaEdit"].ToString().ToString(), false, false);
 
                 AtualizaCantoresCategorias();
+                ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaAbaCantores('" + Session["cdCategoriaEdit"] + "');", true);
             }
             else
             {

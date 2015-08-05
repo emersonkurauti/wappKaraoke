@@ -113,6 +113,7 @@ namespace wappKaraoke.Movimentacoes
             dtCantorFase.Columns.Add("nmCantor", typeof(string));
             dtCantorFase.Columns.Add("nuNotaFinal", typeof(decimal));
             dtCantorFase.Columns.Add("pcDesconto", typeof(decimal));
+            dtCantorFase.Columns.Add("nuCantor", typeof(string));
         }
 
         private void CancelaOperacao()
