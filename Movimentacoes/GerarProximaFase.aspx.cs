@@ -157,12 +157,14 @@ namespace wappKaraoke.Movimentacoes
 
         protected void cdFase_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ltMensagem.Text = "";
             Session["cdFaseAlteracao"] = cdFase.SelectedValue;
             CarregarCantoresCategorias();
         }
 
         protected void btnlnkSortearOrdemApresentacao_OnClick(object sender, EventArgs e)
         {
+            ltMensagem.Text = "";
             if (Session["_dtOrdemCategoria"] != null)
             {
                 int nuSeq;
@@ -215,51 +217,49 @@ namespace wappKaraoke.Movimentacoes
 
                 OrdenaDataTable(ref _dtCantoresFases, caCantoresFases.nuOrdemApresentacao.ToString());
                 Session["_dtCantoresFases"] = _dtCantoresFases;
-                GerarSeqNuCantor();
                 MontaCantoresCategorias(false, false);
             }
         }
 
         protected void btnSalvar_OnClick(object sender, EventArgs e)
         {
+            ltMensagem.Text = "";
             if (Session["_dtCantoresFases"] != null)
             {
-                GerarSeqNuCantor();
-
                 conConcursos objConConcursos = new conConcursos();
                 objConConcursos.objCoConcursos.LimparAtributos();
                 objConConcursos.objCoConcursos.dtConcursoFases = (DataTable)Session["_dtCantoresFases"];
 
                 if (!conConcursos.AtualizarProximaFase())
                 {
-                    ltMensagem.Text = MostraMensagem("Falha", "Problemas ao salvar alterações na próxima fase.", csMensagem.msgDanger);
+                    ltMensagem.Text = MostraMensagem("Falha!", "Problemas ao salvar alterações na próxima fase.", csMensagem.msgDanger);
                     return;
                 }
+
+                ltMensagem.Text = MostraMensagem("Sucesso!", "Alterações realizadas com sucesso.", csMensagem.msgSucess);
             }
         }
 
         protected void btnConfirmarEdicaoCantor_Click(object sender, EventArgs e)
         {
+            ltMensagem.Text = "";
             if (cdAssociacaoEdit.SelectedIndex > 0 && cdMusicaEdit.SelectedIndex > 0)
             {
                 int indexCantorFase = Convert.ToInt32(Session["indexCantorFase"].ToString());
                 int indexCantorConcurso = Convert.ToInt32(Session["indexCantorConcurso"].ToString());
+
+                if ((nuOrdemApresentacaoEdit.Text.Trim() == "") || (Convert.ToInt32(nuOrdemApresentacaoEdit.Text) == 0))
+                {
+                    ltMensagemEdicaoCantor.Text = MostraMensagem("Validação!", "Selecione uma Associação e uma Música.", csMensagem.msgWarning);
+                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoCantor('" + Session["cdCategoriaEdit"].ToString() + "');", true);
+                    return;
+                }
 
                 _dtCantoresFases = (DataTable)Session["_dtCantoresFases"];
                 _dtCantoresFases.Rows[indexCantorFase][caCantoresFases.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
                 _dtCantoresFases.Rows[indexCantorFase][caCantoresFases.cdMusica] = cdMusicaEdit.SelectedValue;
 
                 AtualizarNuOrdemApresentacao(ref _dtCantoresFases, Convert.ToInt32(nuOrdemApresentacaoEdit.Text));
-
-                if ((nuOrdemApresentacaoEdit.Text.Trim() != "") && (Convert.ToInt32(nuOrdemApresentacaoEdit.Text) > 0))
-                    _dtCantoresFases.Rows[indexCantorFase][caCantoresFases.nuOrdemApresentacao] =
-                        Convert.ToInt32(nuOrdemApresentacaoEdit.Text);
-                else
-                {
-                    ltMensagemEdicaoCantor.Text = MostraMensagem("Validação!", "Selecione uma Associação e uma Música.", csMensagem.msgWarning);
-                    ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "AtivaEdicaoCantor('" + Session["cdCategoriaEdit"].ToString() + "');", true);
-                    return;
-                }
 
                 DataTable dt;
                 CarregaDataTableOrdemCategoriasSession();
@@ -349,23 +349,38 @@ namespace wappKaraoke.Movimentacoes
 
                 dtDados.Columns[caCantoresFases.nuOrdemApresentacao].ReadOnly = false;
                 DataRow drAtual = dtDados.NewRow();
+                DataRow drCantorAtual = pdtCantores.NewRow();
+
+                foreach (DataRow dr in pdtCantores.Rows)
+                {
+                    if ((Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) == nuOrdemAnterior) &&
+                        (Convert.ToInt32(Session["cdCategoriaEdit"])) == (Convert.ToInt32(dr[caCantoresFases.cdCategoria].ToString())))
+                    {
+                        drCantorAtual = dr;
+                        break;
+                    }
+                }
+
+                foreach (DataRow dr in dtDados.Rows)
+                {
+                    if (Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) == nuOrdemAnterior)
+                    {
+                        drAtual = dr;
+                        break;
+                    }
+                }
 
                 if (pnuOrdemAtual > nuOrdemAnterior)
                 {
+
                     foreach (DataRow dr in pdtCantores.Rows)
                     {
                         if ((Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) <= pnuOrdemAtual) &&
                             (Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) > nuOrdemAnterior) &&
                             (Convert.ToInt32(Session["cdCategoriaEdit"])) == (Convert.ToInt32(dr[caCantoresFases.cdCategoria].ToString())))
-                            dr[caCantoresFases.nuOrdemApresentacao] = Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) - 1;
-                    }
-
-                    foreach (DataRow dr in dtDados.Rows)
-                    {
-                        if (Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) == nuOrdemAnterior)
                         {
-                            drAtual = dr;
-                            break;
+                            dr[caCantoresFases.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
+                            dr[caCantoresFases.nuOrdemApresentacao] = Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) - 1;
                         }
                     }
 
@@ -374,6 +389,7 @@ namespace wappKaraoke.Movimentacoes
                         if ((Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) <= pnuOrdemAtual) &&
                             (Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) > nuOrdemAnterior))
                             dr[caCantoresFases.nuOrdemApresentacao] = Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) - 1;
+
                     }
                 }
                 else if (pnuOrdemAtual < nuOrdemAnterior)
@@ -383,15 +399,9 @@ namespace wappKaraoke.Movimentacoes
                         if ((Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) >= pnuOrdemAtual) &&
                             (Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) < nuOrdemAnterior) &&
                             (Convert.ToInt32(Session["cdCategoriaEdit"])) == (Convert.ToInt32(dr[caCantoresFases.cdCategoria].ToString())))
-                            dr[caCantoresFases.nuOrdemApresentacao] = Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) + 1;
-                    }
-
-                    foreach (DataRow dr in dtDados.Rows)
-                    {
-                        if (Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) == nuOrdemAnterior)
                         {
-                            drAtual = dr;
-                            break;
+                            dr[caCantoresFases.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
+                            dr[caCantoresFases.nuOrdemApresentacao] = Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString()) + 1;
                         }
                     }
 
@@ -404,6 +414,8 @@ namespace wappKaraoke.Movimentacoes
                 }
 
                 drAtual[caCantoresFases.nuOrdemApresentacao] = pnuOrdemAtual;
+                //drCantorAtual[caCantoresFases.CC_Controle] = wappKaraoke.Classes.
+                drCantorAtual[caCantoresFases.nuOrdemApresentacao] = pnuOrdemAtual;
                 Session["dvCantores_" + Session["cdCategoriaEdit"].ToString().ToString()] = dtDados;
                 return true;
             }
@@ -413,51 +425,51 @@ namespace wappKaraoke.Movimentacoes
             }
         }
 
-        private void GerarSeqNuCantor()
-        {
-            if (Session["_dtOrdemCategoria"] != null)
-            {
-                int nuCantor = 1;
-                int nuSeq;
-                _dtCantoresFases = (DataTable)Session["_dtCantoresFases"];
-                _dtOrdemCategoria = (DataTable)Session["_dtOrdemCategoria"];
-                foreach (DataRow drCategoria in _dtOrdemCategoria.Rows)
-                {
-                    nuSeq = 1;
-                    if (Session["dvCantores_" + drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString()] != null)
-                    {
-                        DataTable dt = (DataTable)Session["dvCantores_" + drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString()];
-                        dt.Columns[caCantoresFases.nuOrdemApresentacao].ReadOnly = false;
-                        dt.Columns[caCantoresFases.nuCantor].ReadOnly = false;
+        //private void GerarSeqNuCantor()
+        //{
+        //    if (Session["_dtOrdemCategoria"] != null)
+        //    {
+        //        int nuCantor = 1;
+        //        int nuSeq;
+        //        _dtCantoresFases = (DataTable)Session["_dtCantoresFases"];
+        //        _dtOrdemCategoria = (DataTable)Session["_dtOrdemCategoria"];
+        //        foreach (DataRow drCategoria in _dtOrdemCategoria.Rows)
+        //        {
+        //            nuSeq = 1;
+        //            if (Session["dvCantores_" + drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString()] != null)
+        //            {
+        //                DataTable dt = (DataTable)Session["dvCantores_" + drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString()];
+        //                dt.Columns[caCantoresFases.nuOrdemApresentacao].ReadOnly = false;
+        //                dt.Columns[caCantoresFases.nuCantor].ReadOnly = false;
 
-                        foreach (DataRow drCantor in _dtCantoresFases.Rows)
-                        {
-                            if (drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString() == drCantor[caCantoresFases.cdCategoria].ToString())
-                            {
-                                foreach (DataRow drCantCat in dt.Rows)
-                                {
-                                    if (drCantor[caCantoresFases.cdCantor].ToString() == drCantCat[caCantoresFases.cdCantor].ToString())
-                                    {
-                                        drCantCat[caCantoresFases.nuOrdemApresentacao] = nuSeq;
-                                        drCantCat[caCantoresFases.nuCantor] = (nuCantor).ToString().PadLeft(3, '0');
-                                        break;
-                                    }
-                                }
+        //                foreach (DataRow drCantor in _dtCantoresFases.Rows)
+        //                {
+        //                    if (drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString() == drCantor[caCantoresFases.cdCategoria].ToString())
+        //                    {
+        //                        foreach (DataRow drCantCat in dt.Rows)
+        //                        {
+        //                            if (drCantor[caCantoresFases.cdCantor].ToString() == drCantCat[caCantoresFases.cdCantor].ToString())
+        //                            {
+        //                                drCantCat[caCantoresFases.nuOrdemApresentacao] = nuSeq;
+        //                                drCantCat[caCantoresFases.nuCantor] = (nuCantor).ToString().PadLeft(3, '0');
+        //                                break;
+        //                            }
+        //                        }
 
-                                drCantor[caCantoresFases.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
-                                drCantor[caCantoresFases.nuOrdemApresentacao] = nuSeq++;
-                                drCantor[caCantoresFases.nuCantor] = (nuCantor++).ToString().PadLeft(3, '0');
-                            }
-                        }
+        //                        drCantor[caCantoresFases.CC_Controle] = KuraFrameWork.csConstantes.sAlterando;
+        //                        drCantor[caCantoresFases.nuOrdemApresentacao] = nuSeq++;
+        //                        drCantor[caCantoresFases.nuCantor] = (nuCantor++).ToString().PadLeft(3, '0');
+        //                    }
+        //                }
 
-                        Session["dvCantores_" + drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString()] = dt;
-                    }
-                }
+        //                Session["dvCantores_" + drCategoria[caConcursosOrdemCategorias.cdCategoria].ToString()] = dt;
+        //            }
+        //        }
 
-                Session["_dtCantoresFases"] = _dtCantoresFases;
-                MontaCantoresCategorias(false, false);
-            }
-        }
+        //        Session["_dtCantoresFases"] = _dtCantoresFases;
+        //        MontaCantoresCategorias(false, false);
+        //    }
+        //}
 
         private bool ValidarNumeroValido(ArrayList palNumerosSorteados, int pNumero)
         {

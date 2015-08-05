@@ -242,8 +242,31 @@ namespace wappKaraoke.Movimentacoes
 
         protected void nuCantor_TextChanged(object sender, EventArgs e)
         {
-            //numero não pode existir no concurso/fase
+            if (cdFase.SelectedIndex == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Selecione a fase.", csMensagem.msgWarning);
+                return;
+            }
 
+            if (nuCantor.Text.Trim() == "")
+                return;
+
+            conCantoresFases objConCantoresFases = new conCantoresFases();
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"]);
+            objConCantoresFases.objCoCantoresFases.nuCantor = nuCantor.Text;
+
+            if (!conCantoresFases.SelectCantoresConcursoPorNumero())
+            {
+                ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível consultar o cantor.", csMensagem.msgDanger);
+                return;
+            }
+
+            if (objConCantoresFases.dtDados.Rows.Count > 0)
+            {
+                nuCantor.Text = "";
+                ltMensagem.Text = MostraMensagem("Validação!", "Número já atribuído a outro cantor neste concurso.", csMensagem.msgDanger);
+                return;
+            }
         }
 
         private int BuscarAssociacaoCantor()
@@ -344,24 +367,57 @@ namespace wappKaraoke.Movimentacoes
 
             int nuOrdemApresentacao = dtCantoresCategoria == null || dtCantoresCategoria.Rows.Count == 0 ? 1 : 
                 Convert.ToInt32(dtCantoresCategoria.Rows[dtCantoresCategoria.Rows.Count-1][caCantoresFases.nuOrdemApresentacao]) + 1;
+            
+            conCantores objConCantores = new conCantores();
+            conMusicas objConMusicas = new conMusicas();
+            conAssociacoes objConAssociacoes = new conAssociacoes();
+            try
+            {
+                DataRow dr = dtCantoresCategoria.NewRow();
 
-            DataRow dr = dtCantoresCategoria.NewRow();
+                dr[caCantoresFases.cdConcurso] = Convert.ToInt32(Session["cdConcurso"]);
+                dr[caCantoresFases.nuOrdemApresentacao] = nuOrdemApresentacao;
+                dr[caCantoresFases.nuCantor] = nuCantor.Text;
 
-            dr[caCantoresFases.cdConcurso] = Convert.ToInt32(Session["cdConcurso"]);
-            dr[caCantoresFases.nuOrdemApresentacao] = nuOrdemApresentacao;
-            dr[caCantoresFases.nuCantor] = nuCantor.Text;
-            dr[caCantoresFases.cdCantor] = Convert.ToInt32(Session["cdConcurso"]);
-            dr[caCantores.nmCantor] = Convert.ToInt32(Session["cdConcurso"]);
-            dr[caCantores.nmNomeKanji] = Convert.ToInt32(Session["cdConcurso"]);
-            dr[caCantoresFases.cdMusica] = Convert.ToInt32(Session["cdConcurso"]);
-            dr[caMusicas.nmMusica] = Convert.ToInt32(Session["cdConcurso"]);
-            dr[caMusicas.nmMusicaKanji] = Convert.ToInt32(Session["cdConcurso"]);
-            dr[caAssociacoes.cdAssociacao] = Convert.ToInt32(Session["cdConcurso"]);
-            dr[caAssociacoes.nmAssociacao] = Convert.ToInt32(Session["cdConcurso"]);
-            dr[caCantoresFases.cdFase] = Convert.ToInt32(Session["cdConcurso"]);
-            dr[caCantoresFases.cdTpStatus] = Convert.ToInt32(Session["cdConcurso"]);
-            dr[caTipoStatus.deTpStatus] = Convert.ToInt32(Session["cdConcurso"]);
+                objConCantores.objCoCantores.LimparAtributos();
+                objConCantores.objCoCantores.cdCantor = Convert.ToInt32(cdCantor.SelectedValue);
+                conCantores.Select();
+                dr[caCantoresFases.cdCantor] = Convert.ToInt32(cdCantor.SelectedValue);
+                dr[caCantores.nmCantor] = objConCantores.dtDados.Rows[0][caCantores.nmCantor].ToString();
+                dr[caCantores.nmNomeKanji] = objConCantores.dtDados.Rows[0][caCantores.nmNomeKanji].ToString();
+                               
+                objConMusicas.objCoMusicas.LimparAtributos();
+                objConMusicas.objCoMusicas.cdMusica = Convert.ToInt32(cdMusica.SelectedValue);
+                conMusicas.Select();
+                dr[caCantoresFases.cdMusica] = Convert.ToInt32(cdMusica.SelectedValue);
+                dr[caMusicas.nmMusica] = objConMusicas.dtDados.Rows[0][caMusicas.nmMusica].ToString();
+                dr[caMusicas.nmMusicaKanji] = objConMusicas.dtDados.Rows[0][caMusicas.nmMusicaKanji].ToString();
+                
+                objConAssociacoes.objCoAssociacoes.LimparAtributos();
+                objConAssociacoes.objCoAssociacoes.cdAssociacao = Convert.ToInt32(cdAssociacao.SelectedValue);
+                conAssociacoes.Select();
+                dr[caAssociacoes.cdAssociacao] = Convert.ToInt32(cdAssociacao.SelectedValue);
+                dr[caAssociacoes.nmAssociacao] = objConAssociacoes.dtDados.Rows[0][caAssociacoes.nmAssociacao].ToString();
+                dr[caCantoresFases.cdFase] = Convert.ToInt32(cdFase.SelectedValue);
+                dr[caCantoresFases.cdTpStatus] = Convert.ToInt32(cdTpStatus.SelectedValue);
+                dr[caCantoresFases.cdCategoria] = Convert.ToInt32(cdCategoria.SelectedValue);
 
+                dtCantoresCategoria.Rows.Add(dr);
+
+                Session["dtCantoresCategoria"] = dtCantoresCategoria;
+                gvCantores.DataSource = dtCantoresCategoria;
+                gvCantores.DataBind();
+                ConfigurarGridView();
+                NomeKanji();
+
+                cdCantor.SelectedIndex = 0;
+                LimparCamposCarregados();
+            }
+            catch
+            {
+                ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível carregar os dados dos registros selecionados.", csMensagem.msgDanger);
+                return;
+            }
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)

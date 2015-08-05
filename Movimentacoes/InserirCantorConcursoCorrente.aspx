@@ -58,8 +58,7 @@
                         <div class="col-sm-2">
                             <asp:TextBox ID="nuCantor" class="form-control" runat="server" 
                                 placeholder="Nº do Cantor..." Visible="True" 
-                                ontextchanged="nuCantor_TextChanged">
-                            </asp:TextBox>
+                                ontextchanged="nuCantor_TextChanged" AutoPostBack="True"></asp:TextBox>
                         </div>
                         <div class="col-sm-2">
                             <asp:LinkButton ID="btnAdicionar" 
