@@ -22,10 +22,7 @@ namespace wappKaraoke.Movimentacoes
 
             if (!this.IsPostBack)
             {
-                ltMensagem.Text = "";
-
-                PegarChaveConcurso();
-                CarregarDDL();
+                InicializaPagina();
             }
 
             base.Page_Load(sender, e);
@@ -43,6 +40,25 @@ namespace wappKaraoke.Movimentacoes
             {
                 return false;
             }
+        }
+
+        private void InicializaPagina()
+        {
+            ltMensagem.Text = "";
+
+            cdFase.DataSource = null;
+            cdCategoria.DataSource = null;
+            cdCantor.DataSource = null;
+            cdMusica.DataSource = null;
+            cdTpStatus.DataSource = null;
+            nuCantor.Text = "";
+
+            PegarChaveConcurso();
+            CarregarDDL();
+
+            Session["dtCantoresCategoria"] = null;
+            gvCantores.DataSource = null;
+            gvCantores.DataBind();
         }
 
         private void CarregarDDL()
@@ -139,8 +155,79 @@ namespace wappKaraoke.Movimentacoes
                 {
                     ((Literal)gvCantores.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dtCantoresCategoria.Rows[i]["nmCantor"].ToString() +
                         " <br/> " + dtCantoresCategoria.Rows[i]["nmNomeKanji"].ToString();
+
+                    ((Literal)gvCantores.Rows[i].FindControl("ltMusicaKanji")).Text = @"" + dtCantoresCategoria.Rows[i]["nmMusica"].ToString() +
+                        " <br/> " + dtCantoresCategoria.Rows[i]["nmMusicaKanji"].ToString();
                 }
             }
+        }
+
+        protected void nuCantor_TextChanged(object sender, EventArgs e)
+        {
+            //Consultar pelo número no concurso/fase corrente
+            //Caso encontre:
+                //Carregar em uma caixa do tipo INFO os dados encontrados, Categoria, ordem apres, nuCantor, Status, nome cantor
+                //perguntar se deve alterá-lo para os dados informados acima
+                //Exibir botões, sim e não (criar novo mostra mensagem onde conterá os botões e os clicks retornarão a opção escolhida);
+                    //Se sim, alterar o cdCantor para o encontrado
+                    //Se não, limpar o número do cantor
+            //Caso não exista:
+                //Consultar pelo cdCantor no concurso/fase corrente e categria selecionada 
+                //Caso encontre:
+                    //Carregar em uma caixa do tipo INFO os dados encontrados, Categoria, ordem apres, nuCantor, Status, nome cantor
+                    //perguntar se deve alterá-lo para os dados informados acima
+                    //Exibir botões, sim e não (criar novo mostra mensagem onde conterá os botões e os clicks retornarão a opção escolhida);
+                        //Se sim, trocar o número do cantor para o encontrado
+                        //Se não, limpar os dados
+        }
+
+        protected void btnAdicionar_Click(object sender, EventArgs e)
+        {
+            if (cdFase.SelectedIndex == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Selecione a fase.", csMensagem.msgWarning);
+                return;
+            }
+
+            if (cdCategoria.SelectedIndex == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Selecione a categoria.", csMensagem.msgWarning);
+                return;
+            }
+
+            if (cdCantor.SelectedIndex == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Selecione o cantor.", csMensagem.msgWarning);
+                return;
+            }
+
+            if (cdMusica.SelectedIndex == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Selecione a música.", csMensagem.msgWarning);
+                return;
+            }
+
+            if (cdTpStatus.SelectedIndex == 0)
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Selecione o status.", csMensagem.msgWarning);
+                return;
+            }
+
+            if (nuCantor.Text.Trim() == "")
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Informe o número do cantor.", csMensagem.msgWarning);
+                return;
+            }
+        }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            InicializaPagina();
+        }
+
+        protected void btnSalvar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

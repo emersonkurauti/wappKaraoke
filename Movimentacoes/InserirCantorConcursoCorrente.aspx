@@ -50,13 +50,15 @@
                         </div>
                         <div class="col-sm-3">
                             <asp:TextBox ID="nuCantor" class="form-control" runat="server" 
-                                placeholder="Nº do Cantor..." Visible="True">
+                                placeholder="Nº do Cantor..." Visible="True" 
+                                ontextchanged="nuCantor_TextChanged">
                             </asp:TextBox>
                         </div>
                         <div class="col-sm-3">
                             <asp:LinkButton ID="btnAdicionar" 
                                     runat="server" 
-                                    CssClass="btn btn-primary btn-block btn-success">
+                                    CssClass="btn btn-primary btn-block btn-success" 
+                                onclick="btnAdicionar_Click">
                                 <i aria-hidden="true" class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Adicionar
                             </asp:LinkButton>
                         </div>
@@ -74,9 +76,18 @@
                                     <asp:BoundField HeaderText="Nº Cantor" DataField="nuCantor">
                                         <ItemStyle Width="5%" />
                                     </asp:BoundField>
+                                    <asp:BoundField HeaderText="Associação" DataField="nmAssociacao">
+                                        <ItemStyle Width="10%" />
+                                    </asp:BoundField>
                                     <asp:TemplateField HeaderText="Nome - Kanji">
                                         <ItemTemplate>
                                             <asp:Literal ID="ltNomeKanji" runat="server">
+                                            </asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Música - Kanji">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltMusicaKanji" runat="server">
                                             </asp:Literal>
                                         </ItemTemplate>
                                     </asp:TemplateField>
@@ -84,6 +95,27 @@
                                 <HeaderStyle CssClass="info" />
                             </asp:GridView>                          
                         </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-2" align="left" style="float: left">
+                            <asp:LinkButton ID="btnSalvar" 
+                                    runat="server" 
+                                    CssClass="btn btn-primary btn-block btn-success"
+                                    onclick="btnSalvar_Click">
+                                <i aria-hidden="true" class="glyphicon glyphicon-save"></i>&nbsp;&nbsp;Salvar
+                            </asp:LinkButton>
+                        </div>
+                        <div class="col-sm-2" align="center" style="float: left">
+                            <asp:LinkButton ID="btnCancelar" 
+                                    runat="server" 
+                                    CssClass="btn btn-primary btn-block btn-danger"
+                                    onclick="btnCancelar_Click">
+                                <i aria-hidden="true" class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp;Cancelar
+                            </asp:LinkButton>
+                        </div>
+                        <div class="col-sm-8" align="right" style="float: right">                            
+                        </div>                        
                     </div>
                 </div>
             </div>
