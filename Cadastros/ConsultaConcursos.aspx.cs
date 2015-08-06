@@ -16,6 +16,7 @@ namespace wappKaraoke.Cadastros
     {
         public override void Page_Load(object sender, EventArgs e)
         {
+            lnkBuscar = btnBuscar;
             gvDadosDefault = gvDados;
             ltMensagemDefault = ltMensagem;
             tobjCa = typeof(caConcursos);

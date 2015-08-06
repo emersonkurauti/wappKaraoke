@@ -15,7 +15,8 @@ namespace wappKaraoke.Cadastros
     public partial class ConsultaAssociacoes : csPageDefault
     {
         public override void Page_Load(object sender, EventArgs e)
-        {            
+        {
+            lnkBuscar = btnBuscar;
             gvDadosDefault = gvDados;
             ltMensagemDefault = ltMensagem;
             tobjCa = typeof(caAssociacoes);

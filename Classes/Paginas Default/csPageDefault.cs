@@ -163,7 +163,7 @@ namespace wappKaraoke.Classes
                             }
                             else
                             {
-                                strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " LIKE '%" + ((TextBox)c).Text.Trim() + "%'";
+                                strFiltro += AndWhere(strFiltro) + " UPPER(" + dc.ColumnName + ") LIKE '%" + ((TextBox)c).Text.Trim().ToUpper() + "%'";
                             }
                         }
                         if ((c is DropDownList) && (((DropDownList)c).ID.ToUpper() == dc.ColumnName.ToUpper()) && (((DropDownList)c).SelectedIndex != 0))
