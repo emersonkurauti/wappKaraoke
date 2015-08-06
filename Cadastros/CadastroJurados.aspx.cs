@@ -6,7 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using wappKaraoke.Classes;
 using wappKaraoke.Classes.Model.Jurados;
-using wappKaraoke.Classes.Controller; 
+using wappKaraoke.Classes.Controller;
+using wappKaraoke.Classes.Mensagem; 
 
 
 namespace wappKaraoke.Cadastros
@@ -26,6 +27,17 @@ namespace wappKaraoke.Cadastros
             }
 
             base.Page_Load(sender, e);
+        }
+
+        protected override void btnSalvar_Click(object sender, EventArgs e)
+        {
+            if (nmNomeKanji.Text.Trim() == "")
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Informe o nome em Kanji do jurado.", csMensagem.msgDanger);
+                return;
+            }
+
+            base.btnSalvar_Click(sender, e);
         }
     }
 }

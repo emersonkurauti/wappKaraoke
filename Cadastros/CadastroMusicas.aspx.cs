@@ -6,7 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using wappKaraoke.Classes;
 using wappKaraoke.Classes.Model.Musicas;
-using wappKaraoke.Classes.Controller; 
+using wappKaraoke.Classes.Controller;
+using wappKaraoke.Classes.Mensagem; 
 
 namespace wappKaraoke.Cadastros
 {
@@ -81,6 +82,12 @@ namespace wappKaraoke.Cadastros
 
         protected override void btnSalvar_Click(object sender, EventArgs e)
         {
+            if (nmMusicaKanji.Text.Trim() == "")
+            {
+                ltMensagem.Text = MostraMensagem("Validação!", "Informe o nome em Kanji da música.", csMensagem.msgDanger);
+                return;
+            }
+
             bool bAlterouCantado = false;
             bool bAlterouKaraoke = false;
             
@@ -145,7 +152,7 @@ namespace wappKaraoke.Cadastros
             }
 
             if (bErro)
-                ltMensagem.Text = MostraMensagem("Falha ao salvar músicas", "Não foi possível enviar os arquivos das músicas.", Classes.Mensagem.csMensagem.msgDanger);
+                ltMensagem.Text = MostraMensagem("Falha ao salvar músicas", "Não foi possível enviar os arquivos das músicas.", csMensagem.msgDanger);
 
             base.btnSalvar_Click(sender, e);
 
