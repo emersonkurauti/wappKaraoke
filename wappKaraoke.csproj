@@ -177,6 +177,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Movimentacoes\Player.aspx" />
     <Content Include="Paineis\PainelAcompanhamentoConcurso.aspx" />
+    <Content Include="Paineis\PainelClassificacao.aspx" />
     <Content Include="teste.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -377,6 +378,13 @@
     </Compile>
     <Compile Include="Paineis\PainelAcompanhamentoConcurso.aspx.designer.cs">
       <DependentUpon>PainelAcompanhamentoConcurso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paineis\PainelClassificacao.aspx.cs">
+      <DependentUpon>PainelClassificacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paineis\PainelClassificacao.aspx.designer.cs">
+      <DependentUpon>PainelClassificacao.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

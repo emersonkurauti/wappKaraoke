@@ -725,6 +725,8 @@ namespace wappKaraoke.Movimentacoes
 
                                 OrdenaDataTable(ref dtDados, "nuOrdemApresentacao");
 
+                                ocsMontaTable.bExibirCodigos = false;
+                                ocsMontaTable.bExibirbtnExcluir = false;
                                 ocsMontaTable.dtDados = dtDados;
                                 strDivs += ocsMontaTable.MontaDataGridView(_dtOrdemCategoria.Rows[i][caConcursosOrdemCategorias.cdCategoria].ToString());
                             }

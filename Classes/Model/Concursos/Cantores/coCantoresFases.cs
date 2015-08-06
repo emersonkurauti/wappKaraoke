@@ -347,7 +347,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  "       CF.cdConcurso, CF.nuOrdemApresentacao, CF.nuCantor, CAN.cdCantor, CAN.nmCantor, " +
                                  "       CAN.nmNomeKanji, MUS.cdMusica, MUS.nmMusica, MUS.nmMusicaKanji, " +
                                  "       ASS.cdAssociacao, ASS.nmAssociacao, CF.cdFase, " +
-                                 "       CF.cdCategoria, CF.cdTpStatus " +
+                                 "       CF.cdCategoria, CF.cdTpStatus, CF.nuNotaFinal, CF.pcDesconto " +
                                  "  FROM CANTORESFASES CF " +
                                  " INNER JOIN CANTORES CAN on CAN.cdCantor = CF.cdCantor " +
                                  " INNER JOIN MUSICAS MUS on MUS.cdMusica = CF.cdMusica " +

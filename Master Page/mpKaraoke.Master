@@ -113,6 +113,7 @@
                         Paineis <span class="caret"></span></a>
                       <ul class="dropdown-menu" role="menu">
                         <li><a href="../Paineis/PainelAcompanhamentoConcurso.aspx">Acompanhamento do Concurso</a></li>
+                        <li><a href="../Paineis/PainelClassificacao.aspx">Classificação</a></li>
                       </ul>
                     </li>
                     <li><a href="../Cadastros/ConsultaConcursos.aspx">Concurso</a></li>
