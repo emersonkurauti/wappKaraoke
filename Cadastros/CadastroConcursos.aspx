@@ -729,7 +729,7 @@
                                                         runat="server" 
                                                         CssClass="btn btn-warning btn-block"
                                                         OnClick="btnlnkSortearOrdemApresentacao_OnClick">
-                                                        <i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Sorteio
+                                                        <i class="glyphicon glyphicon-random"></i>&nbsp;&nbsp;Sorteio
                                                     </asp:LinkButton>
                                                 </div>
                                                 <div class="col-sm-8">

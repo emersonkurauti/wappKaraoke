@@ -679,6 +679,40 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         }
 
         /// <summary>
+        /// Altera a ordem de apresentação do cantor
+        /// </summary>
+        /// <returns></returns>
+        public bool AlterarOrdemApresentacao()
+        {
+            DataTable dtDados = new DataTable();
+            try
+            {
+                string strComando = @"SELECT MAX(" + caCantoresFases.nuOrdemApresentacao + ") + 1 as " + caCantoresFases.nuOrdemApresentacao +
+                                 "  FROM CANTORESFASES CF " +
+                                 " WHERE CF.cdConcurso = " + _cdConcurso +
+                                 "   AND CF.cdFase = " + _cdFase +
+                                 "   AND CF.cdCategoria = " + cdCategoria;
+
+                objBanco.SelectPersonalizado(out dtDados, strComando);
+
+                strComando = @"UPDATE " + caCantoresFases.nmTabela + " SET " + caCantoresFases.cdTpStatus + "=" + _cdTpStatus + "," +
+                    caCantoresFases.nuOrdemApresentacao + "=" + dtDados.Rows[0][caCantoresFases.nuOrdemApresentacao].ToString() +
+                    " WHERE " + caCantoresFases.cdCantor + "=" + _cdCantor +
+                    "  AND " + caCantoresFases.cdConcurso + "=" + _cdConcurso +
+                    "  AND " + caCantoresFases.cdCategoria + "=" + _cdCategoria +
+                    "  AND " + caCantoresFases.cdFase + "=" + _cdFase;
+
+                objBanco.ExecutarSQLPersonalizado(strComando);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Alterar a nota final do cantor
         /// </summary>
         /// <returns></returns>

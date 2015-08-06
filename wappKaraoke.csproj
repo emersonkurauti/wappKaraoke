@@ -150,6 +150,7 @@
     <Content Include="js\demo-gallery.js" />
     <Content Include="js\jquery-10-0-2-gallery.min.js" />
     <Content Include="js\jquery.blueimp-gallery.min.js" />
+    <Content Include="Movimentacoes\AlterarOrdemApresentacao.aspx" />
     <Content Include="Movimentacoes\AlterarStatusCantor.aspx" />
     <Content Include="Movimentacoes\CantoresFases.aspx" />
     <Content Include="Movimentacoes\DefinirConcursoCorrente.aspx" />
@@ -342,6 +343,13 @@
     <Compile Include="Classes\Model\TipoArquivo\caTipoArquivo.cs" />
     <Compile Include="Classes\Model\TipoArquivo\coTipoArquivo.cs" />
     <Compile Include="Classes\MontaDDL\csConcursos.cs" />
+    <Compile Include="Movimentacoes\AlterarOrdemApresentacao.aspx.cs">
+      <DependentUpon>AlterarOrdemApresentacao.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Movimentacoes\AlterarOrdemApresentacao.aspx.designer.cs">
+      <DependentUpon>AlterarOrdemApresentacao.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Movimentacoes\DefinirConcursoCorrente.aspx.cs">
       <DependentUpon>DefinirConcursoCorrente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
