@@ -98,5 +98,21 @@ namespace wappKaraoke.Classes
             dv.Sort = strOrdenacao;
             dtOrdena = dv.ToTable();
         }
+
+        protected virtual bool DataValida(string sData)
+        {
+            try
+            {
+                DateTime dt;
+
+                dt = Convert.ToDateTime(sData);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

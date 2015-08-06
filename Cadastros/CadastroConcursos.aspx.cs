@@ -694,6 +694,22 @@ namespace wappKaraoke.Cadastros
             }
         }
 
+        protected void dtFimConcurso_TextChanged(object sender, EventArgs e)
+        {
+            if (!DataValida(dtFimConcurso.Text))
+            {
+                dtFimConcurso.Text = "";
+            }
+        }
+
+        protected void dtIniConsurso_TextChanged(object sender, EventArgs e)
+        {
+            if (!DataValida(dtIniConcurso.Text))
+            {
+                dtIniConcurso.Text = "";
+            }
+        }
+
         /// <summary>
         /// Imagens/Documentos
         /// </summary>

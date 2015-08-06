@@ -38,5 +38,11 @@ namespace wappKaraoke.Cadastros
 
             base.btnSalvar_Click(sender, e);
         }
+
+        protected void dtNascimento_TextChanged(object sender, EventArgs e)
+        {
+            if (!DataValida(dtNascimento.Text))
+                dtNascimento.Text = "";
+        }
     }
 }

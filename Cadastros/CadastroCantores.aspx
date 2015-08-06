@@ -30,7 +30,8 @@
                         <div class="col-sm-2">
                             <div class='input-group date' id='datetimepicker1'>
                                 <asp:TextBox ID="dtNascimento" runat="server" class="form-control"
-                                    placeholder="Ex. 13/01/2015" Visible="True">
+                                    placeholder="Ex. 13/01/2015" Visible="True" 
+                                    ontextchanged="dtNascimento_TextChanged" AutoPostBack="true">
                                 </asp:TextBox>
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                 </span>

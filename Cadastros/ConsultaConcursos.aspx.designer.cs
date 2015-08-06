@@ -40,13 +40,13 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox nmConcursoKanji;
         
         /// <summary>
-        /// dtIniConsurso control.
+        /// dtIniConcurso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dtIniConsurso;
+        protected global::System.Web.UI.WebControls.TextBox dtIniConcurso;
         
         /// <summary>
         /// dtFimConcurso control.
@@ -65,15 +65,6 @@ namespace wappKaraoke.Cadastros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cdCidade;
-        
-        /// <summary>
-        /// flFinalizado control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox flFinalizado;
         
         /// <summary>
         /// btnLimpar control.

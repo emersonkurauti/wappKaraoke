@@ -93,5 +93,13 @@ namespace wappKaraoke.Cadastros
                     e.Row.Cells[4].Text = "";
             }
         }
+
+        protected void dtNascimento_TextChanged(object sender, EventArgs e)
+        {
+            if (!DataValida(dtNascimento.Text))
+                dtNascimento.Text = "";
+
+            TextChanged(sender, e);
+        }
     }
 }

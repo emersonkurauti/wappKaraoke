@@ -37,9 +37,9 @@
                             <div class="col-md-12">
                                 <div class="col-md-3">
                                     <div class="input-group date">
-                                        <asp:TextBox ID="dtIniConsurso" runat="server" class="form-control"
-                                            placeholder="Ex. 01/01/2015" Visible="True"
-                                            ontextchanged="TextChanged" AutoPostBack="True">
+                                        <asp:TextBox ID="dtIniConcurso" runat="server" class="form-control"
+                                            placeholder="Ex. 01/01/2015" Visible="True" AutoPostBack="True" 
+                                            ontextchanged="dtIniConcurso_TextChanged">
                                         </asp:TextBox>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             Dt. Início
@@ -49,29 +49,19 @@
                                 <div class="col-md-3">
                                     <div class="input-group date">
                                         <asp:TextBox ID="dtFimConcurso" runat="server" class="form-control"
-                                            placeholder="Ex. 01/01/2015" Visible="True"
-                                            ontextchanged="TextChanged" AutoPostBack="True">
+                                            placeholder="Ex. 01/01/2015" Visible="True" AutoPostBack="True" 
+                                            ontextchanged="dtFimConcurso_TextChanged">
                                         </asp:TextBox>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             Dt. Fim&nbsp;&nbsp;&nbsp;
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <asp:DropDownList ID="cdCidade" class="form-control selectpicker" style="text-align:left" 
                                         runat="server" Width="100%"
                                         ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:DropDownList>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <asp:CheckBox ID="flFinalizado" runat="server"/>
-                                        </span>
-                                        <asp:label class="form-control">
-                                            Finalizado?
-                                        </asp:label>
-                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -168,7 +168,8 @@
                                         <div class="col-sm-4">
                                             <div class='input-group date'>
                                                 <asp:TextBox ID="dtIniConcurso" runat="server" class="form-control"
-                                                    placeholder="Ex. 13/01/2015" Visible="True">
+                                                    placeholder="Ex. 13/01/2015" Visible="True"
+                                                    ontextchanged="dtIniConsurso_TextChanged" AutoPostBack="true">
                                                 </asp:TextBox>
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                                     Dt. Início
@@ -178,7 +179,8 @@
                                         <div class="col-sm-4">
                                             <div class='input-group date'>
                                                 <asp:TextBox ID="dtFimConcurso" runat="server" class="form-control"
-                                                    placeholder="Ex. 13/01/2015" Visible="True">
+                                                    placeholder="Ex. 13/01/2015" Visible="True"
+                                                    ontextchanged="dtFimConcurso_TextChanged" AutoPostBack="true">
                                                 </asp:TextBox>
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                                     Dt. Fim&nbsp;&nbsp;&nbsp;

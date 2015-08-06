@@ -100,5 +100,25 @@ namespace wappKaraoke.Cadastros
                     e.Row.Cells[5].Text = "";
             }
         }
+
+        protected void dtFimConcurso_TextChanged(object sender, EventArgs e)
+        {
+            if (!DataValida(dtFimConcurso.Text))
+            {
+                dtFimConcurso.Text = "";
+            }
+
+            TextChanged(sender, e);
+        }
+
+        protected void dtIniConcurso_TextChanged(object sender, EventArgs e)
+        {
+            if (!DataValida(dtIniConcurso.Text))
+            {
+                dtIniConcurso.Text = "";
+            }
+
+            TextChanged(sender, e);
+        }
     }
 }

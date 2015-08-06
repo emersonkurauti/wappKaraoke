@@ -161,9 +161,13 @@ namespace wappKaraoke.Classes
                                 Int32.TryParse(((TextBox)c).Text.Trim(), out intCodigo);
                                 strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " = " + intCodigo.ToString();
                             }
+                            else if (dc.ColumnName.ToUpper().Substring(0, 2) == "DT")
+                            {
+                                strFiltro += AndWhere(strFiltro) + " TO_CHAR(" + dc.ColumnName + ", 'DD/MM/YYYY') = '" + ((TextBox)c).Text.Trim().ToUpper() + "' ";
+                            }
                             else
                             {
-                                strFiltro += AndWhere(strFiltro) + " UPPER(" + dc.ColumnName + ") LIKE '%" + ((TextBox)c).Text.Trim().ToUpper() + "%'";
+                                strFiltro += AndWhere(strFiltro) + " UPPER(" + dc.ColumnName + ") LIKE '%" + ((TextBox)c).Text.Trim().ToUpper() + "%' ";
                             }
                         }
                         if ((c is DropDownList) && (((DropDownList)c).ID.ToUpper() == dc.ColumnName.ToUpper()) && (((DropDownList)c).SelectedIndex != 0))
@@ -171,13 +175,13 @@ namespace wappKaraoke.Classes
                             Int32.TryParse(((DropDownList)c).SelectedValue, out intCodigo);
 
                             if (intCodigo == 0)
-                                strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " = '" + ((DropDownList)c).SelectedValue.ToString() + "'";
+                                strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " = '" + ((DropDownList)c).SelectedValue.ToString() + "' ";
                             else
                                 strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " = " + ((DropDownList)c).SelectedValue;
                         }
                         if ((c is CheckBox) && (((CheckBox)c).ID.ToUpper() == dc.ColumnName.ToUpper()))
                         {
-                            strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " = '" + (((CheckBox)c).Checked ? "S" : "N") + "'";
+                            strFiltro += AndWhere(strFiltro) + " " + dc.ColumnName + " = '" + (((CheckBox)c).Checked ? "S" : "N") + "' ";
                         }
                     }
 
