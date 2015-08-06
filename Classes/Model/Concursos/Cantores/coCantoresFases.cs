@@ -16,6 +16,13 @@ namespace wappKaraoke.Classes.Model.CantoresFases
 {
     public class coCantoresFases : KuraFrameWork.ClasseBase.csModelBase
     {
+        private DataTable _dtCantoresConsursoFase;
+        public DataTable dtCantoresConsursoFase
+        {
+            get { return _dtCantoresConsursoFase; }
+            set { _dtCantoresConsursoFase = value; }
+        }
+
         private DataTable _dtCantoresProxFase;
         public DataTable dtCantoresProxFase
         {
@@ -336,7 +343,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         /// <returns></returns>
         public bool SelectCantoresCategoriasConcurso(out DataTable dtDados)
         {
-            string strComando = @"SELECT 'S' as " + caCantoresFases.CC_Controle + "," +
+            string strComando = @"SELECT '" + KuraFrameWork.csConstantes.sTpCarregado + "' as " + caCantoresFases.CC_Controle + "," +
                                  "       CF.cdConcurso, CF.nuOrdemApresentacao, CF.nuCantor, CAN.cdCantor, CAN.nmCantor, " +
                                  "       CAN.nmNomeKanji, MUS.cdMusica, MUS.nmMusica, MUS.nmMusicaKanji, " +
                                  "       ASS.cdAssociacao, ASS.nmAssociacao, CF.cdFase, " +
@@ -798,6 +805,92 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                 objBanco.RollbackTransaction();
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Insere cantores no concurso
+        /// </summary>
+        /// <returns></returns>
+        public bool InserirCantoresConcurso()
+        {
+            objBanco.BeginTransaction();
+
+            try
+            {
+                foreach (DataRow dr in _dtCantoresConsursoFase.Rows)
+                {
+                    if (dr[caCantoresFases.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpInserido)
+                    {
+                        if (!AtualizaConcursoAssociacoes(dr))
+                        {
+                            objBanco.RollbackTransaction();
+                            return false;
+                        }
+
+                        _cdCantor = Convert.ToInt32(dr[caCantoresFases.cdCantor].ToString());
+                        _cdTpStatus = Convert.ToInt32(dr[caCantoresFases.cdTpStatus].ToString());
+                        _cdMusica = Convert.ToInt32(dr[caCantoresFases.cdMusica].ToString());
+                        _nuCantor = dr[caCantoresFases.nuCantor].ToString();
+                        _nuOrdemApresentacao = Convert.ToInt32(dr[caCantoresFases.nuOrdemApresentacao].ToString());
+                        _flFaseCorrente = "S";
+
+                        if (!Inserir())
+                        {
+                            objBanco.RollbackTransaction();
+                            return false;
+                        }
+                    }
+                }
+
+                objBanco.CommitTransaction();
+                return true;
+            }
+            catch
+            {
+                objBanco.RollbackTransaction();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Atualiza as Associacoes que participam do concurso
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <returns></returns>
+        private bool AtualizaConcursoAssociacoes(DataRow dr)
+        {
+            conConcursosAssociacoes objConConcursosAssociacoes = new conConcursosAssociacoes();
+            objConConcursosAssociacoes.objCoConcursosAssociacoes.LimparAtributos();
+            objConConcursosAssociacoes.objCoConcursosAssociacoes.cdConcurso = _cdConcurso;
+            objConConcursosAssociacoes.objCoConcursosAssociacoes.cdAssociacao =
+                Convert.ToInt32(dr[caCantoresConcursos.cdAssociacao].ToString());
+
+            if (!conConcursosAssociacoes.Select())
+                return false;
+
+            if (objConConcursosAssociacoes.dtDados == null || objConConcursosAssociacoes.dtDados.Rows.Count == 0)
+            {
+                if (!conConcursosAssociacoes.Inserir())
+                    return false;
+            }
+
+            conCantoresConcursos objConCantoresConcursos = new conCantoresConcursos();
+            objConCantoresConcursos.objCoCantoresConcursos.LimparAtributos();
+            objConCantoresConcursos.objCoCantoresConcursos.cdConcurso = _cdConcurso;
+            objConCantoresConcursos.objCoCantoresConcursos.cdCantor = _cdCantor;
+            objConCantoresConcursos.objCoCantoresConcursos.cdAssociacao =
+                Convert.ToInt32(dr[caCantoresConcursos.cdAssociacao].ToString());
+
+            if (!conCantoresConcursos.Select())
+                return false;
+
+            if (objConCantoresConcursos.dtDados == null || objConCantoresConcursos.dtDados.Rows.Count == 0)
+            {
+                if (!conCantoresConcursos.Inserir())
+                    return false;
+            }
+
+            return true;
         }
     }
 }

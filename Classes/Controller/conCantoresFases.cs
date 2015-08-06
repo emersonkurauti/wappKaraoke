@@ -253,6 +253,22 @@ namespace wappKaraoke.Classes.Controller
         }
 
         /// <summary>
+        /// Insere cantores no meio do concurso
+        /// </summary>
+        /// <returns></returns>
+        public static bool InserirCantoresConcurso()
+        {
+            _strMensagemErro = "";
+
+            if (!_objCoCantoresFases.InserirCantoresConcurso())
+            {
+                _strMensagemErro = csMensagem.msgInserir;
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
         /// Excluir
         /// </summary>
         /// <returns></returns>

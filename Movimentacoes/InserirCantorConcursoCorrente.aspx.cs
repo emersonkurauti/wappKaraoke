@@ -148,11 +148,13 @@ namespace wappKaraoke.Movimentacoes
                 if (!conCantoresFases.SelectCantoresCategoriasConcurso())
                 {
                     ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível carregar os cantores desta categoria.", csMensagem.msgDanger);
+                    return;
                 }
 
                 if (objConCantoresFases.dtDados == null || objConCantoresFases.dtDados.Rows.Count == 0)
                 {
                     ltMensagem.Text = MostraMensagem("Aviso!", "Não foram localizados cantores desta categoria.", csMensagem.msgWarning);
+                    return;
                 }
 
                 dtCantoresCategoria = objConCantoresFases.dtDados;
@@ -332,10 +334,18 @@ namespace wappKaraoke.Movimentacoes
         {
             dtCantoresCategoria = (DataTable)Session["dtCantoresCategoria"];
 
-            //foreach (DataRow dr in dtCantoresCategoria.Rows)
-            //{
-            //    if(dr[caCantoresFases.
-            //}
+            foreach (DataRow dr in dtCantoresCategoria.Rows)
+            {
+                if ((dr[caCantoresFases.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpInserido) &&
+                    (cdCantor.SelectedValue == dr[caCantoresFases.cdCantor].ToString()))
+                {
+                    cdMusica.SelectedValue = dr[caCantoresFases.cdMusica].ToString();
+                    cdAssociacao.SelectedValue = dr[caCantoresConcursos.cdAssociacao].ToString();
+                    cdTpStatus.SelectedValue = dr[caCantoresFases.cdTpStatus].ToString();
+                    nuCantor.Text = dr[caCantoresFases.nuCantor].ToString();
+                    return true;
+                }
+            }
 
             return false;
         }
@@ -390,6 +400,7 @@ namespace wappKaraoke.Movimentacoes
             {
                 DataRow dr = dtCantoresCategoria.NewRow();
 
+                dr[caCantoresFases.CC_Controle] = KuraFrameWork.csConstantes.sTpInserido;
                 dr[caCantoresFases.cdConcurso] = Convert.ToInt32(Session["cdConcurso"]);
                 dr[caCantoresFases.nuOrdemApresentacao] = nuOrdemApresentacao;
                 dr[caCantoresFases.nuCantor] = nuCantor.Text;
@@ -437,12 +448,34 @@ namespace wappKaraoke.Movimentacoes
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
+            HabilitarCampos();
             InicializaPagina();
         }
 
         protected void btnSalvar_Click(object sender, EventArgs e)
         {
+            ltMensagem.Text = "";
 
+            if (Session["dtCantoresCategoria"] == null)
+                return;
+
+            dtCantoresCategoria = (DataTable)Session["dtCantoresCategoria"];
+
+            conCantoresFases objConCantoresFases = new conCantoresFases();
+            objConCantoresFases.objCoCantoresFases.LimparAtributos();
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"]);
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(cdFase.SelectedValue);
+            objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(cdCategoria.SelectedValue);
+            objConCantoresFases.objCoCantoresFases.dtCantoresConsursoFase = dtCantoresCategoria;
+
+            if (!conCantoresFases.InserirCantoresConcurso())
+            {
+                ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível inserir o cantor no concurso.", csMensagem.msgDanger);
+                return;
+            }
+
+            LimparCamposCarregados();
+            ltMensagem.Text = MostraMensagem("Sucesso!", "Cantor inserido com sucesso.", csMensagem.msgSucess);
         }
     }
 }
