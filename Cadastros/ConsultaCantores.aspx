@@ -15,17 +15,20 @@
                             <div class="col-md-12">
                                 <div class="col-md-2">
                                     <asp:TextBox ID="cdCantor" class="form-control" runat="server" 
-                                        placeholder="Cód. Cantor..." Visible="True">
+                                        placeholder="Cód. Cantor..." Visible="True"
+                                        ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:TextBox>
                                 </div>
                                 <div class="col-md-5">
                                     <asp:TextBox ID="nmCantor" class="form-control" runat="server" 
-                                        placeholder="Nome do Cantor..." Visible="True">
+                                        placeholder="Nome do Cantor..." Visible="True"
+                                        ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:TextBox>
                                 </div>
                                 <div class="col-md-5">
                                     <asp:TextBox ID="nmNomeKanji" class="form-control" runat="server" 
-                                        placeholder="Nome do Cantor Kanji..." Visible="True">
+                                        placeholder="Nome do Cantor Kanji..." Visible="True"
+                                        ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:TextBox>
                                 </div>
                             </div>
@@ -36,7 +39,8 @@
                                 <div class="col-md-2">
                                     <div class='input-group date' id='datetimepicker1'>
                                         <asp:TextBox ID="dtNascimento" runat="server" class="form-control"
-                                            placeholder="Ex. 13/01/2015" Visible="True">
+                                            placeholder="Ex. 13/01/2015" Visible="True"
+                                            ontextchanged="TextChanged" AutoPostBack="True">
                                         </asp:TextBox>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -44,7 +48,8 @@
                                 </div>
                                 <div class="col-md-10">
                                     <asp:TextBox ID="nmNomeArtistico" class="form-control" runat="server" 
-                                        placeholder="Nome Artístico..." Visible="True">
+                                        placeholder="Nome Artístico..." Visible="True"
+                                        ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:TextBox>
                                 </div>
                             </div>
@@ -54,12 +59,14 @@
                             <div class="col-md-12">
                                 <div class="col-md-2">
                                     <asp:TextBox ID="nuRG" class="form-control" runat="server" 
-                                        placeholder="RG do Cantor..." Visible="True">
+                                        placeholder="RG do Cantor..." Visible="True"
+                                        ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:TextBox>
                                 </div>
                                 <div class="col-md-10">
                                     <asp:DropDownList ID="cdCidade" class="form-control selectpicker" style="text-align:left" 
-                                        runat="server" Width="100%" AutoPostBack="False">
+                                        runat="server" Width="100%" AutoPostBack="True"
+                                        ontextchanged="TextChanged">
                                     </asp:DropDownList>
                                 </div>
                             </div>
@@ -67,7 +74,15 @@
                         <br />
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-8">
+                                <div class="col-md-6">
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:LinkButton ID="btnLimpar" 
+                                                runat="server" 
+                                                CssClass="btn btn-primary btn-block btn-warning"
+                                                onclick="btnLimpar_Click">
+                                        <i aria-hidden="true" class="glyphicon glyphicon-erase"></i>&nbsp;&nbsp;Limpar Filtro
+                                    </asp:LinkButton>
                                 </div>
                                 <div class="col-md-2">
                                     <asp:LinkButton ID="btnBuscar" 

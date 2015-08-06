@@ -14,17 +14,20 @@
                             <div class="col-md-12">
                                 <div class="col-md-2">
                                     <asp:TextBox ID="cdConcurso" class="form-control" runat="server" 
-                                        placeholder="Cód. Concurso..." Visible="True">
+                                        placeholder="Cód. Concurso..." Visible="True"
+                                        ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:TextBox>
                                 </div>
                                 <div class="col-md-4">
                                     <asp:TextBox ID="nmConcurso" class="form-control" runat="server" 
-                                        placeholder="Nome do Concurso..." Visible="True">
+                                        placeholder="Nome do Concurso..." Visible="True"
+                                        ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:TextBox>
                                 </div>
                                 <div class="col-md-6">
                                     <asp:TextBox ID="nmConcursoKanji" class="form-control" runat="server" 
-                                        placeholder="Nome do Concurso Kanji..." Visible="True">
+                                        placeholder="Nome do Concurso Kanji..." Visible="True"
+                                        ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:TextBox>
                                 </div>
                             </div>
@@ -72,7 +75,15 @@
                         <br />
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-8">
+                                <div class="col-md-6">
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:LinkButton ID="btnLimpar" 
+                                                runat="server" 
+                                                CssClass="btn btn-primary btn-block btn-warning"
+                                                onclick="btnLimpar_Click">
+                                        <i aria-hidden="true" class="glyphicon glyphicon-erase"></i>&nbsp;&nbsp;Limpar Filtro
+                                    </asp:LinkButton>
                                 </div>
                                 <div class="col-md-2">
                                     <asp:LinkButton ID="btnBuscar" 

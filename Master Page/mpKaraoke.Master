@@ -69,7 +69,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#home">Mob TI</a>
+                <a class="navbar-brand" href="../Cadastros/ConsultaConcursos.aspx">Mob TI</a>
               </div>
               <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">

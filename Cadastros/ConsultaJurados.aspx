@@ -14,12 +14,14 @@
                             <div class="col-md-12">
                                 <div class="col-md-2">
                                     <asp:TextBox ID="cdJurado" class="form-control" runat="server" 
-                                        placeholder="Cód. Jurado..." Visible="True">
+                                        placeholder="Cód. Jurado..." Visible="True"
+                                        ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:TextBox>
                                 </div>
                                 <div class="col-md-10">
                                     <asp:TextBox ID="nmJurado" class="form-control" runat="server" 
-                                        placeholder="Nome do Jurado..." Visible="True">
+                                        placeholder="Nome do Jurado..." Visible="True"
+                                        ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:TextBox>
                                 </div>
                             </div>
@@ -29,12 +31,14 @@
                             <div class="col-md-12">
                                 <div class="col-md-7">
                                     <asp:TextBox ID="nmNomeKanji" class="form-control" runat="server" 
-                                        placeholder="Nome do Jurado Kanji..." Visible="True">
+                                        placeholder="Nome do Jurado Kanji..." Visible="True"
+                                        ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:TextBox>
                                 </div>
                                 <div class="col-md-5">
                                     <asp:DropDownList ID="cdCidade" class="form-control selectpicker" style="text-align:left" 
-                                        runat="server" Width="100%" AutoPostBack="False">
+                                        runat="server" Width="100%"
+                                        ontextchanged="TextChanged" AutoPostBack="True">
                                     </asp:DropDownList>
                                 </div>
                             </div>
@@ -42,7 +46,15 @@
                         <br />
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-8">
+                                <div class="col-md-6">
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:LinkButton ID="btnLimpar" 
+                                                runat="server" 
+                                                CssClass="btn btn-primary btn-block btn-warning"
+                                                onclick="btnLimpar_Click">
+                                        <i aria-hidden="true" class="glyphicon glyphicon-erase"></i>&nbsp;&nbsp;Limpar Filtro
+                                    </asp:LinkButton>
                                 </div>
                                 <div class="col-md-2">
                                     <asp:LinkButton ID="btnBuscar" 

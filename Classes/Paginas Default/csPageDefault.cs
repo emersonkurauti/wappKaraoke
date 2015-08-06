@@ -12,6 +12,13 @@ namespace wappKaraoke.Classes
 {
     public class csPageDefault : csPage
     {
+        private LinkButton _lnkBuscar;
+        public LinkButton lnkBuscar
+        {
+            get { return _lnkBuscar; }
+            set { _lnkBuscar = value; }
+        }
+
         private string _strPaginaCadastro;
         protected string strPaginaCadastro
         {
@@ -209,6 +216,24 @@ namespace wappKaraoke.Classes
             {
                 ltMensagemDefault.Text = MostraMensagem(csMensagem.msgTitFalaAoConsultar, csMensagem.msgFalhaAoConsultarFiltro, csMensagem.msgDanger);
             }
+        }
+
+        protected virtual void btnLimpar_Click(object sender, EventArgs e)
+        {
+            foreach (Control c in ((LinkButton)sender).Parent.Controls)
+            {
+                if (c is TextBox)
+                    ((TextBox)c).Text = "";
+                else if (c is DropDownList)
+                    ((DropDownList)c).SelectedIndex = 0;
+            }
+
+            btnBuscar_Click(_lnkBuscar, null);
+        }
+
+        protected virtual void TextChanged(object sender, EventArgs e)
+        {
+            btnBuscar_Click(_lnkBuscar, null);
         }
 
         protected virtual string AndWhere(string sComando)

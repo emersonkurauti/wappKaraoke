@@ -13,18 +13,28 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <asp:TextBox ID="cdCategoria" class="form-control" runat="server" 
-                                placeholder="Cód. Categoria..." Visible="True">
+                                placeholder="Cód. Categoria..." Visible="True"
+                                ontextchanged="TextChanged" AutoPostBack="True">
                             </asp:TextBox>
                         </div>
                         <div class="col-sm-10">
                             <asp:TextBox ID="deCategoria" class="form-control" runat="server" 
-                                placeholder="Descrição da Categoria..." Visible="True">
+                                placeholder="Descrição da Categoria..." Visible="True"
+                                ontextchanged="TextChanged" AutoPostBack="True">
                             </asp:TextBox>
                         </div>
                     </div>
                     <br />
                     <div class="row">                    
-                        <div class="col-md-8">
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-2">
+                            <asp:LinkButton ID="btnLimpar" 
+                                        runat="server" 
+                                        CssClass="btn btn-primary btn-block btn-warning"
+                                        onclick="btnLimpar_Click">
+                                <i aria-hidden="true" class="glyphicon glyphicon-erase"></i>&nbsp;&nbsp;Limpar Filtro
+                            </asp:LinkButton>
                         </div>
                         <div class="col-md-2">
                             <asp:LinkButton ID="btnBuscar" 

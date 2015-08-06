@@ -12,23 +12,34 @@
                     <div class="row">
                         <div class="col-md-2">
                             <asp:TextBox ID="cdTpStatus" class="form-control" runat="server" 
-                                placeholder="Cód. Status..." Visible="True">
+                                placeholder="Cód. Status..." Visible="True"
+                                ontextchanged="TextChanged" AutoPostBack="True">
                             </asp:TextBox>
                         </div>
                         <div class="col-md-8">
                             <asp:TextBox ID="deTpStatus" class="form-control" runat="server" 
-                                placeholder="Descrição do Status..." Visible="True">
+                                placeholder="Descrição do Status..." Visible="True"
+                                ontextchanged="TextChanged" AutoPostBack="True">
                             </asp:TextBox>
                         </div>
                         <div class="col-md-2">
                             <asp:DropDownList ID="deCor" class="form-control selectpicker" style="text-align:left" 
-                                runat="server" Width="100%" AutoPostBack="False">
+                                runat="server" Width="100%"
+                                ontextchanged="TextChanged" AutoPostBack="True">
                             </asp:DropDownList>
                         </div>
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-2">
+                            <asp:LinkButton ID="btnLimpar" 
+                                        runat="server" 
+                                        CssClass="btn btn-primary btn-block btn-warning"
+                                        onclick="btnLimpar_Click">
+                                <i aria-hidden="true" class="glyphicon glyphicon-erase"></i>&nbsp;&nbsp;Limpar Filtro
+                            </asp:LinkButton>
                         </div>
                         <div class="col-md-2">
                             <asp:LinkButton ID="btnBuscar" 
