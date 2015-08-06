@@ -11,15 +11,15 @@
                 <div class="panel-body">
                     <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
                     <div class="row">
-                        <div class="col-sm-11">
+                        <div class="col-sm-10">
                             <asp:TextBox ID="nmCidade" class="form-control" runat="server" 
                                 placeholder="Nome da Cidade..." Visible="True">
                             </asp:TextBox>
                         </div>
-                        <div class="col-sm-1">
-                            <asp:TextBox ID="deUF" class="form-control" runat="server" 
-                                placeholder="UF..." Visible="True">
-                            </asp:TextBox>
+                        <div class="col-sm-2">
+                            <asp:DropDownList ID="deUF" class="form-control selectpicker" style="text-align:left" 
+                                runat="server" Width="100%" AutoPostBack="false">
+                            </asp:DropDownList>
                         </div>
                     </div>
                     <br />

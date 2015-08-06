@@ -20,7 +20,8 @@ namespace wappKaraoke.Cadastros
 
             if (!this.IsPostBack)
             {
-                //Carregar os DDL
+                csEstados vcsEstados = new csEstados();
+                deUF = vcsEstados.CarregaDDL(deUF);
             }
 
             base.Page_Load(sender, e);
