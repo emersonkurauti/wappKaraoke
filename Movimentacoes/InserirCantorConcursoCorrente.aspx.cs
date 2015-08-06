@@ -142,7 +142,7 @@ namespace wappKaraoke.Movimentacoes
                 conCantoresFases objConCantoresFases = new conCantoresFases();
                 objConCantoresFases.objCoCantoresFases.LimparAtributos();
                 objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"]);
-                objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"]);
+                objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(cdFase.SelectedValue);
                 objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(cdCategoria.SelectedValue);
 
                 if (!conCantoresFases.SelectCantoresCategoriasConcurso())
@@ -150,7 +150,7 @@ namespace wappKaraoke.Movimentacoes
                     ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível carregar os cantores desta categoria.", csMensagem.msgDanger);
                 }
 
-                if (objConCantoresFases.dtDados != null && objConCantoresFases.dtDados.Rows.Count == 0)
+                if (objConCantoresFases.dtDados == null || objConCantoresFases.dtDados.Rows.Count == 0)
                 {
                     ltMensagem.Text = MostraMensagem("Aviso!", "Não foram localizados cantores desta categoria.", csMensagem.msgWarning);
                 }
@@ -213,29 +213,32 @@ namespace wappKaraoke.Movimentacoes
                 return;
             }
 
-            conCantoresFases objConCantoresFases = new conCantoresFases();
-            objConCantoresFases.objCoCantoresFases.LimparAtributos();
-            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"]);
-            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(cdFase.SelectedValue);
-            objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(cdCategoria.SelectedValue);
-            objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(cdCantor.SelectedValue);
-
-            if (!conCantoresFases.SelectFasesCategoriasCantoresConcurso())
+            if (!CantorEmEdicao())
             {
-                ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível consultar cantor.", csMensagem.msgWarning);
-                return;
-            }
+                conCantoresFases objConCantoresFases = new conCantoresFases();
+                objConCantoresFases.objCoCantoresFases.LimparAtributos();
+                objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"]);
+                objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(cdFase.SelectedValue);
+                objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(cdCategoria.SelectedValue);
+                objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(cdCantor.SelectedValue);
 
-            if (objConCantoresFases.dtDados.Rows.Count == 0)
-            {
-                cdAssociacao.SelectedValue = BuscarAssociacaoCantor().ToString();
-                return;
-            }
+                if (!conCantoresFases.SelectFasesCategoriasCantoresConcurso())
+                {
+                    ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível consultar cantor.", csMensagem.msgWarning);
+                    return;
+                }
 
-            cdMusica.SelectedValue = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdMusica].ToString();
-            cdAssociacao.SelectedValue = objConCantoresFases.dtDados.Rows[0][caCantoresConcursos.cdAssociacao].ToString();
-            cdTpStatus.SelectedValue = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdTpStatus].ToString();
-            nuCantor.Text = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
+                if (objConCantoresFases.dtDados.Rows.Count == 0)
+                {
+                    cdAssociacao.SelectedValue = BuscarAssociacaoCantor().ToString();
+                    return;
+                }
+
+                cdMusica.SelectedValue = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdMusica].ToString();
+                cdAssociacao.SelectedValue = objConCantoresFases.dtDados.Rows[0][caCantoresConcursos.cdAssociacao].ToString();
+                cdTpStatus.SelectedValue = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdTpStatus].ToString();
+                nuCantor.Text = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
+            }
 
             DesabilitarCampos();
         }
@@ -323,6 +326,18 @@ namespace wappKaraoke.Movimentacoes
             cdMusica.CssClass = cdAssociacao.CssClass.Replace(" disabled", "");
 
             nuCantor.ReadOnly = false;
+        }
+
+        private bool CantorEmEdicao()
+        {
+            dtCantoresCategoria = (DataTable)Session["dtCantoresCategoria"];
+
+            //foreach (DataRow dr in dtCantoresCategoria.Rows)
+            //{
+            //    if(dr[caCantoresFases.
+            //}
+
+            return false;
         }
 
         protected void btnAdicionar_Click(object sender, EventArgs e)

@@ -336,7 +336,8 @@ namespace wappKaraoke.Classes.Model.CantoresFases
         /// <returns></returns>
         public bool SelectCantoresCategoriasConcurso(out DataTable dtDados)
         {
-            string strComando = @"SELECT CF.cdConcurso, CF.nuOrdemApresentacao, CF.nuCantor, CAN.cdCantor, CAN.nmCantor, " +
+            string strComando = @"SELECT 'S' as " + caCantoresFases.CC_Controle + "," +
+                                 "       CF.cdConcurso, CF.nuOrdemApresentacao, CF.nuCantor, CAN.cdCantor, CAN.nmCantor, " +
                                  "       CAN.nmNomeKanji, MUS.cdMusica, MUS.nmMusica, MUS.nmMusicaKanji, " +
                                  "       ASS.cdAssociacao, ASS.nmAssociacao, CF.cdFase, " +
                                  "       CF.cdCategoria, CF.cdTpStatus " +
