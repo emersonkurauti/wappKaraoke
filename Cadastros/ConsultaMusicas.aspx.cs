@@ -69,6 +69,11 @@ namespace wappKaraoke.Cadastros
                 {
                     ((Literal)gvDados.Rows[i].FindControl("ltNomeKanji")).Text = @"" + dtDados.Rows[i]["nmMusica"].ToString() + " <br/> " +
                         dtDados.Rows[i]["nmMusicaKanji"].ToString();
+
+                    ((Literal)gvDados.Rows[i].FindControl("ltNuAnoLanc")).Text = dtDados.Rows[i][caMusicas.nuAnoLanc].ToString();
+                    
+                    if (dtDados.Rows[i][caMusicas.nuAnoLanc].ToString() == "0")
+                        ((Literal)gvDados.Rows[i].FindControl("ltNuAnoLanc")).Text = "";
                 }
             }
         }

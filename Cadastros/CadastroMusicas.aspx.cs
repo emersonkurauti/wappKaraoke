@@ -69,13 +69,14 @@ namespace wappKaraoke.Cadastros
             ltAudioKaraoke.Text = "<div><audio id=\"AudioKaraoke\" src=\"../"
                 + wappKaraoke.Properties.Settings.Default.sCaminhoKaraoke.Replace("\\", "/")
                 + deCaminhoMusicaKaraoke.Text + "\"/></div>";
-
         }
 
         protected override void CarregarDados(ControlCollection pControles)
         {
-
             base.CarregarDados(pControles);
+
+            if (nuAnoLanc.Text.ToString() == "0")
+                nuAnoLanc.Text = "";
         }
 
         protected override void btnSalvar_Click(object sender, EventArgs e)

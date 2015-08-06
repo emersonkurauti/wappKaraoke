@@ -94,9 +94,12 @@
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Cantor" DataField="nmCantor">
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="Ano" DataField="nuAnoLanc">
-                                        <ItemStyle Width="5%" />
-                                    </asp:BoundField>
+                                    <asp:TemplateField HeaderText="Ano">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltNuAnoLanc" runat="server">
+                                            </asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:TemplateField>
 				                        <ItemTemplate>
 					                        <asp:LinkButton ID="lnkEdit" runat="server"
