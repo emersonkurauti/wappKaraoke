@@ -344,6 +344,7 @@
     <Compile Include="Classes\Model\TipoArquivo\caTipoArquivo.cs" />
     <Compile Include="Classes\Model\TipoArquivo\coTipoArquivo.cs" />
     <Compile Include="Classes\MontaDDL\csConcursos.cs" />
+    <Compile Include="Classes\MontaDDL\csEstados.cs" />
     <Compile Include="Movimentacoes\AlterarOrdemApresentacao.aspx.cs">
       <DependentUpon>AlterarOrdemApresentacao.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

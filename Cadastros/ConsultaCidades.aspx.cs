@@ -23,6 +23,12 @@ namespace wappKaraoke.Cadastros
             objCon = new conCidades();
 
             base.Page_Load(sender, e);
+
+            if (!this.IsPostBack)
+            {
+                csEstados vcsEstados = new csEstados();
+                deUF = vcsEstados.CarregaDDL(deUF);
+            }
         }
 
         protected override bool ConfigurarGridView()

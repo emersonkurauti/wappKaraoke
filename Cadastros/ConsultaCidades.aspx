@@ -17,17 +17,17 @@
                                 ontextchanged="TextChanged" AutoPostBack="True">
                             </asp:TextBox>
                         </div>
-                        <div class="col-sm-9">
+                        <div class="col-sm-8">
                             <asp:TextBox ID="nmCidade" class="form-control" runat="server" 
                                 placeholder="Nome da Cidade..." Visible="True"
                                 ontextchanged="TextChanged" AutoPostBack="True">
                             </asp:TextBox>
                         </div>
-                        <div class="col-sm-1">
-                            <asp:TextBox ID="deUF" class="form-control" runat="server" 
-                                placeholder="UF..." Visible="True" MaxLength="2"
+                        <div class="col-sm-2">
+                            <asp:DropDownList ID="deUF" class="form-control selectpicker" style="text-align:left" 
+                                runat="server" Width="100%"
                                 ontextchanged="TextChanged" AutoPostBack="True">
-                            </asp:TextBox>
+                            </asp:DropDownList>
                         </div>
                     </div>
                     <br />
