@@ -64,7 +64,7 @@ namespace wappKaraoke.Movimentacoes
                 else
                     CarregaProximoCantor();
 
-                if (!bAchouCantorCantando)
+                if (!bAchouCantorCantando && Session["cdCantorCantando"] != null)
                     MudarStatusCantor(Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantando));
             }
         }
@@ -93,12 +93,14 @@ namespace wappKaraoke.Movimentacoes
 
             if (!conCantoresFases.SelectProximoCantor())
             {
+                Session["cdCantorCantando"] = null;
                 ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível buscar o proximo cantor.", csMensagem.msgDanger);
                 return;
             }
 
             if (objConCantoresFases.dtDados.Rows.Count == 0)
             {
+                Session["cdCantorCantando"] = null;
                 ltMensagem.Text = MostraMensagem("Validação!", "Não existe cantor pronto para cantar.", csMensagem.msgWarning);
                 return;
             }
@@ -113,7 +115,7 @@ namespace wappKaraoke.Movimentacoes
             objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
             objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
             objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(Session["cdCategoria"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantorCantando"].ToString());
             objConCantoresFases.objCoCantoresFases.cdTpStatus = pcdStatus;
 
             if (!conCantoresFases.AlterarStatus())
@@ -136,13 +138,14 @@ namespace wappKaraoke.Movimentacoes
 
             CarregaProximoCantor();
 
-            MudarStatusCantor(Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantando));
+            if (Session["cdCantorCantando"] != null)
+                MudarStatusCantor(Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantando));
         }
 
         private void PreencheDadosCantor(conCantoresFases objConCantoresFases)
         {
             Session["NumeroAtual"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
-            Session["cdCantor"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCantor].ToString();
+            Session["cdCantorCantando"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCantor].ToString();
             Session["cdCategoria"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCategoria].ToString();
 
             ltMensagem.Text = MostraMensagem("Detalhes Cantor:",
@@ -191,7 +194,7 @@ namespace wappKaraoke.Movimentacoes
         private void TrocarNumetoDisplay()
         {
             ocsDisplay = (csDisplay)Session["ocsDisplay"];
-            int iNumero = Convert.ToInt32(Session["NumeroAtual"].ToString());
+            int iNumero = Convert.ToInt32(Session["NumeroAtual"].ToString().Substring(0,3));
             //ocsDisplay.MudarNumero(iNumero.ToString());
             Session["ocsDisplay"] = ocsDisplay;
         }

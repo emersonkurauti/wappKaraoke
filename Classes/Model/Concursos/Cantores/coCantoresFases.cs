@@ -406,6 +406,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  "        cat.deCategoria as CC_deCategoria " +
                                  "   from cantoresfases cf " +
                                  "  inner join concursosordemcategorias coc on coc.cdCategoria = cf.cdCategoria " +
+                                 "                                         and coc.cdConcurso = cf.cdConcurso " +
                                  "  inner join cantores cant on cant.cdCantor = cf.cdCantor " +
                                  "  inner join categorias cat on cat.cdCategoria = coc.cdCategoria " +
                                  "  where cf.cdConcurso = " + _cdConcurso +

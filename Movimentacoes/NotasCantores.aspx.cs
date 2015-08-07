@@ -175,7 +175,7 @@ namespace wappKaraoke.Movimentacoes
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
             objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
-            //objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFase"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
             objConCantoresFases.objCoCantoresFases.nuCantor = psNuCantor;
 
             if (!conCantoresFases.Select())
