@@ -856,13 +856,14 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                 {
                     if (dr[caCantoresFases.CC_Controle].ToString() == KuraFrameWork.csConstantes.sTpInserido)
                     {
+                        _cdCantor = Convert.ToInt32(dr[caCantoresFases.cdCantor].ToString());
+
                         if (!AtualizaConcursoAssociacoes(dr))
                         {
                             objBanco.RollbackTransaction();
                             return false;
                         }
 
-                        _cdCantor = Convert.ToInt32(dr[caCantoresFases.cdCantor].ToString());
                         _cdTpStatus = Convert.ToInt32(dr[caCantoresFases.cdTpStatus].ToString());
                         _cdMusica = Convert.ToInt32(dr[caCantoresFases.cdMusica].ToString());
                         _nuCantor = dr[caCantoresFases.nuCantor].ToString();
