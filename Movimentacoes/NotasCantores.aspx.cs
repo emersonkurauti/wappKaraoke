@@ -206,10 +206,29 @@ namespace wappKaraoke.Movimentacoes
             nuNotaFinal.Text = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuNotafinal].ToString();
             pcDesconto.Text = objConCantoresFases.dtDados.Rows[0][caCantoresFases.pcDesconto].ToString();
 
-            ltMensagem.Text = MostraMensagem("Nº: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString(),
-                "Cantor: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_nmCantor].ToString() + "<br/>" +
-                "Categoria: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_deCategoria].ToString(),
-                csMensagem.msgInfo);
+            if (objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdTpStatus].ToString() !=
+                wappKaraoke.Properties.Settings.Default.sCodStatusCantou)
+            {
+                ltMensagem.Text = MostraMensagem("Nº: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString(),
+                    "Cantor: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_nmCantor].ToString() + "<br/>" +
+                    "Categoria: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_deCategoria].ToString(),
+                    csMensagem.msgDanger);
+            }
+            else if (objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuNotafinal].ToString() == "" ||
+                objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuNotafinal].ToString() == "0")
+            {
+                ltMensagem.Text = MostraMensagem("Nº: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString(),
+                    "Cantor: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_nmCantor].ToString() + "<br/>" +
+                    "Categoria: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_deCategoria].ToString(),
+                    csMensagem.msgInfo);
+            }
+            else
+            {
+                ltMensagem.Text = MostraMensagem("Nº: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString(),
+                    "Cantor: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_nmCantor].ToString() + "<br/>" +
+                    "Categoria: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_deCategoria].ToString(),
+                    csMensagem.msgSucess);
+            }
 
             CarregaPainelNotaJurados();
         }
@@ -319,6 +338,8 @@ namespace wappKaraoke.Movimentacoes
 
             Session["NotasJurados"] = null;
             CarregarNotasCantor(Session["nuCantor"].ToString());
+
+            ltMensagem.Text = MostraMensagem("Sucesso!", "As notas foram salvas com sucesso.", csMensagem.msgSucess);
         }
 
         protected void btnAtualizar_Click(object sender, EventArgs e)
