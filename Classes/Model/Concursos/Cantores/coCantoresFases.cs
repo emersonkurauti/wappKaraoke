@@ -637,7 +637,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                     objConNotas.objCoNotas.cdCategoria = Convert.ToInt32(dr[caNotas.cdCategoria].ToString());
                     objConNotas.objCoNotas.cdFase = Convert.ToInt32(dr[caNotas.cdFase].ToString());
                     objConNotas.objCoNotas.cdJurado = Convert.ToInt32(dr[caNotas.cdJurado].ToString());
-                    objConNotas.objCoNotas.nuNota = Convert.ToInt32(dr[caNotas.nuNota].ToString());
+                    objConNotas.objCoNotas.nuNota = Convert.ToDecimal(dr[caNotas.nuNota].ToString());
                     objConNotas.objCoNotas.deObservacao = dr[caNotas.deObservacao].ToString();
 
                     if (!conNotas.Excluir())

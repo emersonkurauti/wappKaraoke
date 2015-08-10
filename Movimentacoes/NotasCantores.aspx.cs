@@ -282,7 +282,7 @@ namespace wappKaraoke.Movimentacoes
                 _drNota[caNotas.cdCategoria] = Convert.ToInt32(Session["cdCategoria"].ToString());
                 _drNota[caNotas.cdFase] = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
                 _drNota[caNotas.cdJurado] = Convert.ToInt32(vNotas[0]);
-                _drNota[caNotas.nuNota] = Convert.ToDecimal(vNotas[1].Replace(',', '.'));
+                _drNota[caNotas.nuNota] = Convert.ToDecimal(vNotas[1]);
                 _drNota[caNotas.deObservacao] = vNotas[2];
 
                 _dtNotas.Rows.Add(_drNota);
