@@ -139,6 +139,13 @@ namespace wappKaraoke.Movimentacoes
 
             if (objConCantoresFases.dtDados.Rows.Count == 0)
             {
+                Session["cdCantor"] = null;
+                nuCantor.Text = "";
+                pcDesconto.Text = "";
+                deFormulaPontuacao.Text = "";
+                nuNotaFinal.Text = "";
+
+                CarregaPainelNotaJurados();
                 ltMensagem.Text = MostraMensagem("Validação!", "Não existe cantor pronto para receber sua pontuação.", csMensagem.msgWarning);
                 return;
             }
