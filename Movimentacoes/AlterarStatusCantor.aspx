@@ -22,11 +22,11 @@
                         <div class="col-sm-3">
                         </div>
                         <div class="col-sm-6">
+                            <asp:Literal ID="ltInfoCantor" runat="server"></asp:Literal> 
                             <asp:TextBox ID="nuCantor" class="form-control" runat="server" 
                                 placeholder="Número do Cantor..." Visible="True" 
                                 ontextchanged="nuCantor_TextChanged" AutoPostBack="True"></asp:TextBox>
-                            <br />
-                            <asp:Literal ID="ltInfoCantor" runat="server"></asp:Literal>               
+                            <br />              
                             <asp:DropDownList ID="cdStatus" class="form-control selectpicker" style="text-align:left" 
                                 runat="server" Width="100%" AutoPostBack="false">
                             </asp:DropDownList>
