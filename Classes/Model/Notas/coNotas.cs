@@ -66,8 +66,8 @@ namespace wappKaraoke.Classes.Model.Notas
             set { _deObservacao = value; }
         }
 
-        private static int _nuNota;
-        public int nuNota
+        private static decimal _nuNota;
+        public decimal nuNota
         {
             get { return _nuNota; }
             set { _nuNota = value; }

@@ -101,6 +101,7 @@ namespace wappKaraoke.Cadastros
 
                 return;
             }
+
             ltMensagemArquivos.Text = "";
 
             ltMensagemDefault = ltMensagem;
@@ -783,7 +784,7 @@ namespace wappKaraoke.Cadastros
 
         private void CarregarArquivos()
         {
-            conArquivos objConArquivos = new conArquivos();
+            conArquivos objConArquivos = new conArquivos();            
             objConArquivos.objCoArquivos.LimparAtributos();
             objConArquivos.objCoArquivos.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
 
@@ -796,7 +797,12 @@ namespace wappKaraoke.Cadastros
                 if (!conArquivos.Select())
                     ltMensagemArquivos.Text = MostraMensagem("Falha", "Problemas ao carregar imagens.", csMensagem.msgDanger);
 
-                Session["_dtImagens"] = objConArquivos.dtDados;
+                _dtImagens = objConArquivos.dtDados;
+
+                if (Convert.ToInt32(Session["cdConcurso"].ToString()) == 0)
+                    _dtImagens.Rows.Clear();
+
+                Session["_dtImagens"] = _dtImagens;
             }
 
             CarregarImagens();
@@ -811,6 +817,9 @@ namespace wappKaraoke.Cadastros
                     ltMensagemArquivos.Text = MostraMensagem("Falha", "Problemas ao carregar documentos.", csMensagem.msgDanger);
 
                 _dtDocumentos = objConArquivos.dtDados;
+
+                if (Convert.ToInt32(Session["cdConcurso"].ToString()) == 0)
+                    _dtDocumentos.Rows.Clear();
             }
 
             gvDocumentos.DataSource = _dtDocumentos;
@@ -1488,6 +1497,10 @@ namespace wappKaraoke.Cadastros
             }
 
             _dtCantoresConcurso = objConCantoresConcursos.dtDados;
+
+            if (Convert.ToInt32(Session["cdConcurso"].ToString()) == 0)
+                _dtCantoresConcurso.Rows.Clear();
+
             Session["_dtCantoresConcurso"] = _dtCantoresConcurso;
 
             conCantoresFases objConCantoresFases = new conCantoresFases();
@@ -1502,6 +1515,10 @@ namespace wappKaraoke.Cadastros
             }
 
             _dtCantoresFases = objConCantoresFases.dtDados;
+
+            if (Convert.ToInt32(Session["cdConcurso"].ToString()) == 0)
+                _dtCantoresFases.Rows.Clear();
+
             Session["_dtCantoresFases"] = _dtCantoresFases;
 
             CarregarCategorias();
@@ -1903,10 +1920,15 @@ namespace wappKaraoke.Cadastros
                 return;
             }
 
-            gvGrupoJuradoConcurso.DataSource = objConGrupos.dtDados;
+            _dtGruposJurados = objConGrupos.dtDados;
+
+            if (Convert.ToInt32(Session["cdConcurso"].ToString()) == 0)
+                _dtGruposJurados.Rows.Clear();
+
+            gvGrupoJuradoConcurso.DataSource = _dtGruposJurados;
             gvGrupoJuradoConcurso.DataBind();
 
-            Session["_dtGruposJurados"] = objConGrupos.dtDados;
+            Session["_dtGruposJurados"] = _dtGruposJurados;
 
             if (objConGrupos.dtDados.Rows.Count > 0)
                 ConfigurarGridView();
@@ -2103,6 +2125,9 @@ namespace wappKaraoke.Cadastros
             }
 
             _dtAssociacoes = objConConcursosAssociacoes.dtDados;
+
+            if (Convert.ToInt32(Session["cdConcurso"].ToString()) == 0)
+                _dtAssociacoes.Rows.Clear();
 
             gvAssociacoes.DataSource = _dtAssociacoes;
             gvAssociacoes.DataBind();
