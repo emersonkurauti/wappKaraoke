@@ -21,8 +21,6 @@ namespace wappKaraoke.Movimentacoes
         {
             if (!IsPostBack)
             {
-                bool bAchouCantorCantando = false;
-
                 conConcursos objConConcursos = new conConcursos();
                 objConConcursos.objCoConcursos.LimparAtributos();
                 objConConcursos.objCoConcursos.strFiltro = " WHERE flConcursoCorrente = 'S'";
@@ -56,16 +54,23 @@ namespace wappKaraoke.Movimentacoes
                     if (objConCantoresFases.dtDados.Rows.Count > 0)
                     {
                         PreencheDadosCantor(objConCantoresFases);
-                        bAchouCantorCantando = true;
                     }
                     else
                         CarregaProximoCantor();
                 }
                 else
                     CarregaProximoCantor();
-
-                if (!bAchouCantorCantando && Session["cdCantorCantando"] != null)
-                    MudarStatusCantor(Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantando));
+            }
+            else
+            {
+                if (Request["__EVENTARGUMENT"].Contains("AlterarStatusCantando"))
+                {
+                    if (Session["cdCantorCantando"] != null)
+                    {
+                        MudarStatusCantor(Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantando));
+                        ScriptManager.RegisterStartupScript(this.Page, GetType(), "", "TocarMusica();", true);
+                    }
+                }
             }
         }
 
@@ -137,9 +142,6 @@ namespace wappKaraoke.Movimentacoes
             }
 
             CarregaProximoCantor();
-
-            if (Session["cdCantorCantando"] != null)
-                MudarStatusCantor(Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantando));
         }
 
         private void PreencheDadosCantor(conCantoresFases objConCantoresFases)

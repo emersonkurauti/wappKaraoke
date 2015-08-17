@@ -1,5 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master Page/mpKaraoke.Master" AutoEventWireup="true" CodeBehind="Player.aspx.cs" Inherits="wappKaraoke.Movimentacoes.Player" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<script>
+    function Play() {
+        __doPostBack('play', 'AlterarStatusCantando');
+        return false;
+    }
+
+    function TocarMusica() {
+        document.getElementById('Audio').play();
+        return false;
+    }
+</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
@@ -37,7 +48,7 @@
                             <asp:LinkButton ID="btnPlay" 
                                 runat="server" 
                                 CssClass="btn btn-primary btn-block btn-primary"
-                                OnClientClick="document.getElementById('Audio').play(); return false;">
+                                OnClientClick="Play(); return false;">
                                 &nbsp;&nbsp;<i aria-hidden="true" class="glyphicon glyphicon-play"></i>&nbsp;&nbsp;
                             </asp:LinkButton>
                         </div>
