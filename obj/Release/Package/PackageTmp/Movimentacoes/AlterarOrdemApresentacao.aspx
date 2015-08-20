@@ -6,7 +6,7 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span class="panel-title">Alterar Status do Cantor</span>
+                    <span class="panel-title">Alterar Ordem de Apresentação do Cantor</span>
                 </div><!--Panel Header-->
                 <div class="panel-body">
                     <div class="row">
@@ -22,11 +22,11 @@
                         <div class="col-sm-3">
                         </div>
                         <div class="col-sm-6">
+                            <asp:Literal ID="ltInfoCantor" runat="server"></asp:Literal>  
                             <asp:TextBox ID="nuCantor" class="form-control" runat="server" 
                                 placeholder="Número do Cantor..." Visible="True"
                                 AutoPostBack="True" ontextchanged="nuCantor_TextChanged"></asp:TextBox>
                             <br />
-                            <asp:Literal ID="ltInfoCantor" runat="server"></asp:Literal>  
                             <asp:DropDownList ID="cdStatus" class="form-control selectpicker" style="text-align:left" 
                                 runat="server" Width="100%" AutoPostBack="false">
                             </asp:DropDownList>             

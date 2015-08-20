@@ -175,8 +175,8 @@ namespace wappKaraoke.Cadastros
 
             Session["strLista"] = null;
             Session["strDivs"] = null;
-            //Session["alCdCategoria"] = null;
-            //Session["alDeCategoria"] = null;
+            Session["alCdCategoria"] = null;
+            Session["alDeCategoria"] = null;
             Session["_dtCantoresConcursoExc"] = null;
             Session["_dtCantoresConcurso"] = null;
             Session["_dtCantoresFasesExc"] = null;
@@ -1540,6 +1540,10 @@ namespace wappKaraoke.Cadastros
 
             _dtOrdemCategoria = objConOrdemCategorias.dtDados;
             OrdenaDataTable(ref _dtOrdemCategoria, caConcursosOrdemCategorias.nuOrdem + KuraFrameWork.csConstantes.sCrescente);
+
+            if (Convert.ToInt32(Session["cdConcurso"].ToString()) == 0)
+                _dtOrdemCategoria.Rows.Clear();
+
             Session["_dtOrdemCategoria"] = _dtOrdemCategoria;
 
             MontaCantoresCategorias(true, false);
