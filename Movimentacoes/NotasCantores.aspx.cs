@@ -31,23 +31,23 @@ namespace wappKaraoke.Movimentacoes
 
                 if (conConcursos.Select())
                 {
-                    Session["cdConcurso"] = objConConcursos.dtDados.Rows[0][caConcursos.cdConcurso].ToString();
-                    Session["cdFaseCorrente"] = objConConcursos.dtDados.Rows[0][caConcursos.cdFaseCorrente].ToString();
+                    Session["cdConcursoNC"] = objConConcursos.dtDados.Rows[0][caConcursos.cdConcurso].ToString();
+                    Session["cdFaseCorrenteNC"] = objConConcursos.dtDados.Rows[0][caConcursos.cdFaseCorrente].ToString();
                 }
 
-                if (Session["cdConcurso"] == null)
+                if (Session["cdConcursoNC"] == null)
                 {
                     ltMensagem.Text = MostraMensagem("Falha!", "Não existe concurso corrente definido.", csMensagem.msgDanger);
                     return;
                 }
 
-                if (Session["cdFaseCorrente"] == null)
+                if (Session["cdFaseCorrenteNC"] == null)
                 {
                     ltMensagem.Text = MostraMensagem("Falha!", "Não existe fase corrente definida.", csMensagem.msgDanger);
                     return;
                 }
 
-                Session["NotasJurados"] = null;
+                Session["NotasJuradosNC"] = null;
                 CarregarProximoCantorSemNota();
             }
         }
@@ -58,7 +58,7 @@ namespace wappKaraoke.Movimentacoes
 
             conGrupos objConGrupos = new conGrupos();
             objConGrupos.objCoGrupos.LimparAtributos();
-            objConGrupos.objCoGrupos.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+            objConGrupos.objCoGrupos.cdConcurso = Convert.ToInt32(Session["cdConcursoNC"].ToString());
 
             if (conGrupos.Select())
             {
@@ -68,8 +68,8 @@ namespace wappKaraoke.Movimentacoes
                     return;
                 }
 
-                Session["QtdJurados"] = objConGrupos.dtDados.Rows.Count;
-                Session["NotasJurados"] = null;
+                Session["QtdJuradosNC"] = objConGrupos.dtDados.Rows.Count;
+                Session["NotasJuradosNC"] = null;
 
                 string strNota = "";
                 string strObs = "";
@@ -77,15 +77,15 @@ namespace wappKaraoke.Movimentacoes
 
                 foreach (DataRow dr in objConGrupos.dtDados.Rows)
                 {
-                    if ((Session["cdCantor"] != null) && (Session["cdCategoria"] != null) &&
-                        (Session["cdFaseCorrente"] != null) && (Session["cdConcurso"] != null))
+                    if ((Session["cdCantorNC"] != null) && (Session["cdCategoriaNC"] != null) &&
+                        (Session["cdFaseCorrenteNC"] != null) && (Session["cdConcursoNC"] != null))
                     {
                         conNotas objConNotas = new conNotas();
                         objConNotas.objCoNotas.LimparAtributos();
-                        objConNotas.objCoNotas.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
-                        objConNotas.objCoNotas.cdCategoria = Convert.ToInt32(Session["cdCategoria"].ToString());
-                        objConNotas.objCoNotas.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
-                        objConNotas.objCoNotas.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
+                        objConNotas.objCoNotas.cdCantor = Convert.ToInt32(Session["cdCantorNC"].ToString());
+                        objConNotas.objCoNotas.cdCategoria = Convert.ToInt32(Session["cdCategoriaNC"].ToString());
+                        objConNotas.objCoNotas.cdFase = Convert.ToInt32(Session["cdFaseCorrenteNC"].ToString());
+                        objConNotas.objCoNotas.cdConcurso = Convert.ToInt32(Session["cdConcursoNC"].ToString());
                         objConNotas.objCoNotas.cdJurado = Convert.ToInt32(dr[caGrupos.cdJurado].ToString());
 
                         if (!conNotas.Select())
@@ -110,10 +110,10 @@ namespace wappKaraoke.Movimentacoes
 
                     if (strNota != "")
                     {
-                        if (Session["NotasJurados"] == null)
-                            Session["NotasJurados"] = dr[caGrupos.cdJurado].ToString() + "=" + strNota + "=" + strObs;
+                        if (Session["NotasJuradosNC"] == null)
+                            Session["NotasJuradosNC"] = dr[caGrupos.cdJurado].ToString() + "=" + strNota + "=" + strObs;
                         else
-                            Session["NotasJurados"] += ";" + dr[caGrupos.cdJurado].ToString() + "=" + strNota + "=" + strObs;
+                            Session["NotasJuradosNC"] += ";" + dr[caGrupos.cdJurado].ToString() + "=" + strNota + "=" + strObs;
                     }
 
                     index++;
@@ -127,8 +127,8 @@ namespace wappKaraoke.Movimentacoes
 
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
-            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoNC"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrenteNC"].ToString());
             objConCantoresFases.objCoCantoresFases.cdTpStatus = Convert.ToInt32(wappKaraoke.Properties.Settings.Default.sCodStatusCantou);
 
             if (!conCantoresFases.SelectProximoCantorSemNota())
@@ -139,7 +139,7 @@ namespace wappKaraoke.Movimentacoes
 
             if (objConCantoresFases.dtDados.Rows.Count == 0)
             {
-                Session["cdCantor"] = null;
+                Session["cdCantorNC"] = null;
                 nuCantor.Text = "";
                 pcDesconto.Text = "";
                 deFormulaPontuacao.Text = "";
@@ -150,14 +150,14 @@ namespace wappKaraoke.Movimentacoes
                 return;
             }
 
-            Session["NotasJurados"] = null;
+            Session["NotasJuradosNC"] = null;
             nuNotaFinal.Text = "";
             pcDesconto.Text = "";
             nuCantor.Text = "";
 
-            Session["nuCantor"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
-            Session["cdCantor"] = objConCantoresFases.dtDados.Rows[0][caCantores.cdCantor].ToString();
-            Session["cdCategoria"] = objConCantoresFases.dtDados.Rows[0][caCategorias.cdCategoria].ToString();
+            Session["nuCantorNC"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
+            Session["cdCantorNC"] = objConCantoresFases.dtDados.Rows[0][caCantores.cdCantor].ToString();
+            Session["cdCategoriaNC"] = objConCantoresFases.dtDados.Rows[0][caCategorias.cdCategoria].ToString();
 
             deFormulaPontuacao.Text = objConCantoresFases.dtDados.Rows[0][caCategorias.deFormulaPontuacao].ToString();
 
@@ -181,8 +181,8 @@ namespace wappKaraoke.Movimentacoes
 
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
-            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoNC"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrenteNC"].ToString());
             objConCantoresFases.objCoCantoresFases.nuCantor = psNuCantor;
 
             if (!conCantoresFases.Select())
@@ -197,10 +197,10 @@ namespace wappKaraoke.Movimentacoes
                 return;
             }
 
-            Session["nuCantor"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
-            Session["cdCantor"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCantor].ToString();
-            Session["cdCategoria"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCategoria].ToString();
-            Session["cdFase"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdFase].ToString();
+            Session["nuCantorNC"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuCantor].ToString();
+            Session["cdCantorNC"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCantor].ToString();
+            Session["cdCategoriaNC"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCategoria].ToString();
+            Session["cdFaseNC"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdFase].ToString();
 
             deFormulaPontuacao.Text = objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_deFormulaPontuacao].ToString();
             nuNotaFinal.Text = objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuNotafinal].ToString();
@@ -237,7 +237,7 @@ namespace wappKaraoke.Movimentacoes
         {
             hfNotas.Value = hfNotas.Value.ToString().Substring(0, hfNotas.Value.Length - 1);
 
-            Session["NotasJurados"] = hfNotas.Value.ToString();
+            Session["NotasJuradosNC"] = hfNotas.Value.ToString();
 
             string strFormula = deFormulaPontuacao.Text;
             string[] vNotasJurados = hfNotas.Value.ToString().Split(';');
@@ -251,6 +251,39 @@ namespace wappKaraoke.Movimentacoes
                 Session[csDinamico.strCampoNotaJurado.Replace("[cdJurado]", vNotas[0])] = vNotas[1];
                 Session[csDinamico.strCampoObsJurado.Replace("[cdJurado]", vNotas[0])] = vNotas[2];
             }
+
+            int cdFase = 0, posFase = 0;
+
+            do
+            {
+                cdFase = 0;
+                posFase = 0;
+
+                posFase = strFormula.IndexOf('F');
+                if (posFase != -1)
+                {
+                    cdFase = Convert.ToInt32(strFormula.Substring(posFase + 1, 1));
+
+                    conCantoresFases objConCantoresFases = new conCantoresFases();
+                    objConCantoresFases.objCoCantoresFases.LimparAtributos();
+                    objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoNC"]);
+                    objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(Session["cdCategoriaNC"].ToString());
+                    objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantorNC"].ToString());
+                    objConCantoresFases.objCoCantoresFases.cdFase = cdFase;
+
+                    if (!conCantoresFases.Select())
+                    {
+                        ltMensagem.Text = MostraMensagem("Falha!", "Falha ao consultar nota da fase anterior.", csMensagem.msgDanger);
+                        return;
+                    }
+
+                    if (objConCantoresFases.dtDados != null && objConCantoresFases.dtDados.Rows.Count > 0)
+                    {
+                        strFormula = strFormula.Replace("[F" + cdFase + "]",
+                            objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuNotafinal].ToString());
+                    }
+                }
+            } while (cdFase != 0);
 
             double dpcDesconto;
             Double.TryParse(pcDesconto.Text, out dpcDesconto);
@@ -275,20 +308,20 @@ namespace wappKaraoke.Movimentacoes
         {
             CalculaNota();
 
-            if (Session["NotasJurados"] == null)
+            if (Session["NotasJuradosNC"] == null)
             {
                 ltMensagem.Text = MostraMensagem("Validação!", "Notas não informadas.", csMensagem.msgWarning);
                 return;
             }
 
-            if (Session["QtdJurados"] == null)
+            if (Session["QtdJuradosNC"] == null)
             { 
                 return;
             }
 
-            string[] vNotasJurados = Session["NotasJurados"].ToString().Split(';');
+            string[] vNotasJurados = Session["NotasJuradosNC"].ToString().Split(';');
 
-            if (vNotasJurados.Length != Convert.ToInt32(Session["QtdJurados"].ToString()))
+            if (vNotasJurados.Length != Convert.ToInt32(Session["QtdJuradosNC"].ToString()))
             {
                 ltMensagem.Text = MostraMensagem("Validação!", "Devem ser informadas todas as notas.", csMensagem.msgWarning);
                 return;
@@ -303,10 +336,10 @@ namespace wappKaraoke.Movimentacoes
                 vNotas = vNotasJurados[i].Split('=');
                 _drNota = _dtNotas.NewRow();
 
-                _drNota[caNotas.cdConcurso] = Convert.ToInt32(Session["cdConcurso"].ToString());
-                _drNota[caNotas.cdCantor] = Convert.ToInt32(Session["cdCantor"].ToString());
-                _drNota[caNotas.cdCategoria] = Convert.ToInt32(Session["cdCategoria"].ToString());
-                _drNota[caNotas.cdFase] = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
+                _drNota[caNotas.cdConcurso] = Convert.ToInt32(Session["cdConcursoNC"].ToString());
+                _drNota[caNotas.cdCantor] = Convert.ToInt32(Session["cdCantorNC"].ToString());
+                _drNota[caNotas.cdCategoria] = Convert.ToInt32(Session["cdCategoriaNC"].ToString());
+                _drNota[caNotas.cdFase] = Convert.ToInt32(Session["cdFaseCorrenteNC"].ToString());
                 _drNota[caNotas.cdJurado] = Convert.ToInt32(vNotas[0]);
                 _drNota[caNotas.nuNota] = Convert.ToDecimal(vNotas[1]);
                 _drNota[caNotas.deObservacao] = vNotas[2];
@@ -322,10 +355,10 @@ namespace wappKaraoke.Movimentacoes
 
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
-            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcurso"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(Session["cdCategoria"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoNC"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantorNC"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(Session["cdCategoriaNC"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrenteNC"].ToString());
             objConCantoresFases.objCoCantoresFases.nuNotafinal = dNuNotaFina;
             objConCantoresFases.objCoCantoresFases.pcDesconto = dpcDesconto;
             objConCantoresFases.objCoCantoresFases.dtNotas = _dtNotas;
@@ -336,21 +369,21 @@ namespace wappKaraoke.Movimentacoes
                 return;
             }
 
-            Session["NotasJurados"] = null;
-            CarregarNotasCantor(Session["nuCantor"].ToString());
+            Session["NotasJuradosNC"] = null;
+            CarregarNotasCantor(Session["nuCantorNC"].ToString());
 
             ltMensagem.Text = MostraMensagem("Sucesso!", "As notas foram salvas com sucesso.", csMensagem.msgSucess);
         }
 
         protected void btnAtualizar_Click(object sender, EventArgs e)
         {
-            Session["NotasJurados"] = null;
+            Session["NotasJuradosNC"] = null;
             CarregarProximoCantorSemNota();
         }
 
         protected void nuCantor_TextChanged(object sender, EventArgs e)
         {
-            Session["NotasJurados"] = null;
+            Session["NotasJuradosNC"] = null;
             CarregarNotasCantor(nuCantor.Text);
         }
     }

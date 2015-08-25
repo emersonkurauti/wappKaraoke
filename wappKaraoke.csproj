@@ -138,6 +138,7 @@
     <Content Include="css\bootstrap-3-0-2-gallery.min.css" />
     <Content Include="css\bootstrap-submenu.css" />
     <Content Include="css\bootstrap-submenu.min.css" />
+    <Content Include="Erro\ErroGenerico.aspx" />
     <Content Include="js\bootstrap-3-0-2-gallery.min.js" />
     <Content Include="css\bootstrap-image-gallery.css" />
     <Content Include="css\bootstrap-image-gallery.min.css" />
@@ -347,6 +348,13 @@
     <Compile Include="Classes\Model\TipoArquivo\coTipoArquivo.cs" />
     <Compile Include="Classes\MontaDDL\csConcursos.cs" />
     <Compile Include="Classes\MontaDDL\csEstados.cs" />
+    <Compile Include="Erro\ErroGenerico.aspx.cs">
+      <DependentUpon>ErroGenerico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Erro\ErroGenerico.aspx.designer.cs">
+      <DependentUpon>ErroGenerico.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Movimentacoes\AlterarOrdemApresentacao.aspx.cs">
       <DependentUpon>AlterarOrdemApresentacao.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

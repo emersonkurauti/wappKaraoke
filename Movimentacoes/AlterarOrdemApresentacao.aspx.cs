@@ -24,19 +24,19 @@ namespace wappKaraoke.Movimentacoes
                 objConConcursos.objCoConcursos.LimparAtributos();
                 objConConcursos.objCoConcursos.strFiltro = " WHERE flConcursoCorrente = 'S'";
 
-                Session["cdConcursoCorrente"] = null;
-                Session["cdFaseCorrente"] = null;
+                Session["cdConcursoCorrenteOrdemApres"] = null;
+                Session["cdFaseCorrenteOdemApres"] = null;
 
                 if (conConcursos.Select())
                 {
                     if (objConConcursos.dtDados != null && objConConcursos.dtDados.Rows.Count > 0)
                     {
-                        Session["cdConcursoCorrente"] = objConConcursos.dtDados.Rows[0][caConcursos.cdConcurso].ToString();
-                        Session["cdFaseCorrente"] = objConConcursos.dtDados.Rows[0][caConcursos.cdFaseCorrente].ToString();
+                        Session["cdConcursoCorrenteOrdemApres"] = objConConcursos.dtDados.Rows[0][caConcursos.cdConcurso].ToString();
+                        Session["cdFaseCorrenteOdemApres"] = objConConcursos.dtDados.Rows[0][caConcursos.cdFaseCorrente].ToString();
                     }
                 }
 
-                if (Session["cdConcursoCorrente"] == null)
+                if (Session["cdConcursoCorrenteOrdemApres"] == null)
                 {
                     ltMensagem.Text = MostraMensagem("Falha!", "Atenção, não existe concurso corrende definido!", csMensagem.msgDanger);
                 }
@@ -50,8 +50,8 @@ namespace wappKaraoke.Movimentacoes
 
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
-            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoCorrente"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoCorrenteOrdemApres"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrenteOdemApres"].ToString());
             objConCantoresFases.objCoCantoresFases.nuCantor = nuCantor.Text;
 
             if (!conCantoresFases.Select())
@@ -68,8 +68,8 @@ namespace wappKaraoke.Movimentacoes
                 return false;
             }
 
-            Session["cdCantor"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCantor].ToString();
-            Session["cdCategoria"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCategoria].ToString();
+            Session["cdCantorOrdemApres"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCantor].ToString();
+            Session["cdCategoriaOrdemApres"] = objConCantoresFases.dtDados.Rows[0][caCantoresFases.cdCategoria].ToString();
 
             ltInfoCantor.Text = MostraMensagem("Detalhes:",
                 "Nome: " + objConCantoresFases.dtDados.Rows[0][caCantoresFases.CC_nmCantor].ToString() + "<br/>" +
@@ -105,10 +105,10 @@ namespace wappKaraoke.Movimentacoes
             }
 
             conCantoresFases objConCantoresFases = new conCantoresFases();
-            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoCorrente"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantor"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(Session["cdCategoria"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoCorrenteOrdemApres"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantorOrdemApres"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrenteOdemApres"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(Session["cdCategoriaOrdemApres"].ToString());
             objConCantoresFases.objCoCantoresFases.cdTpStatus = Convert.ToInt32(cdStatus.SelectedValue.ToString());
 
             if (!conCantoresFases.AlterarOrdemApresentacao())
