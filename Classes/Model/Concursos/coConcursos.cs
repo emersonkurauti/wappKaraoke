@@ -761,7 +761,7 @@ namespace wappKaraoke.Classes.Model.Concursos
         {
             objBanco.BeginTransaction();
 
-            bool bAlteraFaseCorrente = false;
+            bool bAlteraFaseCorrente = true;
 
             try
             {
