@@ -509,7 +509,7 @@ namespace wappKaraoke.Movimentacoes
 
             conCantoresConcursos objConCantoresConcursos = new conCantoresConcursos();
             objConCantoresConcursos.objCoCantoresConcursos.LimparAtributos();
-            objConCantoresConcursos.objCoCantoresConcursos.cdConcurso = Convert.ToInt32(Session["cdConcursoGerarProxFaseGP"].ToString());
+            objConCantoresConcursos.objCoCantoresConcursos.cdConcurso = Convert.ToInt32(Session["cdConcursoGerarProxFase"].ToString());
 
             if (!conCantoresConcursos.Select())
             {
