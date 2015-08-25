@@ -264,23 +264,30 @@ namespace wappKaraoke.Movimentacoes
                 {
                     cdFase = Convert.ToInt32(strFormula.Substring(posFase + 1, 1));
 
-                    conCantoresFases objConCantoresFases = new conCantoresFases();
-                    objConCantoresFases.objCoCantoresFases.LimparAtributos();
-                    objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoNC"]);
-                    objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(Session["cdCategoriaNC"].ToString());
-                    objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantorNC"].ToString());
-                    objConCantoresFases.objCoCantoresFases.cdFase = cdFase;
-
-                    if (!conCantoresFases.Select())
+                    if (cdFase != Convert.ToInt32(Session["cdFaseCorrenteNC"]))
                     {
-                        ltMensagem.Text = MostraMensagem("Falha!", "Falha ao consultar nota da fase anterior.", csMensagem.msgDanger);
-                        return;
+                        conCantoresFases objConCantoresFases = new conCantoresFases();
+                        objConCantoresFases.objCoCantoresFases.LimparAtributos();
+                        objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoNC"]);
+                        objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(Session["cdCategoriaNC"].ToString());
+                        objConCantoresFases.objCoCantoresFases.cdCantor = Convert.ToInt32(Session["cdCantorNC"].ToString());
+                        objConCantoresFases.objCoCantoresFases.cdFase = cdFase;
+
+                        if (!conCantoresFases.Select())
+                        {
+                            ltMensagem.Text = MostraMensagem("Falha!", "Falha ao consultar nota da fase anterior.", csMensagem.msgDanger);
+                            return;
+                        }
+
+                        if (objConCantoresFases.dtDados != null && objConCantoresFases.dtDados.Rows.Count > 0)
+                        {
+                            strFormula = strFormula.Replace("[F" + cdFase + "]",
+                                objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuNotafinal].ToString());
+                        }
                     }
-
-                    if (objConCantoresFases.dtDados != null && objConCantoresFases.dtDados.Rows.Count > 0)
+                    else
                     {
-                        strFormula = strFormula.Replace("[F" + cdFase + "]",
-                            objConCantoresFases.dtDados.Rows[0][caCantoresFases.nuNotafinal].ToString());
+                        strFormula = strFormula.Replace("[F" + cdFase + "]", "0");
                     }
                 }
             } while (cdFase != 0);
