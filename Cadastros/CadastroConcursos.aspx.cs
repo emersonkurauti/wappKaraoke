@@ -314,8 +314,7 @@ namespace wappKaraoke.Cadastros
 
         public void btnFechar_Click(Object sender, EventArgs e)
         {
-            flFinalizado.Checked = true;            
-            GerarSeqNuCantor();
+            flFinalizado.Checked = true;      
             MostrarAvisoConcursoFinalizado();
             btnSalvar_Click(null, null);
         }
