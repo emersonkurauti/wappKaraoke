@@ -104,10 +104,11 @@
                             </li>
                             <li><a href="../Movimentacoes/GerarProximaFase.aspx">Gerar Próx. fase</a></li>
                             <li><a href="../Movimentacoes/NotasCantores.aspx">Notas do Cantor</a></li>
-                            <li><a href="../Movimentacoes/Player.aspx">Player</a></li>
                             <li><a href="../Movimentacoes/AlterarStatusCantor.aspx">Status do Cantor</a></li>
                         </ul>
                     </li>
+                    <li><a href="../Cadastros/ConsultaConcursos.aspx">Concurso</a></li>
+                    <li><a href="../Movimentacoes/Player.aspx">Player</a></li>
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         Paineis <span class="caret"></span></a>
@@ -116,7 +117,6 @@
                         <li><a href="../Paineis/PainelClassificacao.aspx">Classificação</a></li>
                       </ul>
                     </li>
-                    <li><a href="../Cadastros/ConsultaConcursos.aspx">Concurso</a></li>
                 </ul>
               </div><!--<div class="navbar-collapse collapse">-->
             </div>
