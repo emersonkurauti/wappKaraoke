@@ -270,6 +270,8 @@ namespace wappKaraoke.Paineis
 
                                 OrdenaDataTable(ref dtDados, caCantoresFases.nuNotafinal + " DESC");
 
+                                ocsMontaTable.bExibirColocacao = true;
+                                ocsMontaTable.bExibirSequencial = false;
                                 ocsMontaTable.bExibirNotaFinal = true;
                                 ocsMontaTable.bExibirDesconto = true;
                                 ocsMontaTable.bExibirCodigos = false;

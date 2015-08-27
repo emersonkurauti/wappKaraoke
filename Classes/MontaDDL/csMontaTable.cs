@@ -49,6 +49,20 @@ namespace wappKaraoke.Classes
             set { _bExibirDesconto = value; }
         }
 
+        private bool _bExibirSequencial = true;
+        public bool bExibirSequencial
+        {
+            get { return _bExibirSequencial; }
+            set { _bExibirSequencial = value; }
+        }
+
+        private bool _bExibirColocacao = false;
+        public bool bExibirColocacao
+        {
+            get { return _bExibirColocacao; }
+            set { _bExibirColocacao = value; }
+        }
+
         private DataTable _dtDados;
         public DataTable dtDados
         {
@@ -59,6 +73,7 @@ namespace wappKaraoke.Classes
         public string MontaDataGridView(string strIdGV)
         {
             string sSequencial = "      <th data-hide=\"all\" scope=\"col\" visible=\"false\">Seq.</th>";
+            string sColocacao = "      <th data-hide=\"all\" scope=\"col\" visible=\"false\">Pos.</th>";
             string sCodCantor = "      <th data-hide=\"all\" scope=\"col\" visible=\"false\">Cód. Cantor</th>";
             string sCodAssociacao = "      <th data-hide=\"all\" scope=\"col\">Cód. Associação</th>";
             string sCodMusica = "      <th data-hide=\"all\" scope=\"col\">Cód. Música</th>";
@@ -67,13 +82,18 @@ namespace wappKaraoke.Classes
             string sNotaFinal = "      <th data-hide=\"all\" scope=\"col\">Nota Final</th>";
             string sDesconto = "      <th data-hide=\"all\" scope=\"col\">% Desconto</th>";
 
+            if (!_bExibirSequencial)
+                sSequencial = "";
+
             if (!_bExibirCodigos)
             {
-                sSequencial = "";
                 sCodCantor = "";
                 sCodAssociacao = "";
                 sCodMusica = "";
             }
+
+            if (!_bExibirColocacao)
+                sColocacao = "";
 
             if (!_bExibirbtnEditar)
                 sEditar = "";
@@ -91,6 +111,7 @@ namespace wappKaraoke.Classes
                  + "  <thead>"
                  + "    <tr class=\"info\">"
                  + sSequencial
+                 + sColocacao
                  + sNotaFinal
                  + sDesconto
                  + "      <th data-hide=\"all\" scope=\"col\" visible=\"false\">Nº Cantor</th>" //nuCantor
@@ -113,13 +134,17 @@ namespace wappKaraoke.Classes
         public string MontaLinhasGridView(string strIdGV, string strIDCategoria)
         {
             string strLinhas = "";
+            int nuColocacao = 1;
 
             foreach (DataRow dr in _dtDados.Rows)
             {
                 strLinhas += "<tr>";
                 //Seq
-                if (_bExibirCodigos)
+                if (_bExibirSequencial)
                     strLinhas += "<td style=\"width:5%;\">" + dr[caCantoresFases.nuOrdemApresentacao] + "</td>";
+
+                if (_bExibirColocacao)
+                    strLinhas += "<td style=\"width:5%;\">" + nuColocacao++ + "º" + "</td>";
 
                 //Nota Final
                 if(_bExibirNotaFinal)
