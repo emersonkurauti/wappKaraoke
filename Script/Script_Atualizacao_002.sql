@@ -1,0 +1,1 @@
+Alter table Associacoes add deSiglaAssociacao VArchar2(10);
