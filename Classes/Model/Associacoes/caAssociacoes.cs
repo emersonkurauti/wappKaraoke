@@ -74,6 +74,10 @@ namespace wappKaraoke.Classes.Model.Associacoes
         {
             get { return "nmAssociacao"; }
         }
+        public static string deSiglaAssociacao
+        {
+            get { return "deSiglaAssociacao"; }
+        }
 		public static string cdAssociacao
         {
             get { return "cdAssociacao"; }
@@ -131,11 +135,11 @@ namespace wappKaraoke.Classes.Model.Associacoes
         /// <param name="strNome"></param>
         public static void RetornarFields()
         {
-            _strFields = CC_cdRegistro  + "," + nuEnderecoRepresentante + "," + nmAssociacao + "," + cdAssociacao + "," + nuCEPRepresentante + "," + nuEnderecoPresidente + "," + nmRepresentante + "," + deComplementoRepresentante + "," + nmPresidente + "," + deRuaRepresentante + "," + deBairroRepresentante + "," + deBairroPresidente + "," + nuCEPPresidente + "," + deRuaPresidente + "," + deComplementoPresidente;
+            _strFields = CC_cdRegistro + "," + nuEnderecoRepresentante + "," + nmAssociacao + "," + deSiglaAssociacao + "," + cdAssociacao + "," + nuCEPRepresentante + "," + nuEnderecoPresidente + "," + nmRepresentante + "," + deComplementoRepresentante + "," + nmPresidente + "," + deRuaRepresentante + "," + deBairroRepresentante + "," + deBairroPresidente + "," + nuCEPPresidente + "," + deRuaPresidente + "," + deComplementoPresidente;
 
-            _strNome = "Cd. Registro, nuEnderecoRepresentante, nmAssociacao, cdAssociacao, nuCEPRepresentante, nuEnderecoPresidente, nmRepresentante, deComplementoRepresentante, nmPresidente, deRuaRepresentante, deBairroRepresentante, deBairroPresidente, nuCEPPresidente, deRuaPresidente, deComplementoPresidente";
+            _strNome = "Cd. Registro, nuEnderecoRepresentante, nmAssociacao, deSiglaAssociacao, cdAssociacao, nuCEPRepresentante, nuEnderecoPresidente, nmRepresentante, deComplementoRepresentante, nmPresidente, deRuaRepresentante, deBairroRepresentante, deBairroPresidente, nuCEPPresidente, deRuaPresidente, deComplementoPresidente";
 
-            _strVisivel = "0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1";
+            _strVisivel = "0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1";
         }
     }
 }

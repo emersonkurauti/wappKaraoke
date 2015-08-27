@@ -17,9 +17,15 @@
                                 ontextchanged="TextChanged" AutoPostBack="True">
                             </asp:TextBox>
                         </div>
-                        <div class="col-sm-10">
+                        <div class="col-sm-8">
                             <asp:TextBox ID="nmAssociacao" class="form-control" runat="server" 
                                 placeholder="Nome da Associação..." Visible="True"
+                                ontextchanged="TextChanged" AutoPostBack="True">
+                            </asp:TextBox>
+                        </div>
+                        <div class="col-sm-2">
+                            <asp:TextBox ID="deSiglaAssociacao" class="form-control" runat="server" 
+                                placeholder="Sigla..." Visible="True"
                                 ontextchanged="TextChanged" AutoPostBack="True">
                             </asp:TextBox>
                         </div>
@@ -81,6 +87,8 @@
                                 <Columns>
                                     <asp:BoundField HeaderText="Cód." DataField="cdAssociacao">
                                         <ItemStyle Width="5%" />
+                                    </asp:BoundField>
+                                    <asp:BoundField HeaderText="Sigla" DataField="deSiglaAssociacao">
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="Nome" DataField="nmAssociacao">
                                     </asp:BoundField>

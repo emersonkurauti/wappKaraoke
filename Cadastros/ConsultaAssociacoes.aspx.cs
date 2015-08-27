@@ -39,6 +39,7 @@ namespace wappKaraoke.Cadastros
                 gvDados.HeaderRow.Cells[0].Attributes["data-hide"] = "phone";
                 gvDados.HeaderRow.Cells[2].Attributes["data-hide"] = "phone";
                 gvDados.HeaderRow.Cells[3].Attributes["data-hide"] = "phone";
+                gvDados.HeaderRow.Cells[4].Attributes["data-hide"] = "phone";
 
                 //Adds THEAD and TBODY to GridView.
                 gvDados.HeaderRow.TableSection = TableRowSection.TableHeader;

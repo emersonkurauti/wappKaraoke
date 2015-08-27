@@ -11,7 +11,12 @@
                 <div class="panel-body">
                     <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-2">
+                            <asp:TextBox ID="deSiglaAssociacao" class="form-control" runat="server" 
+                                placeholder="Sigla..." Visible="True">
+                            </asp:TextBox>
+                        </div>
+                        <div class="col-sm-10">
                             <asp:TextBox ID="nmAssociacao" class="form-control" runat="server" 
                                 placeholder="Descrição da Associação..." Visible="True">
                             </asp:TextBox>

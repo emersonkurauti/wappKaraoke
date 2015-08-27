@@ -58,6 +58,7 @@
                                             <asp:CheckBox ID="chkRow" runat="server" Width="5%"/>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <asp:BoundField DataField="nuCantor" HeaderText="Nº" />
                                     <asp:BoundField HeaderText="Nome" DataField="nmCantor">
                                     </asp:BoundField>
                                     <asp:BoundField DataField="nuNotaFinal" HeaderText="Nota" />
@@ -75,13 +76,6 @@
                                 onclick="btnProxima_Click">
                                 Passar&nbsp;&nbsp;<i aria-hidden="true" class="glyphicon glyphicon-arrow-right"></i>
                             </asp:LinkButton>
-                            <!--<br/>
-                            <asp:LinkButton ID="btnAnterior" 
-                                        runat="server" 
-                                        CssClass="btn btn-primary btn-block btn-success " 
-                                onclick="btnAnterior_Click">
-                                <i aria-hidden="true" class="glyphicon glyphicon-arrow-left"></i>&nbsp;&nbsp;Voltar
-                            </asp:LinkButton>-->
                             <br/>
                         </div>
                         <div class="col-sm-5">
@@ -95,6 +89,7 @@
                                             <asp:CheckBox ID="chkRow" runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <asp:BoundField DataField="nuCantor" HeaderText="Nº" />
                                     <asp:BoundField HeaderText="Nome" DataField="nmCantor">
                                     </asp:BoundField>
                                     <asp:BoundField DataField="nuNotaFinal" HeaderText="Nota" />

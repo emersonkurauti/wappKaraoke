@@ -33,6 +33,13 @@ namespace wappKaraoke.Classes.Model.Associacoes
             set { _nmAssociacao = value; }
         }
 
+        private static string _deSiglaAssociacao = "";
+        public string deSiglaAssociacao
+        {
+            get { return _deSiglaAssociacao; }
+            set { _deSiglaAssociacao = value; }
+        }
+
 		private static int _cdAssociacao;
         public int cdAssociacao
         {

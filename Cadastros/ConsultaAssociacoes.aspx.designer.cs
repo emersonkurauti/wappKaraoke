@@ -31,6 +31,15 @@ namespace wappKaraoke.Cadastros {
         protected global::System.Web.UI.WebControls.TextBox nmAssociacao;
         
         /// <summary>
+        /// deSiglaAssociacao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox deSiglaAssociacao;
+        
+        /// <summary>
         /// nmPresidente control.
         /// </summary>
         /// <remarks>
