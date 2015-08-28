@@ -31,12 +31,12 @@ namespace wappKaraoke.Paineis {
         protected global::System.Web.UI.WebControls.Literal ltMensagem;
         
         /// <summary>
-        /// gvAcompanhamentoConcurso control.
+        /// ltListaCantores control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvAcompanhamentoConcurso;
+        protected global::System.Web.UI.WebControls.Literal ltListaCantores;
     }
 }

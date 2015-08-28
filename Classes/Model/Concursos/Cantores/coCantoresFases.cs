@@ -462,6 +462,7 @@ namespace wappKaraoke.Classes.Model.CantoresFases
                                  " inner join tipostatus ts on ts.cdTpStatus = cf.cdTpStatus " +
                                  " where coc.cdConcurso = " + _cdConcurso +
                                  "   and cf.cdFase = " + _cdFase +
+                                 "   and cf.cdCategoria = " + _cdCategoria +
                                  " order by coc.nuOrdem, cf.nuOrdemApresentacao, cf.nuCantor";
 
             return objBanco.SelectPersonalizado(out dtDados, strComando);

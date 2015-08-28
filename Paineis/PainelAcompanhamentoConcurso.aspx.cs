@@ -11,101 +11,78 @@ using wappKaraoke.Classes.Model.CantoresFases;
 using wappKaraoke.Classes.Model.Concursos;
 using wappKaraoke.Classes.Model.TipoStatus;
 using System.Data;
+using wappKaraoke.Classes.Paginas_Default;
+using wappKaraoke.Classes.Model.Categorias;
+using wappKaraoke.Classes.Model.ConcursosOrdemCategorias;
 
 namespace wappKaraoke.Paineis
 {
-    public partial class PainelAcompanhamentoConcurso : csPage
+    public partial class PainelAcompanhamentoConcurso : csPainelAcompanhamento
     {
         public override void Page_Load(object sender, EventArgs e)
         {
+            string strMensagemErro = "";
+            DataTable dtConcursoOrdemCategoria;
+
+            base.Page_Load(sender, e);
+
+            if (!ValidaConcursoFaseCorrente(out strMensagemErro))
+            {
+                ltMensagem.Text = strMensagemErro;
+                return;
+            }
+
             ltRefresh.Text = "<meta http-equiv=\"refresh\" content=\"" + 
                 wappKaraoke.Properties.Settings.Default.sTempoAtualizaçãoPainel + "\" />";
 
-            conConcursos objConConcursos = new conConcursos();
-            objConConcursos.objCoConcursos.LimparAtributos();
-            objConConcursos.objCoConcursos.strFiltro = " WHERE flConcursoCorrente = 'S'";
-
-            Session["cdConcursoCorrente"] = null;
-
-            if (conConcursos.Select())
+            if (!CarregarCategoriasConcursos(out strMensagemErro, out dtConcursoOrdemCategoria))
             {
-                if (objConConcursos.dtDados != null && objConConcursos.dtDados.Rows.Count > 0)
-                {
-                    Session["cdConcursoCorrente"] = objConConcursos.dtDados.Rows[0][caConcursos.cdConcurso].ToString();
-                    Session["cdFaseCorrente"] = objConConcursos.dtDados.Rows[0][caConcursos.cdFaseCorrente].ToString();
-                }
-            }
-
-            if (Session["cdConcursoCorrente"] == null)
-            {
-                ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível localizar o concurso corrente.", csMensagem.msgDanger);
+                ltMensagem.Text = strMensagemErro;
                 return;
             }
 
-            if (Session["cdFaseCorrente"] == null)
+            MontarPainelAcompanhamento(dtConcursoOrdemCategoria);
+        }
+
+        private void MontarPainelAcompanhamento(DataTable dtConcursoOrdemCategoria)
+        {
+            string strPainelCompleto = "";
+            ltListaCantores.Text = "";
+
+            foreach (DataRow dr in dtConcursoOrdemCategoria.Rows)
             {
-                ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível localizar a fase corrente.", csMensagem.msgDanger);
-                return;
+                strPainelCompleto = strPainel.Replace("[deCategoria]", dr[caConcursosOrdemCategorias.CC_deCategoria].ToString());
+
+                Session["cdCategoriaPainel"] = Convert.ToInt32(dr[caConcursosOrdemCategorias.cdCategoria].ToString());
+
+                strPainelCompleto = strPainelCompleto.Replace("[TableCantores]", MontarTabelaCantores());
+
+                ltListaCantores.Text += strPainelCompleto;
             }
+        }
+
+        private string  MontarTabelaCantores()
+        {
+            string strTabelaCantores = "";
 
             conCantoresFases objConCantoresFases = new conCantoresFases();
             objConCantoresFases.objCoCantoresFases.LimparAtributos();
-            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoCorrente"].ToString());
-            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrente"].ToString());
+            objConCantoresFases.objCoCantoresFases.cdConcurso = Convert.ToInt32(Session["cdConcursoCorrentePainel"]);
+            objConCantoresFases.objCoCantoresFases.cdFase = Convert.ToInt32(Session["cdFaseCorrentePainel"]);
+            objConCantoresFases.objCoCantoresFases.cdCategoria = Convert.ToInt32(Session["cdCategoriaPainel"]);
 
             if (!conCantoresFases.SelectPainelAcompanhamentoConcurso())
             {
-                ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível carregar o acompanhamento do concurso corrente.", csMensagem.msgDanger);
-                return;
+                ltMensagem.Text = MostraMensagem("Falha!", "Não foi possível carregar o acompanhamento do concurso corrente.", csMensagem.msgDanger); ;
+                return "";
             }
 
-            gvAcompanhamentoConcurso.AutoGenerateColumns = false;
-            gvAcompanhamentoConcurso.DataSource = objConCantoresFases.dtDados;
-            gvAcompanhamentoConcurso.DataBind();
-
-            for (int i = 0; i < objConCantoresFases.dtDados.Rows.Count; i++)
+            if (objConCantoresFases.dtDados != null && objConCantoresFases.dtDados.Rows.Count > 0)
             {
-                ((Literal)gvAcompanhamentoConcurso.Rows[i].FindControl("ltCantorKanji")).Text = @"" +
-                    objConCantoresFases.dtDados.Rows[i]["nmCantor"].ToString() +
-                    " <br/> " + objConCantoresFases.dtDados.Rows[i]["nmNomeKanji"].ToString();
-                ((Literal)gvAcompanhamentoConcurso.Rows[i].FindControl("ltMusicaKanji")).Text = @"" +
-                    objConCantoresFases.dtDados.Rows[i]["nmMusica"].ToString() +
-                    " <br/> " + objConCantoresFases.dtDados.Rows[i]["nmMusicaKanji"].ToString();
-
-                PintaLinha(gvAcompanhamentoConcurso.Rows[i], objConCantoresFases.dtDados.Rows[i]["deCor"].ToString());
+                strTabelaCantores = MontaEstruturaTabela(objConCantoresFases.dtDados);
             }
 
-            Session["_dtCantoresFases"] = objConCantoresFases.dtDados;
-
-            gvAcompanhamentoConcurso.HeaderRow.TableSection = TableRowSection.TableHeader;
-        }
-
-        private void PintaLinha(GridViewRow gvRow, string strCor)
-        {
-            if (strCor == "AZUL")
-            {
-                gvRow.BackColor = System.Drawing.Color.LightBlue;
-            }
-            else if (strCor == "VERDE")
-            {
-                gvRow.BackColor = System.Drawing.Color.LightGreen;
-            }
-            else if (strCor == "VERMELHO")
-            {
-                gvRow.BackColor = System.Drawing.Color.Salmon;
-            }
-            else if (strCor == "AMARELO")
-            {
-                gvRow.BackColor = System.Drawing.Color.Yellow;
-            }
-            else if (strCor == "LARANJADO")
-            {
-                gvRow.BackColor = System.Drawing.Color.Orange;
-            }
-            else if (strCor == "BRANCO")
-            {
-                gvRow.BackColor = System.Drawing.Color.White;
-            }
+            return strTabelaCantores;
         }
     }
 }

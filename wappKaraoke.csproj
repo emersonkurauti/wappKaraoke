@@ -348,6 +348,9 @@
     <Compile Include="Classes\Model\TipoArquivo\coTipoArquivo.cs" />
     <Compile Include="Classes\MontaDDL\csConcursos.cs" />
     <Compile Include="Classes\MontaDDL\csEstados.cs" />
+    <Compile Include="Classes\Paginas Default\csPainelAcompanhamento.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Erro\ErroGenerico.aspx.cs">
       <DependentUpon>ErroGenerico.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -473,7 +476,7 @@
     <Compile Include="Classes\MontaDDL\csCorStatus.cs" />
     <Compile Include="Classes\MontaDDL\csFases.cs" />
     <Compile Include="Classes\MontaDDL\csJurados.cs" />
-    <Compile Include="Classes\MontaDDL\csMontaTable.cs" />
+    <Compile Include="Classes\Dinamico\csMontaTable.cs" />
     <Compile Include="Classes\MontaDDL\csMusicas.cs" />
     <Compile Include="Classes\Paginas Default\csPageDefault.cs">
       <SubType>ASPXCodeBehind</SubType>

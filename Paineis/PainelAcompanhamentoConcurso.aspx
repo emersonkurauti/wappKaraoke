@@ -13,28 +13,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <asp:Literal ID="ltMensagem" runat="server"></asp:Literal>
-                            <asp:GridView ID="gvAcompanhamentoConcurso" runat="server"
-                                CssClass="footable table table-bordered table-hover">
-                                <Columns>
-                                    <asp:BoundField DataField="deCategoria" HeaderText="Categoria" />
-                                    <asp:BoundField DataField="nuCantor" HeaderText="Nº Cantor" />
-                                    <asp:BoundField DataField="nmAssociacao" HeaderText="Associação" />
-                                    <asp:TemplateField HeaderText="Cantor">
-                                        <ItemTemplate>
-                                            <asp:Literal ID="ltCantorKanji" runat="server">
-                                            </asp:Literal>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Música">
-                                        <ItemTemplate>
-                                            <asp:Literal ID="ltMusicaKanji" runat="server">
-                                            </asp:Literal>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:BoundField DataField="deTpStatus" HeaderText="Status" />
-                                </Columns>
-                                <HeaderStyle CssClass="info" />
-                            </asp:GridView>
+                            <asp:Literal ID="ltListaCantores" runat="server"></asp:Literal>
                         </div>
                     </div>
                 </div>
